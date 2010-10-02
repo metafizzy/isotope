@@ -43,14 +43,68 @@
     return fn ? this.bind( "smartresize", fn ) : this.trigger( "smartresize", ["execAsap"] );
   };
 
+  /*
+    $cards.all
+    $cards.filtered
+    $cards.sorted
+  */
 
   var mercutioMethods = {
     
-    init : function( options, callback ) {
+    // gets all current children ( filtered if necessary ) in the pool
+    getCards : function() {
+
+    },
+    
+    filter : function() {
+      
+    },
+    
+    // used on all the filtered cards, $cards.filtered
+    sort : function() {
+      
+    },
+    
+    // used on collection of cards (should be filtered, and sorted before )
+    // accepts cards-to-be-laid-out and colYs to start with
+    layout : function( $cardsToBeLaidOut, colYs ) {
+      
+    },
+    
+    resize : function() {
+      // get updated colCount
+      // if current colCount !== previous colCount
+        // do layout
+    },
+    
+    append : function() {
+      
+    },
+    
+    init : function( options ) {
 
       return this.each(function() {  
 
-        console.log( this )
+        var $this = $(this),
+            data = $this.data('mercutio'),
+            props = data || {};
+
+        // checks if masonry has been called before on this object
+        props.initiated = !!data;
+
+        var previousOptions = props.initiated ? data.opts : {};
+
+        props.opts = $.extend(
+          {},
+          $.fn.mercutio.defaults,
+          previousOptions,
+          options
+        );
+        
+        $this.data( 'mercutio', props );
+        
+        // need to get cards
+        $this.mercutio( 'getCards' );
 
       });
       
