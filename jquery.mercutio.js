@@ -53,7 +53,10 @@
     
     // gets all current children ( filtered if necessary ) in the pool
     getCards : function() {
-
+      // var props = this.data('mercutio');
+      // 
+      // props.
+      // console.log( this, props )
     },
     
     filter : function() {
@@ -65,20 +68,193 @@
       
     },
     
+    // will use top
+    position : function() {
+      
+    },
+    
+    placeCard : function( setCount, setY, props ) {
+      // here, `this` refers to a child element or "brick"
+          // get the minimum Y value from the columns
+      var minimumY  = Math.min.apply( Math, setY ),
+          setHeight = minimumY + this.outerHeight(true),
+          i         = setY.length,
+          shortCol  = i,
+          setSpan   = props.colCount + 1 - i,
+          animOpts  = $.extend( {}, props.opts.animationOptions ),
+          position;
+      // Which column has the minY value, closest to the left
+      while (i--) {
+        if ( setY[i] === minimumY ) {
+          shortCol = i;
+        }
+      }
+          
+      position = {
+        left: props.colW * shortCol + props.posLeft,
+        top: minimumY
+      };
+          
+      // position the brick
+      this[ props.applyStyle ]( position, animOpts );
+
+      // console.log( props.colY )
+
+      // apply setHeight to necessary columns
+      for ( i=0; i < setSpan; i++ ) {
+        props.colYs[ shortCol + i ] = setHeight;
+      }
+      
+      return this;
+    },
+    
+    singleColumn : function( colYs, props ) {
+      return this.each(function(){
+        $(this).mercutio( 'placeCard', props.colCount, colYs, props );
+      });
+    },
+    
+    
+    multiColumn : function( colYs, props ) {
+      return this.each(function(){
+        var $this  = $(this),
+            //how many columns does this brick span
+            colSpan = Math.ceil( $this.outerWidth(true) / props.colW );
+        colSpan = Math.min( colSpan, props.colCount );
+
+        if ( colSpan === 1 ) {
+          // if brick spans only one column, just like singleMode
+          $this.mercutio( 'placeCard', props.colCount, colYs, props );
+        } else {
+          // brick spans more than one column
+          // how many different places could this brick fit horizontally
+          var groupCount = props.colCount + 1 - colSpan,
+              groupY = [];
+
+          // for each group potential horizontal position
+          for ( i=0; i < groupCount; i++ ) {
+            // make an array of colY values for that one group
+            var groupColY = colYs.slice( i, i+colSpan );
+            // and get the max value of the array
+            groupY[i] = Math.max.apply( Math, groupColY );
+          }
+
+          $this.mercutio( 'placeCard', groupCount, groupY, props );
+        }
+      });
+    },
+    
     // used on collection of cards (should be filtered, and sorted before )
     // accepts cards-to-be-laid-out and colYs to start with
-    layout : function( $cardsToBeLaidOut, colYs ) {
+    layout : function( $cards, colYs ) {
+
+      var props = this.data('mercutio');
+
+      // are we animating the layout arrangement?
+      // use plugin-ish syntax for css or animate
+      props.applyStyle =  ( props.initiated && props.opts.animate ) ? 'animate' : 'css';
+
+
+      // layout logic
+      var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
+
+      $cards.mercutio( layoutMode, colYs, props );
+
+      // set the height of the container to the tallest column
+      props.containerHeight = Math.max.apply( Math, props.colYs );
+      var containerStyle    = { height: props.containerHeight - props.posTop },
+          animOpts          = $.extend( {}, props.opts.animationOptions );
+      this[ props.applyStyle ]( containerStyle, animOpts );
+
+      // add masoned class first time around
+      if ( !props.initiated ) { 
+        // wait 1 millisec for quell transitions
+        var $container = this;
+        setTimeout(function(){
+          $container.addClass('mercutio'); 
+        }, 1 );
+      }
+
+      // provide props.bricks as context for the callback
+      // callback = callback || function(){};
+      // callback.call( props.$bricks );
+
+      // set all data so we can retrieve it for appended appendedContent
+      //    or anyone else's crazy jquery fun
+      this.data( 'mercutio', props );
+      
+      return this;
       
     },
     
     resize : function() {
+      // console.log( this.data('mercutio') , this[0].id )
+      var props = this.data('mercutio'),
+          prevColCount = props.colCount;
+      
+      props.initiated = true;
       // get updated colCount
-      // if current colCount !== previous colCount
-        // do layout
+      // console.log('resize')
+      this.mercutio( 'getColCount', props );
+      // console.log( props.colCount, prevColCount )
+      if ( props.colCount !== prevColCount ) {
+        // if column count has changed, do a new column cound
+        var colYs = this.mercutio( 'resetColYs', props );
+        this.mercutio( 'layout', props.$cards.all, colYs );
+      }
+
+      return this;
     },
     
     append : function() {
       
+    },
+    
+    getColCount : function( props ) {
+      props.colCount = Math.floor( this.width() / props.colW ) ;
+      props.colCount = Math.max( props.colCount, 1 );
+      return this;
+    },
+    
+    // only run though on initial init
+    setup : function() {
+      var props = this.data('mercutio');
+      props.$cards = {};
+      // need to get cards
+      props.$cards.all = props.opts.selector ? 
+        this.find( props.opts.selector ) : 
+        this.children;
+      
+      props.colW = props.opts.columnWidth || props.$cards.all.outerWidth(true);
+
+      // if colW == 0, back out before divide by zero
+      if ( !props.colW ) {
+        window.console && console.error('Column width calculated to be zero. Stopping Mercutio plugin before divide by zero. Check that the width of first child inside the masonry container is not zero.');
+        return this;
+      }
+
+      this.css('position', 'relative').mercutio( 'getColCount', props );
+
+      props.$cards.all.css( 'position', 'absolute' );
+
+      // get top left position of where the bricks should be
+      var $cursor   = $( document.createElement('div') );
+      this.prepend( $cursor );
+      props.posTop  = Math.round( $cursor.position().top );
+      props.posLeft = Math.round( $cursor.position().left );
+      $cursor.remove();
+
+      return this;
+    },
+    
+    resetColYs : function( props ) {
+      var colYs = [],
+          i = props.colCount;
+      while (i--) {
+        colYs.push( props.posTop );
+      }
+      props.colYs = colYs;
+      return colYs
     },
     
     init : function( options ) {
@@ -103,8 +279,20 @@
         
         $this.data( 'mercutio', props );
         
-        // need to get cards
-        $this.mercutio( 'getCards' );
+        if ( !props.initiated ) {
+          $this.mercutio( 'setup' );
+        }
+
+        var colYs = $this.mercutio( 'resetColYs', props );
+        $this.mercutio( 'layout', props.$cards.all, colYs );
+
+
+        // binding window resizing
+        if ( props.opts.resizeable ) {
+          $(window).bind('smartresize.mercutio', function() { $this.mercutio( 'resize' ); } );
+        } else if ( !props.opts.resizeable && !!previousOptions.resizeable ) {
+          $(window).unbind('smartresize.mercutio');
+        }
 
       });
       
@@ -133,14 +321,14 @@
 
   // Default plugin options
   $.fn.mercutio.defaults = {
-    singleMode: false,
-    columnWidth: undefined,
-    itemSelector: undefined,
-    appendedContent: undefined,
-    saveOptions: true,
+    // singleMode: false,
+    // columnWidth: undefined,
+    // itemSelector: undefined,
+    // appendedContent: undefined,
+    // saveOptions: true,
     resizeable: true,
-    animate: false,
-    animationOptions: {}
+    // animate: false,
+    // animationOptions: {}
   };
 
 })(jQuery);
