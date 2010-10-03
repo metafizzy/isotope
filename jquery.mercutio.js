@@ -24,6 +24,8 @@
               continue;
             }
           
+            console.log( props[i],  m_style[ props[i] ] )
+          
             if ( m_style[ props[i] ] !== undefined ) {
               return true;
             }
@@ -261,17 +263,33 @@
       });
     },
     
+    // parseTransformStyle : function( style ) {
+    //   for ( prop in style ) {
+    //     switch
+    //   }
+    //   return style;
+    // },
 
     complete : function( props ) {
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn =  ( props.initiated && props.opts.animate ) ? 'animate' : 'css',
+      var styleFn =  ( props.initialized && props.opts.animate ) ? 'animate' : 'css',
           animOpts = props.opts.animationOptions;
 
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
-                                       // have to extend animation to play nice with jQuery
+        // var style = mercutioMethods.parseTransformStyle( obj.style );
+        for ( var prop in obj.style ) {
+          console.log( prop, obj.style[prop] )
+          // switch ( obj.style[prop] ) {
+          //   case 'scale' :
+          //     console.log( obj.style )
+          //     break;
+          // }
+        }
+        
+                                   // have to extend animation to play nice with jQuery
         obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
       });
 
@@ -294,6 +312,8 @@
     layout : function( $cards, colYs ) {
 
       var props = this.data('mercutio');
+
+      // console.log( props.opts.hiddenStyle.scale )
 
       // layout logic
       var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
@@ -328,13 +348,13 @@
       var props = this.data('mercutio'),
           prevColCount = props.colCount;
       
-      props.initiated = true;
+      props.initialized = true;
 
       // get updated colCount
       this.mercutio( 'getColCount', props );
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        var colYs = this.mercutio( 'resetColYs', props );
+        var colYs = mercutioMethods.resetColYs( props );
         this.mercutio( 'layout', props.$cards.filtered, colYs );
       }
 
@@ -365,7 +385,7 @@
 
       // if colW == 0, back out before divide by zero
       if ( !props.colW ) {
-        window.console && console.error('Column width calculated to be zero. Stopping Mercutio plugin before divide by zero. Check that the width of first child inside the masonry container is not zero.');
+        window.console && console.error('Column width calculated to be zero. Stopping Mercutio plugin before divide by zero. Check that the width of first child inside the mercutio container is not zero.');
         return this;
       }
 
@@ -405,9 +425,9 @@
             props = data || {};
 
         // checks if masonry has been called before on this object
-        props.initiated = !!data;
+        props.initialized = !!data;
 
-        var previousOptions = props.initiated ? data.opts : {};
+        var previousOptions = props.initialized ? data.opts : {};
 
         props.opts = $.extend(
           {},
@@ -418,11 +438,11 @@
         
         $this.data( 'mercutio', props );
         
-        if ( !props.initiated ) {
+        if ( !props.initialized ) {
           $this.mercutio( 'setup' );
         }
 
-        var colYs = $this.mercutio( 'resetColYs', props );
+        var colYs = mercutioMethods.resetColYs( props );
         $this
           .mercutio( 'filter', props.$cards.all )
           .mercutio( 'layout', props.$cards.filtered, colYs );
@@ -449,11 +469,11 @@
     },
     
     translate : function( x, y ) {
-      return mercutioMethods.transform('translate(' + x + 'px, ' + y + 'px)')
+      return mercutioMethods.transform('translate(' + x + 'px, ' + y + 'px) scale(1)')
     },
     
     translate3d : function( x, y ) {
-      return mercutioMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0)')
+      return mercutioMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0) scale(1)')
     },
     
     positionAbs : function( x, y ) {
@@ -499,10 +519,12 @@
     resizeable: true,
     hiddenClass : 'mercutio-hidden',
     hiddenStyle : {
-      opacity : 0
+      opacity : 0,
+      scale: 0.001
     },
     visibleStyle : {
-      opacity : 1
+      opacity : 1,
+      scale: 1
     },
     animationOptions: {
       queue: false
