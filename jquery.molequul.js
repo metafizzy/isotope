@@ -1,7 +1,7 @@
 /*************************************************
-**  jQuery Mercutio version 0.1
+**  jQuery Molequul version 0.1
 **  Copyright David DeSandro, licensed MIT
-**  http://desandro.com/resources/jquery-mercutio
+**  http://desandro.com/resources/jquery-molequul
 **************************************************/
 (function($){  
 
@@ -151,13 +151,13 @@
   };
 
 
-  // ========================= mercutio ===============================
+  // ========================= molequul ===============================
 
-  var mercutioMethods = {
+  var molequulMethods = {
     
 
     filter : function( $cards ) {
-      var props  = this.data('mercutio'),
+      var props  = this.data('molequul'),
           filter = props.opts.filter === '' ? '*' : props.opts.filter;
 
       if ( !filter ) {
@@ -213,7 +213,7 @@
       
       x        = props.colW * shortCol + props.posLeft;
       y        = minimumY;
-      position = mercutioMethods.position( x, y );
+      position = molequulMethods.position( x, y );
 
       // position the brick
       props.styleQueue.push({ $el: this, style: position });
@@ -229,7 +229,7 @@
     
     singleColumn : function( colYs, props ) {
       return this.each(function(){
-        $(this).mercutio( 'placeCard', props.colCount, colYs, props );
+        $(this).molequul( 'placeCard', props.colCount, colYs, props );
       });
     },
     
@@ -243,7 +243,7 @@
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          $this.mercutio( 'placeCard', props.colCount, colYs, props );
+          $this.molequul( 'placeCard', props.colCount, colYs, props );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
@@ -258,7 +258,7 @@
             groupY[i] = Math.max.apply( Math, groupColY );
           }
 
-          $this.mercutio( 'placeCard', groupCount, groupY, props );
+          $this.molequul( 'placeCard', groupCount, groupY, props );
         }
       });
     },
@@ -279,7 +279,7 @@
 
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
-        // var style = mercutioMethods.parseTransformStyle( obj.style );
+        // var style = molequulMethods.parseTransformStyle( obj.style );
         for ( var prop in obj.style ) {
           console.log( prop, obj.style[prop] )
           // switch ( obj.style[prop] ) {
@@ -302,7 +302,7 @@
 
       // set all data so we can retrieve it for appended appendedContent
       //    or anyone else's crazy jquery fun
-      this.data( 'mercutio', props );
+      this.data( 'molequul', props );
       
       return this;
     },
@@ -311,23 +311,23 @@
     // accepts cards-to-be-laid-out and colYs to start with
     layout : function( $cards, colYs ) {
 
-      var props = this.data('mercutio');
+      var props = this.data('molequul');
 
       // console.log( props.opts.hiddenStyle.scale )
 
       // layout logic
       var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
 
-      $cards.mercutio( layoutMode, colYs, props );
+      $cards.molequul( layoutMode, colYs, props );
 
       // set the height of the container to the tallest column
       props.containerHeight = Math.max.apply( Math, props.colYs );
       var containerStyle    = { height: props.containerHeight - props.posTop };
       props.styleQueue.push({ $el: this, style: containerStyle });
       
-      // this[ props.applyStyle ]( containerStyle, animOpts ).mercutio( 'complete', props );
+      // this[ props.applyStyle ]( containerStyle, animOpts ).molequul( 'complete', props );
 
-      this.mercutio( 'complete', props );
+      this.molequul( 'complete', props );
       
       return this;
       
@@ -344,18 +344,18 @@
     },
     
     resize : function() {
-      // console.log( this.data('mercutio') , this[0].id )
-      var props = this.data('mercutio'),
+      // console.log( this.data('molequul') , this[0].id )
+      var props = this.data('molequul'),
           prevColCount = props.colCount;
       
       props.initialized = true;
 
       // get updated colCount
-      this.mercutio( 'getColCount', props );
+      this.molequul( 'getColCount', props );
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        var colYs = mercutioMethods.resetColYs( props );
-        this.mercutio( 'layout', props.$cards.filtered, colYs );
+        var colYs = molequulMethods.resetColYs( props );
+        this.molequul( 'layout', props.$cards.filtered, colYs );
       }
 
       return this;
@@ -373,7 +373,7 @@
     
     // only run though on initial init
     setup : function() {
-      var props = this.data('mercutio');
+      var props = this.data('molequul');
       props.$cards = {};
       props.styleQueue = [];
       // need to get cards
@@ -385,11 +385,11 @@
 
       // if colW == 0, back out before divide by zero
       if ( !props.colW ) {
-        window.console && console.error('Column width calculated to be zero. Stopping Mercutio plugin before divide by zero. Check that the width of first child inside the mercutio container is not zero.');
+        window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
         return this;
       }
 
-      this.css('position', 'relative').mercutio( 'getColCount', props );
+      this.css('position', 'relative').molequul( 'getColCount', props );
 
       cardStyle = { position: 'absolute' };
       if ( usingTransforms ) {
@@ -405,10 +405,10 @@
       props.posLeft = Math.round( $cursor.position().left );
       $cursor.remove();
 
-      // add mercutio class first time around
+      // add molequul class first time around
       var $container = this;
       setTimeout(function(){
-        $container.addClass('mercutio'); 
+        $container.addClass('molequul'); 
       }, 1 );
 
       return this;
@@ -421,7 +421,7 @@
       return this.each(function() {  
 
         var $this = $(this),
-            data = $this.data('mercutio'),
+            data = $this.data('molequul'),
             props = data || {};
 
         // checks if masonry has been called before on this object
@@ -431,28 +431,28 @@
 
         props.opts = $.extend(
           {},
-          $.fn.mercutio.defaults,
+          $.fn.molequul.defaults,
           previousOptions,
           options
         );
         
-        $this.data( 'mercutio', props );
+        $this.data( 'molequul', props );
         
         if ( !props.initialized ) {
-          $this.mercutio( 'setup' );
+          $this.molequul( 'setup' );
         }
 
-        var colYs = mercutioMethods.resetColYs( props );
+        var colYs = molequulMethods.resetColYs( props );
         $this
-          .mercutio( 'filter', props.$cards.all )
-          .mercutio( 'layout', props.$cards.filtered, colYs );
+          .molequul( 'filter', props.$cards.all )
+          .molequul( 'layout', props.$cards.filtered, colYs );
 
 
         // binding window resizing
         if ( props.opts.resizeable ) {
-          $(window).bind('smartresize.mercutio', function() { $this.mercutio( 'resize' ); } );
+          $(window).bind('smartresize.molequul', function() { $this.molequul( 'resize' ); } );
         } else if ( !props.opts.resizeable && !!previousOptions.resizeable ) {
-          $(window).unbind('smartresize.mercutio');
+          $(window).unbind('smartresize.molequul');
         }
 
       });
@@ -469,11 +469,11 @@
     },
     
     translate : function( x, y ) {
-      return mercutioMethods.transform('translate(' + x + 'px, ' + y + 'px) scale(1)')
+      return molequulMethods.transform('translate(' + x + 'px, ' + y + 'px) scale(1)')
     },
     
     translate3d : function( x, y ) {
-      return mercutioMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0) scale(1)')
+      return molequulMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0) scale(1)')
     },
     
     positionAbs : function( x, y ) {
@@ -485,24 +485,24 @@
 
   if ( usingTransforms ) {
     var translateMethod = Modernizr.csstransforms3d ? 'translate3d' : 'translate';
-    mercutioMethods.position = mercutioMethods[ translateMethod ];
+    molequulMethods.position = molequulMethods[ translateMethod ];
   } else {
-    mercutioMethods.position = mercutioMethods.positionAbs;
+    molequulMethods.position = molequulMethods.positionAbs;
   }
-  // mercutioMethods.position = Modernizr.csstransforms3d ? mercutioMethods.translate3d : mercutioMethods.positionAbs;
+  // molequulMethods.position = Modernizr.csstransforms3d ? molequulMethods.translate3d : molequulMethods.positionAbs;
 
-  // mercutio code begin
-  $.fn.mercutio = function( firstArg ) { 
+  // molequul code begin
+  $.fn.molequul = function( firstArg ) { 
 
     // Method calling logic
-    var method = mercutioMethods[ firstArg ];
+    var method = molequulMethods[ firstArg ];
     if ( method ) {
       // remove firstArg, which is a string of the function name, from arguments
       var args = Array.prototype.slice.call( arguments, 1 );
       return method.apply( this, args );
       
     } else if ( !firstArg || typeof firstArg === 'object' ) {
-      return mercutioMethods.init.apply( this, arguments );
+      return molequulMethods.init.apply( this, arguments );
     }
 
 
@@ -510,14 +510,14 @@
 
 
   // Default plugin options
-  $.fn.mercutio.defaults = {
+  $.fn.molequul.defaults = {
     // singleMode: false,
     // columnWidth: undefined,
     // itemSelector: undefined,
     // appendedContent: undefined,
     // saveOptions: true,
     resizeable: true,
-    hiddenClass : 'mercutio-hidden',
+    hiddenClass : 'molequul-hidden',
     hiddenStyle : {
       opacity : 0,
       scale: 0.001

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>jQuery Mercutio &rsaquo; Filtering</title>
+  <title>jQuery Molequul &rsaquo; Filtering</title>
 
   <link rel="stylesheet" href="css/style.css" media="screen" />  
   <style>
@@ -15,7 +15,7 @@
 <body>
   
   <div id="site-nav">
-    <h1>jQuery Mercutio</h1>
+    <h1>jQuery Molequul</h1>
     <ul>
       <li><a href=".">Primer</a></li>
       <li><a href="basic-single-column.html">Basic single-column</a></li>
@@ -41,16 +41,16 @@
     <h1>Filtering</h1>  
 
     <div class="copy">
-      <p>Filtering is supported by Mercutio since v1.2. This example demonstrates how to show, hide, and rearrange visible items, using some basic logic. Each control button has a class that matches a class of arrangeable elements: <code>gray</code>, <code>red</code>, and <code>black</code>. When one of these buttons is clicked, the arrangeable elements that have a matching class are shown, and the elements that do not match are hidden. To keep track of what's visible, a class of <code>invis</code> is added and removed to each element. In this example, the mercutio settings have <code>itemSelector</code> as <code><span class="string">'.box:not(.invis)'</span></code>, so only visible elements will be arranged in the layout. After the proper elements are hidden and the others shown, <code>.mercutio()</code> is called and the layout is rearranged.</p>
+      <p>Filtering is supported by Molequul since v1.2. This example demonstrates how to show, hide, and rearrange visible items, using some basic logic. Each control button has a class that matches a class of arrangeable elements: <code>gray</code>, <code>red</code>, and <code>black</code>. When one of these buttons is clicked, the arrangeable elements that have a matching class are shown, and the elements that do not match are hidden. To keep track of what's visible, a class of <code>invis</code> is added and removed to each element. In this example, the molequul settings have <code>itemSelector</code> as <code><span class="string">'.box:not(.invis)'</span></code>, so only visible elements will be arranged in the layout. After the proper elements are hidden and the others shown, <code>.molequul()</code> is called and the layout is rearranged.</p>
 
       <pre id="code"><code><span class="storage">var</span>
   speed <span class="storage">=</span> <span class="constant">1000</span>,  <span class="comment">// animation speed</span>
   <span class="keyword">$</span>wall <span class="keyword">=</span> <span class="keyword">$</span>(<span class="string">'#demo'</span>).find(<span class="string">'.wrap'</span>)
 ;
 
-<span class="keyword">$</span>wall.mercutio({
+<span class="keyword">$</span>wall.molequul({
   columnWidth: <span class="constant">100</span>, 
-  <span class="comment">// only apply mercutio layout to visible elements</span>
+  <span class="comment">// only apply molequul layout to visible elements</span>
   itemSelector: <span class="string">'.box:not(.invis)'</span>,
   animate: <span class="constant">true</span>,
   animationOptions: {
@@ -74,7 +74,7 @@
     <span class="keyword">$</span>wall.children(colorClass<span class="storage">+</span><span class="string">'.invis'</span>)
       .toggleClass(<span class="string">'invis'</span>).fadeIn(speed);
   }
-  <span class="keyword">$</span>wall.mercutio();
+  <span class="keyword">$</span>wall.molequul();
 
   <span class="keyword">return</span> <span class="constant">false</span>;
 });</code></pre>
@@ -301,13 +301,13 @@
     </div> <!-- #demo -->
 
     <p id="footer">
-      jQuery Mercutio by <a href="http://desandro.com/">David DeSandro</a>
+      jQuery Molequul by <a href="http://desandro.com/">David DeSandro</a>
     </p>
   
   </div> <!-- #content -->
 
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="../jquery.mercutio.js"></script>
+  <script src="../jquery.molequul.js"></script>
   <script>
     $(function(){
 
@@ -316,9 +316,9 @@
         $wall = $('#demo').find('.wrap')
       ;
 
-      $wall.mercutio({
+      $wall.molequul({
         columnWidth: 100, 
-        // only apply mercutio layout to visible elements
+        // only apply molequul layout to visible elements
         selector: '.box',
         animate: true,
         animationOptions: {
@@ -331,7 +331,7 @@
         console.log('click')
         var className = $(this).attr('class'),
             filterSelector = className === 'all' ? '*' : '.' + className;
-        $wall.mercutio({ filter: filterSelector });
+        $wall.molequul({ filter: filterSelector });
 
         return false;
       });

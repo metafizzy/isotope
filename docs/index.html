@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>jQuery Mercutio &rsaquo; Primer</title>
+	<title>jQuery Molequul &rsaquo; Primer</title>
 
 	<link rel="stylesheet" href="css/style.css" media="screen" />
   
@@ -12,7 +12,7 @@
 <body>
 
   <div id="site-nav">
-    <h1>jQuery Mercutio</h1>
+    <h1>jQuery Molequul</h1>
     <ul>
       <li class="selected"><a href=".">Primer</a>
         <ul>
@@ -45,7 +45,7 @@
   	<h1>Primer</h1>	
 
     <div class="copy">
-      <p>Mercutio is a layout plugin for jQuery. Think of it as the flip side of CSS floats. Whereas floating arranges elements horizontally then vertically, Mercutio arranges elements vertically then horizontally according to a grid. The result minimizes vertical gaps between elements of varying height, just like a mason fitting stones in a wall.</p>
+      <p>Molequul is a layout plugin for jQuery. Think of it as the flip side of CSS floats. Whereas floating arranges elements horizontally then vertically, Molequul arranges elements vertically then horizontally according to a grid. The result minimizes vertical gaps between elements of varying height, just like a mason fitting stones in a wall.</p>
 
     </div><!-- .copy -->
 
@@ -118,7 +118,7 @@
       </div> 
 
       <div class="example">
-        <h3>Mercutio</h3>
+        <h3>Molequul</h3>
         <div id="secondary" class="wrap">
           <div class="box col1">
             <h5>1</h5>
@@ -191,23 +191,23 @@
 
       <h2 id="min-config">Minimum recommended configuration</h2>
 
-      <p>Configuring Mercutio is fairly easy. Simply call the <code>.mercutio()</code> method on the container element. Depending on the layout, you&rsquo;ll most likely need to specify one option.</p>
+      <p>Configuring Molequul is fairly easy. Simply call the <code>.molequul()</code> method on the container element. Depending on the layout, you&rsquo;ll most likely need to specify one option.</p>
 
       <p>For layouts with elements that span multiple widths, like the <a href="basic-multi-column.html">basic multi-column example</a>:</p>
 
-      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).mercutio({ columnWidth: <span class="constant">200</span> });</code></pre>
+      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).molequul({ columnWidth: <span class="constant">200</span> });</code></pre>
 
       <p>For layouts with elements that span the same width, like the <a href="basic-single-column.html">basic single-column example</a>:</p>
 
-      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).mercutio({ singleMode: <span class="constant">true</span> });</code></pre>
+      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).molequul({ singleMode: <span class="constant">true</span> });</code></pre>
 
-      <p>No need to worry about how many columns, or width of gutters, or how big the container is. Thanks to the wonders of jQuery’s <code>outerWidth()</code> and <code>innerWidth()</code> methods, Mercutio appropriately accounts for the space of any margin, padding, and border-width set with CSS.</p>
+      <p>No need to worry about how many columns, or width of gutters, or how big the container is. Thanks to the wonders of jQuery’s <code>outerWidth()</code> and <code>innerWidth()</code> methods, Molequul appropriately accounts for the space of any margin, padding, and border-width set with CSS.</p>
 
       <p>This plugin is designed to progressively enhance the layout, so &lsquo;brick&rsquo; elements should be floated if JavaScript is disabled. Floating also ensures that the bricks width will be measured correctly.</p>
       
       <h2 id="options">Plugin options</h2>
 
-      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).mercutio({
+      <pre><code><span class="keyword">$</span>(<span class="string">'#wrapper'</span>).molequul({
 
   singleMode: <span class="constant">false</span>,
   <span class="comment">// Disables measuring the width of each floated element.
@@ -224,7 +224,7 @@
   // Required for Infinite Scroll with window resizing.</span>
 
   resizeable: <span class="constant">true</span>,
-  <span class="comment">// Binds a Mercutio call to window resizes 
+  <span class="comment">// Binds a Molequul call to window resizes 
   // so layout appears fluid.
   // default: true</span>
 
@@ -240,44 +240,44 @@
   // Useful for Infinite Scroll integration.</span>
 
   saveOptions: <span class="constant">true</span>,
-  <span class="comment">// Mercutio will use the options from previous Mercutio
+  <span class="comment">// Molequul will use the options from previous Molequul
   // calls by default, so you only have to enter in options once
   // default: true</span>
 
 },  <span class="storage">function</span>() {}
   <span class="comment">// Optional callback.
-  // 'this' will refer to the applicable elements Mercutio just rearranged</span>
+  // 'this' will refer to the applicable elements Molequul just rearranged</span>
 
 );</code></pre>
 
 
       <h2 id="code-repository">Code repository</h2>
 
-      <p>This project lives on GitHub at <a href="http://github.com/desandro/mercutio">github.com/desandro/mercutio</a>, where you can follow progress, download all this documentation, grab the latest version of the script, or fork this project and make it better yourself.</p>
+      <p>This project lives on GitHub at <a href="http://github.com/desandro/molequul">github.com/desandro/molequul</a>, where you can follow progress, download all this documentation, grab the latest version of the script, or fork this project and make it better yourself.</p>
 
-      <p>There you can find an <a href="http://github.com/desandro/mercutio/issues">issue tracker</a> where you can look through other people&rsquo;s <a href="http://github.com/desandro/mercutio/issues/closed">resolved issues</a> or submit a new one for yourself. If you&rsquo;re still having trouble, try <a href="http://wiki.github.com/desandro/mercutio/">looking over the FAQ</a>.</p>
+      <p>There you can find an <a href="http://github.com/desandro/molequul/issues">issue tracker</a> where you can look through other people&rsquo;s <a href="http://github.com/desandro/molequul/issues/closed">resolved issues</a> or submit a new one for yourself. If you&rsquo;re still having trouble, try <a href="http://wiki.github.com/desandro/molequul/">looking over the FAQ</a>.</p>
 
       <h2 id="resizing">Window resizing</h2>
 
-      <p>By default, Mercutio binds a call to the browser window for resizing. But the rearrangement script is triggered only when the layout adds or loses a column, so you don&rsquo;t have to worry about Mercutio slowing down window resizes, or with fixed layouts.</p>
+      <p>By default, Molequul binds a call to the browser window for resizing. But the rearrangement script is triggered only when the layout adds or loses a column, so you don&rsquo;t have to worry about Molequul slowing down window resizes, or with fixed layouts.</p>
 
       <h2 id="images">Handling images &amp; other media</h2>
 
-      <p>Since Mercutio measures the height of the elements when placing them, you will need to account for images and other media that haven&rsquo;t loaded yet.  For images, the best method is to specify the width and height of images inline.</p>
+      <p>Since Molequul measures the height of the elements when placing them, you will need to account for images and other media that haven&rsquo;t loaded yet.  For images, the best method is to specify the width and height of images inline.</p>
 
       <pre><code><span class="storage">&lt;img src=<span class="string">"img_file.jpg"</span> width=<span class="string">"280"</span> height=<span class="string">"160"</span> /&gt;</span></code></pre>
 
       <p>If you&rsquo;re using a PHP-based CMS, you can use the <a href="http://php.net/manual/en/function.getimagesize.php">getimagesize</a> function.</p>
 
-      <p>If this is not possible or if you&rsquo;re dealing with @font-face fonts, another option is to call Mercutio after all media has loaded. This is done by calling the function inside of <code>$(window).load()</code> instead of <code>$(document).ready()</code>.</p>
+      <p>If this is not possible or if you&rsquo;re dealing with @font-face fonts, another option is to call Molequul after all media has loaded. This is done by calling the function inside of <code>$(window).load()</code> instead of <code>$(document).ready()</code>.</p>
 
       <pre><code><span class="keyword">$</span>(<span class="support">window</span>).<span class="keyword">load</span>(<span class="storage">function</span>(){
-  <span class="keyword">$</span>(<span class="string">'#wrapper'</span>).mercutio({ columnWidth: <span class="constant">200</span> });
+  <span class="keyword">$</span>(<span class="string">'#wrapper'</span>).molequul({ columnWidth: <span class="constant">200</span> });
 });</code></pre>
 
       <h2 id="anchor-links">Resolving anchor links</h2>
 
-      <p>Since Mercutio relies on absolute positioning, any anchor links that occur within or after the wrapping element will not work when the page first loads.  The following script is one solution.</p>
+      <p>Since Molequul relies on absolute positioning, any anchor links that occur within or after the wrapping element will not work when the page first loads.  The following script is one solution.</p>
 
       <pre><code><span class="keyword">$</span>(<span class="support">window</span>).<span class="keyword">load</span>(<span class="storage">function</span>(){
   <span class="keyword">if</span> ( <span class="keyword">window</span>.<span class="keyword">location</span>.<span class="keyword">hash</span> ) {
@@ -290,7 +290,7 @@
 
       <h2 id="inthewild">Examples in the wild</h2>
 
-      <p>In addition to the examples below, see <a href="http://delicious.com/desandro/jquerymercutio">delicious links tagged with jquerymercutio</a> and <a href="http://emberapp.com/desandro/collections/jquery-mercutio">jQuery Mercutio Collection on Ember for screenshots</a>.</p>
+      <p>In addition to the examples below, see <a href="http://delicious.com/desandro/jquerymolequul">delicious links tagged with jquerymolequul</a> and <a href="http://emberapp.com/desandro/collections/jquery-molequul">jQuery Molequul Collection on Ember for screenshots</a>.</p>
 
       <ul>
 
@@ -335,12 +335,12 @@
       
       <ul>
         <li><a href="http://paulirish.com">Paul Irish</a> for his <a href="http://www.infinite-scroll.com">Infinite Scroll</a> plugin, which served as a template I used to produce a plugin of my own. The <code>appendedContent</code> option was design to work specifically with Infinite Scroll. Infinite Scroll is packaged with these docs.</li>
-        <li>Louis-Rémi Babé and Paul Irish for the <a href="http://github.com/lrbabe/jquery-smartresize">jQuery SmartResize plugin</a>. This adds a special <em>smartresize</em> event to jQuery, so window resize events do not have to be executed on every frame. This plugin is used within jQuery Mercutio.</li>
+        <li>Louis-Rémi Babé and Paul Irish for the <a href="http://github.com/lrbabe/jquery-smartresize">jQuery SmartResize plugin</a>. This adds a special <em>smartresize</em> event to jQuery, so window resize events do not have to be executed on every frame. This plugin is used within jQuery Molequul.</li>
       </ul>
 
       <h2 id="license">License</h2>
 
-      <p>jQuery Mercutio is licensed under the MIT license, just like <a href="http://jquery.org/license">jQuery itself.</a> It may be used for personal and commercial applications.</p>
+      <p>jQuery Molequul is licensed under the MIT license, just like <a href="http://jquery.org/license">jQuery itself.</a> It may be used for personal and commercial applications.</p>
 
       <div class="license-copy">
         <h3>The MIT License</h3>
@@ -358,17 +358,17 @@
   	</div> <!-- .copy -->
 
     <p id="footer">
-  		jQuery Mercutio by <a href="http://desandro.com/">David DeSandro</a>
+  		jQuery Molequul by <a href="http://desandro.com/">David DeSandro</a>
   	</p>
     
   </div> <!-- #content -->
 
 
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="../jquery.mercutio.js"></script>
+  <script src="../jquery.molequul.js"></script>
   <script>
   	$(function(){
-  		$('#secondary').mercutio({columnWidth: 100});
+  		$('#secondary').molequul({columnWidth: 100});
   	});
   </script>
 

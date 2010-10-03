@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>jQuery Mercutio &rsaquo; Animating with CSS transitions</title>
+  <title>jQuery Molequul &rsaquo; Animating with CSS transitions</title>
 
   <link rel="stylesheet" href="css/style.css" media="screen" />  
   <style media="screen">
@@ -20,7 +20,7 @@
 <body>
   
   <div id="site-nav">
-    <h1>jQuery Mercutio</h1>
+    <h1>jQuery Molequul</h1>
     <ul>
       <li><a href=".">Primer</a></li>
       <li><a href="basic-single-column.html">Basic single-column</a></li>
@@ -49,9 +49,9 @@
 
       <p>Alternatively, you can rely on CSS3 transitions to animate layout rearrangements. CSS transitions are supported by Firefox 4, Chrome 5, Safari 4, and Opera 10.5.</p>
       <p> In your script, leave out the <code>animate</code> option. </p>
-  <pre id="code"><code><span class="keyword">$</span>(<span class="string">'#demo'</span>).mercutio({ columnWidth: <span class="constant">100</span> });</code></pre>
+  <pre id="code"><code><span class="keyword">$</span>(<span class="string">'#demo'</span>).molequul({ columnWidth: <span class="constant">100</span> });</code></pre>
 
-      <p>In the CSS, add transition properties. Mercutio will add a class of <code>masoned</code> to the container after the first arrangement so transitions can be applied afterward.</p>
+      <p>In the CSS, add transition properties. Molequul will add a class of <code>masoned</code> to the container after the first arrangement so transitions can be applied afterward.</p>
   <pre><code><span class="id">#demo</span><span class="class">.masoned</span>, <span class="id">#demo</span><span class="class">.masoned .box</span> {
   <span class="prop">-webkit-transition</span>: <span class="value">all .7s ease-out</span>;
      <span class="prop">-moz-transition</span>: <span class="value">all .7s ease-out</span>;
@@ -174,7 +174,7 @@
     </div> <!-- #demo -->
 
     <p id="footer">
-      jQuery Mercutio by <a href="http://desandro.com/">David DeSandro</a><br /> 
+      jQuery Molequul by <a href="http://desandro.com/">David DeSandro</a><br /> 
       <a href="http://github.com/lrbabe/jquery-smartresize">smartresize jQuery event plugin</a> by Louis-Rémi Babé and <a href="http://paulirish.com/2009/throttled-smartresize-jquery-event-handler/">Paul Irish</a>
     </p>
     
@@ -182,11 +182,11 @@
 
 
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="../jquery.mercutio.js"></script>
+  <script src="../jquery.molequul.js"></script>
   <script>
     $(function(){
 
-      $('#demo').mercutio({ columnWidth: 100 });
+      $('#demo').molequul({ columnWidth: 100 });
 
     });
   </script>

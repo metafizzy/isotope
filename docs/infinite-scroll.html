@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>jQuery Mercutio &rsaquo; Infinite Scroll</title>
+  <title>jQuery Molequul &rsaquo; Infinite Scroll</title>
 
   <link rel="stylesheet" href="css/style.css" media="screen" />  
   
@@ -12,7 +12,7 @@
 <body>
   
   <div id="site-nav">
-    <h1>jQuery Mercutio</h1>
+    <h1>jQuery Molequul</h1>
     <ul>
       <li><a href=".">Primer</a></li>
       <li><a href="basic-single-column.html">Basic single-column</a></li>
@@ -38,18 +38,18 @@
       <h1>Infinite Scroll</h1>
 
     <div class="copy">
-      <p>Mercutio integrates well with auto-paging scripts like <a href="http://www.infinite-scroll.com/">Infinite Scroll</a> by <a href="http://paulirish.com">Paul Irish</a>. Using the <code>appendedContent</code> option, Mercutio will only re-position the newly appended elements, and skip over all the previous elements that are already in their proper position, thus saving precious milliseconds of page load time.</p>
+      <p>Molequul integrates well with auto-paging scripts like <a href="http://www.infinite-scroll.com/">Infinite Scroll</a> by <a href="http://paulirish.com">Paul Irish</a>. Using the <code>appendedContent</code> option, Molequul will only re-position the newly appended elements, and skip over all the previous elements that are already in their proper position, thus saving precious milliseconds of page load time.</p>
 
-      <p>Setting up the Mercutio call is just the same as normally would be. Since this layout uses both Infinite Scroll and resizable, <code>itemSelector</code> is recommended.</p>
+      <p>Setting up the Molequul call is just the same as normally would be. Since this layout uses both Infinite Scroll and resizable, <code>itemSelector</code> is recommended.</p>
 
       <pre><code><span class="storage">var</span> <span class="keyword">$</span>wall <span class="keyword">= $</span>(<span class="string">'#demo'</span>);
 
-<span class="keyword">$</span>wall.mercutio({ 
+<span class="keyword">$</span>wall.molequul({ 
   columnWidth: <span class="constant">100</span>, 
   itemSelector: <span class="string">'.box:visible'</span> 
 });</code></pre>
 
-      <p>In the Infinite Scroll configuration, call Mercutio as a callback. Infinite Scroll provides the newly loaded elements as an argument, <code>newElements</code> in the example code. As this argument is an array of the DOM nodes, it needs to be passed in as a jQuery object to be used for the value of <code>appendedContent</code>.</p>
+      <p>In the Infinite Scroll configuration, call Molequul as a callback. Infinite Scroll provides the newly loaded elements as an argument, <code>newElements</code> in the example code. As this argument is an array of the DOM nodes, it needs to be passed in as a jQuery object to be used for the value of <code>appendedContent</code>.</p>
 
       <pre id="code"><code><span class="keyword">$</span>wall.infinitescroll({
   navSelector  : <span class="string">'#page_nav'</span>,  <span class="comment">// selector for the paged navigation </span>
@@ -63,9 +63,9 @@
     <span class="keyword">$</span>(<span class="string">'#infscr-loading'</span>).animate({opacity: .<span class="constant">8</span>},<span class="constant">2000</span>).fadeOut(<span class="string">'normal'</span>);   
   }
   },
-  <span class="comment">// call mercutio as a callback</span>
+  <span class="comment">// call molequul as a callback</span>
   <span class="storage">function</span>( newElements ) { 
-    <span class="keyword">$</span>(<span class="constant">this</span>).mercutio({ appendedContent: <span class="keyword">$</span>( newElements ) }); 
+    <span class="keyword">$</span>(<span class="constant">this</span>).molequul({ appendedContent: <span class="keyword">$</span>( newElements ) }); 
   }
 );</code></pre>
 
@@ -73,12 +73,12 @@
 
       <p><a href="./#images">As recommended in the primer,</a> the best solution to handle images is to have the size attributes defined in the <code>img</code> tag, especially when using Infinite Scroll. This is the solution employed in the example below.</p>
 
-      <p>Of course, this is not a viable option in some CMSs, most notably <a href="http://tumblr.com">Tumblr</a>. In this situation, Mercutio needs to be called after the newly-appended images are fully loaded. This is done by delaying the Mercutio callback.</p>
+      <p>Of course, this is not a viable option in some CMSs, most notably <a href="http://tumblr.com">Tumblr</a>. In this situation, Molequul needs to be called after the newly-appended images are fully loaded. This is done by delaying the Molequul callback.</p>
 
-  <pre><code><span class="comment">// call mercutio as a callback, after 1000 milliseconds</span>
+  <pre><code><span class="comment">// call molequul as a callback, after 1000 milliseconds</span>
 <span class="storage">function</span>( newElements ) {
   setTimeout(<span class="storage">function</span>() {
-    <span class="keyword">$</span>wall.mercutio({ appendedContent: <span class="keyword">$</span>(newElements) });
+    <span class="keyword">$</span>wall.molequul({ appendedContent: <span class="keyword">$</span>(newElements) });
   }, <span class="constant">1000</span>);
 }</code></pre>    
 
@@ -313,21 +313,21 @@
     </p>
 
     <p id="footer">
-      jQuery Mercutio by <a href="http://desandro.com/">David DeSandro</a> <br />
+      jQuery Molequul by <a href="http://desandro.com/">David DeSandro</a> <br />
       <a href="http://www.infinite-scroll.com/">Infinite Scroll</a> by <a href="http://paulirish.com">Paul Irish</a>
     </p>
 
   </div>
 
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="../jquery.mercutio.js"></script>
+  <script src="../jquery.molequul.js"></script>
   <script src="js/jquery.infinitescroll.min.js"></script>
   <script>
     $(function(){
       
       var $wall = $('#demo');
 
-      $wall.mercutio({
+      $wall.molequul({
         columnWidth: 100, 
         itemSelector: '.box:visible'
       });
@@ -344,8 +344,8 @@
           $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');   
         }
       },
-        // call mercutio as a callback.
-        function( newElements ) { $(this).mercutio({ appendedContent: $(newElements) }); }
+        // call molequul as a callback.
+        function( newElements ) { $(this).molequul({ appendedContent: $(newElements) }); }
       );
 
     });

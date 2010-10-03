@@ -1,6 +1,6 @@
 /*
  *  This is just a utitlity script so we can 
- *  add random content to mercutio-ed layouts
+ *  add random content to molequul-ed layouts
  */
 
 var 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>jQuery Mercutio &rsaquo; Appending new elements</title>
+  <title>jQuery Molequul &rsaquo; Appending new elements</title>
 
   <link rel="stylesheet" href="css/style.css" media="screen" />  
   
@@ -12,7 +12,7 @@
 <body>
   
   <div id="site-nav">
-    <h1>jQuery Mercutio</h1>
+    <h1>jQuery Molequul</h1>
     <ul>
       <li><a href=".">Primer</a></li>
       <li><a href="basic-single-column.html">Basic single-column</a></li>
@@ -38,13 +38,13 @@
     <h1>Appending new elements</h1>  
 
     <div class="copy">
-  		<p>New elements can be appended to &lsquo;masoned&rsquo; containers and then arranged to the layout using the <code>appendedContent</code> option. <code>appendedContent</code> accepts the a jQuery object of the newly appended elements.  In this example, each time <a href="#append_new_bricks">the button</a> is clicked, new <code>box</code> elements are created and then together made into a jQuery object.  This object is first appended to the wrapping container, then the boxes are rearranged with a <code>.mercutio()</code> call. Finally, using the callback function, the new boxes are dynamically styled. </p> 
-  		<p>In the click function, <code>appendedContent</code> was the only option to specify in the mercutio configuration since Mercutio saves all previous options. Using <code>appendedContent</code>, the Mercutio script saves some processing time as it only rearranges the box(es) inside that appended container.</p>
+  		<p>New elements can be appended to &lsquo;masoned&rsquo; containers and then arranged to the layout using the <code>appendedContent</code> option. <code>appendedContent</code> accepts the a jQuery object of the newly appended elements.  In this example, each time <a href="#append_new_bricks">the button</a> is clicked, new <code>box</code> elements are created and then together made into a jQuery object.  This object is first appended to the wrapping container, then the boxes are rearranged with a <code>.molequul()</code> call. Finally, using the callback function, the new boxes are dynamically styled. </p> 
+  		<p>In the click function, <code>appendedContent</code> was the only option to specify in the molequul configuration since Molequul saves all previous options. Using <code>appendedContent</code>, the Molequul script saves some processing time as it only rearranges the box(es) inside that appended container.</p>
 
-      <pre id="code"><code><span class="comment">// cache mercutio wrap</span>
+      <pre id="code"><code><span class="comment">// cache molequul wrap</span>
 <span class="storage">var</span> <span class="keyword">$</span>wall <span class="keyword">=</span> <span class="keyword">$</span>(<span class="string">'#demo'</span>).find(<span class="string">'.wrap'</span>);
 
-<span class="keyword">$</span>wall.mercutio({
+<span class="keyword">$</span>wall.molequul({
   columnWidth: <span class="constant">100</span>, 
   itemSelector: <span class="string">'.box'</span>
 });
@@ -72,7 +72,7 @@
     <span class="comment">// append new elements</span>
     .append( <span class="keyword">$</span>boxes )
     <span class="comment">// arrange new elements</span>
-    .mercutio( { appendedContent: <span class="keyword">$</span>boxes } ,
+    .molequul( { appendedContent: <span class="keyword">$</span>boxes } ,
       <span class="comment">// using a callback to style new elements</span>
       <span class="storage">function</span>() { 
         <span class="keyword">$</span>(<span class="constant">this</span>).css({background: <span class="string">'#222'</span>, color: <span class="string">'#EEE'</span> });
@@ -124,21 +124,21 @@
     </div> <!-- #demo --> 
 
     <p id="footer">
-      jQuery Mercutio by <a href="http://desandro.com/">David DeSandro</a>
+      jQuery Molequul by <a href="http://desandro.com/">David DeSandro</a>
     </p>
     
   </div> <!-- #content -->
 
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="../jquery.mercutio.js"></script>
+  <script src="../jquery.molequul.js"></script>
   <script src="js/rando-lorem-text.js"></script>
   <script>
     $(function(){
       
-      // cache mercutio wrap
+      // cache molequul wrap
       var $wall = $('#demo').find('.wrap');
 
-      $wall.mercutio({
+      $wall.molequul({
         columnWidth: 100, 
         itemSelector: '.box'
       });
@@ -165,7 +165,7 @@
           // append new elements
           .append( $boxes )
           // arrange new elements
-          .mercutio( { appendedContent: $boxes } ,
+          .molequul( { appendedContent: $boxes } ,
             // using a callback to style new elements
             function() { 
               $(this).css({background: '#222', color: '#EEE' });
