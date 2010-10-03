@@ -7,98 +7,105 @@
 
   // ========================= miniModernizr ===============================
   // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
-  var miniModernizr = {},
-      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-      classes = [],
-      docElement = document.documentElement,
-      m = document.createElement( 'modernizr' ),
-      m_style = m.style,
-      test_props = function ( props, callback ) {
-        for ( var i in props ) {
-
-          try { 
-            m_style[ props[i] ] !== undefined
-          } catch(e){
-            continue;
-          }
-
-          console.log( props[i], m_style[ props[i] ] )
+  if ( !Modernizr ) {
+    
+    var miniModernizr = {},
+        vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+        classes = [],
+        docElement = document.documentElement,
+        m = document.createElement( 'modernizr' ),
+        m_style = m.style,
+        test_props = function ( props, callback ) {
+          for ( var i in props ) {
+            // IE9 ugliness
+            try { 
+              m_style[ props[i] ] !== undefined
+            } catch(e){
+              continue;
+            }
           
-          if ( m_style[ props[i] ] !== undefined ) {
-            return true;
+            if ( m_style[ props[i] ] !== undefined ) {
+              return true;
+            }
           }
-        }
-      },
-      test_props_all = function ( prop, callback ) {
-        var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
-
-        props = [ prop, 'Webkit' + uc_prop, 'Moz' + uc_prop, 
-                  'O' + uc_prop, 'ms' + uc_prop, 'Khtml' + uc_prop ];
-
-
-        return !!test_props( props, callback );
-      },
-      tests = {
-        csstransforms : function() {
-          return !!test_props([ 'transformProperty', 'WebkitTransform', 
-                          'MozTransform', 'OTransform', 'msTransform' ]);
         },
-        csstransforms3d : function() {
-          //  set_css_all( 'perspective:500' );
+        test_props_all = function ( prop, callback ) {
+          var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
 
-          var ret = !!test_props([ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ]);
+          props = [ prop, 'Webkit' + uc_prop, 'Moz' + uc_prop, 
+                    'O' + uc_prop, 'ms' + uc_prop, 'Khtml' + uc_prop ];
 
-          if (ret){
-            var st = document.createElement('style'),
-                div = document.createElement('div');
 
-            st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
-                                'modernizr){#modernizr{height:3px}}';
-            document.getElementsByTagName('head')[0].appendChild(st);
-            div.id = 'modernizr';
-            docElement.appendChild(div);
+          return !!test_props( props, callback );
+        },
+        tests = {
+          csstransforms : function() {
+            return !!test_props([ 'transformProperty', 'WebkitTransform', 
+                            'MozTransform', 'OTransform', 'msTransform' ]);
+          },
+          csstransforms3d : function() {
+            var ret = !!test_props([ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ]);
 
-            ret = div.offsetHeight === 3;
+            if (ret){
+              var st = document.createElement('style'),
+                  div = document.createElement('div');
 
-            st.parentNode.removeChild(st);
-            div.parentNode.removeChild(div);
+              st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
+                                  'modernizr){#modernizr{height:3px}}';
+              document.getElementsByTagName('head')[0].appendChild(st);
+              div.id = 'modernizr';
+              docElement.appendChild(div);
+
+              ret = div.offsetHeight === 3;
+
+              st.parentNode.removeChild(st);
+              div.parentNode.removeChild(div);
+            }
+            return ret;
+          },
+          csstransitions : function() {
+            return test_props_all( 'transitionProperty' );
           }
-          return ret;
-        },
-        csstransitions : function() {
-          return test_props_all( 'transitionProperty' );
-        }
+        };
+
+    // hasOwnProperty shim by kangax needed for Safari 2.0 support
+    var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
+    if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
+      hasOwnProperty = function (object, property) {
+        return _hasOwnProperty.call(object, property);
       };
-
-  // hasOwnProperty shim by kangax needed for Safari 2.0 support
-  var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
-  if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
-    hasOwnProperty = function (object, property) {
-      return _hasOwnProperty.call(object, property);
-    };
-  }
-  else {
-    hasOwnProperty = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-      return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
-    };
-  }
-      
-  // Run through all tests and detect their support in the current UA.
-  for ( var feature in tests ) {
-    if ( hasOwnProperty( tests, feature ) ) {
-      // run the test, throw the return value into the Modernizr,
-      //   then based on that boolean, define an appropriate className
-      //   and push it into an array of classes we'll join later.
-      var test = tests[ feature ]();
-      miniModernizr[ feature.toLowerCase() ] = test;
-      var className = ( test ?  '' : 'no-' ) + feature.toLowerCase()
-      classes.push( className );
     }
-  }
+    else {
+      hasOwnProperty = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+        return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
+      };
+    }
+      
+    // Run through all tests and detect their support in the current UA.
+    for ( var feature in tests ) {
+      if ( hasOwnProperty( tests, feature ) ) {
+        // run the test, throw the return value into the Modernizr,
+        //   then based on that boolean, define an appropriate className
+        //   and push it into an array of classes we'll join later.
+        var test = tests[ feature ]();
+        miniModernizr[ feature.toLowerCase() ] = test;
+        var className = ( test ?  '' : 'no-' ) + feature.toLowerCase()
+        classes.push( className );
+      }
+    }
   
-  // Add the new classes to the <html> element.
-  docElement.className += ' ' + classes.join( ' ' );
+    // Add the new classes to the <html> element.
+    docElement.className += ' ' + classes.join( ' ' );
 
+    var Modernizr = miniModernizr;
+  }
+
+
+  // position convience method
+  // for now, we'll only use transforms in Chrome and Safari
+  // In Opera, transform removes all text anti-aliasing, crippling legibility
+  // in FF, you cannot transition transforms in < 4.0
+  var usingTransforms = Modernizr.csstransforms && $.browser.webkit;
 
 
   // ========================= smartresize ===============================
@@ -183,10 +190,7 @@
       
     },
     
-    // will use top
-    position : function() {
-      
-    },
+
     
     placeCard : function( setCount, setY, props ) {
       // here, `this` refers to a child element or "brick"
@@ -197,18 +201,17 @@
           shortCol  = i,
           setSpan   = props.colCount + 1 - i,
           animOpts  = $.extend( {}, props.opts.animationOptions ),
-          position;
+          position, x, y ;
       // Which column has the minY value, closest to the left
       while (i--) {
         if ( setY[i] === minimumY ) {
           shortCol = i;
         }
       }
-          
-      position = {
-        left: props.colW * shortCol + props.posLeft,
-        top: minimumY
-      };
+      
+      x        = props.colW * shortCol + props.posLeft;
+      y        = minimumY;
+      position = mercutioMethods.position( x, y );
 
       // position the brick
       props.styleQueue.push({ $el: this, style: position });
@@ -368,7 +371,12 @@
 
       this.css('position', 'relative').mercutio( 'getColCount', props );
 
-      props.$cards.all.css( 'position', 'absolute' );
+      cardStyle = { position: 'absolute' };
+      if ( usingTransforms ) {
+        cardStyle.left = 0;
+        cardStyle.top = 0;
+      }
+      props.$cards.all.css( cardStyle );
 
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
@@ -429,10 +437,39 @@
 
       });
       
+    },
+    
+    transform : function( value ) {
+      return {
+        '-webkit-transform' : value,
+           '-moz-transform' : value,
+             '-o-transform' : value,
+                'transform' : value
+      }
+    },
+    
+    translate : function( x, y ) {
+      return mercutioMethods.transform('translate(' + x + 'px, ' + y + 'px)')
+    },
+    
+    translate3d : function( x, y ) {
+      return mercutioMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0)')
+    },
+    
+    positionAbs : function( x, y ) {
+      return { left: x, top: y }
     }
     
-    
   };
+
+
+  if ( usingTransforms ) {
+    var translateMethod = Modernizr.csstransforms3d ? 'translate3d' : 'translate';
+    mercutioMethods.position = mercutioMethods[ translateMethod ];
+  } else {
+    mercutioMethods.position = mercutioMethods.positionAbs;
+  }
+  // mercutioMethods.position = Modernizr.csstransforms3d ? mercutioMethods.translate3d : mercutioMethods.positionAbs;
 
   // mercutio code begin
   $.fn.mercutio = function( firstArg ) { 
