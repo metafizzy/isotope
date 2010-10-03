@@ -51,16 +51,36 @@
 
   var mercutioMethods = {
     
-    // gets all current children ( filtered if necessary ) in the pool
-    getCards : function() {
-      // var props = this.data('mercutio');
-      // 
-      // props.
-      // console.log( this, props )
-    },
-    
+
     filter : function() {
+      var props  = this.data('mercutio'),
+          filter = props.opts.filter,
+          $cards = props.$cards.all;
+
+      if ( !filter ) {
+        props.$cards.filtered = $cards;
+      } else {
+        var hiddenClass    = props.opts.hiddenClass,
+            hiddenSelector = '.' + hiddenClass,
+            $visibleCards  = $cards.not( hiddenSelector ),
+            $hiddenCards   = $cards.filter( hiddenSelector ),
+            $cardsToShow   = $hiddenCards;
+
+        props.$cards.filtered = $cards.filter( filter );
+
+        if ( filter === '*' ) {
+          // $visibleCards = this;
+        } else {
+          $cardsToShow = $hiddenCards.filter( filter );
+          $cardsToHide = $visibleCards.not( filter );
+          props.styleQueue.push({ $el: $cardsToHide, style: props.opts.hiddenStyle });
+        }
+        
+        props.styleQueue.push({ $el: $cardsToShow, style: props.opts.visibleStyle });
+        
+      }
       
+      return this;
     },
     
     // used on all the filtered cards, $cards.filtered
@@ -94,11 +114,10 @@
         left: props.colW * shortCol + props.posLeft,
         top: minimumY
       };
-          
-      // position the brick
-      this[ props.applyStyle ]( position, animOpts );
 
-      // console.log( props.colY )
+      // position the brick
+      props.styleQueue.push({ $el: this, style: position });
+      // this[ props.applyStyle ]( position, animOpts );
 
       // apply setHeight to necessary columns
       for ( i=0; i < setSpan; i++ ) {
@@ -144,36 +163,22 @@
       });
     },
     
-    // used on collection of cards (should be filtered, and sorted before )
-    // accepts cards-to-be-laid-out and colYs to start with
-    layout : function( $cards, colYs ) {
 
-      var props = this.data('mercutio');
+    complete : function( props ) {
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      props.applyStyle =  ( props.initiated && props.opts.animate ) ? 'animate' : 'css';
+      var styleFn =  ( props.initiated && props.opts.animate ) ? 'animate' : 'css',
+          animOpts = props.opts.animationOptions;
 
+      // process styleQueue
+      $.each( props.styleQueue, function( i, obj ){
+                                       // have to extend animation to play nice with jQuery
+        obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
+      });
 
-      // layout logic
-      var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
-
-      $cards.mercutio( layoutMode, colYs, props );
-
-      // set the height of the container to the tallest column
-      props.containerHeight = Math.max.apply( Math, props.colYs );
-      var containerStyle    = { height: props.containerHeight - props.posTop },
-          animOpts          = $.extend( {}, props.opts.animationOptions );
-      this[ props.applyStyle ]( containerStyle, animOpts );
-
-      // add masoned class first time around
-      if ( !props.initiated ) { 
-        // wait 1 millisec for quell transitions
-        var $container = this;
-        setTimeout(function(){
-          $container.addClass('mercutio'); 
-        }, 1 );
-      }
+      // clear out queue for next time
+      props.styleQueue = [];
 
       // provide props.bricks as context for the callback
       // callback = callback || function(){};
@@ -184,7 +189,40 @@
       this.data( 'mercutio', props );
       
       return this;
+    },
+    
+    // used on collection of cards (should be filtered, and sorted before )
+    // accepts cards-to-be-laid-out and colYs to start with
+    layout : function( $cards, colYs ) {
+
+      var props = this.data('mercutio');
+
+      // layout logic
+      var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
+
+      $cards.mercutio( layoutMode, colYs, props );
+
+      // set the height of the container to the tallest column
+      props.containerHeight = Math.max.apply( Math, props.colYs );
+      var containerStyle    = { height: props.containerHeight - props.posTop };
+      props.styleQueue.push({ $el: this, style: containerStyle });
       
+      // this[ props.applyStyle ]( containerStyle, animOpts ).mercutio( 'complete', props );
+
+      this.mercutio( 'complete', props );
+      
+      return this;
+      
+    },
+    
+    resetColYs : function( props ) {
+      var colYs = [],
+          i = props.colCount;
+      while (i--) {
+        colYs.push( props.posTop );
+      }
+      props.colYs = colYs;
+      return colYs
     },
     
     resize : function() {
@@ -193,14 +231,13 @@
           prevColCount = props.colCount;
       
       props.initiated = true;
+
       // get updated colCount
-      // console.log('resize')
       this.mercutio( 'getColCount', props );
-      // console.log( props.colCount, prevColCount )
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
         var colYs = this.mercutio( 'resetColYs', props );
-        this.mercutio( 'layout', props.$cards.all, colYs );
+        this.mercutio( 'layout', props.$cards.filtered, colYs );
       }
 
       return this;
@@ -220,6 +257,7 @@
     setup : function() {
       var props = this.data('mercutio');
       props.$cards = {};
+      props.styleQueue = [];
       // need to get cards
       props.$cards.all = props.opts.selector ? 
         this.find( props.opts.selector ) : 
@@ -244,18 +282,16 @@
       props.posLeft = Math.round( $cursor.position().left );
       $cursor.remove();
 
+      // add mercutio class first time around
+      var $container = this;
+      setTimeout(function(){
+        $container.addClass('mercutio'); 
+      }, 1 );
+
       return this;
     },
     
-    resetColYs : function( props ) {
-      var colYs = [],
-          i = props.colCount;
-      while (i--) {
-        colYs.push( props.posTop );
-      }
-      props.colYs = colYs;
-      return colYs
-    },
+
     
     init : function( options ) {
 
@@ -284,7 +320,9 @@
         }
 
         var colYs = $this.mercutio( 'resetColYs', props );
-        $this.mercutio( 'layout', props.$cards.all, colYs );
+        $this
+          .mercutio( 'filter' )
+          .mercutio( 'layout', props.$cards.filtered, colYs );
 
 
         // binding window resizing
@@ -327,6 +365,13 @@
     // appendedContent: undefined,
     // saveOptions: true,
     resizeable: true,
+    hiddenClass : 'mercutio-hidden',
+    hiddenStyle : {
+      opacity : 0
+    },
+    visibleStyle : {
+      opacity : 1
+    }
     // animate: false,
     // animationOptions: {}
   };
