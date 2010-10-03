@@ -5,6 +5,104 @@
 **************************************************/
 (function($){  
 
+  // ========================= miniModernizr ===============================
+  // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
+  var miniModernizr = {},
+      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+      classes = [],
+      docElement = document.documentElement,
+      m = document.createElement( 'modernizr' ),
+      m_style = m.style,
+      test_props = function ( props, callback ) {
+        for ( var i in props ) {
+
+          try { 
+            m_style[ props[i] ] !== undefined
+          } catch(e){
+            continue;
+          }
+
+          console.log( props[i], m_style[ props[i] ] )
+          
+          if ( m_style[ props[i] ] !== undefined ) {
+            return true;
+          }
+        }
+      },
+      test_props_all = function ( prop, callback ) {
+        var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
+
+        props = [ prop, 'Webkit' + uc_prop, 'Moz' + uc_prop, 
+                  'O' + uc_prop, 'ms' + uc_prop, 'Khtml' + uc_prop ];
+
+
+        return !!test_props( props, callback );
+      },
+      tests = {
+        csstransforms : function() {
+          return !!test_props([ 'transformProperty', 'WebkitTransform', 
+                          'MozTransform', 'OTransform', 'msTransform' ]);
+        },
+        csstransforms3d : function() {
+          //  set_css_all( 'perspective:500' );
+
+          var ret = !!test_props([ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ]);
+
+          if (ret){
+            var st = document.createElement('style'),
+                div = document.createElement('div');
+
+            st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
+                                'modernizr){#modernizr{height:3px}}';
+            document.getElementsByTagName('head')[0].appendChild(st);
+            div.id = 'modernizr';
+            docElement.appendChild(div);
+
+            ret = div.offsetHeight === 3;
+
+            st.parentNode.removeChild(st);
+            div.parentNode.removeChild(div);
+          }
+          return ret;
+        },
+        csstransitions : function() {
+          return test_props_all( 'transitionProperty' );
+        }
+      };
+
+  // hasOwnProperty shim by kangax needed for Safari 2.0 support
+  var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
+  if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
+    hasOwnProperty = function (object, property) {
+      return _hasOwnProperty.call(object, property);
+    };
+  }
+  else {
+    hasOwnProperty = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+      return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
+    };
+  }
+      
+  // Run through all tests and detect their support in the current UA.
+  for ( var feature in tests ) {
+    if ( hasOwnProperty( tests, feature ) ) {
+      // run the test, throw the return value into the Modernizr,
+      //   then based on that boolean, define an appropriate className
+      //   and push it into an array of classes we'll join later.
+      var test = tests[ feature ]();
+      miniModernizr[ feature.toLowerCase() ] = test;
+      var className = ( test ?  '' : 'no-' ) + feature.toLowerCase()
+      classes.push( className );
+    }
+  }
+  
+  // Add the new classes to the <html> element.
+  docElement.className += ' ' + classes.join( ' ' );
+
+
+
+  // ========================= smartresize ===============================
+
   /*!
    * smartresize: debounced resize event for jQuery
    * http://github.com/lrbabe/jquery-smartresize
