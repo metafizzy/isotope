@@ -319,7 +319,7 @@
       $wall.mercutio({
         columnWidth: 100, 
         // only apply mercutio layout to visible elements
-        itemSelector: '.box:not(.invis)',
+        selector: '.box',
         animate: true,
         animationOptions: {
           duration: speed,
@@ -328,21 +328,10 @@
       });
 
       $('#filtering-nav a').click(function(){
-        var colorClass = '.' + $(this).attr('class');
-
-        if(colorClass=='.all') {
-          // show all hidden boxes
-          $wall.children('.invis')
-            .toggleClass('invis').fadeIn(speed);
-        } else {  
-          // hide visible boxes 
-          $wall.children().not(colorClass).not('.invis')
-            .toggleClass('invis').fadeOut(speed);
-          // show hidden boxes
-          $wall.children(colorClass+'.invis')
-            .toggleClass('invis').fadeIn(speed);
-        }
-        $wall.mercutio();
+        console.log('click')
+        var className = $(this).attr('class'),
+            filterSelector = className === 'all' ? '*' : '.' + className;
+        $wall.mercutio({ filter: filterSelector });
 
         return false;
       });

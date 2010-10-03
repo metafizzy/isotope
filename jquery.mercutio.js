@@ -43,19 +43,15 @@
     return fn ? this.bind( "smartresize", fn ) : this.trigger( "smartresize", ["execAsap"] );
   };
 
-  /*
-    $cards.all
-    $cards.filtered
-    $cards.sorted
-  */
+
+  // ========================= mercutio ===============================
 
   var mercutioMethods = {
     
 
-    filter : function() {
+    filter : function( $cards ) {
       var props  = this.data('mercutio'),
-          filter = props.opts.filter,
-          $cards = props.$cards.all;
+          filter = props.opts.filter === '' ? '*' : props.opts.filter;
 
       if ( !filter ) {
         props.$cards.filtered = $cards;
@@ -68,16 +64,17 @@
 
         props.$cards.filtered = $cards.filter( filter );
 
-        if ( filter === '*' ) {
-          // $visibleCards = this;
-        } else {
+        if ( filter !== '*' ) {
           $cardsToShow = $hiddenCards.filter( filter );
-          $cardsToHide = $visibleCards.not( filter );
+
+          var $cardsToHide = $visibleCards.not( filter ).toggleClass( hiddenClass );
+          $cardsToHide.addClass( hiddenClass );
           props.styleQueue.push({ $el: $cardsToHide, style: props.opts.hiddenStyle });
         }
         
         props.styleQueue.push({ $el: $cardsToShow, style: props.opts.visibleStyle });
-        
+        $cardsToShow.removeClass( hiddenClass );
+
       }
       
       return this;
@@ -261,7 +258,7 @@
       // need to get cards
       props.$cards.all = props.opts.selector ? 
         this.find( props.opts.selector ) : 
-        this.children;
+        this.children();
       
       props.colW = props.opts.columnWidth || props.$cards.all.outerWidth(true);
 
@@ -321,7 +318,7 @@
 
         var colYs = $this.mercutio( 'resetColYs', props );
         $this
-          .mercutio( 'filter' )
+          .mercutio( 'filter', props.$cards.all )
           .mercutio( 'layout', props.$cards.filtered, colYs );
 
 
@@ -371,9 +368,10 @@
     },
     visibleStyle : {
       opacity : 1
+    },
+    animationOptions: {
+      queue: false
     }
-    // animate: false,
-    // animationOptions: {}
   };
 
 })(jQuery);
