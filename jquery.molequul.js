@@ -5,71 +5,70 @@
 **************************************************/
 (function($){  
 
+  // ========================= getStyleProperty by kangax ===============================
+
+  var getStyleProperty = (function(){
+
+    var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
+
+    function getStyleProperty(propName, element) {
+      element = element || document.documentElement;
+      var style = element.style,
+          prefixed;
+
+      // test standard property first
+      if (typeof style[propName] == 'string') return propName;
+
+      // capitalize
+      propName = propName.charAt(0).toUpperCase() + propName.slice(1);
+
+      // test vendor specific properties
+      for (var i=0, l=prefixes.length; i<l; i++) {
+        prefixed = prefixes[i] + propName;
+        if (typeof style[prefixed] == 'string') return prefixed;
+      }
+    }
+
+    return getStyleProperty;
+  })();
+
   // ========================= miniModernizr ===============================
   // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
-  if ( !Modernizr ) {
+  if ( !window.Modernizr ) {
     
     var miniModernizr = {},
         vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
         classes = [],
         docElement = document.documentElement,
-        m = document.createElement( 'modernizr' ),
-        m_style = m.style,
-        test_props = function ( props, callback ) {
-          for ( var i in props ) {
-            // IE9 ugliness
-            try { 
-              m_style[ props[i] ] !== undefined
-            } catch(e){
-              continue;
-            }
-          
-            console.log( props[i],  m_style[ props[i] ] )
-          
-            if ( m_style[ props[i] ] !== undefined ) {
-              return true;
-            }
-          }
-        },
-        test_props_all = function ( prop, callback ) {
-          var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
-
-          props = [ prop, 'Webkit' + uc_prop, 'Moz' + uc_prop, 
-                    'O' + uc_prop, 'ms' + uc_prop, 'Khtml' + uc_prop ];
-
-
-          return !!test_props( props, callback );
-        },
         tests = {
           csstransforms : function() {
-            return !!test_props([ 'transformProperty', 'WebkitTransform', 
-                            'MozTransform', 'OTransform', 'msTransform' ]);
+            return !!getStyleProperty('transform');
           },
           csstransforms3d : function() {
-            var ret = !!test_props([ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ]);
-
+            var ret = !!getStyleProperty('perspective');
+  
             if (ret){
               var st = document.createElement('style'),
                   div = document.createElement('div');
-
+  
               st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
                                   'modernizr){#modernizr{height:3px}}';
               document.getElementsByTagName('head')[0].appendChild(st);
               div.id = 'modernizr';
               docElement.appendChild(div);
-
+  
               ret = div.offsetHeight === 3;
-
+  
               st.parentNode.removeChild(st);
               div.parentNode.removeChild(div);
             }
             return ret;
           },
           csstransitions : function() {
-            return test_props_all( 'transitionProperty' );
+            return !!getStyleProperty('transitionProperty');
           }
         };
-
+  
     // hasOwnProperty shim by kangax needed for Safari 2.0 support
     var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
     if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
@@ -98,16 +97,41 @@
   
     // Add the new classes to the <html> element.
     docElement.className += ' ' + classes.join( ' ' );
-
-    var Modernizr = miniModernizr;
+  
+    window.Modernizr = miniModernizr;
   }
 
-
-  // position convience method
-  // for now, we'll only use transforms in Chrome and Safari
-  // In Opera, transform removes all text anti-aliasing, crippling legibility
-  // in FF, you cannot transition transforms in < 4.0
-  var usingTransforms = Modernizr.csstransforms && $.browser.webkit;
+  // convienence vars
+  var transformFnUtils = {
+        translate : {
+          getFn : {
+            '2d' : function ( position ) {
+              return 'translate(' + position.x + 'px, ' + position.y + 'px)';
+            },
+            '3d' : function ( position ) {
+              return 'translate3d(' + position.x + 'px, ' + position.y + 'px, 0)';
+            }
+          },
+          regex : /translate(3d)?\([\s\d\-\.,px]+\)/
+        },
+        scale : {
+          getFn : {
+            '2d' : function ( scale ) {
+              return 'scale(' + scale + ')';
+            },
+            '3d' : function ( scale ) {
+              return 'scale3d(' + scale + ', ' + scale + ', 1)';
+            }
+          },
+          regex : /scale(3d)?\([\s\d\-\.,px]+\)/
+        }
+      },
+      // for now, we'll only use transforms in Chrome and Safari
+      // In Opera, transform removes all text anti-aliasing, crippling legibility
+      // in FF, you cannot transition transforms in < 4.0
+      usingTransforms = Modernizr.csstransforms && $.browser.webkit,
+      dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
+      transformProp = getStyleProperty('transform');
 
 
   // ========================= smartresize ===============================
