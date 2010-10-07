@@ -10,22 +10,34 @@
   var getStyleProperty = (function(){
 
     var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
+    var _cache = { };
 
     function getStyleProperty(propName, element) {
       element = element || document.documentElement;
       var style = element.style,
-          prefixed;
+          prefixed,
+          uPropName;
 
+      // check cache only when no element is given
+      if (arguments.length == 1 && typeof _cache[propName] == 'string') {
+        return _cache[propName];
+      }
       // test standard property first
-      if (typeof style[propName] == 'string') return propName;
+      if (typeof style[propName] == 'string') {
+        return (_cache[propName] = propName);
+      }
+      
+      // console.log('getting prop', propName)
 
       // capitalize
-      propName = propName.charAt(0).toUpperCase() + propName.slice(1);
+      uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
       // test vendor specific properties
       for (var i=0, l=prefixes.length; i<l; i++) {
-        prefixed = prefixes[i] + propName;
-        if (typeof style[prefixed] == 'string') return prefixed;
+        prefixed = prefixes[i] + uPropName;
+        if (typeof style[prefixed] == 'string') {
+          return (_cache[propName] = prefixed);
+        }
       }
     }
 
@@ -35,7 +47,7 @@
   // ========================= miniModernizr ===============================
   // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
   if ( !window.Modernizr ) {
-    
+
     var miniModernizr = {},
         vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
         classes = [],
@@ -46,19 +58,19 @@
           },
           csstransforms3d : function() {
             var ret = !!getStyleProperty('perspective');
-  
+
             if (ret){
               var st = document.createElement('style'),
                   div = document.createElement('div');
-  
+
               st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
                                   'modernizr){#modernizr{height:3px}}';
               document.getElementsByTagName('head')[0].appendChild(st);
               div.id = 'modernizr';
               docElement.appendChild(div);
-  
+
               ret = div.offsetHeight === 3;
-  
+
               st.parentNode.removeChild(st);
               div.parentNode.removeChild(div);
             }
@@ -68,7 +80,7 @@
             return !!getStyleProperty('transitionProperty');
           }
         };
-  
+
     // hasOwnProperty shim by kangax needed for Safari 2.0 support
     var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
     if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
@@ -81,7 +93,7 @@
         return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
       };
     }
-      
+
     // Run through all tests and detect their support in the current UA.
     for ( var feature in tests ) {
       if ( hasOwnProperty( tests, feature ) ) {
@@ -94,44 +106,97 @@
         classes.push( className );
       }
     }
-  
+
     // Add the new classes to the <html> element.
     docElement.className += ' ' + classes.join( ' ' );
-  
+
     window.Modernizr = miniModernizr;
   }
 
-  // convienence vars
-  var transformFnUtils = {
-        translate : {
-          getFn : {
-            '2d' : function ( position ) {
-              return 'translate(' + position.x + 'px, ' + position.y + 'px)';
-            },
-            '3d' : function ( position ) {
-              return 'translate3d(' + position.x + 'px, ' + position.y + 'px, 0)';
-            }
+  // ========================= jQuery transform extensions ===============================
+
+  // if props.transform hasn't been set, do it already
+  $.props.transform = getStyleProperty('transform');
+
+
+  var transformFnUtilsDimensional = {
+        '2d' : {
+          translate : function ( position ) {
+            return 'translate(' + position[0] + 'px, ' + position[1] + 'px)';
           },
-          regex : /translate(3d)?\([\s\d\-\.,px]+\)/
+          scale :  function ( scale ) {
+            return 'scale(' + scale[0] + ')';
+          },
         },
-        scale : {
-          getFn : {
-            '2d' : function ( scale ) {
-              return 'scale(' + scale + ')';
-            },
-            '3d' : function ( scale ) {
-              return 'scale3d(' + scale + ', ' + scale + ', 1)';
-            }
+        '3d' : {
+          translate : function ( position ) {
+            return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0)';
           },
-          regex : /scale(3d)?\([\s\d\-\.,px]+\)/
+          scale : function ( scale ) {
+            return 'scale3d(' + scale[0] + ', ' + scale[0] + ', 1)';
+          }
+          
         }
       },
-      // for now, we'll only use transforms in Chrome and Safari
-      // In Opera, transform removes all text anti-aliasing, crippling legibility
-      // in FF, you cannot transition transforms in < 4.0
-      usingTransforms = Modernizr.csstransforms && $.browser.webkit,
       dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
-      transformProp = getStyleProperty('transform');
+      usingTransforms = Modernizr.csstransforms && $.browser.webkit,
+      transformFnUtils = transformFnUtilsDimensional[ dimensions ];
+      
+  var _jQueryStyle = $.style;
+  $.style = function ( elem, name, value  ) {
+
+    switch ( name ) {
+      case 'scale' :
+      case 'translate' :
+        console.log( name )
+        // unpack current transform data
+        var data =  $( elem ).data('transform') || {};
+        // extend new value over current data
+        var newData = {};
+        newData[ name ] = value;
+        $.extend( data, newData );
+
+        var valueFns = [];
+
+        for ( var fnName in data ) {
+          var transformValue = data[ fnName ],
+              getFn = transformFnUtils[ fnName ],
+              valueFn = getFn( transformValue );
+          valueFns.push( valueFn );
+        }
+
+        // set data back in elem
+        $( elem ).data('transform', data );
+
+        value = valueFns.join(' ');
+        // console.log( value )
+        
+        // set name to vendor specific property
+        name = $.props.transform;
+        
+        break
+    }
+
+    // if ( name === 'transform') {
+    // }
+    return _jQueryStyle.apply( this, arguments );
+  };
+  
+  
+  var _fxCur = $.fx.prototype.cur;
+  $.fx.prototype.cur = function () {
+    if ( this.prop === 'scale' ) {
+      var currentScale = $( this.elem ).data('transform')[ this.prop ] || [ 1 ];
+      // scale value is saved as a 1 item array
+      return currentScale[0]
+    }
+
+    return _fxCur.apply(this, arguments);
+  }
+
+  $.fx.step.scale = function (fx) {
+    $( fx.elem ).css({ scale: [ fx.now ] });
+  };
 
 
   // ========================= smartresize ===============================
@@ -287,13 +352,6 @@
       });
     },
     
-    // parseTransformStyle : function( style ) {
-    //   for ( prop in style ) {
-    //     switch
-    //   }
-    //   return style;
-    // },
-
     complete : function( props ) {
 
       // are we animating the layout arrangement?
@@ -303,16 +361,6 @@
 
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
-        // var style = molequulMethods.parseTransformStyle( obj.style );
-        for ( var prop in obj.style ) {
-          console.log( prop, obj.style[prop] )
-          // switch ( obj.style[prop] ) {
-          //   case 'scale' :
-          //     console.log( obj.style )
-          //     break;
-          // }
-        }
-        
                                    // have to extend animation to play nice with jQuery
         obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
       });
@@ -483,37 +531,18 @@
       
     },
     
-    transform : function( value ) {
-      return {
-        '-webkit-transform' : value,
-           '-moz-transform' : value,
-             '-o-transform' : value,
-                'transform' : value
-      }
-    },
-    
     translate : function( x, y ) {
-      return molequulMethods.transform('translate(' + x + 'px, ' + y + 'px) scale(1)')
-    },
-    
-    translate3d : function( x, y ) {
-      return molequulMethods.transform('translate3d(' + x + 'px, ' + y + 'px, 0) scale(1)')
+      return { translate : [ x, y ] }
     },
     
     positionAbs : function( x, y ) {
-      return { left: x, top: y }
+      return { left: x, top: y };
     }
     
   };
 
 
-  if ( usingTransforms ) {
-    var translateMethod = Modernizr.csstransforms3d ? 'translate3d' : 'translate';
-    molequulMethods.position = molequulMethods[ translateMethod ];
-  } else {
-    molequulMethods.position = molequulMethods.positionAbs;
-  }
-  // molequulMethods.position = Modernizr.csstransforms3d ? molequulMethods.translate3d : molequulMethods.positionAbs;
+  molequulMethods.position = usingTransforms ? molequulMethods.translate : molequulMethods.positionAbs;
 
   // molequul code begin
   $.fn.molequul = function( firstArg ) { 
@@ -535,20 +564,15 @@
 
   // Default plugin options
   $.fn.molequul.defaults = {
-    // singleMode: false,
-    // columnWidth: undefined,
-    // itemSelector: undefined,
-    // appendedContent: undefined,
-    // saveOptions: true,
     resizeable: true,
     hiddenClass : 'molequul-hidden',
     hiddenStyle : {
       opacity : 0,
-      scale: 0.001
+      scale : [ 0 ]
     },
     visibleStyle : {
       opacity : 1,
-      scale: 1
+      scale : [ 1 ]
     },
     animationOptions: {
       queue: false
