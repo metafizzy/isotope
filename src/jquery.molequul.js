@@ -1,248 +1,11 @@
 /*************************************************
 **  jQuery Molequul version 0.1
-**  Copyright David DeSandro, licensed MIT
-**  http://desandro.com/resources/jquery-molequul
+**  Copyright David DeSandro
 **************************************************/
 (function($){  
 
-  // ========================= getStyleProperty by kangax ===============================
-
-  var getStyleProperty = (function(){
-
-    var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
-    var _cache = { };
-
-    function getStyleProperty(propName, element) {
-      element = element || document.documentElement;
-      var style = element.style,
-          prefixed,
-          uPropName;
-
-      // check cache only when no element is given
-      if (arguments.length == 1 && typeof _cache[propName] == 'string') {
-        return _cache[propName];
-      }
-      // test standard property first
-      if (typeof style[propName] == 'string') {
-        return (_cache[propName] = propName);
-      }
-      
-      // console.log('getting prop', propName)
-
-      // capitalize
-      uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
-
-      // test vendor specific properties
-      for (var i=0, l=prefixes.length; i<l; i++) {
-        prefixed = prefixes[i] + uPropName;
-        if (typeof style[prefixed] == 'string') {
-          return (_cache[propName] = prefixed);
-        }
-      }
-    }
-
-    return getStyleProperty;
-  })();
-
-  // ========================= miniModernizr ===============================
-  // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
-  if ( !window.Modernizr ) {
-
-    var miniModernizr = {},
-        vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-        classes = [],
-        docElement = document.documentElement,
-        tests = {
-          csstransforms : function() {
-            return !!getStyleProperty('transform');
-          },
-          csstransforms3d : function() {
-            var ret = !!getStyleProperty('perspective');
-
-            if (ret){
-              var st = document.createElement('style'),
-                  div = document.createElement('div');
-
-              st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
-                                  'modernizr){#modernizr{height:3px}}';
-              document.getElementsByTagName('head')[0].appendChild(st);
-              div.id = 'modernizr';
-              docElement.appendChild(div);
-
-              ret = div.offsetHeight === 3;
-
-              st.parentNode.removeChild(st);
-              div.parentNode.removeChild(div);
-            }
-            return ret;
-          },
-          csstransitions : function() {
-            return !!getStyleProperty('transitionProperty');
-          }
-        };
-
-    // hasOwnProperty shim by kangax needed for Safari 2.0 support
-    var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
-    if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
-      hasOwnProperty = function (object, property) {
-        return _hasOwnProperty.call(object, property);
-      };
-    }
-    else {
-      hasOwnProperty = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-        return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
-      };
-    }
-
-    // Run through all tests and detect their support in the current UA.
-    for ( var feature in tests ) {
-      if ( hasOwnProperty( tests, feature ) ) {
-        // run the test, throw the return value into the Modernizr,
-        //   then based on that boolean, define an appropriate className
-        //   and push it into an array of classes we'll join later.
-        var test = tests[ feature ]();
-        miniModernizr[ feature.toLowerCase() ] = test;
-        var className = ( test ?  '' : 'no-' ) + feature.toLowerCase()
-        classes.push( className );
-      }
-    }
-
-    // Add the new classes to the <html> element.
-    docElement.className += ' ' + classes.join( ' ' );
-
-    window.Modernizr = miniModernizr;
-  }
-
-  // ========================= jQuery transform extensions ===============================
-
-  // if props.transform hasn't been set, do it already
-  $.props.transform = getStyleProperty('transform');
-
-
-  var transformFnUtilsDimensional = {
-        '2d' : {
-          translate : function ( position ) {
-            return 'translate(' + position[0] + 'px, ' + position[1] + 'px)';
-          },
-          scale :  function ( scale ) {
-            return 'scale(' + scale[0] + ')';
-          },
-        },
-        '3d' : {
-          translate : function ( position ) {
-            return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0)';
-          },
-          scale : function ( scale ) {
-            return 'scale3d(' + scale[0] + ', ' + scale[0] + ', 1)';
-          }
-          
-        }
-      },
-      dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
-      usingTransforms = Modernizr.csstransforms,
-      // usingTransforms = false,
-      transformFnUtils = transformFnUtilsDimensional[ dimensions ];
-  
-  var _jQueryStyle = $.style;
-  $.style = function ( elem, name, value  ) {
-
-    switch ( name ) {
-      case 'scale' :
-      case 'translate' :
-        // console.log( name )
-        // unpack current transform data
-        var data =  $( elem ).data('transform') || {};
-        // extend new value over current data
-        var newData = {};
-        newData[ name ] = value;
-        $.extend( data, newData );
-
-        var valueFns = [];
-
-        for ( var fnName in data ) {
-          var transformValue = data[ fnName ],
-              getFn = transformFnUtils[ fnName ],
-              valueFn = getFn( transformValue );
-          valueFns.push( valueFn );
-        }
-
-        // set data back in elem
-        $( elem ).data('transform', data );
-
-        value = valueFns.join(' ');
-        // console.log( value )
-        
-        // set name to vendor specific property
-        name = $.props.transform;
-        
-        break
-    }
-
-    // if ( name === 'transform') {
-    // }
-    return _jQueryStyle.apply( this, arguments );
-  };
-  
-  
-  var _fxCur = $.fx.prototype.cur;
-  $.fx.prototype.cur = function () {
-    if ( this.prop === 'scale' ) {
-      var data = $( this.elem ).data('transform'),
-          currentScale = data ? data[ this.prop ] : [ 1 ];
-      // scale value is saved as a 1 item array
-      return currentScale[0]
-    }
-
-    return _fxCur.apply(this, arguments);
-  }
-
-  $.fx.step.scale = function (fx) {
-    $( fx.elem ).css({ scale: [ fx.now ] });
-  };
-
-
-  // ========================= smartresize ===============================
-
-  /*!
-   * smartresize: debounced resize event for jQuery
-   * http://github.com/lrbabe/jquery-smartresize
-   *
-   * Copyright (c) 2009 Louis-Remi Babe
-   * Licensed under the GPL license.
-   * http://docs.jquery.com/License
-   *
-   */
-  var $event = $.event,
-      resizeTimeout;
-
-  $event.special.smartresize = {
-    setup: function() {
-      $(this).bind( "resize", $event.special.smartresize.handler );
-    },
-    teardown: function() {
-      $(this).unbind( "resize", $event.special.smartresize.handler );
-    },
-    handler: function( event, execAsap ) {
-      // Save the context
-      var context = this,
-          args = arguments;
-
-      // set correct event type
-      event.type = "smartresize";
-
-      if ( resizeTimeout ) { clearTimeout( resizeTimeout ); }
-      resizeTimeout = setTimeout(function() {
-        jQuery.event.handle.apply( context, args );
-      }, execAsap === "execAsap"? 0 : 100 );
-    }
-  };
-
-  $.fn.smartresize = function( fn ) {
-    return fn ? this.bind( "smartresize", fn ) : this.trigger( "smartresize", ["execAsap"] );
-  };
-
-
-  // ========================= molequul ===============================
+  var usingTransforms = Modernizr.csstransforms;
+  // var usingTransforms = false;
 
   var molequulMethods = {
     
@@ -293,7 +56,6 @@
           i         = setY.length,
           shortCol  = i,
           setSpan   = props.colCount + 1 - i,
-          animOpts  = $.extend( {}, props.opts.animationOptions ),
           position, x, y ;
       // Which column has the minY value, closest to the left
       while (i--) {
@@ -362,11 +124,15 @@
           animOpts = props.opts.animationOptions;
       // console.log( props.initialized, props.opts.animate, styleFn )
 
+      // console.log( $.extend( {}, animOpts ) )
+
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
-                                   // have to extend animation to play nice with jQuery
+                                         // have to extend animation to play nice with jQuery
         obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
       });
+      
+      
 
       // clear out queue for next time
       props.styleQueue = [];
