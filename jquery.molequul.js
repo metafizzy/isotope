@@ -139,16 +139,17 @@
         }
       },
       dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
-      usingTransforms = Modernizr.csstransforms && $.browser.webkit,
+      usingTransforms = Modernizr.csstransforms,
+      // usingTransforms = false,
       transformFnUtils = transformFnUtilsDimensional[ dimensions ];
-      
+  
   var _jQueryStyle = $.style;
   $.style = function ( elem, name, value  ) {
 
     switch ( name ) {
       case 'scale' :
       case 'translate' :
-        console.log( name )
+        // console.log( name )
         // unpack current transform data
         var data =  $( elem ).data('transform') || {};
         // extend new value over current data
@@ -186,7 +187,8 @@
   var _fxCur = $.fx.prototype.cur;
   $.fx.prototype.cur = function () {
     if ( this.prop === 'scale' ) {
-      var currentScale = $( this.elem ).data('transform')[ this.prop ] || [ 1 ];
+      var data = $( this.elem ).data('transform'),
+          currentScale = data ? data[ this.prop ] : [ 1 ];
       // scale value is saved as a 1 item array
       return currentScale[0]
     }
@@ -358,6 +360,7 @@
       // use plugin-ish syntax for css or animate
       var styleFn =  ( props.initialized && props.opts.animate ) ? 'animate' : 'css',
           animOpts = props.opts.animationOptions;
+      // console.log( props.initialized, props.opts.animate, styleFn )
 
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
@@ -568,12 +571,13 @@
     hiddenClass : 'molequul-hidden',
     hiddenStyle : {
       opacity : 0,
-      scale : [ 0 ]
+      scale : [ 0.001 ]
     },
     visibleStyle : {
       opacity : 1,
       scale : [ 1 ]
     },
+    animate : false,
     animationOptions: {
       queue: false
     }
