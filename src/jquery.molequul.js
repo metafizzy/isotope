@@ -7,7 +7,7 @@
   var usingTransforms = Modernizr.csstransforms;
   // var usingTransforms = false;
 
-  var molequulMethods = {
+  $.molequul = {
     
 
     filter : function( $cards ) {
@@ -66,7 +66,7 @@
       
       x        = props.colW * shortCol + props.posLeft;
       y        = minimumY;
-      position = molequulMethods.position( x, y );
+      position = $.molequul.position( x, y );
 
       // position the brick
       props.styleQueue.push({ $el: this, style: position });
@@ -195,7 +195,7 @@
       this.molequul( 'getColCount', props );
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        var colYs = molequulMethods.resetColYs( props );
+        var colYs = $.molequul.resetColYs( props );
         this.molequul( 'layout', props.$cards.filtered, colYs );
       }
 
@@ -283,7 +283,7 @@
           $this.molequul( 'setup' );
         }
 
-        var colYs = molequulMethods.resetColYs( props );
+        var colYs = $.molequul.resetColYs( props );
         $this
           .molequul( 'filter', props.$cards.all )
           .molequul( 'layout', props.$cards.filtered, colYs );
@@ -311,20 +311,20 @@
   };
 
 
-  molequulMethods.position = usingTransforms ? molequulMethods.translate : molequulMethods.positionAbs;
+  $.molequul.position = usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
 
   // molequul code begin
   $.fn.molequul = function( firstArg ) { 
 
     // Method calling logic
-    var method = molequulMethods[ firstArg ];
+    var method = $.molequul[ firstArg ];
     if ( method ) {
       // remove firstArg, which is a string of the function name, from arguments
       var args = Array.prototype.slice.call( arguments, 1 );
       return method.apply( this, args );
       
     } else if ( !firstArg || typeof firstArg === 'object' ) {
-      return molequulMethods.init.apply( this, arguments );
+      return $.molequul.init.apply( this, arguments );
     }
 
 
