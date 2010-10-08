@@ -9,6 +9,25 @@
 
   $.molequul = {
     
+    // Default plugin options
+    defaults : {
+      resizeable: true,
+      containerClass : 'molequul',
+      hiddenClass : 'molequul-hidden',
+      hiddenStyle : {
+        opacity : 0,
+        scale : [ 0.001 ]
+      },
+      visibleStyle : {
+        opacity : 1,
+        scale : [ 1 ]
+      },
+      animate : false,
+      animationOptions: {
+        queue: false
+      }
+    },
+    
 
     filter : function( $cards ) {
       var props  = this.data('molequul'),
@@ -249,7 +268,7 @@
       // add molequul class first time around
       var $container = this;
       setTimeout(function(){
-        $container.addClass('molequul'); 
+        $container.addClass( props.opts.containerClass ); 
       }, 1 );
 
       return this;
@@ -272,7 +291,7 @@
 
         props.opts = $.extend(
           {},
-          $.fn.molequul.defaults,
+          $.molequul.defaults,
           previousOptions,
           options
         );
@@ -330,23 +349,5 @@
 
   };
 
-
-  // Default plugin options
-  $.fn.molequul.defaults = {
-    resizeable: true,
-    hiddenClass : 'molequul-hidden',
-    hiddenStyle : {
-      opacity : 0,
-      scale : [ 0.001 ]
-    },
-    visibleStyle : {
-      opacity : 1,
-      scale : [ 1 ]
-    },
-    animate : false,
-    animationOptions: {
-      queue: false
-    }
-  };
 
 })(jQuery);
