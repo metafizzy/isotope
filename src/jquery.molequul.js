@@ -4,14 +4,14 @@
 **************************************************/
 (function($){  
 
-  var usingTransforms = Modernizr.csstransforms;
-  // var usingTransforms = false;
-
   $.molequul = {
     
     // Default plugin options
     defaults : {
+      columnWidth : 150,
       resizeable: true,
+      layoutMode : 'masonry',
+      masonrySingleMode : false,
       containerClass : 'molequul',
       hiddenClass : 'molequul-hidden',
       hiddenStyle : {
@@ -22,11 +22,13 @@
         opacity : 1,
         scale : [ 1 ]
       },
-      animate : false,
+      animationEngine : 'best-available',
       animationOptions: {
         queue: false
       }
     },
+    
+    usingTransforms : Modernizr.csstransforms && Modernizr.csstransitions,
     
 
     filter : function( $cards ) {
@@ -34,7 +36,7 @@
           filter = props.opts.filter === '' ? '*' : props.opts.filter;
 
       if ( !filter ) {
-        props.$cards.filtered = $cards;
+        props.atoms.$filtered = $cards;
       } else {
         var hiddenClass    = props.opts.hiddenClass,
             hiddenSelector = '.' + hiddenClass,
@@ -42,7 +44,7 @@
             $hiddenCards   = $cards.filter( hiddenSelector ),
             $cardsToShow   = $hiddenCards;
 
-        props.$cards.filtered = $cards.filter( filter );
+        props.atoms.$filtered = $cards.filter( filter );
 
         if ( filter !== '*' ) {
           $cardsToShow = $hiddenCards.filter( filter );
@@ -66,8 +68,9 @@
     },
     
 
+    // ====================== masonry layout methods ======================
     
-    placeCard : function( setCount, setY, props ) {
+    placeBrick : function( setCount, setY, props ) {
       // here, `this` refers to a child element or "brick"
           // get the minimum Y value from the columns
       var minimumY  = Math.min.apply( Math, setY ),
@@ -99,14 +102,14 @@
       return this;
     },
     
-    singleColumn : function( colYs, props ) {
+    masonrySingleColumn : function( props ) {
       return this.each(function(){
-        $(this).molequul( 'placeCard', props.colCount, colYs, props );
+        $(this).molequul( 'placeBrick', props.colCount, props.colYs, props );
       });
     },
     
     
-    multiColumn : function( colYs, props ) {
+    masonryMultiColumn : function( props ) {
       return this.each(function(){
         var $this  = $(this),
             //how many columns does this brick span
@@ -115,7 +118,7 @@
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          $this.molequul( 'placeCard', props.colCount, colYs, props );
+          $this.molequul( 'placeBrick', props.colCount, props.colYs, props );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
@@ -125,29 +128,148 @@
           // for each group potential horizontal position
           for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            var groupColY = colYs.slice( i, i+colSpan );
+            var groupColY = props.colYs.slice( i, i+colSpan );
             // and get the max value of the array
             groupY[i] = Math.max.apply( Math, groupColY );
           }
 
-          $this.molequul( 'placeCard', groupCount, groupY, props );
+          $this.molequul( 'placeBrick', groupCount, groupY, props );
         }
       });
     },
     
+    getMasonryColCount : function( props ) {
+      props.width = this.width();
+      props.colCount = Math.floor( props.width / props.colW ) ;
+      props.colCount = Math.max( props.colCount, 1 );
+      return this;
+    },
+    
+    masonryResetLayoutProps : function( props ) {
+      
+      var i = props.colCount;
+      props.colYs = [];
+      while (i--) {
+        props.colYs.push( props.posTop );
+      }
+      return this;
+    },
+    
+
+    
+    masonryResize : function( props ) {
+      var prevColCount = props.colCount;
+      // get updated colCount
+      this.molequul( 'getMasonryColCount', props );
+      if ( props.colCount !== prevColCount ) {
+        // if column count has changed, do a new column cound
+        // var colYs = $.molequul.resetColYs( props );
+        this
+          .molequul( 'masonryResetLayoutProps', props )
+          .molequul( 'layout', props.atoms.$filtered );
+      }
+
+      return this;
+    },
+    
+    masonryMeasureContainerHeight : function( props ) {
+      props.containerHeight = Math.max.apply( Math, props.colYs );
+      return this
+    },
+    
+    // ====================== ClearFloat ======================
+    
+    clearFloat : function( props ) {
+      
+      return this.each( function() {
+        var $this = $(this).
+            atomW = $this.outerWidth(true),
+            atomH = $this.outerHeight(true),
+            x, y, position;
+        
+        if ( props.clearFloat.x !== 0  &&  atomW + props.clearFloat.x > props.width ) {
+          // if this element cannot fit in the current row
+          props.clearFloat.x = 0;
+          props.clearFloat.y = props.clearFloat.height;
+        } 
+        
+        x        = props.clearFloat.x + props.posLeft;
+        y        = props.clearFloat.y + props.posTop;
+        position = $.molequul.position( x, y );
+        // position the atom
+        props.styleQueue.push({ $el: $this, style: position });
+
+        props.clearFloat.height = Math.max( props.clearFloat.y + atomH, props.clearFloat.height );
+        props.clearFloat.x += atomW;
+
+      });
+    },
+
+    // ====================== General Methods ======================
+
+    
     complete : function( props ) {
+
+
+      
+      return this;
+    },
+    
+    
+    // used on collection of cards (should be filtered, and sorted before )
+    // accepts cards-to-be-laid-out and colYs to start with
+    layout : function( $elems ) {
+
+      var props = this.data('molequul'),
+          layoutMode = props.opts.layoutMode ;
+
+      // switch ( props.opts.layoutMode.toLowerCase().replace(/[ -]/g, '') ) {
+      //   case 'clearfloat' :
+      //     layoutMode = 'clearFloat';
+      //     break;
+      //   case 'masonrysinglecolumn' :
+      //     layoutMode = 'masonrySingleColumn';
+      //     break;
+      //   default :
+      //     layoutMode = 'masonryMultiColumn';
+      // }
+
+      // props.clearFloat = {
+      //   x : 0,
+      //   y : 0,
+      //   height : 0
+      // };
+      // 
+      // props.width = this.width();
+
+      // layout logic
+      var layoutMethod = layoutMode;
+      if ( layoutMethod === 'masonry' ) {
+        layoutMethod = props.opts.masonrySingleMode ? 'masonrySingleColumn' : 'masonryMultiColumn';
+      }
+      
+      $elems.molequul( layoutMethod, props );
+
+      // set the height of the container to the tallest column
+      // props.containerHeight = Math.max.apply( Math, props.colYs );
+      // props.containerHeight = props.clearFloat.height;
+      this.molequul( layoutMode + 'MeasureContainerHeight', props );
+      var containerStyle    = { height: props.containerHeight - props.posTop };
+      props.styleQueue.push({ $el: this, style: containerStyle });
+
+
+
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn =  ( props.initialized && props.opts.animate ) ? 'animate' : 'css',
+      var styleFn = ( props.applyStyleFnName === 'animate' && !props.initialized ) ? 
+                    'css' : props.applyStyleFnName,
           animOpts = props.opts.animationOptions;
-      // console.log( props.initialized, props.opts.animate, styleFn )
 
-      // console.log( $.extend( {}, animOpts ) )
 
       // process styleQueue
       $.each( props.styleQueue, function( i, obj ){
-                                         // have to extend animation to play nice with jQuery
+                                       // have to extend animation to play nice with jQuery
         obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
       });
       
@@ -164,84 +286,39 @@
       //    or anyone else's crazy jquery fun
       this.data( 'molequul', props );
       
-      return this;
-    },
-    
-    // used on collection of cards (should be filtered, and sorted before )
-    // accepts cards-to-be-laid-out and colYs to start with
-    layout : function( $cards, colYs ) {
-
-      var props = this.data('molequul');
-
-      // console.log( props.opts.hiddenStyle.scale )
-
-      // layout logic
-      var layoutMode = props.opts.singleMode ? 'singleColumn' : 'multiColumn';
-
-      $cards.molequul( layoutMode, colYs, props );
-
-      // set the height of the container to the tallest column
-      props.containerHeight = Math.max.apply( Math, props.colYs );
-      var containerStyle    = { height: props.containerHeight - props.posTop };
-      props.styleQueue.push({ $el: this, style: containerStyle });
       
-      // this[ props.applyStyle ]( containerStyle, animOpts ).molequul( 'complete', props );
-
-      this.molequul( 'complete', props );
       
       return this;
       
     },
     
-    resetColYs : function( props ) {
-      var colYs = [],
-          i = props.colCount;
-      while (i--) {
-        colYs.push( props.posTop );
-      }
-      props.colYs = colYs;
-      return colYs
-    },
+  
+
     
     resize : function() {
-      // console.log( this.data('molequul') , this[0].id )
-      var props = this.data('molequul'),
-          prevColCount = props.colCount;
-      
+      var props = this.data('molequul');
       props.initialized = true;
 
-      // get updated colCount
-      this.molequul( 'getColCount', props );
-      if ( props.colCount !== prevColCount ) {
-        // if column count has changed, do a new column cound
-        var colYs = $.molequul.resetColYs( props );
-        this.molequul( 'layout', props.$cards.filtered, colYs );
-      }
-
-      return this;
+      return this.molequul( props.opts.layoutMode + 'Resize', props );
     },
     
     append : function() {
       
     },
     
-    getColCount : function( props ) {
-      props.colCount = Math.floor( this.width() / props.colW ) ;
-      props.colCount = Math.max( props.colCount, 1 );
-      return this;
-    },
+
     
     // only run though on initial init
-    setup : function() {
-      var props = this.data('molequul');
-      props.$cards = {};
+    setup : function( props ) {
+      // var props = this.data('molequul');
+      props.atoms = {};
       props.styleQueue = [];
       // need to get cards
-      props.$cards.all = props.opts.selector ? 
+      props.atoms.$all = props.opts.selector ? 
         this.find( props.opts.selector ) : 
         this.children();
       
-      props.colW = props.opts.columnWidth || props.$cards.all.outerWidth(true);
+      props.colW = props.opts.columnWidth || props.atoms.$all.outerWidth(true);
 
       // if colW == 0, back out before divide by zero
       if ( !props.colW ) {
@@ -252,12 +329,27 @@
       this.css('position', 'relative').molequul( 'getColCount', props );
 
       cardStyle = { position: 'absolute' };
-      if ( usingTransforms ) {
+      if ( $.molequul.usingTransforms ) {
         cardStyle.left = 0;
         cardStyle.top = 0;
       }
-      props.$cards.all.css( cardStyle );
+      props.atoms.$all.css( cardStyle );
 
+      // 
+      switch ( props.opts.animationEngine ) {
+        // ****  change option to lower case
+        case 'none' :
+          props.applyStyleFnName = 'css';
+          break;
+        case 'jquery' :
+          props.applyStyleFnName = 'animate';
+          break;
+        case 'best-available' :
+        default :
+          props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
+          break;
+      }
+      
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
       this.prepend( $cursor );
@@ -270,6 +362,9 @@
       setTimeout(function(){
         $container.addClass( props.opts.containerClass ); 
       }, 1 );
+      
+      // save data
+      this.data( 'molequul', props )
 
       return this;
     },
@@ -296,16 +391,19 @@
           options
         );
         
-        $this.data( 'molequul', props );
+        // $this.data( 'molequul', props );
         
         if ( !props.initialized ) {
-          $this.molequul( 'setup' );
+          $this.molequul( 'setup', props );
+        }
+        
+        if ( props.opts.layoutMode === 'masonry' ) {
+          $this.molequul('getMasonryColCount', props )
         }
 
-        var colYs = $.molequul.resetColYs( props );
-        $this
-          .molequul( 'filter', props.$cards.all )
-          .molequul( 'layout', props.$cards.filtered, colYs );
+        $this.molequul( 'filter', props.atoms.$all )
+          .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
+          .molequul( 'layout', props.atoms.$filtered );
 
 
         // binding window resizing
@@ -330,7 +428,7 @@
   };
 
 
-  $.molequul.position = usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
+  $.molequul.position = $.molequul.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
 
   // molequul code begin
   $.fn.molequul = function( firstArg ) { 
