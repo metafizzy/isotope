@@ -163,7 +163,6 @@
       this.molequul( 'getMasonryColCount', props );
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        // var colYs = $.molequul.resetColYs( props );
         this
           .molequul( 'masonryResetLayoutProps', props )
           .molequul( 'layout', props.atoms.$filtered );
@@ -180,9 +179,8 @@
     // ====================== ClearFloat ======================
     
     clearFloat : function( props ) {
-      
       return this.each( function() {
-        var $this = $(this).
+        var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
             x, y, position;
@@ -223,25 +221,6 @@
       var props = this.data('molequul'),
           layoutMode = props.opts.layoutMode ;
 
-      // switch ( props.opts.layoutMode.toLowerCase().replace(/[ -]/g, '') ) {
-      //   case 'clearfloat' :
-      //     layoutMode = 'clearFloat';
-      //     break;
-      //   case 'masonrysinglecolumn' :
-      //     layoutMode = 'masonrySingleColumn';
-      //     break;
-      //   default :
-      //     layoutMode = 'masonryMultiColumn';
-      // }
-
-      // props.clearFloat = {
-      //   x : 0,
-      //   y : 0,
-      //   height : 0
-      // };
-      // 
-      // props.width = this.width();
-
       // layout logic
       var layoutMethod = layoutMode;
       if ( layoutMethod === 'masonry' ) {
@@ -251,8 +230,6 @@
       $elems.molequul( layoutMethod, props );
 
       // set the height of the container to the tallest column
-      // props.containerHeight = Math.max.apply( Math, props.colYs );
-      // props.containerHeight = props.clearFloat.height;
       this.molequul( layoutMode + 'MeasureContainerHeight', props );
       var containerStyle    = { height: props.containerHeight - props.posTop };
       props.styleQueue.push({ $el: this, style: containerStyle });
