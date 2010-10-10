@@ -81,25 +81,35 @@
         props.elemCount ++;
       });
     },
+
+    getPrevProp : function( property, props ) {
+      return props.prevOpts && props.prevOpts[ property ] ? 
+        props.prevOpts[ property ] : undefined
+    },
     
     // used on all the filtered cards, $cards.filtered
     sort : function( $elems ) {
       var props  = this.data('molequul'),
-          sortBy =  props.opts.sortBy;
+          sortBy =  props.opts.sortBy,
+          sortDir = props.opts.sortDir,
+          previousFilter  = $.molequul.getPrevProp( 'filter', props ),
+          previousSortBy  = $.molequul.getPrevProp( 'sortBy', props ),
+          previousSortDir = $.molequul.getPrevProp( 'sortDir', props );
       // don't proceed if there is nothing to sort by
-      if ( !sortBy ) {
+      // or if previousFilter == filter AND sortBy == previous Sort by
+      if ( !sortBy || ( props.opts.filter === previousFilter && sortBy === previousSortBy && sortDir === previousSortDir ) ) {
         return this;
       }
-      var sortDir = props.opts.sortDir,
-          getSorter = function( elem ) {
-            return $(elem).data('molequul-sort-data')[ sortBy ];
-          };
-      console.log( sortBy );
+      
+      var getSorter = function( elem ) {
+        return $(elem).data('molequul-sort-data')[ sortBy ];
+      };
+      // console.log( sortBy );
       
       
       $elems.sort( function( alpha, beta ) {
         var a = getSorter( alpha ),
-            b = getSorter( beta )
+            b = getSorter( beta );
         return ( a > b ) ? 1 * sortDir : ( a < b ) ? -1 * sortDir : 0;
       });
       
@@ -370,7 +380,10 @@
         this.find( props.opts.selector ) : 
         this.children();
       
-      this.css('position', 'relative');
+      this.css({
+        overflow : 'hidden',
+        position : 'relative'
+      });
 
       cardStyle = { position: 'absolute' };
       if ( $.molequul.usingTransforms ) {
@@ -439,12 +452,12 @@
         // checks if masonry has been called before on this object
         props.initialized = !!data;
 
-        var previousOptions = props.initialized ? data.opts : {};
+        props.prevOpts = props.initialized ? data.opts : {};
 
         props.opts = $.extend(
           {},
           $.molequul.defaults,
-          previousOptions,
+          props.prevOpts,
           options
         );
         
@@ -453,7 +466,7 @@
         }
         
         
-        if ( previousOptions.layoutMode && previousOptions.layoutMode !== props.opts.layoutMode ) {
+        if ( props.prevOpts.layoutMode && props.prevOpts.layoutMode !== props.opts.layoutMode ) {
           $this.molequul( props.opts.layoutMode + 'Setup', props );
         }
         
