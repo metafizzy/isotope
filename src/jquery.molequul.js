@@ -25,7 +25,8 @@
       animationEngine : 'best-available',
       animationOptions: {
         queue: false
-      }
+      },
+      sortDir : 1
     },
     
     usingTransforms : Modernizr.csstransforms && Modernizr.csstransitions,
@@ -62,11 +63,51 @@
       return this;
     },
     
-    // used on all the filtered cards, $cards.filtered
-    sort : function() {
-      
+    // ====================== Sorting ======================
+    
+    
+    addSortData : function( props ) {
+      return this.each(function(){
+        var $this = $(this),
+            sortData = {},
+            getSortData = props.opts.getSortData;
+        // get value for sort data based on fn( $elem ) passed in
+        for ( var key in getSortData ) {
+          sortData[ key ] = getSortData[ key ]( $this );
+        }
+        // apply sort data to $element
+        $this.data( 'molequul-sort-data', sortData );
+        // increment element count
+        props.elemCount ++;
+      });
     },
     
+    // used on all the filtered cards, $cards.filtered
+    sort : function( $elems ) {
+      var props  = this.data('molequul'),
+          sortBy =  props.opts.sortBy;
+      // don't proceed if there is nothing to sort by
+      if ( !sortBy ) {
+        return this;
+      }
+      var sortDir = props.opts.sortDir,
+          getSorter = function( elem ) {
+            return $(elem).data('molequul-sort-data')[ sortBy ];
+          };
+      console.log( sortBy );
+      
+      
+      $elems.sort( function( alpha, beta ) {
+        var a = getSorter( alpha ),
+            b = getSorter( beta )
+        return ( a > b ) ? 1 * sortDir : ( a < b ) ? -1 * sortDir : 0;
+      });
+      
+      return this;
+    },
+    
+
+    // ====================== Layout ======================
 
     pushPosition : function( x, y, props ) {
       var position = $.molequul.position( x, y );
@@ -74,7 +115,7 @@
       return this;
     },
 
-    // ====================== masonry layout methods ======================
+    // ====================== masonry ======================
     
     placeBrick : function( setCount, setY, props ) {
       // here, `this` refers to a child element or "brick"
@@ -95,7 +136,7 @@
       // position the brick
       x = props.colW * shortCol + props.posLeft;
       y = minimumY;
-      $this.molequul( 'pushPosition', x, y, props );
+      this.molequul( 'pushPosition', x, y, props );
 
       // apply setHeight to necessary columns
       for ( i=0; i < setSpan; i++ ) {
@@ -320,9 +361,10 @@
     
     // only run though on initial init
     setup : function( props ) {
-      // var props = this.data('molequul');
+
       props.atoms = {};
       props.styleQueue = [];
+      props.elemCount = 0;
       // need to get cards
       props.atoms.$all = props.opts.selector ? 
         this.find( props.opts.selector ) : 
@@ -337,16 +379,26 @@
       }
       props.atoms.$all.css( cardStyle );
 
-      // 
-      switch ( props.opts.animationEngine ) {
-        // ****  change option to lower case
+      // sorting
+      var originalOrderSorter = {
+        'original-order' : function( $elem ) {
+          return props.elemCount;
+        }
+      };
+      props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
+
+      // add sort data to each elem
+      props.atoms.$all.molequul( 'addSortData', props );
+
+      // get applyStyleFnName
+      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _-]/g, '') ) {
         case 'none' :
           props.applyStyleFnName = 'css';
           break;
         case 'jquery' :
           props.applyStyleFnName = 'animate';
           break;
-        case 'best-available' :
+        case 'bestavailable' :
         default :
           props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
           break;
@@ -406,7 +458,9 @@
         }
         
 
-        $this.molequul( 'filter', props.atoms.$all )
+        $this
+          .molequul( 'filter', props.atoms.$all )
+          .molequul( 'sort', props.atoms.$filtered )
           .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
           .molequul( 'layout', props.atoms.$filtered, callback );
 
