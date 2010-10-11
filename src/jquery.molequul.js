@@ -57,7 +57,7 @@
         
         props.styleQueue.push({ $el: $cardsToShow, style: props.opts.visibleStyle });
         $cardsToShow.removeClass( hiddenClass );
-
+        // console.log( $cardsToShow.length, $cardsToHide.length )
       }
       
       return this;
@@ -82,32 +82,34 @@
       });
     },
 
-    getPrevProp : function( property, props ) {
-      return props.prevOpts && props.prevOpts[ property ] ? 
-        props.prevOpts[ property ] : undefined
+    isNewProp : function( property, props ) {
+      if ( !props.initialized ) {
+        return true;
+      }
+      var previousProp = props.prevOpts[ property ] ? 
+        props.prevOpts[ property ] : undefined;
+      return ( props.opts[ property ] !== previousProp );
     },
     
     // used on all the filtered cards, $cards.filtered
-    sort : function( $elems ) {
-      var props  = this.data('molequul'),
-          sortBy =  props.opts.sortBy,
-          sortDir = props.opts.sortDir,
-          previousFilter  = $.molequul.getPrevProp( 'filter', props ),
-          previousSortBy  = $.molequul.getPrevProp( 'sortBy', props ),
-          previousSortDir = $.molequul.getPrevProp( 'sortDir', props );
+    sort : function( props ) {
+      var sortBy =  props.opts.sortBy,
+          sortDir = props.opts.sortDir;
+
       // don't proceed if there is nothing to sort by
       // or if previousFilter == filter AND sortBy == previous Sort by
-      if ( !sortBy || ( props.opts.filter === previousFilter && sortBy === previousSortBy && sortDir === previousSortDir ) ) {
+      if ( !sortBy  || ( !props.isNew.filter && !props.isNew.sortBy && !props.isNew.sortDir ) ) {
         return this;
       }
       
+      // console.log('sorting...', sortBy, sortDir);
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
       };
       // console.log( sortBy );
       
-      
-      $elems.sort( function( alpha, beta ) {
+      // var sortDir = props.opts.sortDir;
+      props.atoms.$filtered.sort( function( alpha, beta ) {
         var a = getSorter( alpha ),
             b = getSorter( beta );
         return ( a > b ) ? 1 * sortDir : ( a < b ) ? -1 * sortDir : 0;
@@ -303,6 +305,13 @@
     // accepts cards-to-be-laid-out and colYs to start with
     layout : function( $elems, callback ) {
 
+      // var filteredNames = '';
+      // $elems.each(function(){
+      //   filteredNames += $(this).find('h2').text() + ' '
+      // })
+      // console.log( filteredNames )
+
+
       var props = this.data('molequul'),
           layoutMode = props.opts.layoutMode ;
 
@@ -373,6 +382,7 @@
     setup : function( props ) {
 
       props.atoms = {};
+      props.isNew = {};
       props.styleQueue = [];
       props.elemCount = 0;
       // need to get cards
@@ -439,7 +449,7 @@
       return this;
     },
     
-
+    watchedProps : [ 'filter', 'sortBy', 'sortDir' ],
     
     init : function( options, callback ) {
 
@@ -471,9 +481,22 @@
         }
         
 
+        // check if watched properties are new
+        $.each( $.molequul.watchedProps, function( i, propName ){
+          props.isNew[ propName ] = $.molequul.isNewProp( propName, props )
+        });
+        
+        
+        // console.log( props.isNew )
+        
+        
+        if ( props.isNew.filter ) {
+          $this.molequul( 'filter', props.atoms.$all );
+        }
+
+
         $this
-          .molequul( 'filter', props.atoms.$all )
-          .molequul( 'sort', props.atoms.$filtered )
+          .molequul( 'sort', props )
           .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
           .molequul( 'layout', props.atoms.$filtered, callback );
 
