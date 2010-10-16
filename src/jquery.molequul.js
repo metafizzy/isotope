@@ -31,6 +31,15 @@
     
     usingTransforms : Modernizr.csstransforms && Modernizr.csstransitions,
     
+    isNewProp : function( property, props ) {
+      if ( !props.initialized ) {
+        return true;
+      }
+      var previousProp = props.prevOpts[ property ];
+      return ( props.opts[ property ] !== previousProp );
+    },
+    
+    // ====================== Filtering ======================
 
     filter : function( $cards ) {
       var props  = this.data('molequul'),
@@ -82,15 +91,6 @@
       });
     },
 
-    isNewProp : function( property, props ) {
-      if ( !props.initialized ) {
-        return true;
-      }
-      var previousProp = props.prevOpts[ property ] ? 
-        props.prevOpts[ property ] : undefined;
-      return ( props.opts[ property ] !== previousProp );
-    },
-    
     getSortFn : function( sortBy, sortDir ) {
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
@@ -98,7 +98,7 @@
       return function( alpha, beta ) {
         var a = getSorter( alpha ),
             b = getSorter( beta );
-        return ( a > b ) ? 1 * sortDir : ( a < b ) ? -1 * sortDir : 0;
+        return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
       }
     },
     
@@ -297,6 +297,7 @@
         .molequul( 'layout', props.atoms.$filtered );
     },
 
+
     // ====================== General Methods ======================
 
     
@@ -355,14 +356,8 @@
       //    or anyone else's crazy jquery fun
       this.data( 'molequul', props );
       
-      
-      
       return this;
-      
     },
-    
-  
-
     
     resize : function() {
       var props = this.data('molequul');
@@ -532,7 +527,6 @@
     } else if ( !firstArg || typeof firstArg === 'object' ) {
       return $.molequul.init.apply( this, arguments );
     }
-
 
   };
 
