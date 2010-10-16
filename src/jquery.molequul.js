@@ -91,29 +91,28 @@
       return ( props.opts[ property ] !== previousProp );
     },
     
-    // used on all the filtered cards, $cards.filtered
-    sort : function( props ) {
-      var sortBy =  props.opts.sortBy,
-          sortDir = props.opts.sortDir;
-
-      // don't proceed if there is nothing to sort by
-      // or if previousFilter == filter AND sortBy == previous Sort by
-      if ( !sortBy  || ( !props.isNew.filter && !props.isNew.sortBy && !props.isNew.sortDir ) ) {
-        return this;
-      }
-      
-      // console.log('sorting...', sortBy, sortDir);
+    getSortFn : function( sortBy, sortDir ) {
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
       };
-      // console.log( sortBy );
-      
-      // var sortDir = props.opts.sortDir;
-      props.atoms.$filtered.sort( function( alpha, beta ) {
+      return function( alpha, beta ) {
         var a = getSorter( alpha ),
             b = getSorter( beta );
         return ( a > b ) ? 1 * sortDir : ( a < b ) ? -1 * sortDir : 0;
-      });
+      }
+    },
+    
+    randomSortFn : function() {
+      return Math.random() > 5 ? 1 : -1;
+    },
+    
+    // used on all the filtered cards, $cards.filtered
+    sort : function( props ) {
+      
+      var sortFn = props.opts.sortBy === 'random' ? $.molequul.randomSortFn :
+        $.molequul.getSortFn( props.opts.sortBy, props.opts.sortDir );
+      
+      props.atoms.$filtered.sort( sortFn );
       
       return this;
     },
@@ -449,7 +448,7 @@
       return this;
     },
     
-    watchedProps : [ 'filter', 'sortBy', 'sortDir' ],
+    watchedProps : [ 'filter', 'sortBy', 'sortDir', 'layoutMode' ],
     
     init : function( options, callback ) {
 
@@ -474,30 +473,25 @@
         if ( !props.initialized ) {
           $this.molequul( 'setup', props );
         }
-        
-        
-        if ( props.prevOpts.layoutMode && props.prevOpts.layoutMode !== props.opts.layoutMode ) {
-          $this.molequul( props.opts.layoutMode + 'Setup', props );
-        }
-        
 
         // check if watched properties are new
         $.each( $.molequul.watchedProps, function( i, propName ){
           props.isNew[ propName ] = $.molequul.isNewProp( propName, props )
         });
-        
-        
-        // console.log( props.isNew )
-        
+
+        if ( props.isNew.layoutMode ) {
+          $this.molequul( props.opts.layoutMode + 'Setup', props );
+        }
         
         if ( props.isNew.filter ) {
           $this.molequul( 'filter', props.atoms.$all );
         }
 
+        if ( props.isNew.filter || props.isNew.sortBy || props.isNew.sortDir ) {
+          $this.molequul( 'sort', props );
+        }
 
-        $this
-          .molequul( 'sort', props )
-          .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
+        $this.molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
           .molequul( 'layout', props.atoms.$filtered, callback );
 
 
