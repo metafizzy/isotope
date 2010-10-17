@@ -227,9 +227,7 @@
       this.molequul( 'getMasonryColCount', props );
       if ( props.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        this
-          .molequul( 'masonryResetLayoutProps', props )
-          .molequul( 'layout', props.atoms.$filtered );
+        this.molequul( 'reLayout', props );
       }
 
       return this;
@@ -294,13 +292,12 @@
     
     clearFloatResize : function( props ) {
       props.width = this.width();
-      return this
-        .molequul( 'clearFloatResetLayoutProps', props )
-        .molequul( 'layout', props.atoms.$filtered );
+      return this.molequul( 'reLayout', props );
     },
 
 
     // ====================== General Methods ======================
+
 
     
     // used on collection of cards (should be filtered, and sorted before )
@@ -356,9 +353,16 @@
     
     resize : function() {
       var props = this.data('molequul');
-      props.initialized = true;
 
       return this.molequul( props.opts.layoutMode + 'Resize', props );
+    },
+    
+    reLayout : function( props ) {
+      props = props || this.data('molequul');
+      props.initialized = true;
+      return this
+        .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
+        .molequul( 'layout', props.atoms.$filtered );
     },
     
     append : function() {
