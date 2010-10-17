@@ -79,9 +79,10 @@
       return this.each(function(){
         var $this = $(this),
             sortData = {},
-            getSortData = props.opts.getSortData;
+            getSortData = props.opts.getSortData,
+            key;
         // get value for sort data based on fn( $elem ) passed in
-        for ( var key in getSortData ) {
+        for ( key in getSortData ) {
           sortData[ key ] = getSortData[ key ]( $this );
         }
         // apply sort data to $element
@@ -99,7 +100,7 @@
         var a = getSorter( alpha ),
             b = getSorter( beta );
         return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
-      }
+      };
     },
     
     randomSortFn : function() {
@@ -136,7 +137,7 @@
           i         = setY.length,
           shortCol  = i,
           setSpan   = props.colCount + 1 - i,
-          position, x, y ;
+          x, y ;
       // Which column has the minY value, closest to the left
       while (i--) {
         if ( setY[i] === minimumY ) {
@@ -178,12 +179,13 @@
           // brick spans more than one column
           // how many different places could this brick fit horizontally
           var groupCount = props.colCount + 1 - colSpan,
-              groupY = [];
+              groupY = [],
+              groupColY;
 
           // for each group potential horizontal position
-          for ( i=0; i < groupCount; i++ ) {
+          for ( var i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            var groupColY = props.colYs.slice( i, i+colSpan );
+            groupColY = props.colYs.slice( i, i+colSpan );
             // and get the max value of the array
             groupY[i] = Math.max.apply( Math, groupColY );
           }
@@ -235,7 +237,7 @@
     
     masonryMeasureContainerHeight : function( props ) {
       props.containerHeight = Math.max.apply( Math, props.colYs );
-      return this
+      return this;
     },
     
     masonrySetup : function( props ) {
@@ -305,18 +307,11 @@
     // accepts cards-to-be-laid-out and colYs to start with
     layout : function( $elems, callback ) {
 
-      // var filteredNames = '';
-      // $elems.each(function(){
-      //   filteredNames += $(this).find('h2').text() + ' '
-      // })
-      // console.log( filteredNames )
-
-
       var props = this.data('molequul'),
-          layoutMode = props.opts.layoutMode ;
+          layoutMode = props.opts.layoutMode,
+          layoutMethod = layoutMode;
 
       // layout logic
-      var layoutMethod = layoutMode;
       if ( layoutMethod === 'masonry' ) {
         layoutMethod = props.opts.masonrySingleMode ? 'masonrySingleColumn' : 'masonryMultiColumn';
       }
@@ -389,7 +384,7 @@
         position : 'relative'
       });
 
-      cardStyle = { position: 'absolute' };
+      var cardStyle = { position: 'absolute' };
       if ( $.molequul.usingTransforms ) {
         cardStyle.left = 0;
         cardStyle.top = 0;
@@ -408,7 +403,7 @@
       props.atoms.$all.molequul( 'addSortData', props );
 
       // get applyStyleFnName
-      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _-]/g, '') ) {
+      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
         case 'none' :
           props.applyStyleFnName = 'css';
           break;
@@ -418,7 +413,6 @@
         case 'bestavailable' :
         default :
           props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
-          break;
       }
       
       // get top left position of where the bricks should be
@@ -438,7 +432,7 @@
       this.molequul( props.opts.layoutMode + 'Setup', props );
       
       // save data
-      this.data( 'molequul', props )
+      this.data( 'molequul', props );
 
       return this;
     },
@@ -471,7 +465,7 @@
 
         // check if watched properties are new
         $.each( $.molequul.watchedProps, function( i, propName ){
-          props.isNew[ propName ] = $.molequul.isNewProp( propName, props )
+          props.isNew[ propName ] = $.molequul.isNewProp( propName, props );
         });
 
         if ( props.isNew.layoutMode ) {
@@ -493,7 +487,7 @@
         // binding window resizing
         if ( props.opts.resizeable ) {
           $(window).bind('smartresize.molequul', function() { $this.molequul( 'resize' ); } );
-        } else if ( !props.opts.resizeable && !!previousOptions.resizeable ) {
+        } else if ( !props.opts.resizeable && !!props.prevOpts.resizeable ) {
           $(window).unbind('smartresize.molequul');
         }
 
@@ -502,7 +496,7 @@
     },
     
     translate : function( x, y ) {
-      return { translate : [ x, y ] }
+      return { translate : [ x, y ] };
     },
     
     positionAbs : function( x, y ) {

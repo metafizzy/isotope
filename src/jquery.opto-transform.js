@@ -5,8 +5,6 @@
   // if props.transform hasn't been set, do it already
   $.props.transform = getStyleProperty('transform');
   
-  // console.log( getStyleProperty('transform') )
-
   var transformFnUtilsDimensional = {
         '2d' : {
           translate : function ( position ) {
@@ -26,7 +24,6 @@
         }
       },
       dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
-      // usingTransforms = false,
       transformFnUtils = transformFnUtilsDimensional[ dimensions ];
 
 
@@ -56,7 +53,6 @@
         $( elem ).data('transform', data );
 
         value = valueFns.join(' ');
-        // console.log( value )
         
         // set name to vendor specific property
         name = $.props.transform;
@@ -64,8 +60,6 @@
         break;
     }
 
-    // if ( name === 'transform') {
-    // }
     return _jQueryStyle.apply( this, arguments );
   };
   
