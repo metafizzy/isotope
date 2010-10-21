@@ -39,6 +39,66 @@
       return ( props.opts[ property ] !== previousProp );
     },
     
+    // ====================== Adding ======================
+    
+    addSortData : function( props ) {
+      return this.each(function(){
+        var $this = $(this),
+            sortData = {},
+            getSortData = props.opts.getSortData,
+            key;
+        // get value for sort data based on fn( $elem ) passed in
+        for ( key in getSortData ) {
+          sortData[ key ] = getSortData[ key ]( $this );
+        }
+        // apply sort data to $element
+        $this.data( 'molequul-sort-data', sortData );
+        // increment element count
+        props.elemCount ++;
+      });
+    },
+    
+    setupAtoms : function( props ) {
+      // base style for atoms
+      var atomStyle = { position: 'absolute' };
+      if ( $.molequul.usingTransforms ) {
+        atomStyle.left = 0;
+        atomStyle.top = 0;
+      }
+
+      // add sort data to each elem
+      return this.molequul( 'addSortData', props ).css( atomStyle );
+    },
+    
+    getAtoms : function( props ) {
+      return props.opts.selector ? this.filter( props.opts.selector ) : this;
+    },
+    
+    // adds a jQuery object of items to a molequul container
+    addTo : function( $molecule ) {
+      var props = $molecule.data('molequul'),
+          $newAtoms = props.opts.selector ? this.filter( props.opts.selector ) : this;
+      $newAtoms.molequul( 'setupAtoms', props )
+      // console.log( $newAtoms )
+      props.atoms.$all = props.atoms.$all.add( $newAtoms );
+      props.atoms.$filtered = props.atoms.$filtered.add( $newAtoms );
+      // console.log( prevLen, props.atoms.$all.length )
+      return $newAtoms;
+    },
+    
+    add : function( $content ) {
+      $content.molequul( 'addTo', this );
+      return this;
+    },
+    
+    append : function( $content ) {
+      // console.log('appedning')
+      this.append( $content );
+      $content.molequul( 'addTo', this );
+      // console.log( this );
+      return this.molequul('init');
+    },
+    
     // ====================== Filtering ======================
 
     filter : function( $cards ) {
@@ -75,23 +135,6 @@
     // ====================== Sorting ======================
     
     
-    addSortData : function( props ) {
-      return this.each(function(){
-        var $this = $(this),
-            sortData = {},
-            getSortData = props.opts.getSortData,
-            key;
-        // get value for sort data based on fn( $elem ) passed in
-        for ( key in getSortData ) {
-          sortData[ key ] = getSortData[ key ]( $this );
-        }
-        // apply sort data to $element
-        $this.data( 'molequul-sort-data', sortData );
-        // increment element count
-        props.elemCount ++;
-      });
-    },
-
     getSortFn : function( sortBy, sortDir ) {
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
@@ -365,12 +408,6 @@
         .molequul( 'layout', props.atoms.$filtered );
     },
     
-    append : function() {
-      
-    },
-    
-
-    
     // only run though on initial init
     setup : function( props ) {
 
@@ -388,13 +425,6 @@
         position : 'relative'
       });
 
-      var cardStyle = { position: 'absolute' };
-      if ( $.molequul.usingTransforms ) {
-        cardStyle.left = 0;
-        cardStyle.top = 0;
-      }
-      props.atoms.$all.css( cardStyle );
-
       // sorting
       var originalOrderSorter = {
         'original-order' : function( $elem ) {
@@ -403,8 +433,7 @@
       };
       props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
 
-      // add sort data to each elem
-      props.atoms.$all.molequul( 'addSortData', props );
+      props.atoms.$all.molequul( 'setupAtoms', props );
 
       // get applyStyleFnName
       switch ( props.opts.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
@@ -466,7 +495,7 @@
         if ( !props.initialized ) {
           $this.molequul( 'setup', props );
         }
-
+        
         // check if watched properties are new
         $.each( $.molequul.watchedProps, function( i, propName ){
           props.isNew[ propName ] = $.molequul.isNewProp( propName, props );
@@ -497,6 +526,11 @@
 
       });
       
+    },
+    
+    appendToLayout : function( $content ) {
+      var $newAtoms = $content.molequul( 'addTo', this );
+      return this.molequul( 'layout', $newAtoms );
     },
     
     translate : function( x, y ) {
