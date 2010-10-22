@@ -5,28 +5,35 @@
   // if props.transform hasn't been set, do it already
   $.props.transform = getStyleProperty('transform');
   
-  var transformFnUtilsDimensional = {
-        '2d' : {
-          translate : function ( position ) {
-            return 'translate(' + position[0] + 'px, ' + position[1] + 'px)';
-          },
-          scale :  function ( scale ) {
-            return 'scale(' + scale[0] + ')';
-          }
+  var optoTransform = {
+    fnUtilsDimensional : {
+      '2d' : {
+        translate : function ( position ) {
+          return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
         },
-        '3d' : {
-          translate : function ( position ) {
-            return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0)';
-          },
-          scale : function ( scale ) {
-            return 'scale3d(' + scale[0] + ', ' + scale[0] + ', 1)';
-          }
+        scale :  function ( scale ) {
+          return 'scale(' + scale[0] + ') ';
         }
       },
-      dimensions = Modernizr.csstransforms3d ? '3d' : '2d',
-      transformFnUtils = transformFnUtilsDimensional[ dimensions ];
+      '3d' : {
+        translate : function ( position ) {
+          return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
+        },
+        scale : function ( scale ) {
+          return 'scale3d(' + scale[0] + ', ' + scale[0] + ', 1) ';
+        }
+      }
+    },
+    dimensions : Modernizr.csstransforms3d ? '3d' : '2d',
+    // always do translate then scale
+    transforms : [ 'translate', 'scale' ]
+  };
 
-
+  optoTransform.fnUtils = optoTransform.fnUtilsDimensional[ optoTransform.dimensions ];
+  optoTransform.transformsLen = 2;
+  
+  
+  
   var _jQueryStyle = $.style;
   $.style = function ( elem, name, value  ) {
 
@@ -34,25 +41,30 @@
       case 'scale' :
       case 'translate' :
         // unpack current transform data
-        var data =  $( elem ).data('transform') || {},
+        var data =  $( elem ).data('opto-transform') || {},
         // extend new value over current data
             newData = {},
-            valueFns = [],
-            fnName;
+            fnName,
+            transformObj = {};
         newData[ name ] = value;
         $.extend( data, newData );
 
         for ( fnName in data ) {
           var transformValue = data[ fnName ],
-              getFn = transformFnUtils[ fnName ],
-              valueFn = getFn( transformValue );
-          valueFns.push( valueFn );
+              getFn = optoTransform.fnUtils[ fnName ];
+          transformObj[ fnName ] = getFn( transformValue );
         }
 
-        // set data back in elem
-        $( elem ).data('transform', data );
+        // get proper order
+        var translateFn = transformObj.translate || '',
+            scaleFn = transformObj.scale || '',
+            valueFns = translateFn + scaleFn;
 
-        value = valueFns.join(' ');
+        // set data back in elem
+        $( elem ).data('opto-transform', data );
+
+        // sorting so scale always comes before 
+        value = valueFns;
         
         // set name to vendor specific property
         name = $.props.transform;
