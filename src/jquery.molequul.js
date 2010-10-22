@@ -390,18 +390,16 @@
       callback = callback || function(){};
       callback.call( $elems );
 
-      // set all data so we can retrieve it for appended appendedContent
-      //    or anyone else's crazy jquery fun
-      this.data( 'molequul', props );
-      
       return this;
     },
+    
     
     resize : function() {
       var props = this.data('molequul');
 
       return this.molequul( props.opts.layoutMode + 'Resize', props );
     },
+    
     
     reLayout : function( props ) {
       props = props || this.data('molequul');
@@ -526,6 +524,11 @@
         } else if ( !props.opts.resizeable && !!props.prevOpts.resizeable ) {
           $(window).unbind('smartresize.molequul');
         }
+
+
+        // set all data so we can retrieve it for appended appendedContent
+        //    or anyone else's crazy jquery fun
+        $this.data( 'molequul', props );
 
       });
       
