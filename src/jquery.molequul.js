@@ -277,7 +277,7 @@
     },
     
     masonryMeasureContainerHeight : function( props ) {
-      props.containerHeight = Math.max.apply( Math, props.colYs );
+      props.containerHeight = Math.max.apply( Math, props.colYs ) - props.posTop;
       return this;
     },
     
@@ -360,7 +360,10 @@
 
       // set the height of the container to the tallest column
       this.molequul( layoutMode + 'MeasureContainerHeight', props );
-      var containerStyle    = { height: props.containerHeight - props.posTop };
+      var containerStyle    = { height: props.containerHeight };
+      
+
+
       props.styleQueue.push({ $el: this, style: containerStyle });
 
 
