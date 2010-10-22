@@ -82,6 +82,8 @@
       // console.log( $newAtoms )
       props.atoms.$all = props.atoms.$all.add( $newAtoms );
       props.atoms.$filtered = props.atoms.$filtered.add( $newAtoms );
+      props.appending = true;
+      // $molecule.data( 'molequul', props );
       // console.log( prevLen, props.atoms.$all.length )
       return $newAtoms;
     },
@@ -506,11 +508,11 @@
           $this.molequul( props.opts.layoutMode + 'Setup', props );
         }
         
-        if ( props.isNew.filter ) {
+        if ( props.isNew.filter || props.appending ) {
           $this.molequul( 'filter', props.atoms.$all );
         }
 
-        if ( props.isNew.filter || props.isNew.sortBy || props.isNew.sortDir ) {
+        if ( props.isNew.filter || props.isNew.sortBy || props.isNew.sortDir || props.appending ) {
           $this.molequul( 'sort', props );
         }
 
@@ -525,6 +527,7 @@
           $(window).unbind('smartresize.molequul');
         }
 
+        props.appending = false;
 
         // set all data so we can retrieve it for appended appendedContent
         //    or anyone else's crazy jquery fun
