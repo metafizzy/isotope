@@ -15,12 +15,10 @@
       containerClass : 'molequul',
       hiddenClass : 'molequul-hidden',
       hiddenStyle : {
-        opacity : 0,
-        scale : [ 0.001 ]
+        opacity : 0
       },
       visibleStyle : {
-        opacity : 1,
-        scale : [ 1 ]
+        opacity : 1
       },
       animationEngine : 'best-available',
       animationOptions: {
@@ -557,6 +555,18 @@
     }
     
   };
+
+  // add transform default styles for filtered classes
+  if ( Modernizr.csstransforms ) {
+    $.molequul.defaults.hiddenStyle = {
+      opacity : 0,
+      scale : [ 0.001 ]
+    };
+    $.molequul.defaults.visibleStyle = {
+      opacity : 1,
+      scale : [ 1 ]
+    };
+  }
 
 
   // molequul code begin

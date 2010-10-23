@@ -56,6 +56,8 @@
         }
 
         // get proper order
+        // ideally, we could loop through this give an array, but since we only have
+        // a couple transforms we're keeping track of, we'll do it like so
         var translateFn = transformObj.translate || '',
             scaleFn = transformObj.scale || '',
             valueFns = translateFn + scaleFn;
