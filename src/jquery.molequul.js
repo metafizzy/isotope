@@ -29,8 +29,6 @@
       sortDir : 1
     },
     
-    usingTransforms : Modernizr.csstransforms && Modernizr.csstransitions,
-    
     isNewProp : function( property, props ) {
       if ( !props.initialized ) {
         return true;
@@ -61,7 +59,7 @@
     setupAtoms : function( props ) {
       // base style for atoms
       var atomStyle = { position: 'absolute' };
-      if ( $.molequul.usingTransforms ) {
+      if ( props.usingTransforms ) {
         atomStyle.left = 0;
         atomStyle.top = 0;
       }
@@ -93,7 +91,7 @@
       return this;
     },
     
-    append : function( $content ) {
+    insert : function( $content ) {
       // console.log('appedning')
       this.append( $content );
       $content.molequul( 'addTo', this );
@@ -167,7 +165,7 @@
     // ====================== Layout ======================
 
     pushPosition : function( x, y, props ) {
-      var position = $.molequul.position( x, y );
+      var position = props.positionFn( x, y );
       props.styleQueue.push({ $el: this, style: position });
       return this;
     },
@@ -428,6 +426,26 @@
         position : 'relative'
       });
 
+      var jQueryAnimation = false;
+
+      // get applyStyleFnName
+      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
+        case 'none' :
+          props.applyStyleFnName = 'css';
+          break;
+        case 'jquery' :
+          props.applyStyleFnName = 'animate';
+          jQueryAnimation = true;
+          break;
+        case 'bestavailable' :
+        default :
+          props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
+      }
+      
+      props.usingTransforms = Modernizr.csstransforms && Modernizr.csstransitions && !jQueryAnimation;
+
+      props.positionFn = props.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
+      
       // sorting
       var originalOrderSorter = {
         'original-order' : function( $elem ) {
@@ -437,19 +455,7 @@
       props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
 
       props.atoms.$all.molequul( 'setupAtoms', props );
-
-      // get applyStyleFnName
-      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
-        case 'none' :
-          props.applyStyleFnName = 'css';
-          break;
-        case 'jquery' :
-          props.applyStyleFnName = 'animate';
-          break;
-        case 'bestavailable' :
-        default :
-          props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
-      }
+      
       
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
@@ -526,7 +532,7 @@
         } else if ( !props.opts.resizeable && !!props.prevOpts.resizeable ) {
           $(window).unbind('smartresize.molequul');
         }
-
+        
         props.appending = false;
 
         // set all data so we can retrieve it for appended appendedContent
@@ -552,8 +558,6 @@
     
   };
 
-
-  $.molequul.position = $.molequul.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
 
   // molequul code begin
   $.fn.molequul = function( firstArg ) { 
