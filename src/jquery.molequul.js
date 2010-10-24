@@ -24,6 +24,7 @@
       animationOptions: {
         queue: false
       },
+      sortBy : 'index',
       sortDir : 1
     },
     
@@ -445,12 +446,12 @@
       props.positionFn = props.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
       
       // sorting
-      var originalOrderSorter = {
-        'original-order' : function( $elem ) {
+      var indexSorter = {
+        'index' : function( $elem ) {
           return props.elemCount;
         }
       };
-      props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
+      props.opts.getSortData = $.extend( indexSorter, props.opts.getSortData );
 
       props.atoms.$all.molequul( 'setupAtoms', props );
       
@@ -531,6 +532,7 @@
           $(window).unbind('smartresize.molequul');
         }
         
+        // reset this prop for next time
         props.appending = false;
 
         // set all data so we can retrieve it for appended appendedContent
