@@ -24,7 +24,7 @@
       animationOptions: {
         queue: false
       },
-      sortBy : 'index',
+      sortBy : 'original-order',
       sortDir : 1
     },
     
@@ -440,7 +440,7 @@
       
       // sorting
       var indexSorter = {
-        'index' : function( $elem ) {
+        'original-order' : function( $elem ) {
           return props.elemCount;
         }
       };
