@@ -439,12 +439,12 @@
       props.positionFn = props.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
       
       // sorting
-      var indexSorter = {
+      var originalOrderSorter = {
         'original-order' : function( $elem ) {
           return props.elemCount;
         }
       };
-      props.opts.getSortData = $.extend( indexSorter, props.opts.getSortData );
+      props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
 
       props.atoms.$all.molequul( 'setupAtoms', props );
       
