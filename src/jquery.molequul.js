@@ -93,32 +93,31 @@
     
     // ====================== Filtering ======================
 
-    filter : function( $cards ) {
+    filter : function( $atoms ) {
       var props  = this.data('molequul'),
           filter = props.opts.filter === '' ? '*' : props.opts.filter;
 
       if ( !filter ) {
-        props.atoms.$filtered = $cards;
+        props.atoms.$filtered = $atoms;
       } else {
         var hiddenClass    = props.opts.hiddenClass,
             hiddenSelector = '.' + hiddenClass,
-            $visibleCards  = $cards.not( hiddenSelector ),
-            $hiddenCards   = $cards.filter( hiddenSelector ),
-            $cardsToShow   = $hiddenCards;
+            $visibleAtoms  = $atoms.not( hiddenSelector ),
+            $hiddenAtoms   = $atoms.filter( hiddenSelector ),
+            $atomsToShow   = $hiddenAtoms;
 
-        props.atoms.$filtered = $cards.filter( filter );
+        props.atoms.$filtered = $atoms.filter( filter );
 
         if ( filter !== '*' ) {
-          $cardsToShow = $hiddenCards.filter( filter );
+          $atomsToShow = $hiddenAtoms.filter( filter );
 
-          var $cardsToHide = $visibleCards.not( filter ).toggleClass( hiddenClass );
-          $cardsToHide.addClass( hiddenClass );
-          props.styleQueue.push({ $el: $cardsToHide, style: props.opts.hiddenStyle });
+          var $atomsToHide = $visibleAtoms.not( filter ).toggleClass( hiddenClass );
+          $atomsToHide.addClass( hiddenClass );
+          props.styleQueue.push({ $el: $atomsToHide, style: props.opts.hiddenStyle });
         }
         
-        props.styleQueue.push({ $el: $cardsToShow, style: props.opts.visibleStyle });
-        $cardsToShow.removeClass( hiddenClass );
-        // console.log( $cardsToShow.length, $cardsToHide.length )
+        props.styleQueue.push({ $el: $atomsToShow, style: props.opts.visibleStyle });
+        $atomsToShow.removeClass( hiddenClass );
       }
       
       return this;
@@ -142,7 +141,7 @@
       return Math.random() > 5 ? 1 : -1;
     },
     
-    // used on all the filtered cards, $cards.filtered
+    // used on all the filtered atoms, $atoms.filtered
     sort : function( props ) {
       
       var sortFn = props.opts.sortBy === 'random' ? $.molequul.randomSortFn :
@@ -335,8 +334,8 @@
 
 
     
-    // used on collection of cards (should be filtered, and sorted before )
-    // accepts cards-to-be-laid-out and colYs to start with
+    // used on collection of atoms (should be filtered, and sorted before )
+    // accepts atoms-to-be-laid-out and colYs to start with
     layout : function( $elems, callback ) {
 
       var props = this.data('molequul'),
@@ -408,7 +407,7 @@
       props.isNew = {};
       props.styleQueue = [];
       props.elemCount = 0;
-      // need to get cards
+      // need to get atoms
       props.atoms.$all = props.opts.selector ? 
         this.find( props.opts.selector ) : 
         this.children();
