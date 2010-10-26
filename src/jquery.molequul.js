@@ -550,16 +550,16 @@
     }
     
   };
-
+  
   // add transform default styles for filtered classes
-  if ( Modernizr.csstransforms ) {
+  if ( Modernizr.csstransforms && !$.browser.opera ) {
     $.molequul.defaults.hiddenStyle = {
       opacity : 0,
-      scale : [ 0.001 ]
+      scale : 0.001
     };
     $.molequul.defaults.visibleStyle = {
       opacity : 1,
-      scale : [ 1 ]
+      scale : 1
     };
   }
 
