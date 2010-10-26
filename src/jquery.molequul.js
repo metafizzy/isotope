@@ -67,30 +67,6 @@
       return this.molequul( 'addSortData', props ).css( atomStyle );
     },
     
-    // ====================== Convenience methods ======================
-    
-    // adds a jQuery object of items to a molequul container
-    add : function( $content ) {
-      var props = this.data('molequul'),
-          $newAtoms = props.opts.selector ? $content.filter( props.opts.selector ) : $content;
-      $newAtoms.molequul( 'setupAtoms', props )
-      // add new atoms to atoms pools
-      props.atoms.$all = props.atoms.$all.add( $newAtoms );
-      props.atoms.$filtered = props.atoms.$filtered.add( $newAtoms );
-      props.appending = true;
-      return this;
-    },
-    
-    // convienence method for adding elements properly to any layout
-    insert : function( $content ) {
-      return this.append( $content ).molequul( 'add', $content ).molequul('init');
-    },
-    
-    // convienence method for working with Infinite Scroll
-    appended : function( $content ) {
-      return this.molequul( 'add', $content ).molequul( 'layout', $content );
-    },
-    
     // ====================== Filtering ======================
 
     filter : function( $atoms ) {
@@ -154,6 +130,15 @@
     
 
     // ====================== Layout ======================
+
+    
+    translate : function( x, y ) {
+      return { translate : [ x, y ] };
+    },
+    
+    positionAbs : function( x, y ) {
+      return { left: x, top: y };
+    },
 
     pushPosition : function( x, y, props ) {
       var position = props.positionFn( x, y );
@@ -330,12 +315,11 @@
     },
 
 
-    // ====================== General Methods ======================
-
+    // ====================== General Layout ======================
 
     
     // used on collection of atoms (should be filtered, and sorted before )
-    // accepts atoms-to-be-laid-out and colYs to start with
+    // accepts atoms-to-be-laid-out to start with
     layout : function( $elems, callback ) {
 
       var props = this.data('molequul'),
@@ -378,8 +362,9 @@
       props.styleQueue = [];
 
       // provide $elems as context for the callback
-      callback = callback || function(){};
-      callback.call( $elems );
+      if ( callback ) {
+        callback.call( $elems );
+      }
 
       return this;
     },
@@ -399,6 +384,8 @@
         .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
         .molequul( 'layout', props.atoms.$filtered );
     },
+    
+    // ====================== Setup and Init ======================
     
     // only run though on initial init
     setup : function( props ) {
@@ -480,7 +467,7 @@
             data = $this.data('molequul'),
             props = data || {};
 
-        // checks if masonry has been called before on this object
+        // checks if molquul has been called before on this object
         props.initialized = !!data;
 
         props.prevOpts = props.initialized ? data.opts : {};
@@ -535,17 +522,28 @@
       
     },
     
-    appendToLayout : function( $content ) {
-      var $newAtoms = $content.molequul( 'addTo', this );
-      return this.molequul( 'layout', $newAtoms );
+    // ====================== Convenience methods ======================
+    
+    // adds a jQuery object of items to a molequul container
+    add : function( $content ) {
+      var props = this.data('molequul'),
+          $newAtoms = props.opts.selector ? $content.filter( props.opts.selector ) : $content;
+      $newAtoms.molequul( 'setupAtoms', props )
+      // add new atoms to atoms pools
+      props.atoms.$all = props.atoms.$all.add( $newAtoms );
+      props.atoms.$filtered = props.atoms.$filtered.add( $newAtoms );
+      props.appending = true;
+      return this;
     },
     
-    translate : function( x, y ) {
-      return { translate : [ x, y ] };
+    // convienence method for adding elements properly to any layout
+    insert : function( $content ) {
+      return this.append( $content ).molequul( 'add', $content ).molequul('init');
     },
     
-    positionAbs : function( x, y ) {
-      return { left: x, top: y };
+    // convienence method for working with Infinite Scroll
+    appended : function( $content ) {
+      return this.molequul( 'add', $content ).molequul( 'layout', $content );
     }
     
   };
