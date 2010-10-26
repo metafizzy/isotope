@@ -2,96 +2,123 @@
 (function($){  
 
 
-  // if props.transform hasn't been set, do it already
-  $.props.transform = getStyleProperty('transform');
-  
-  var optoTransform = {
-    fnUtilsDimensional : {
-      '2d' : {
-        translate : function ( position ) {
-          return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
-        },
-        scale :  function ( scale ) {
-          return 'scale(' + scale[0] + ') ';
-        }
-      },
-      '3d' : {
+  $.optoTransform = {
+    
+    transformProp : getStyleProperty('transform'),
+    
+    fnUtils : Modernizr.csstransforms3d ? 
+      { // 2d transform functions
         translate : function ( position ) {
           return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
         },
         scale : function ( scale ) {
-          return 'scale3d(' + scale[0] + ', ' + scale[0] + ', 1) ';
+          return 'scale3d(' + scale + ', ' + scale + ', 1) ';
+        }
+      } :
+      { // 3d transform functions
+        translate : function ( position ) {
+          return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
+        },
+        scale :  function ( scale ) {
+          return 'scale(' + scale + ') ';
         }
       }
+    ,
+    
+    set : function( elem, name, value ) {
+
+      // unpack current transform data
+      var data =  $( elem ).data('transform') || {},
+      // extend new value over current data
+          newData = {},
+          fnName,
+          transformObj = {};
+      // overwrite new data
+      newData[ name ] = value;
+      $.extend( data, newData );
+
+      for ( fnName in data ) {
+        var transformValue = data[ fnName ],
+            getFn = $.optoTransform.fnUtils[ fnName ];
+        transformObj[ fnName ] = getFn( transformValue );
+      }
+
+      // get proper order
+      // ideally, we could loop through this give an array, but since we only have
+      // a couple transforms we're keeping track of, we'll do it like so
+      var translateFn = transformObj.translate || '',
+          scaleFn = transformObj.scale || '',
+          valueFns = translateFn + scaleFn;
+
+      // set data back in elem
+      $( elem ).data( 'transform', data );
+
+      // sorting so scale always comes before 
+      value = valueFns;
+
+      // set name to vendor specific property
+      elem.style[ $.optoTransform.transformProp ] = valueFns;
+
+    }
+  };
+  
+  // ==================== scale ===================
+  
+  $.cssNumber.scale = true;
+  
+  $.cssHooks.scale = {
+    set: function( elem, value ) {
+
+      if ( typeof value === 'string' ) {
+        value = parseFloat( value );
+      }
+
+      $.optoTransform.set( elem, 'scale', value )
+
     },
-    dimensions : Modernizr.csstransforms3d ? '3d' : '2d',
-    // always do translate then scale
-    transforms : [ 'translate', 'scale' ]
-  };
-
-  optoTransform.fnUtils = optoTransform.fnUtilsDimensional[ optoTransform.dimensions ];
-  optoTransform.transformsLen = 2;
-  
-  
-  
-  var _jQueryStyle = $.style;
-  $.style = function ( elem, name, value  ) {
-
-    switch ( name ) {
-      case 'scale' :
-      case 'translate' :
-        // unpack current transform data
-        var data =  $( elem ).data('opto-transform') || {},
-        // extend new value over current data
-            newData = {},
-            fnName,
-            transformObj = {};
-        newData[ name ] = value;
-        $.extend( data, newData );
-
-        for ( fnName in data ) {
-          var transformValue = data[ fnName ],
-              getFn = optoTransform.fnUtils[ fnName ];
-          transformObj[ fnName ] = getFn( transformValue );
-        }
-
-        // get proper order
-        // ideally, we could loop through this give an array, but since we only have
-        // a couple transforms we're keeping track of, we'll do it like so
-        var translateFn = transformObj.translate || '',
-            scaleFn = transformObj.scale || '',
-            valueFns = translateFn + scaleFn;
-
-        // set data back in elem
-        $( elem ).data('opto-transform', data );
-
-        // sorting so scale always comes before 
-        value = valueFns;
-        
-        // set name to vendor specific property
-        name = $.props.transform;
-        
-        break;
+    get: function( elem, computed ) {
+      var transform = $.data( elem, 'transform' );
+      return transform && transform.scale ? transform.scale : 1;
     }
+  }
 
-    return _jQueryStyle.apply( this, arguments );
+  $.fx.step.scale = function( fx ) {
+    $.cssHooks.scale.set( fx.elem, fx.now+fx.unit );
   };
   
   
-  var _fxCur = $.fx.prototype.cur;
-  $.fx.prototype.cur = function () {
-    if ( this.prop === 'scale' ) {
-      var data = $( this.elem ).data('transform'),
-          currentScale = data && data[ this.prop ] ? data[ this.prop ] : [ 1 ];
-      // scale value is saved as a 1 item array
-      return currentScale[0];
+  // ==================== translate ===================
+    
+  $.cssNumber.translate = true;
+  
+  $.cssHooks.translate = {
+    set: function( elem, value ) {
+
+      // all this would be for public ease-of-use,
+      // but we're leaving it out since this add-on is
+      // only for internal-plugin use
+      // if ( typeof value === 'string' ) {
+      //   value = value.split(' ');
+      // }
+      // 
+      //  
+      // var i, val;
+      // for ( i = 0; i < 2; i++ ) {
+      //   val = value[i];
+      //   if ( typeof val === 'string' ) {
+      //     val = parseInt( val );
+      //   }
+      // }
+
+      $.optoTransform.set( elem, 'translate', value )
+
+    },
+    
+    get: function( elem, computed ) {
+      var transform = $.data( elem, 'transform' );
+      return transform && transform.translate ? transform.translate : [ 0, 0 ];
     }
+  }
 
-    return _fxCur.apply(this, arguments);
-  };
-
-  $.fx.step.scale = function (fx) {
-    $( fx.elem ).css({ scale: [ fx.now ] });
-  };
 
 })( jQuery );
