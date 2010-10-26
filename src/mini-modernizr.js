@@ -45,63 +45,59 @@ if ( !window.Modernizr ) {
       vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
       classes = [],
       docElement = document.documentElement,
-      tests = {
-        csstransforms : function() {
-          return !!getStyleProperty('transform');
-        },
-        csstransforms3d : function() {
-          var ret = !!getStyleProperty('perspective');
-
-          if (ret){
-            var st = document.createElement('style'),
-                div = document.createElement('div');
-
-            st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
-                                'modernizr){#modernizr{height:3px}}';
-            document.getElementsByTagName('head')[0].appendChild(st);
-            div.id = 'modernizr';
-            docElement.appendChild(div);
-
-            ret = div.offsetHeight === 3;
-
-            st.parentNode.removeChild(st);
-            div.parentNode.removeChild(div);
+      
+      tests = [
+        {
+          name : 'csstransforms',
+          result : function() {
+            return !!getStyleProperty('transform');
           }
-          return ret;
         },
-        csstransitions : function() {
-          return !!getStyleProperty('transitionProperty');
-        }
-      };
+        {
+          name : 'csstransforms3d',
+          result : function() {
+            var ret = !!getStyleProperty('perspective');
+            console.log( ret )
+            if (ret){
+              var st = document.createElement('style'),
+                  div = document.createElement('div');
 
-  // hasOwnProperty shim by kangax needed for Safari 2.0 support
-  var _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
-  if (typeof _hasOwnProperty !== 'undefined' && typeof _hasOwnProperty.call !== 'undefined') {
-    hasOwnProperty = function (object, property) {
-      return _hasOwnProperty.call(object, property);
-    };
-  }
-  else {
-    hasOwnProperty = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-      return ((property in object) && typeof object.constructor.prototype[property] === 'undefined');
-    };
-  }
+              st.textContent = '@media ('+vendorCSSPrefixes.join('transform-3d),(') + 
+                                  'modernizr){#modernizr{height:3px}}';
+              document.getElementsByTagName('head')[0].appendChild(st);
+              div.id = 'modernizr';
+              docElement.appendChild(div);
+
+              ret = div.offsetHeight === 3;
+
+              st.parentNode.removeChild(st);
+              div.parentNode.removeChild(div);
+            }
+            return ret;
+          }
+        },
+        {
+          name : 'csstransitions',
+          result : function() {
+            return !!getStyleProperty('transitionProperty');
+          }
+        }
+      ]
+  ;
+
 
   // Run through all tests and detect their support in the current UA.
-  for ( var feature in tests ) {
-    if ( hasOwnProperty( tests, feature ) ) {
-      // run the test, throw the return value into the Modernizr,
-      //   then based on that boolean, define an appropriate className
-      //   and push it into an array of classes we'll join later.
-      var test = tests[ feature ]();
-      miniModernizr[ feature.toLowerCase() ] = test;
-      var className = ( test ?  '' : 'no-' ) + feature.toLowerCase()
-      classes.push( className );
-    }
+  for ( var i = 0, len = tests.length; i < len; i++ ) {
+    var test = tests[i];
+    miniModernizr[ test.name ] = test.result();
+    var className = ( test.result() ?  '' : 'no-' ) + test.name;
+    classes.push( className );
   }
 
   // Add the new classes to the <html> element.
   docElement.className += ' ' + classes.join( ' ' );
 
   window.Modernizr = miniModernizr;
+  
+  
 }
