@@ -127,7 +127,8 @@
       // console.log( this.options.layoutMode )
       
       // do any layout-specific setup
-      this.$elem.molequul( '_' + this.options.layoutMode + 'Setup' );
+      this.width = this.$elem.width();
+      this._getMasonryColCount();
       
       // save data
       // this.data( 'molequul', props );
@@ -356,17 +357,17 @@
       });
     },
     
-    getMasonryColCount : function( props ) {
-      props.colW = props.opts.columnWidth || props.atoms.$all.outerWidth(true);
+    _getMasonryColCount : function( ) {
+      // console.log( 'getting masonry col count')
+      this.colW = this.options.columnWidth || this.atoms.$all.outerWidth(true);
 
       // if colW == 0, back out before divide by zero
-      if ( !props.colW ) {
+      if ( !this.colW ) {
         window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
         return this;
       }
-      props.width = this.width();
-      props.colCount = Math.floor( props.width / props.colW ) ;
-      props.colCount = Math.max( props.colCount, 1 );
+      this.colCount = Math.floor( this.width / this.colW ) ;
+      this.colCount = Math.max( this.colCount, 1 );
       return this;
     },
     
@@ -399,7 +400,7 @@
       return this;
     },
     
-    masonrySetup : function( props ) {
+    _masonrySetup : function( props ) {
       this.molequul('getMasonryColCount', props );
       return this;
     },
@@ -528,76 +529,6 @@
     },
     
     // ====================== Setup and Init ======================
-    
-    // only run though on initial init
-    setup : function( props ) {
-
-      props.atoms = {};
-      props.isNew = {};
-      props.styleQueue = [];
-      props.elemCount = 0;
-      // need to get atoms
-      props.atoms.$all = props.opts.selector ? 
-        this.find( props.opts.selector ) : 
-        this.children();
-      
-      this.css({
-        overflow : 'hidden',
-        position : 'relative'
-      });
-
-      var jQueryAnimation = false;
-
-      // get applyStyleFnName
-      switch ( props.opts.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
-        case 'none' :
-          props.applyStyleFnName = 'css';
-          break;
-        case 'jquery' :
-          props.applyStyleFnName = 'animate';
-          jQueryAnimation = true;
-          break;
-        case 'bestavailable' :
-        default :
-          props.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
-      }
-      
-      props.usingTransforms = Modernizr.csstransforms && Modernizr.csstransitions && !jQueryAnimation;
-
-      props.positionFn = props.usingTransforms ? $.molequul.translate : $.molequul.positionAbs;
-      
-      // sorting
-      var originalOrderSorter = {
-        'original-order' : function( $elem ) {
-          return props.elemCount;
-        }
-      };
-      props.opts.getSortData = $.extend( originalOrderSorter, props.opts.getSortData );
-
-      props.atoms.$all.molequul( 'setupAtoms', props );
-      
-      
-      // get top left position of where the bricks should be
-      var $cursor   = $( document.createElement('div') );
-      this.prepend( $cursor );
-      props.posTop  = Math.round( $cursor.position().top );
-      props.posLeft = Math.round( $cursor.position().left );
-      $cursor.remove();
-
-      // add molequul class first time around
-      var $container = this;
-      setTimeout(function(){
-        $container.addClass( props.opts.containerClass ); 
-      }, 1 );
-      
-      // do any layout-specific setup
-      this.molequul( props.opts.layoutMode + 'Setup', props );
-      
-      // save data
-      this.data( 'molequul', props );
-
-      return this;
-    },
     
     watchedProps : [ 'filter', 'sortBy', 'sortDir', 'layoutMode' ],
     
