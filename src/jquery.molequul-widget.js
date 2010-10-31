@@ -1,29 +1,6 @@
 (function( $, undefined ) {
 
   // our "Widget" object constructor
-  
-  var MolequulDefaults = {
-    columnWidth : 150,
-    resizeable: true,
-    layoutMode : 'masonry',
-    masonrySingleMode : false,
-    containerClass : 'molequul',
-    hiddenClass : 'molequul-hidden',
-    hiddenStyle : {
-      opacity : 0
-    },
-    visibleStyle : {
-      opacity : 1
-    },
-    animationEngine : 'best-available',
-    animationOptions: {
-      queue: false
-    },
-    sortBy : 'original-order',
-    sortDir : 1
-    
-  };
-  
   var Molequul = function( options, element ){
     this.elem = element;
     this.$elem = $( element );
@@ -61,7 +38,7 @@
     },
     
     // sets up widget
-    _create: function( options ) {
+    _create : function( options ) {
       
       this.options = $.extend( true, this.options, options );
       
@@ -345,9 +322,10 @@
 
     },
     
-    masonrySingleColumn : function( props ) {
-      return this.each(function(){
-        $(this).molequul( 'placeBrick', props.colCount, props.colYs, props );
+    _masonrySingleColumn : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
+        instance._placeBrick( $(this), instance.colCount, instance.colYs );
       });
     },
     
@@ -454,11 +432,6 @@
       });
     },
     
-    clearFloatSetup : function( props ) {
-      props.width = this.width();
-      return this;
-    },
-    
     _clearFloatResetLayoutProps : function() {
       this.clearFloat = {
         x : 0,
@@ -472,9 +445,9 @@
       this.containerHeight = this.clearFloat.height;
     },
     
-    clearFloatResize : function( props ) {
-      props.width = this.width();
-      return this.molequul( 'reLayout', props );
+    _clearFloatResize : function() {
+      this.width = this.$elem.width();
+      return this.reLayout()
     },
 
 
@@ -545,104 +518,30 @@
         .layout( this.atoms.$filtered, callback )
     },
     
-    // ====================== Setup and Init ======================
-    
-    
-    init : function( options, callback ) {
-
-      return this.each(function() {  
-
-        var $this = $(this),
-            data = $this.data('molequul'),
-            props = data || {};
-
-        // checks if molquul has been called before on this object
-        props.initialized = !!data;
-
-        props.prevOpts = props.initialized ? data.opts : {};
-
-        props.opts = $.extend(
-          {},
-          $.molequul.defaults,
-          props.prevOpts,
-          options
-        );
-        
-        if ( !props.initialized ) {
-          $this.molequul( 'setup', props );
-        }
-        
-        // check if watched properties are new
-        $.each( $.molequul.watchedProps, function( i, propName ){
-          props.isNew[ propName ] = $.molequul.isNewProp( propName, props );
-        });
-
-        if ( props.isNew.layoutMode ) {
-          $this.molequul( props.opts.layoutMode + 'Setup', props );
-        }
-        
-        if ( props.isNew.filter || props.appending ) {
-          $this.molequul( 'filter', props.atoms.$all );
-        }
-
-        if ( props.isNew.filter || props.isNew.sortBy || props.isNew.sortDir || props.appending ) {
-          $this.molequul( 'sort', props );
-        }
-
-        $this.molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
-          .molequul( 'layout', props.atoms.$filtered, callback );
-
-
-        // binding window resizing
-        if ( props.opts.resizeable ) {
-          $(window).bind('smartresize.molequul', function() { $this.molequul( 'resize' ); } );
-        } else if ( !props.opts.resizeable && !!props.prevOpts.resizeable ) {
-          $(window).unbind('smartresize.molequul');
-        }
-        
-        // reset this prop for next time
-        props.appending = false;
-
-        // set all data so we can retrieve it for appended appendedContent
-        //    or anyone else's crazy jquery fun
-        $this.data( 'molequul', props );
-
-      });
-      
-    },
-    
     // ====================== Convenience methods ======================
     
     // adds a jQuery object of items to a molequul container
     add : function( $content ) {
-      var props = this.data('molequul'),
-          $newAtoms = props.opts.selector ? $content.filter( props.opts.selector ) : $content;
-      $newAtoms.molequul( 'setupAtoms', props )
+      var $newAtoms = this._filterFind( $content, this.options.itemSelector );
+      this._setupAtoms( $newAtoms );
       // add new atoms to atoms pools
-      props.atoms.$all = props.atoms.$all.add( $newAtoms );
-      props.atoms.$filtered = props.atoms.$filtered.add( $newAtoms );
-      props.appending = true;
+      this.atoms.$all = this.atoms.$all.add( $newAtoms );
+      this.atoms.$filtered = this.atoms.$filtered.add( $newAtoms );
       return this;
     },
     
     // convienence method for adding elements properly to any layout
     insert : function( $content ) {
-      return this.append( $content ).molequul( 'add', $content ).molequul('init');
+      this.$elem.append( $content );
+      return this.add( $content )._init();
     },
     
     // convienence method for working with Infinite Scroll
-    appended : function( $content ) {
-      return this.molequul( 'add', $content ).molequul( 'layout', $content );
+    appended : function( $content, callback ) {
+      return this.add( $content ).layout( $content, callback );
     }
 
 
-    // publicFn: function(){ // notice no underscore
-    //   return "public method";
-    // },
-    // 
-    // _privateFn: function(){
-    //   return "private method";
-    // }
   };
   
   $.widget.bridge( 'molequul', Molequul );
