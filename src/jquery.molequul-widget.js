@@ -56,8 +56,8 @@
 
     },
     
-    _filterFind: function( selector ) {
-      return selector ? this.find( selector ).add( this.find( selector ) ) : this;
+    _filterFind: function( $elems, selector ) {
+      return selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems;
     },
     
     // sets up widget
@@ -70,7 +70,7 @@
       this.styleQueue = [];
       this.elemCount = 0;
       // need to get atoms
-      this.atoms.$all = this.$elem.children().molequul('_filterFind', this.options.itemSelector );
+      this.atoms.$all = this._filterFind( this.$elem.children(), this.options.itemSelector );
       
       // console.log( 'all atoms', this.atoms.$all.length )
       
@@ -97,16 +97,19 @@
       
       this.usingTransforms = Modernizr.csstransforms && Modernizr.csstransitions && !jQueryAnimation;
 
-      this.positionFn = this.usingTransforms ? Molequul.translate : Molequul.positionAbs;
+      this.positionFn = this.usingTransforms ? this._translate : this._positionAbs;
       
       // sorting
       var originalOrderSorter = {
         'original-order' : function( $elem ) {
-          return props.elemCount;
+          return this.elemCount;
         }
       };
+
       this.options.getSortData = $.extend( originalOrderSorter, this.options.getSortData );
 
+
+      this._setupAtoms( this.atoms.$all );
       this.atoms.$all.molequul( '_setupAtoms' );
       
       
@@ -118,10 +121,9 @@
       $cursor.remove();
 
       // add molequul class first time around
-      var $container = this.$elem,
-          containerClass = this.options.containerClass;
+      var instance = this;
       setTimeout( function() {
-        $container.addClass( containerClass );
+        instance.$elem.addClass( instance.options.containerClass );
       }, 0 );
       
       // console.log( this.options.layoutMode )
@@ -133,17 +135,57 @@
       // save data
       // this.data( 'molequul', props );
       
+      // bind resize method
+      if ( this.options.resizeable ) {
+        $(window).bind('smartresize.molequul', function() { instance.$elem.molequul('resize') } );
+      }
+      
+    },
+  
+    
+    _isNewProp : function( prop ) {
+      return this.prevOpts ? ( this.options[ prop ] !== this.prevOpts[ prop ] ) : true;
     },
   
     // _init fires when your instance is first created
     // (from the constructor above), and when you
     // attempt to initialize the widget again (by the bridge)
     // after it has already been initialized.
-    _init: function(){
+    _init : function( callback ) {
       
       // this.options = $.extend( true, Molequul.options, this.options );
+
+      // check if watched properties are new
+      var instance = this;
+      $.each( [ 'filter', 'sortBy', 'sortDir' ], function( i, propName ){
+        // console.log( propName, this );
+        instance.isNew[ propName ] = instance._isNewProp( propName );
+      });
+
+      if ( this.isNew.filter ) {
+        this.atoms.$filtered = this._filter( this.atoms.$all )
+      } else {
+        this.atoms.$filtered = this.atoms.$all;
+      }
+
+      if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortDir ) {
+        this._sort();
+      }
       
-      console.log( this )
+      
+      // console.log( '_' + this.options.layoutMode + 'ResetLayoutProps' )
+      // this[ '_' + this.options.layoutMode + 'ResetLayoutProps' ]();
+
+      // console.log( $.data( this.$elem, 'molequul') );
+
+      // setTimeout( function(){
+      // this.layout( this.atoms.$filtered, callback );
+      
+      this.reLayout( callback );
+      // instance.$elem.molequul( 'layout', instance.atoms.$filtered, callback );
+      // }, 0)
+
+      // console.log( this )
       // init code
     },
 
@@ -170,22 +212,16 @@
     },
 
 
-    
-    isNewProp : function( property, props ) {
-      if ( !props.initialized ) {
-        return true;
-      }
-      var previousProp = props.prevOpts[ property ];
-      return ( props.opts[ property ] !== previousProp );
-    },
+
     
     // ====================== Adding ======================
     
-    addSortData : function( props ) {
-      return this.each(function(){
+    _addSortData : function( $atoms ) {
+      var instance = this;
+      $atoms.each(function(){
         var $this = $(this),
             sortData = {},
-            getSortData = props.opts.getSortData,
+            getSortData = instance.options.getSortData,
             key;
         // get value for sort data based on fn( $elem ) passed in
         for ( key in getSortData ) {
@@ -194,58 +230,63 @@
         // apply sort data to $element
         $this.data( 'molequul-sort-data', sortData );
         // increment element count
-        props.elemCount ++;
+        instance.elemCount ++;
       });
     },
     
-    setupAtoms : function( props ) {
+    _setupAtoms : function( $atoms ) {
+      
       // base style for atoms
       var atomStyle = { position: 'absolute' };
-      if ( props.usingTransforms ) {
+      if ( this.usingTransforms ) {
         atomStyle.left = 0;
         atomStyle.top = 0;
       }
 
+      $atoms.css( atomStyle );
+      
       // add sort data to each elem
-      return this.molequul( 'addSortData', props ).css( atomStyle );
+      this._addSortData( $atoms );
+
+      // return this.molequul( 'addSortData', props ).css( atomStyle );
     },
     
     // ====================== Filtering ======================
 
-    filter : function( $atoms ) {
-      var props  = this.data('molequul'),
-          filter = props.opts.filter === '' ? '*' : props.opts.filter;
+    _filter : function( $atoms ) {
+      var $filteredAtoms,
+          filter = this.options.filter === '' ? '*' : this.options.filter;
 
       if ( !filter ) {
-        props.atoms.$filtered = $atoms;
+        $filteredAtoms = $atoms;
       } else {
-        var hiddenClass    = props.opts.hiddenClass,
+        var hiddenClass    = this.options.hiddenClass,
             hiddenSelector = '.' + hiddenClass,
             $visibleAtoms  = $atoms.not( hiddenSelector ),
             $hiddenAtoms   = $atoms.filter( hiddenSelector ),
             $atomsToShow   = $hiddenAtoms;
 
-        props.atoms.$filtered = $atoms.filter( filter );
+        $filteredAtoms = $atoms.filter( filter );
 
         if ( filter !== '*' ) {
           $atomsToShow = $hiddenAtoms.filter( filter );
 
           var $atomsToHide = $visibleAtoms.not( filter ).toggleClass( hiddenClass );
           $atomsToHide.addClass( hiddenClass );
-          props.styleQueue.push({ $el: $atomsToHide, style: props.opts.hiddenStyle });
+          this.styleQueue.push({ $el: $atomsToHide, style: this.options.hiddenStyle });
         }
         
-        props.styleQueue.push({ $el: $atomsToShow, style: props.opts.visibleStyle });
+        this.styleQueue.push({ $el: $atomsToShow, style: this.options.visibleStyle });
         $atomsToShow.removeClass( hiddenClass );
       }
       
-      return this;
+      return $filteredAtoms;
     },
     
     // ====================== Sorting ======================
     
     
-    getSortFn : function( sortBy, sortDir ) {
+    _getSortFn : function( sortBy, sortDir ) {
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
       };
@@ -261,12 +302,11 @@
     },
     
     // used on all the filtered atoms, $atoms.filtered
-    sort : function( props ) {
+    _sort : function() {
       
-      var sortFn = props.opts.sortBy === 'random' ? $.molequul.randomSortFn :
-        $.molequul.getSortFn( props.opts.sortBy, props.opts.sortDir );
+      var sortFn = this._getSortFn( this.options.sortBy, this.options.sortDir );
       
-      props.atoms.$filtered.sort( sortFn );
+      this.atoms.$filtered.sort( sortFn );
       
       return this;
     },
@@ -275,30 +315,29 @@
     // ====================== Layout ======================
 
     
-    translate : function( x, y ) {
+    _translate : function( x, y ) {
       return { translate : [ x, y ] };
     },
     
-    positionAbs : function( x, y ) {
+    _positionAbs : function( x, y ) {
       return { left: x, top: y };
     },
 
-    pushPosition : function( x, y, props ) {
-      var position = props.positionFn( x, y );
-      props.styleQueue.push({ $el: this, style: position });
-      return this;
+    _pushPosition : function( $elem, x, y ) {
+      var position = this.positionFn( x, y );
+      this.styleQueue.push({ $el: $elem, style: position });
     },
 
     // ====================== masonry ======================
     
-    placeBrick : function( setCount, setY, props ) {
+    _placeBrick : function( $brick, setCount, setY ) {
       // here, `this` refers to a child element or "brick"
           // get the minimum Y value from the columns
       var minimumY  = Math.min.apply( Math, setY ),
-          setHeight = minimumY + this.outerHeight(true),
+          setHeight = minimumY + $brick.outerHeight(true),
           i         = setY.length,
           shortCol  = i,
-          setSpan   = props.colCount + 1 - i,
+          setSpan   = this.colCount + 1 - i,
           x, y ;
       // Which column has the minY value, closest to the left
       while (i--) {
@@ -308,16 +347,15 @@
       }
       
       // position the brick
-      x = props.colW * shortCol + props.posLeft;
+      x = this.colW * shortCol + this.posLeft;
       y = minimumY;
-      this.molequul( 'pushPosition', x, y, props );
+      this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
       for ( i=0; i < setSpan; i++ ) {
-        props.colYs[ shortCol + i ] = setHeight;
+        this.colYs[ shortCol + i ] = setHeight;
       }
-      
-      return this;
+
     },
     
     masonrySingleColumn : function( props ) {
@@ -327,32 +365,33 @@
     },
     
     
-    masonryMultiColumn : function( props ) {
-      return this.each(function(){
+    _masonryMultiColumn : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
         var $this  = $(this),
             //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / props.colW );
-        colSpan = Math.min( colSpan, props.colCount );
+            colSpan = Math.ceil( $this.outerWidth(true) / instance.colW );
+        colSpan = Math.min( colSpan, instance.colCount );
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          $this.molequul( 'placeBrick', props.colCount, props.colYs, props );
+          instance._placeBrick( $this, instance.colCount, instance.colYs );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
-          var groupCount = props.colCount + 1 - colSpan,
+          var groupCount = instance.colCount + 1 - colSpan,
               groupY = [],
               groupColY;
 
           // for each group potential horizontal position
           for ( var i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            groupColY = props.colYs.slice( i, i+colSpan );
+            groupColY = instance.colYs.slice( i, i+colSpan );
             // and get the max value of the array
             groupY[i] = Math.max.apply( Math, groupColY );
           }
-
-          $this.molequul( 'placeBrick', groupCount, groupY, props );
+          
+          instance._placeBrick( $this, groupCount, groupY );
         }
       });
     },
@@ -366,43 +405,37 @@
         window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
         return this;
       }
+      this.width = this.$elem.width();
       this.colCount = Math.floor( this.width / this.colW ) ;
       this.colCount = Math.max( this.colCount, 1 );
       return this;
     },
     
-    masonryResetLayoutProps : function( props ) {
-      
-      var i = props.colCount;
-      props.colYs = [];
+    _masonryResetLayoutProps : function() {
+      var i = this.colCount;
+      this.colYs = [];
       while (i--) {
-        props.colYs.push( props.posTop );
+        this.colYs.push( this.posTop );
       }
       return this;
     },
     
 
     
-    masonryResize : function( props ) {
-      var prevColCount = props.colCount;
+    _masonryResize : function() {
+      var prevColCount = this.colCount;
       // get updated colCount
-      this.molequul( 'getMasonryColCount', props );
-      if ( props.colCount !== prevColCount ) {
+      this._getMasonryColCount();
+      if ( this.colCount !== prevColCount ) {
         // if column count has changed, do a new column cound
-        this.molequul( 'reLayout', props );
+        this.reLayout();
       }
 
       return this;
     },
     
-    masonryMeasureContainerHeight : function( props ) {
-      props.containerHeight = Math.max.apply( Math, props.colYs ) - props.posTop;
-      return this;
-    },
-    
-    _masonrySetup : function( props ) {
-      this.molequul('getMasonryColCount', props );
-      return this;
+    _masonryMeasureContainerHeight : function() {
+      this.containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
     },
     
 
@@ -447,9 +480,8 @@
       return this;
     },
     
-    clearFloatMeasureContainerHeight : function ( props ) {
-      props.containerHeight = props.clearFloat.height;
-      return this;
+    _clearFloatMeasureContainerHeight : function () {
+      this.containerHeight = this.clearFloat.height;
     },
     
     clearFloatResize : function( props ) {
@@ -465,36 +497,37 @@
     // accepts atoms-to-be-laid-out to start with
     layout : function( $elems, callback ) {
 
-      var props = this.data('molequul'),
-          layoutMode = props.opts.layoutMode,
+      var layoutMode = this.options.layoutMode,
           layoutMethod = layoutMode;
 
       // layout logic
       if ( layoutMethod === 'masonry' ) {
-        layoutMethod = props.opts.masonrySingleMode ? 'masonrySingleColumn' : 'masonryMultiColumn';
+        layoutMethod = this.options.masonrySingleMode ? '_masonrySingleColumn' : '_masonryMultiColumn';
       }
       
-      $elems.molequul( layoutMethod, props );
+      this[ layoutMethod ]( $elems );
+      
+      // $elems.molequul( layoutMethod, props );
 
       // set the height of the container to the tallest column
-      this.molequul( layoutMode + 'MeasureContainerHeight', props );
-      var containerStyle    = { height: props.containerHeight };
+      this[ '_' +  layoutMode + 'MeasureContainerHeight' ]();
+      var containerStyle    = { height: this.containerHeight };
       
 
 
-      props.styleQueue.push({ $el: this, style: containerStyle });
+      this.styleQueue.push({ $el: this.$elem, style: containerStyle });
 
 
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn = ( props.applyStyleFnName === 'animate' && !props.initialized ) ? 
-                    'css' : props.applyStyleFnName,
-          animOpts = props.opts.animationOptions;
+      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.$elem, 'molequul' ) ) ? 
+                    'css' : this.applyStyleFnName,
+          animOpts = this.options.animationOptions;
 
 
       // process styleQueue
-      $.each( props.styleQueue, function( i, obj ){
+      $.each( this.styleQueue, function( i, obj ){
                                        // have to extend animation to play nice with jQuery
         obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
       });
@@ -502,7 +535,7 @@
       
 
       // clear out queue for next time
-      props.styleQueue = [];
+      this.styleQueue = [];
 
       // provide $elems as context for the callback
       if ( callback ) {
@@ -514,23 +547,19 @@
     
     
     resize : function() {
-      var props = this.data('molequul');
-
-      return this.molequul( props.opts.layoutMode + 'Resize', props );
+      return this[ '_' + this.options.layoutMode + 'Resize' ]();
     },
     
     
-    reLayout : function( props ) {
-      props = props || this.data('molequul');
-      props.initialized = true;
-      return this
-        .molequul( props.opts.layoutMode + 'ResetLayoutProps', props )
-        .molequul( 'layout', props.atoms.$filtered );
+    reLayout : function( callback ) {
+      console.log('layout again')
+      this
+        [ '_' +  this.options.layoutMode + 'ResetLayoutProps' ]()
+        .layout( this.atoms.$filtered, callback )
     },
     
     // ====================== Setup and Init ======================
     
-    watchedProps : [ 'filter', 'sortBy', 'sortDir', 'layoutMode' ],
     
     init : function( options, callback ) {
 
