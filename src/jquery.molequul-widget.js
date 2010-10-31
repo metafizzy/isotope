@@ -18,12 +18,12 @@
       masonrySingleMode : false,
       containerClass : 'molequul',
       hiddenClass : 'molequul-hidden',
-      hiddenStyle : {
-        opacity : 0
-      },
-      visibleStyle : {
-        opacity : 1
-      },
+      hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
+        { opacity : 0, scale : 0.001 } :
+        { opacity : 0 },
+      visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
+        { opacity : 1, scale : 1 } :
+        { opacity : 1 },
       animationEngine : 'best-available',
       animationOptions: {
         queue: false
