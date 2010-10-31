@@ -172,21 +172,8 @@
         this._sort();
       }
       
-      
-      // console.log( '_' + this.options.layoutMode + 'ResetLayoutProps' )
-      // this[ '_' + this.options.layoutMode + 'ResetLayoutProps' ]();
-
-      // console.log( $.data( this.$elem, 'molequul') );
-
-      // setTimeout( function(){
-      // this.layout( this.atoms.$filtered, callback );
-      
       this.reLayout( callback );
-      // instance.$elem.molequul( 'layout', instance.atoms.$filtered, callback );
-      // }, 0)
 
-      // console.log( this )
-      // init code
     },
 
     option: function( key, value ){
@@ -442,26 +429,27 @@
     
     // ====================== ClearFloat ======================
     
-    clearFloat : function( props ) {
-      return this.each( function() {
+    _clearFloat : function( $elems ) {
+      var instance = this;
+      return $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
             x, y;
         
-        if ( props.clearFloat.x !== 0  &&  atomW + props.clearFloat.x > props.width ) {
+        if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
           // if this element cannot fit in the current row
-          props.clearFloat.x = 0;
-          props.clearFloat.y = props.clearFloat.height;
+          instance.clearFloat.x = 0;
+          instance.clearFloat.y = instance.clearFloat.height;
         } 
         
         // position the atom
-        x = props.clearFloat.x + props.posLeft;
-        y = props.clearFloat.y + props.posTop;
-        $this.molequul( 'pushPosition', x, y, props );
+        x = instance.clearFloat.x + instance.posLeft;
+        y = instance.clearFloat.y + instance.posTop;
+        instance._pushPosition( $this, x, y );
 
-        props.clearFloat.height = Math.max( props.clearFloat.y + atomH, props.clearFloat.height );
-        props.clearFloat.x += atomW;
+        instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
+        instance.clearFloat.x += atomW;
 
       });
     },
@@ -471,8 +459,8 @@
       return this;
     },
     
-    clearFloatResetLayoutProps : function( props ) {
-      props.clearFloat = {
+    _clearFloatResetLayoutProps : function() {
+      this.clearFloat = {
         x : 0,
         y : 0,
         height : 0
@@ -498,11 +486,11 @@
     layout : function( $elems, callback ) {
 
       var layoutMode = this.options.layoutMode,
-          layoutMethod = layoutMode;
+          layoutMethod = '_' + layoutMode;
 
       // layout logic
-      if ( layoutMethod === 'masonry' ) {
-        layoutMethod = this.options.masonrySingleMode ? '_masonrySingleColumn' : '_masonryMultiColumn';
+      if ( layoutMethod === '_masonry' ) {
+        layoutMethod += this.options.masonrySingleMode ? 'SingleColumn' : 'MultiColumn';
       }
       
       this[ layoutMethod ]( $elems );
@@ -552,7 +540,6 @@
     
     
     reLayout : function( callback ) {
-      console.log('layout again')
       this
         [ '_' +  this.options.layoutMode + 'ResetLayoutProps' ]()
         .layout( this.atoms.$filtered, callback )
