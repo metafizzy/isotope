@@ -124,7 +124,6 @@
       // check if watched properties are new
       var instance = this;
       $.each( [ 'filter', 'sortBy', 'sortDir' ], function( i, propName ){
-        // console.log( propName, this );
         instance.isNew[ propName ] = instance._isNewProp( propName );
       });
 
@@ -518,23 +517,27 @@
     // ====================== Convenience methods ======================
     
     // adds a jQuery object of items to a molequul container
-    addAtoms : function( $content ) {
+    addAtoms : function( $content, callback ) {
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
       // add new atoms to atoms pools
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
       // this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
-      return $newAtoms;
+      // return $newAtoms;
+      if ( callback ) {
+        callback( $newAtoms );
+      }
     },
     
     // convienence method for adding elements properly to any layout
     insert : function( $content, callback ) {
       this.element.append( $content );
       
-      var $newAtoms = this.addAtoms( $content ),
-          $filteredAtoms = this._filter( $newAtoms );
-
-      this.$filteredAtoms = this.$filteredAtoms.add( $filteredAtoms );
+      var instance = this;
+      this.addAtoms( $content, function( $newAtoms ) {
+        $filteredAtoms = instance._filter( $newAtoms );
+        instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
+      });
 
       this._sort().reLayout( callback );
       
@@ -542,7 +545,15 @@
     
     // convienence method for working with Infinite Scroll
     appended : function( $content, callback ) {
-      return this.add( $content ).layout( $content, callback );
+      // var $newAtoms = this.addAtoms( $content );
+      // this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
+      // 
+      // return this.layout( $newAtoms, callback );
+      var instance = this;
+      this.addAtoms( $content, function( $newAtoms ){
+        instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
+        instance.layout( $newAtoms, callback )
+      });
     }
 
 
