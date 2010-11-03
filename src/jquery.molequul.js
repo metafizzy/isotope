@@ -525,9 +525,9 @@
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
       // add new atoms to atoms pools
+      // FIXME : this breaks shuffle order and returns to original order
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
-      // this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
-      // return $newAtoms;
+
       if ( callback ) {
         callback( $newAtoms );
       }
@@ -542,7 +542,7 @@
         $filteredAtoms = instance._filter( $newAtoms );
         instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
       });
-
+      
       this._sort().reLayout( callback );
       
     },
@@ -558,6 +558,39 @@
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
         instance.layout( $newAtoms, callback )
       });
+    },
+    
+    _shuffleArray : function ( array ) {
+      var tmp, current, i = array.length;
+      
+      if ( i ){ 
+        while(--i) {
+          current = ~~( Math.random() * (i + 1) );
+          tmp = array[current];
+          array[current] = array[i];
+          array[i] = tmp;
+        }
+      }
+      return array;
+    },
+    
+    logNames : function( $atoms ) {
+      var message = '';
+      $atoms.each(function(){
+        message += $(this).find('.name').text() + ', ';
+      });
+      window.console && console.log( message );
+    },
+    
+    shuffle : function( callback ) {
+      this.options.sortBy = 'shuffle';
+      
+      this.logNames( this.$allAtoms );      
+      this.$allAtoms = this._shuffleArray( this.$allAtoms );
+      this.logNames( this.$allAtoms );
+      this.$filteredAtoms = this._filter( this.$allAtoms );
+      
+      return this.reLayout( callback );
     }
 
 
