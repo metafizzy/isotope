@@ -28,7 +28,7 @@
         queue: false
       },
       sortBy : 'original-order',
-      sortDir : 1
+      sortDir : 'asc'
 
     },
     
@@ -164,14 +164,8 @@
       return this; // make sure to return the instance!
     },
 
-
-
     
     // ====================== Adding ======================
-    
-    _addSortData : function( $atoms ) {
-
-    },
     
     _setupAtoms : function( $atoms ) {
       
@@ -201,7 +195,6 @@
         instance.elemCount ++;
       });
 
-      // return this.molequul( 'addSortData', props ).css( atomStyle );
     },
     
     // ====================== Filtering ======================
@@ -240,6 +233,21 @@
     
     
     _getSortFn : function( sortBy, sortDir ) {
+      
+      switch ( sortDir.toLowerCase() ) {
+        case 'd' :
+        case 'des' :
+        case 'desc' :
+        case 'desend' :
+        case 'decend' :
+        case 'descend' :
+        case 'descending' :
+          sortDir = -1;
+          break;
+        default :
+          sortDir = 1;
+      }
+
       var getSorter = function( elem ) {
         return $(elem).data('molequul-sort-data')[ sortBy ];
       };
