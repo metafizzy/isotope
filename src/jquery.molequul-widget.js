@@ -2,8 +2,7 @@
 
   // our "Widget" object constructor
   var Molequul = function( options, element ){
-    this.elem = element;
-    this.$elem = $( element );
+    this.element = $( element );
 
     this._create( options );
     this._init();
@@ -40,18 +39,18 @@
     // sets up widget
     _create : function( options ) {
       
-      this.options = $.extend( true, this.options, options );
+      this.options = $.extend( true, {}, this.options, options );
       
       this.atoms = {};
       this.isNew = {};
       this.styleQueue = [];
       this.elemCount = 0;
       // need to get atoms
-      this.atoms.$all = this._filterFind( this.$elem.children(), this.options.itemSelector );
+      this.atoms.$all = this._filterFind( this.element.children(), this.options.itemSelector );
       
       // console.log( 'all atoms', this.atoms.$all.length )
       
-      this.$elem.css({
+      this.element.css({
         overflow : 'hidden',
         position : 'relative'
       });
@@ -90,7 +89,7 @@
       
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
-      this.$elem.prepend( $cursor );
+      this.element.prepend( $cursor );
       this.posTop  = Math.round( $cursor.position().top );
       this.posLeft = Math.round( $cursor.position().left );
       $cursor.remove();
@@ -98,16 +97,16 @@
       // add molequul class first time around
       var instance = this;
       setTimeout( function() {
-        instance.$elem.addClass( instance.options.containerClass );
+        instance.element.addClass( instance.options.containerClass );
       }, 0 );
       
       // do any layout-specific setup
-      this.width = this.$elem.width();
+      this.width = this.element.width();
       this._getMasonryColCount();
       
       // bind resize method
       if ( this.options.resizeable ) {
-        $(window).bind('smartresize.molequul', function() { instance.$elem.molequul('resize') } );
+        $(window).bind('smartresize.molequul', function() { instance.element.molequul('resize') } );
       }
       
     },
@@ -361,7 +360,7 @@
         window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
         return this;
       }
-      this.width = this.$elem.width();
+      this.width = this.element.width();
       this.colCount = Math.floor( this.width / this.colW ) ;
       this.colCount = Math.max( this.colCount, 1 );
       return this;
@@ -437,7 +436,7 @@
     },
     
     _clearFloatResize : function() {
-      this.width = this.$elem.width();
+      this.width = this.element.width();
       return this.reLayout()
     },
 
@@ -467,13 +466,13 @@
       
 
 
-      this.styleQueue.push({ $el: this.$elem, style: containerStyle });
+      this.styleQueue.push({ $el: this.element, style: containerStyle });
 
 
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.$elem, 'molequul' ) ) ? 
+      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'molequul' ) ) ? 
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
@@ -504,7 +503,6 @@
     
     
     reLayout : function( callback ) {
-      console.log('relaying out', this.atoms.$filtered.length )
       return this
         [ '_' +  this.options.layoutMode + 'ResetLayoutProps' ]()
         .layout( this.atoms.$filtered, callback )
@@ -524,7 +522,7 @@
     
     // convienence method for adding elements properly to any layout
     insert : function( $content, callback ) {
-      this.$elem.append( $content );
+      this.element.append( $content );
       
       var $newAtoms = this.addAtoms( $content ),
           $filteredAtoms = this._filter( $newAtoms );
