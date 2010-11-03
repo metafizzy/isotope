@@ -41,14 +41,13 @@
       
       this.options = $.extend( true, {}, this.options, options );
       
-      this.atoms = {};
       this.isNew = {};
       this.styleQueue = [];
       this.elemCount = 0;
       // need to get atoms
-      this.atoms.$all = this._filterFind( this.element.children(), this.options.itemSelector );
+      this.$allAtoms = this._filterFind( this.element.children(), this.options.itemSelector );
       
-      // console.log( 'all atoms', this.atoms.$all.length )
+      // console.log( 'all atoms', this.$allAtoms.length )
       
       this.element.css({
         overflow : 'hidden',
@@ -84,7 +83,7 @@
 
       this.options.getSortData = $.extend( this.options.getSortData, originalOrderSorter );
 
-      this._setupAtoms( this.atoms.$all );
+      this._setupAtoms( this.$allAtoms );
       
       
       // get top left position of where the bricks should be
@@ -130,9 +129,9 @@
       });
 
       if ( this.isNew.filter ) {
-        this.atoms.$filtered = this._filter( this.atoms.$all )
+        this.$filteredAtoms = this._filter( this.$allAtoms )
       } else {
-        this.atoms.$filtered = this.atoms.$all;
+        this.$filteredAtoms = this.$allAtoms;
       }
 
       if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortDir ) {
@@ -260,7 +259,7 @@
       
       var sortFn = this._getSortFn( this.options.sortBy, this.options.sortDir );
       
-      this.atoms.$filtered.sort( sortFn );
+      this.$filteredAtoms.sort( sortFn );
       
       return this;
     },
@@ -353,7 +352,7 @@
     
     _getMasonryColCount : function( ) {
       // console.log( 'getting masonry col count')
-      this.colW = this.options.columnWidth || this.atoms.$all.outerWidth(true);
+      this.colW = this.options.columnWidth || this.$allAtoms.outerWidth(true);
 
       // if colW == 0, back out before divide by zero
       if ( !this.colW ) {
@@ -505,7 +504,7 @@
     reLayout : function( callback ) {
       return this
         [ '_' +  this.options.layoutMode + 'ResetLayoutProps' ]()
-        .layout( this.atoms.$filtered, callback )
+        .layout( this.$filteredAtoms, callback )
     },
     
     // ====================== Convenience methods ======================
@@ -515,8 +514,8 @@
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
       // add new atoms to atoms pools
-      this.atoms.$all = this.atoms.$all.add( $newAtoms );
-      // this.atoms.$filtered = this.atoms.$filtered.add( $newAtoms );
+      this.$allAtoms = this.$allAtoms.add( $newAtoms );
+      // this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
       return $newAtoms;
     },
     
@@ -527,7 +526,7 @@
       var $newAtoms = this.addAtoms( $content ),
           $filteredAtoms = this._filter( $newAtoms );
 
-      this.atoms.$filtered = this.atoms.$filtered.add( $filteredAtoms );
+      this.$filteredAtoms = this.$filteredAtoms.add( $filteredAtoms );
 
       this._sort().reLayout( callback );
       
