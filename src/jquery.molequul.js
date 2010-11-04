@@ -377,8 +377,9 @@
       return this;
     },
     
-    _masonryMeasureContainerHeight : function() {
-      this.containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
+    _masonryGetContainerSize : function() {
+      var containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
+      return { height: containerHeight };
     },
     
 
@@ -419,8 +420,8 @@
       return this;
     },
     
-    _clearFloatMeasureContainerHeight : function () {
-      this.containerHeight = this.clearFloat.height;
+    _clearFloatGetContainerSize : function () {
+      return { height : this.clearFloat.height };
     },
     
     _clearFloatResize : function() {
@@ -446,14 +447,9 @@
       
       this[ layoutMethod ]( $elems );
       
-      // $elems.molequul( layoutMethod, props );
 
-      // set the height of the container to the tallest column
-      this[ '_' +  layoutMode + 'MeasureContainerHeight' ]();
-      var containerStyle    = { height: this.containerHeight };
-      
-
-
+      // set the size of the container
+      var containerStyle = this[ '_' +  layoutMode + 'GetContainerSize' ]();
       this.styleQueue.push({ $el: this.element, style: containerStyle });
 
 
