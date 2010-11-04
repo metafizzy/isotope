@@ -354,7 +354,7 @@
       return this;
     },
     
-    _masonryResetLayoutProps : function() {
+    _masonryReset : function() {
       var i = this.colCount;
       this.colYs = [];
       while (i--) {
@@ -410,7 +410,7 @@
       });
     },
     
-    _clearFloatResetLayoutProps : function() {
+    _clearFloatReset : function() {
       this.clearFloat = {
         x : 0,
         y : 0,
@@ -492,7 +492,7 @@
     
     reLayout : function( callback ) {
       return this
-        [ '_' +  this.options.layoutMode + 'ResetLayoutProps' ]()
+        [ '_' +  this.options.layoutMode + 'Reset' ]()
         .layout( this.$filteredAtoms, callback )
     },
     
