@@ -32,7 +32,7 @@
         queue: false
       },
       sortBy : 'original-order',
-      sortDir : 'asc'
+      sortAscending : true
 
     },
     
@@ -127,7 +127,7 @@
       
       // check if watched properties are new
       var instance = this;
-      $.each( [ 'filter', 'sortBy', 'sortDir' ], function( i, propName ){
+      $.each( [ 'filter', 'sortBy', 'sortAscending' ], function( i, propName ){
         instance.isNew[ propName ] = instance._isNewProp( propName );
       });
 
@@ -137,7 +137,7 @@
         this.$filteredAtoms = this.$allAtoms;
       }
 
-      if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortDir ) {
+      if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortAscending ) {
         this._sort();
       }
       
@@ -234,41 +234,19 @@
     
     // ====================== Sorting ======================
     
-    
-    _getSortFn : function( sortBy, sortDir ) {
-      
-      switch ( sortDir.toLowerCase() ) {
-        case 'd' :
-        case 'des' :
-        case 'desc' :
-        case 'desend' :
-        case 'decend' :
-        case 'descend' :
-        case 'descending' :
-          sortDir = -1;
-          break;
-        default :
-          sortDir = 1;
-      }
-
-      var getSorter = function( elem ) {
-        return $(elem).data('molequul-sort-data')[ sortBy ];
-      };
-      return function( alpha, beta ) {
-        var a = getSorter( alpha ),
-            b = getSorter( beta );
-        return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
-      };
-    },
-    
-    randomSortFn : function() {
-      return Math.random() > 5 ? 1 : -1;
-    },
-    
     // used on all the filtered atoms, $atoms.filtered
     _sort : function() {
       
-      var sortFn = this._getSortFn( this.options.sortBy, this.options.sortDir );
+      var instance = this,
+          getSorter = function( elem ) {
+            return $(elem).data('molequul-sort-data')[ instance.options.sortBy ];
+          },
+          sortDir = this.options.sortAscending ? 1 : -1;
+          sortFn = function( alpha, beta ) {
+            var a = getSorter( alpha ),
+                b = getSorter( beta );
+            return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
+          };
       
       this.$filteredAtoms.sort( sortFn );
       
