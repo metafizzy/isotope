@@ -57,5 +57,8 @@
   		return returnValue;
   	};
   };
+  
+  
+  $.widget.bridge( 'molequul', Molequul );
 
 })( jQuery );

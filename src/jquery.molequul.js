@@ -5,7 +5,7 @@
 (function( $, undefined ) {
 
   // our "Widget" object constructor
-  var Molequul = function( options, element ){
+  window.Molequul = function( options, element ){
     this.element = $( element );
 
     this._create( options );
@@ -104,8 +104,8 @@
       }, 0 );
       
       // do any layout-specific setup
-      this.width = this.element.width();
-      this._getMasonryColCount();
+      // this.width = this.element.width();
+      // this._getMasonryColCount();
       
       // bind resize method
       if ( this.options.resizeable ) {
@@ -272,167 +272,17 @@
 
     // ====================== masonry ======================
     
-    _placeBrick : function( $brick, setCount, setY ) {
-      // here, `this` refers to a child element or "brick"
-          // get the minimum Y value from the columns
-      var minimumY  = Math.min.apply( Math, setY ),
-          setHeight = minimumY + $brick.outerHeight(true),
-          i         = setY.length,
-          shortCol  = i,
-          setSpan   = this.colCount + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
-        if ( setY[i] === minimumY ) {
-          shortCol = i;
-        }
-      }
-      
-      // position the brick
-      x = this.colW * shortCol + this.posLeft;
-      y = minimumY;
-      this._pushPosition( $brick, x, y );
 
-      // apply setHeight to necessary columns
-      for ( i=0; i < setSpan; i++ ) {
-        this.colYs[ shortCol + i ] = setHeight;
-      }
-
-    },
-    
-    _masonrySingleColumn : function( $elems ) {
-      var instance = this;
-      $elems.each(function(){
-        instance._placeBrick( $(this), instance.colCount, instance.colYs );
-      });
-    },
-    
-    
-    _masonryMultiColumn : function( $elems ) {
-      var instance = this;
-      $elems.each(function(){
-        var $this  = $(this),
-            //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / instance.colW );
-        colSpan = Math.min( colSpan, instance.colCount );
-
-        if ( colSpan === 1 ) {
-          // if brick spans only one column, just like singleMode
-          instance._placeBrick( $this, instance.colCount, instance.colYs );
-        } else {
-          // brick spans more than one column
-          // how many different places could this brick fit horizontally
-          var groupCount = instance.colCount + 1 - colSpan,
-              groupY = [],
-              groupColY;
-
-          // for each group potential horizontal position
-          for ( var i=0; i < groupCount; i++ ) {
-            // make an array of colY values for that one group
-            groupColY = instance.colYs.slice( i, i+colSpan );
-            // and get the max value of the array
-            groupY[i] = Math.max.apply( Math, groupColY );
-          }
-          
-          instance._placeBrick( $this, groupCount, groupY );
-        }
-      });
-    },
-    
-    _getMasonryColCount : function( ) {
-      // console.log( 'getting masonry col count')
-      this.colW = this.options.columnWidth || this.$allAtoms.outerWidth(true);
-
-      // if colW == 0, back out before divide by zero
-      if ( !this.colW ) {
-        window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
-        return this;
-      }
-      this.width = this.element.width();
-      this.colCount = Math.floor( this.width / this.colW ) ;
-      this.colCount = Math.max( this.colCount, 1 );
-      return this;
-    },
-    
-    _masonryReset : function() {
-      var i = this.colCount;
-      this.colYs = [];
-      while (i--) {
-        this.colYs.push( this.posTop );
-      }
-      return this;
-    },
-    
-
-    
-    _masonryResize : function() {
-      var prevColCount = this.colCount;
-      // get updated colCount
-      this._getMasonryColCount();
-      if ( this.colCount !== prevColCount ) {
-        // if column count has changed, do a new column cound
-        this.reLayout();
-      }
-
-      return this;
-    },
-    
-    _masonryGetContainerSize : function() {
-      var containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
-      return { height: containerHeight };
-    },
     
 
     
     // ====================== ClearFloat ======================
     
-    _clearFloat : function( $elems ) {
-      var instance = this;
-      return $elems.each( function() {
-        var $this = $(this),
-            atomW = $this.outerWidth(true),
-            atomH = $this.outerHeight(true),
-            x, y;
-        
-        if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
-          // if this element cannot fit in the current row
-          instance.clearFloat.x = 0;
-          instance.clearFloat.y = instance.clearFloat.height;
-        } 
-        
-        // position the atom
-        x = instance.clearFloat.x + instance.posLeft;
-        y = instance.clearFloat.y + instance.posTop;
-        instance._pushPosition( $this, x, y );
 
-        instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
-        instance.clearFloat.x += atomW;
-
-      });
-    },
-    
-    _clearFloatReset : function() {
-      this.clearFloat = {
-        x : 0,
-        y : 0,
-        height : 0
-      };
-      return this;
-    },
-    
-    _clearFloatGetContainerSize : function () {
-      return { height : this.clearFloat.height };
-    },
-    
-    _clearFloatResize : function() {
-      this.width = this.element.width();
-      return this.reLayout()
-    },
 
 
     // ====================== General Layout ======================
 
-    
     // used on collection of atoms (should be filtered, and sorted before )
     // accepts atoms-to-be-laid-out to start with
     layout : function( $elems, callback ) {
@@ -441,11 +291,11 @@
           layoutMethod = '_' + layoutMode;
 
       // layout logic
-      if ( layoutMethod === '_masonry' ) {
-        layoutMethod += this.options.masonrySingleMode ? 'SingleColumn' : 'MultiColumn';
-      }
+      // if ( layoutMethod === '_masonry' ) {
+      //   layoutMethod += this.options.masonrySingleMode ? 'SingleColumn' : 'MultiColumn';
+      // }
       
-      this[ layoutMethod ]( $elems );
+      this[ '_' +  layoutMode + 'Layout' ]( $elems );
       
 
       // set the size of the container
@@ -567,9 +417,167 @@
       return this.reLayout( callback );
     }
 
+  };
+  
+  
+  // ====================== LAYOUTS ======================
+  
+  
+  // ====================== Masonry ======================
+  
+  Molequul.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
+    // here, `this` refers to a child element or "brick"
+        // get the minimum Y value from the columns
+    var minimumY  = Math.min.apply( Math, setY ),
+        setHeight = minimumY + $brick.outerHeight(true),
+        i         = setY.length,
+        shortCol  = i,
+        setSpan   = this.colCount + 1 - i,
+        x, y ;
+    // Which column has the minY value, closest to the left
+    while (i--) {
+      if ( setY[i] === minimumY ) {
+        shortCol = i;
+      }
+    }
+    
+    // position the brick
+    x = this.colW * shortCol + this.posLeft;
+    y = minimumY;
+    this._pushPosition( $brick, x, y );
+
+    // apply setHeight to necessary columns
+    for ( i=0; i < setSpan; i++ ) {
+      this.colYs[ shortCol + i ] = setHeight;
+    }
 
   };
   
-  $.widget.bridge( 'molequul', Molequul );
+  
+  Molequul.prototype._masonryLayout = function( $elems ) {
+    var instance = this;
+    $elems.each(function(){
+      var $this  = $(this),
+          //how many columns does this brick span
+          colSpan = Math.ceil( $this.outerWidth(true) / instance.colW );
+      colSpan = Math.min( colSpan, instance.colCount );
+
+      if ( colSpan === 1 ) {
+        // if brick spans only one column, just like singleMode
+        instance._masonryPlaceBrick( $this, instance.colCount, instance.colYs );
+      } else {
+        // brick spans more than one column
+        // how many different places could this brick fit horizontally
+        var groupCount = instance.colCount + 1 - colSpan,
+            groupY = [],
+            groupColY;
+
+        // for each group potential horizontal position
+        for ( var i=0; i < groupCount; i++ ) {
+          // make an array of colY values for that one group
+          groupColY = instance.colYs.slice( i, i+colSpan );
+          // and get the max value of the array
+          groupY[i] = Math.max.apply( Math, groupColY );
+        }
+        
+        instance._masonryPlaceBrick( $this, groupCount, groupY );
+      }
+    });
+  };
+  
+  Molequul.prototype._masonryGetColCount = function( ) {
+    // console.log( 'getting masonry col count')
+    this.colW = this.options.columnWidth || this.$allAtoms.outerWidth(true);
+
+    // if colW == 0, back out before divide by zero
+    if ( !this.colW ) {
+      window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
+      return this;
+    }
+    this.width = this.element.width();
+    this.colCount = Math.floor( this.width / this.colW ) ;
+    this.colCount = Math.max( this.colCount, 1 );
+    return this;
+  };
+  
+  // reset
+  Molequul.prototype._masonryReset = function() {
+    // FIXME shouldn't have to call this again
+    this._masonryGetColCount();
+    var i = this.colCount;
+    this.colYs = [];
+    while (i--) {
+      this.colYs.push( this.posTop );
+    }
+    return this;
+  };
+  
+
+  
+  Molequul.prototype._masonryResize = function() {
+    var prevColCount = this.colCount;
+    // get updated colCount
+    this._masonryGetColCount();
+    if ( this.colCount !== prevColCount ) {
+      // if column count has changed, do a new column cound
+      this.reLayout();
+    }
+
+    return this;
+  };
+  
+  Molequul.prototype._masonryGetContainerSize = function() {
+    var containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
+    return { height: containerHeight };
+  };
+  
+  
+  // ====================== rows ======================
+    
+  _rowsLayout : function( $elems ) {
+    var instance = this;
+    return $elems.each( function() {
+      var $this = $(this),
+          atomW = $this.outerWidth(true),
+          atomH = $this.outerHeight(true),
+          x, y;
+      
+      if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
+        // if this element cannot fit in the current row
+        instance.clearFloat.x = 0;
+        instance.clearFloat.y = instance.clearFloat.height;
+      } 
+      
+      // position the atom
+      x = instance.clearFloat.x + instance.posLeft;
+      y = instance.clearFloat.y + instance.posTop;
+      instance._pushPosition( $this, x, y );
+
+      instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
+      instance.clearFloat.x += atomW;
+
+    });
+  },
+  
+  _rowsReset : function() {
+    this.clearFloat = {
+      x : 0,
+      y : 0,
+      height : 0
+    };
+    return this;
+  },
+  
+  _rowsGetContainerSize : function () {
+    return { height : this.clearFloat.height };
+  },
+  
+  _rowsResize : function() {
+    this.width = this.element.width();
+    return this.reLayout()
+  },
+    
+  
+
   
 })( jQuery );
