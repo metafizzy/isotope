@@ -568,7 +568,7 @@
   
   // ====================== rows ======================
     
-  $.Molequul.prototype._rowsLayout = function( $elems ) {
+  $.Molequul.prototype._clearFloatLayout = function( $elems ) {
     var instance = this;
     return $elems.each( function() {
       var $this = $(this),
@@ -593,7 +593,7 @@
     });
   };
   
-  $.Molequul.prototype._rowsReset = function() {
+  $.Molequul.prototype._clearFloatReset = function() {
     this.clearFloat = {
       x : 0,
       y : 0,
@@ -602,11 +602,11 @@
     return this;
   };
   
-  $.Molequul.prototype._rowsGetContainerSize = function () {
+  $.Molequul.prototype._clearFloatGetContainerSize = function () {
     return { height : this.clearFloat.height };
   };
   
-  $.Molequul.prototype._rowsResize = function() {
+  $.Molequul.prototype._clearFloatResize = function() {
     this.width = this.element.width();
     return this.reLayout()
   };
