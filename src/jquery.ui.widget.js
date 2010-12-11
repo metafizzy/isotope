@@ -23,7 +23,7 @@
   			options;
 
   		// prevent calls to internal methods
-  		if ( isMethodCall && options.substring( 0, 1 ) === "_" ) {
+  		if ( isMethodCall && options.charAt( 0 ) === "_" ) {
   			return returnValue;
   		}
 
@@ -31,11 +31,11 @@
   			this.each(function() {
   				var instance = $.data( this, name );
   				if ( !instance ) {
-  					throw "cannot call methods on " + name + " prior to initialization; " +
-  						"attempted to call method '" + options + "'";
+  					return $.error( "cannot call methods on " + name + " prior to initialization; " +
+  						"attempted to call method '" + options + "'" );
   				}
   				if ( !$.isFunction( instance[options] ) ) {
-  					throw "no such method '" + options + "' for " + name + " widget instance";
+  					return $.error( "no such method '" + options + "' for " + name + " widget instance" );
   				}
   				var methodValue = instance[ options ].apply( instance, args );
   				if ( methodValue !== instance && methodValue !== undefined ) {
