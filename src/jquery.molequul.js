@@ -15,7 +15,7 @@
   $.Molequul.prototype = {
 
     options : {
-      columnWidth : 150,
+      // columnWidth : 150,
       resizeable: true,
       layoutMode : 'masonry',
       masonrySingleMode : false,
@@ -430,7 +430,9 @@
         atomUnstyle[ $.optoTransform.transformProp ] = 'none';
       }
       
-      this.$allAtoms.css( atomUnstyle );
+      this.$allAtoms
+        .css( atomUnstyle )
+        .removeClass( this.options.hiddenClass );
       
       this.element
         .css({
@@ -438,7 +440,7 @@
           height: 'auto'
         })
         .unbind('.molequul')
-        .removeClass('molequul')
+        .removeClass( this.options.containerClass )
         .removeData('molequul');
       
       $(window).unbind('.molequul');
@@ -460,7 +462,7 @@
         setHeight = minimumY + $brick.outerHeight(true),
         i         = setY.length,
         shortCol  = i,
-        setSpan   = this.colCount + 1 - i,
+        setSpan   = this.masonry.colCount + 1 - i,
         x, y ;
     // Which column has the minY value, closest to the left
     while (i--) {
@@ -470,13 +472,13 @@
     }
     
     // position the brick
-    x = this.colW * shortCol + this.posLeft;
+    x = this.masonry.colW * shortCol + this.posLeft;
     y = minimumY;
     this._pushPosition( $brick, x, y );
 
     // apply setHeight to necessary columns
     for ( i=0; i < setSpan; i++ ) {
-      this.colYs[ shortCol + i ] = setHeight;
+      this.masonry.colYs[ shortCol + i ] = setHeight;
     }
 
   };
@@ -487,23 +489,23 @@
     $elems.each(function(){
       var $this  = $(this),
           //how many columns does this brick span
-          colSpan = Math.ceil( $this.outerWidth(true) / instance.colW );
-      colSpan = Math.min( colSpan, instance.colCount );
+          colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.colW );
+      colSpan = Math.min( colSpan, instance.masonry.colCount );
 
       if ( colSpan === 1 ) {
         // if brick spans only one column, just like singleMode
-        instance._masonryPlaceBrick( $this, instance.colCount, instance.colYs );
+        instance._masonryPlaceBrick( $this, instance.masonry.colCount, instance.masonry.colYs );
       } else {
         // brick spans more than one column
         // how many different places could this brick fit horizontally
-        var groupCount = instance.colCount + 1 - colSpan,
+        var groupCount = instance.masonry.colCount + 1 - colSpan,
             groupY = [],
             groupColY;
 
         // for each group potential horizontal position
         for ( var i=0; i < groupCount; i++ ) {
           // make an array of colY values for that one group
-          groupColY = instance.colYs.slice( i, i+colSpan );
+          groupColY = instance.masonry.colYs.slice( i, i+colSpan );
           // and get the max value of the array
           groupY[i] = Math.max.apply( Math, groupColY );
         }
@@ -515,27 +517,31 @@
   
   $.Molequul.prototype._masonryGetColCount = function( ) {
     // console.log( 'getting masonry col count')
-    this.colW = this.options.columnWidth || this.$allAtoms.outerWidth(true);
+    // console.log( this.options.masonry.columnWidth )
+    
+    this.masonry.colW = this.options.masonry.columnWidth || this.$allAtoms.outerWidth(true);
 
     // if colW == 0, back out before divide by zero
-    if ( !this.colW ) {
+    if ( !this.masonry.colW ) {
       window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
       return this;
     }
     this.width = this.element.width();
-    this.colCount = Math.floor( this.width / this.colW ) ;
-    this.colCount = Math.max( this.colCount, 1 );
+    this.masonry.colCount = Math.floor( this.width / this.masonry.colW ) ;
+    this.masonry.colCount = Math.max( this.masonry.colCount, 1 );
     return this;
   };
   
   // reset
   $.Molequul.prototype._masonryReset = function() {
+    // layout-specific props
+    this.masonry = {};
     // FIXME shouldn't have to call this again
     this._masonryGetColCount();
-    var i = this.colCount;
-    this.colYs = [];
+    var i = this.masonry.colCount;
+    this.masonry.colYs = [];
     while (i--) {
-      this.colYs.push( this.posTop );
+      this.masonry.colYs.push( this.posTop );
     }
     return this;
   };
@@ -543,10 +549,10 @@
 
   
   $.Molequul.prototype._masonryResize = function() {
-    var prevColCount = this.colCount;
+    var prevColCount = this.masonry.colCount;
     // get updated colCount
     this._masonryGetColCount();
-    if ( this.colCount !== prevColCount ) {
+    if ( this.masonry.colCount !== prevColCount ) {
       // if column count has changed, do a new column cound
       this.reLayout();
     }
@@ -555,7 +561,7 @@
   };
   
   $.Molequul.prototype._masonryGetContainerSize = function() {
-    var containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
+    var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
     return { height: containerHeight };
   };
   
