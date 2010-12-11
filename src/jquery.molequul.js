@@ -406,6 +406,7 @@
       window.console && console.log( message );
     },
     
+    // HACKy should probably remove
     shuffle : function( callback ) {
       this.options.sortBy = 'shuffle';
       
@@ -415,6 +416,33 @@
       this.$filteredAtoms = this._filter( this.$allAtoms );
       
       return this.reLayout( callback );
+    },
+    
+    // destroys widget, returns elements and container back (close) to original style
+    destroy : function() {
+      var atomUnstyle = $.extend( this.options.visibleStyle, {
+        position: 'relative',
+        top: 'auto',
+        left: 'auto'
+      });
+      
+      if ( this.usingTransforms ) {
+        atomUnstyle[ $.optoTransform.transformProp ] = 'none';
+      }
+      
+      this.$allAtoms.css( atomUnstyle );
+      
+      this.element
+        .css({
+          width: 'auto',
+          height: 'auto'
+        })
+        .unbind('.molequul')
+        .removeClass('molequul')
+        .removeData('molequul');
+      
+      $(window).unbind('.molequul');
+
     }
 
   };
