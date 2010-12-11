@@ -5,14 +5,14 @@
 (function( $, undefined ) {
 
   // our "Widget" object constructor
-  window.Molequul = function( options, element ){
+  $.Molequul = function( options, element ){
     this.element = $( element );
 
     this._create( options );
     this._init();
   };
 
-  Molequul.prototype = {
+  $.Molequul.prototype = {
 
     options : {
       columnWidth : 150,
@@ -425,7 +425,7 @@
   
   // ====================== Masonry ======================
   
-  Molequul.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
+  $.Molequul.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
     // here, `this` refers to a child element or "brick"
         // get the minimum Y value from the columns
     var minimumY  = Math.min.apply( Math, setY ),
@@ -454,7 +454,7 @@
   };
   
   
-  Molequul.prototype._masonryLayout = function( $elems ) {
+  $.Molequul.prototype._masonryLayout = function( $elems ) {
     var instance = this;
     $elems.each(function(){
       var $this  = $(this),
@@ -485,7 +485,7 @@
     });
   };
   
-  Molequul.prototype._masonryGetColCount = function( ) {
+  $.Molequul.prototype._masonryGetColCount = function( ) {
     // console.log( 'getting masonry col count')
     this.colW = this.options.columnWidth || this.$allAtoms.outerWidth(true);
 
@@ -501,7 +501,7 @@
   };
   
   // reset
-  Molequul.prototype._masonryReset = function() {
+  $.Molequul.prototype._masonryReset = function() {
     // FIXME shouldn't have to call this again
     this._masonryGetColCount();
     var i = this.colCount;
@@ -514,7 +514,7 @@
   
 
   
-  Molequul.prototype._masonryResize = function() {
+  $.Molequul.prototype._masonryResize = function() {
     var prevColCount = this.colCount;
     // get updated colCount
     this._masonryGetColCount();
@@ -526,7 +526,7 @@
     return this;
   };
   
-  Molequul.prototype._masonryGetContainerSize = function() {
+  $.Molequul.prototype._masonryGetContainerSize = function() {
     var containerHeight = Math.max.apply( Math, this.colYs ) - this.posTop;
     return { height: containerHeight };
   };
@@ -534,7 +534,7 @@
   
   // ====================== rows ======================
     
-  _rowsLayout : function( $elems ) {
+  $.Molequul.prototype._rowsLayout = function( $elems ) {
     var instance = this;
     return $elems.each( function() {
       var $this = $(this),
@@ -552,30 +552,30 @@
       x = instance.clearFloat.x + instance.posLeft;
       y = instance.clearFloat.y + instance.posTop;
       instance._pushPosition( $this, x, y );
-
+  
       instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
       instance.clearFloat.x += atomW;
-
-    });
-  },
   
-  _rowsReset : function() {
+    });
+  };
+  
+  $.Molequul.prototype._rowsReset = function() {
     this.clearFloat = {
       x : 0,
       y : 0,
       height : 0
     };
     return this;
-  },
+  };
   
-  _rowsGetContainerSize : function () {
+  $.Molequul.prototype._rowsGetContainerSize = function () {
     return { height : this.clearFloat.height };
-  },
+  };
   
-  _rowsResize : function() {
+  $.Molequul.prototype._rowsResize = function() {
     this.width = this.element.width();
     return this.reLayout()
-  },
+  };
     
   
 

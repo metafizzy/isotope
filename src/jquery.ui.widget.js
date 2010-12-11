@@ -59,6 +59,6 @@
   };
   
   
-  $.widget.bridge( 'molequul', Molequul );
+  $.widget.bridge( 'molequul', $.Molequul );
 
 })( jQuery );
