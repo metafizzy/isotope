@@ -2,38 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>default</title>
+  <title>{{ page.title }}</title>
 
   <style media="screen">
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
     
   </style>
 
 </head>
 <body>
 
-  <h1>default</h1>
+  <h1>{{ page.title }}</h1>
   
-  <p>{{ site.site_name }}</p>
-
-  {% for element in site.elements %}
-    <li>{{ element }}</li>
-  {% endfor %}
-
-  <ul>
-    {% for element in site.elements2 %}
-      <li>{{ element.name }} {{ element.number }}</li>
-    {% endfor %}
-    
-  </ul>
-
-  <ul>
-    {% for item in site.items %}
-      <li>{{ item.part_no }}</li>
-    {% endfor %}
-    
-  </ul>
+  {{ content }}
   
-  <p>parking tickets</p>
+
   
 </body>
 </html>
