@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>default</title>
+
+  <style media="screen">
+    
+  </style>
+
+</head>
+<body>
+
+  <h1>default</h1>
+  
+  <p>{{ site.site_name }}</p>
+
+  {% for element in site.elements %}
+    <li>{{ element }}</li>
+  {% endfor %}
+
+  <ul>
+    {% for element in site.elements2 %}
+      <li>{{ element.name }} {{ element.number }}</li>
+    {% endfor %}
+    
+  </ul>
+
+  <ul>
+    {% for item in site.items %}
+      <li>{{ item.part_no }}</li>
+    {% endfor %}
+    
+  </ul>
+  
+  <p>parking tickets</p>
+  
+</body>
+</html>
