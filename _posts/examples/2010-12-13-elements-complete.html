@@ -1,0 +1,424 @@
+---
+title: Elements Complete
+layout: default
+category: examples
+---
+
+<style>
+  body {
+    padding: 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.5em;
+    background: #222;
+    color: #FFF;
+  }
+
+  a {
+    color: #FB4;
+    text-decoration: none;
+  }
+
+  .wrap {
+    background: transparent;
+    border: 4px solid #FFF;
+    padding: 20px;
+  }
+
+  .element {
+    width: 110px;
+    height: 110px;
+    margin: 5px;
+    float: left;
+    background: white;
+    overflow: hidden;
+    position: relative;
+    color: #222;
+    border-top-right-radius: 1.2em;
+  }
+  
+  .xray .element {
+    border-width: 5px;
+    border-style: solid;
+    width: 100px;
+    height: 100px;
+    background-color: hsla( 0, 0%, 14%, 0.8 ) !important;
+  }
+  
+  .element.alkali          { background-color: hsl(   0, 100%, 50%); }
+  .element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
+  .element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
+  .element.actinoid        { background-color: hsl( 108, 100%, 50%); }
+  .element.transition      { background-color: hsl( 144, 100%, 50%); }
+  .element.post-transition { background-color: hsl( 180, 100%, 50%); }
+  .element.metalloid       { background-color: hsl( 216, 100%, 50%); }
+  .element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
+  .element.halogen         { background-color: hsl( 288, 100%, 50%); }
+  .element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
+  
+  
+  .xray .element.alkali          { color: hsl(   0, 100%, 50%); background-color: inherit; }
+  .xray .element.alkaline-earth  { color: hsl(  36, 100%, 50%); background-color: inherit; }
+  .xray .element.lanthanoid      { color: hsl(  72, 100%, 50%); background-color: inherit; }
+  .xray .element.actinoid        { color: hsl( 108, 100%, 50%); background-color: inherit; }
+  .xray .element.transition      { color: hsl( 144, 100%, 50%); background-color: inherit; }
+  .xray .element.post-transition { color: hsl( 180, 100%, 50%); background-color: inherit; }
+  .xray .element.metalloid       { color: hsl( 216, 100%, 50%); background-color: inherit; }
+  .xray .element.other.nonmetal  { color: hsl( 252, 100%, 50%); background-color: inherit; }
+  .xray .element.halogen         { color: hsl( 288, 100%, 50%); background-color: inherit; }
+  .xray .element.noble-gas       { color: hsl( 324, 100%, 50%); background-color: inherit; }
+  
+  
+  .element * {
+    position: absolute;
+    margin: 0;
+  }
+  
+  .element .symbol {
+    left: 0.2em;
+    top: 0.4em;
+    font-size: 3.8em;
+    line-height: 1.0em;
+    color: #FFF;
+  }
+  .element.large .symbol {
+    font-size: 4.5em;
+  }
+  
+  .xray .element .symbol {
+    left: 0.1em;
+    top: 0.3em;
+    color: inherit;
+  }
+  .xray .element.large .symbol {
+    font-size: 4.2em;
+  }
+
+  .xray .element.fake {
+    background-color: hsla( 0, 0%, 25%, 0.8 ) !important;
+  }
+
+  .element.fake .symbol {
+    color: #000;
+  }
+
+  .xray .element.fake .symbol {
+    color: inherit;
+  }
+  
+  
+  .element .name {
+    left: 0.5em;
+    bottom: 1.6em;
+    font-size: 1.05em;
+  }
+
+  .element .weight {
+    font-size: 0.9em;
+    left: 0.5em;
+    bottom: 0.5em;
+  }
+
+  .element .number {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: hsla(0,0%,0%,.5);
+    right: 0.5em;
+    top: 0.5em;
+  }
+  .xray .element .number { color: inherit; }
+
+  .variable-sizes .element.width2 { width: 230px; }
+  .variable-sizes.xray .element.width2 { width: 220px; }
+
+  .variable-sizes .element.height2 { height: 230px; }
+  .variable-sizes.xray .element.height2 { height: 220px; }
+  
+  .variable-sizes .element.width2.height2 {
+    font-size: 2.0em;
+  }
+  
+  .element.large,
+  .variable-sizes .element.large,
+  .variable-sizes .element.large.width2.height2 {
+    font-size: 3.0em;
+    width: 350px;
+    height: 350px;
+    z-index: 100;
+  }
+  .xray .element.large,
+  .xray .variable-sizes .element.large,
+  .xray .variable-sizes .element.large.width2,
+  .xray .variable-sizes .element.large.height2 {
+    width: 340px;
+    height: 340px;
+  }
+  
+  .wrap.molequul,
+  .molequul .element {
+    -webkit-transition-duration: 1.0s;
+       -moz-transition-duration: 1.0s;
+/*           -o-transition-duration: 1.0s;*/
+            transition-duration: 1.0s;
+    
+  }
+  
+  .wrap.molequul {
+    -webkit-transition-property: height;
+       -moz-transition-property: height;
+/*           -o-transition-property: height;*/
+            transition-property: height;
+  }
+
+  .molequul .element {
+    -webkit-transition-property: -webkit-transform, opacity;
+       -moz-transition-property:    -moz-transform, opacity;
+/*           -o-transition-property:      -o-transform, opacity;*/
+            transition-property:         transform, opacity;
+  }
+  
+  
+  #filters li li,
+  .sort li,
+  #layout li {
+    display: inline-block;
+    margin-right: 0.5em;
+    list-style: none;
+  }
+  
+  .molequul-hidden {
+    pointer-events: none;
+  }
+
+</style>
+
+
+</head>
+<body>
+
+<h1>the elements</h1>
+
+<h3>Filters</h3>
+
+<ul id="filters">
+  <li><a href="#show-all">show all</a></li>
+  <li><a href="#metalloid">metalloid</a></li>
+  <li>
+    <a href="#metal">metal</a>
+    <ul>
+      <li><a href="#alkali">alkali</a></li>
+      <li><a href="#alkaline-earth">alkaline-earth</a></li>
+      <li><a href="#lanthanoid">lanthanoid</a></li>
+      <li><a href="#actinoid">actinoid</a></li>
+      <li><a href="#transition">transition</a></li>
+      <li><a href="#post-transition">post-transition</a></li>
+    </ul>
+  </li>
+  <li>
+    <a href="#nonmetal">nonmetal</a>
+    <ul>
+      <li><a href="#other">other</a></li>
+      <li><a href="#halogen">halogen</a></li>
+      <li><a href="#noble-gas">noble-gas</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<h3>Sort Ascending</h3>
+
+<ul id="sort-asc" class="sort asc">
+  <li><a href="#original-order">original-order</a></li>
+  <li><a href="#name">name</a></li>
+  <li><a href="#symbol">symbol</a></li>
+  <li><a href="#number">number</a></li>
+  <li><a href="#weight">weight</a></li>
+  <li><a href="#category">category</a></li>
+</ul>
+
+<h3>Sort Descending</h3>
+
+<ul id="sort-desc" class="sort desc">
+  <li><a href="#original-order">original-order</a></li>
+  <li><a href="#name">name</a></li>
+  <li><a href="#symbol">symbol</a></li>
+  <li><a href="#number">number</a></li>
+  <li><a href="#weight">weight</a></li>
+  <li><a href="#category">category</a></li>
+</ul>
+
+<h3>Layout</h3>
+
+<ul id="layout">
+  
+  <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
+  <li id="toggle-layout"><a href="#toggle-layout">Toggle layout mode</a></li>
+  <li id="insert"><a href="#insert">Insert new elements</a></li>
+  <li id="append"><a href='#append'>Append new elements</a></li>
+  <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
+</ul>
+
+
+<div id="demo" class="wrap">
+  {% for element in site.elements %}
+      
+    <div class="element {% for cat in element.categories %}{{ cat }} {% endfor %} " data-symbol="{{ element.symbol }}" data-category="{{ element.categories[0] }}">
+      <p class="number">{{ element.number }}</p>
+      <h3 class="symbol">{{ element.symbol }}</h3>
+      <h2 class="name">{{ element.name }} {{ w_class }}</h2>
+      <p class="weight">{{ element.weight }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<p id="xray"><a href='#xray'>Toggle X-ray mmm mode</a></p>
+
+<script src="../js/jquery-1.4.4.min.js"></script>
+<script src="../src/mini-modernizr.js"></script>
+<script src="../src/jquery.opto-transform.js"></script>
+<script src="../src/jquery.smartresize.js"></script>
+<script src="../src/jquery.molequul.js"></script>
+<script src="../src/jquery.ui.widget.js"></script>
+<script src="../js/fake-element.js"></script>
+<script>
+
+
+  $(function(){
+
+    var $demo = $('#demo'),
+        masonryLayout = true;
+    
+    // hacky way of adding random size classes
+    $demo.find('.element').each(function(){
+      if ( Math.random() > 0.6 ) {
+        $(this).addClass('width2');
+      }
+      if ( Math.random() > 0.6 ) {
+        $(this).addClass('height2');
+      }
+    });
+
+
+    // console.log('starting')
+    console.time('initializeMe');
+    $demo.molequul({
+      itemSelector : '.element',
+      // layoutMode : 'clearFloat',
+      masonry : {
+        columnWidth : 120
+      },
+      animationEngine : $.browser.opera ? 'jquery' : 'best-available',
+      // animationEngine : 'jquery',
+      getSortData : {
+        symbol : function( $elem ) {
+          return $elem.attr('data-symbol');
+        },
+        category : function( $elem ) {
+          return $elem.attr('data-category');
+        },
+        number : function( $elem ) {
+          return parseInt( $elem.find('.number').text(), 10 );
+        },
+        weight : function( $elem ) {
+          return parseInt( $elem.find('.weight').text().replace( /[\(\)]/g, ''), 10 );
+        },
+        name : function ( $elem ) {
+          return $elem.find('.name').text();
+        }
+      }
+    });
+    console.timeEnd('initializeMe');
+    
+
+    $('#filters').find('a').click(function(){
+      // get href attribute, minus the #, plus a . to make it a class
+      var filterName = '.' + $(this).attr('href').slice(1);
+      filterName = filterName === '.show-all' ? '*' : filterName;
+      // var filterTest = 'filter ' + filterName;
+      // console.time( filterTest );
+      $demo.molequul({ filter: filterName })
+      // console.timeEnd( filterTest );
+      return false;
+    });
+    
+    $('.sort a').click(function(){
+      // get href attribute, minus the #
+      var $this = $(this),
+          sortName = $this.attr('href').slice(1),
+          asc = $this.parents('.sort').hasClass('asc');
+      // var sortTest = 'sort ' + sortName + ' ' + direction;
+      // console.time( sortTest );
+      $demo.molequul({ 
+        sortBy : sortName,
+        sortAscending : asc
+      });
+      // console.timeEnd( sortTest );
+      return false;
+    });
+    
+    // change size of clicked element
+    $demo.find('.element').live('click', function(){
+      $(this).toggleClass('large');
+      // console.time('relayout');
+      $demo.molequul('reLayout');
+      // console.timeEnd('relayout');
+    });
+    
+    // toggle variable sizes of all elements
+    $('#toggle-sizes').find('a').click(function(){
+      $demo
+        .toggleClass('variable-sizes')
+        .molequul('reLayout');
+      return false;
+    });
+    
+    
+    // toggle masonry / clearFloat layout
+    $('#toggle-layout').find('a').click(function(){
+      masonryLayout = !masonryLayout;
+      var mode = masonryLayout ? 'masonry' : 'clearFloat';
+      $demo.molequul({ layoutMode : mode });
+      return false;
+    });
+
+
+    $('#insert').find('a').click(function(){
+      var i = Math.ceil( Math.random()*3 + 1 ),
+          newEls = '';
+      // window.console && console.log( i )
+      while ( i-- ) {
+        newEls += fakeElement.create();
+      }
+      var $newEls = $( newEls )
+      // $demo.append( $newEls ).molequul( 'appendToLayout', $newEls );
+      $demo.molequul( 'insert', $newEls );
+      // $demo.append( $newEls ).molequul( 'addAtoms', $newEls ).molequul();
+      // $demo.molequul()
+      // console.log( next )
+      
+      return false;
+    });
+
+    $('#append').find('a').click(function(){
+      var i = Math.ceil( Math.random()*3 + 1 ),
+          newEls = '';
+      while ( i-- ) {
+        newEls += fakeElement.create();
+      }
+      var $newEls = $( newEls )
+      $demo.append( $newEls ).molequul( 'appended', $newEls );
+      
+      return false;
+    });
+    
+    $('#shuffle a').click(function(){
+      $demo.molequul('shuffle');
+      return false;
+    });
+
+    $('#xray').find('a').click(function(){
+      $demo.toggleClass('xray');
+    });
+
+  });
+</script>
