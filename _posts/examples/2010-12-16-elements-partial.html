@@ -1,12 +1,15 @@
 ---
-title: Elements Complete
+title: Elements Partial
 layout: elements
 category: examples
 ---
 
+
+
 <div id="demo" class="wrap">
-  {% for element in site.elements %}
+  {% for element in site.elements_partial %}
     {% include element-partial.html %}
   {% endfor %}
 </div>
+
 

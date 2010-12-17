@@ -1,0 +1,6 @@
+<div class="element {% for cat in element.categories %}{{ cat }} {% endfor %} " data-symbol="{{ element.symbol }}" data-category="{{ element.categories[0] }}">
+  <p class="number">{{ element.number }}</p>
+  <h3 class="symbol">{{ element.symbol }}</h3>
+  <h2 class="name">{{ element.name }} {{ w_class }}</h2>
+  <p class="weight">{{ element.weight }}</p>
+</div>

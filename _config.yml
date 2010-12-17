@@ -710,3 +710,48 @@ elements:
     symbol: Lr
     name: Lawrencium
     weight: (262)
+
+
+elements_partial:
+  - categories: [actinoid, metal, inner-transition-element]
+    othercategory: f
+    number: 94
+    symbol: Pu
+    name: Plutonium
+    weight: (244)
+  - categories: [other, nonmetal]
+    othercategory: p
+    number: 7
+    symbol: N
+    name: Nitrogen
+    weight: 14.0067
+  - categories: [transition, metal]
+    othercategory: d
+    number: 106
+    symbol: Sg
+    name: Seaborgium
+    weight: (271)
+  - categories: [halogen, nonmetal]
+    othercategory: p
+    number: 17
+    symbol: Cl
+    name: Chlorine
+    weight: 35.453
+  - categories: [noble-gas, nonmetal]
+    othercategory: p
+    number: 36
+    symbol: Kr
+    name: Krypton
+    weight: 83.798
+  - categories: [alkaline-earth, metal]
+    othercategory: s
+    number: 56
+    symbol: Ba
+    name: Barium
+    weight: 137.327
+  - categories: [alkaline-earth, metal]
+    othercategory: s
+    number: 88
+    symbol: Ra
+    name: Radium
+    weight: (226)
