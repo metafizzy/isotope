@@ -251,7 +251,7 @@
   <ul id="layouts" class="options">
     <li><a href="#masonry">masonry</a></li>
     <li><a href="#clearFloat">clearFloat</a></li>
-    <li><a href="#cellsInRows">cellsInRows</a></li>
+    <li><a href="#cellsByRow">cellsByRow</a></li>
   </ul>
 
   <h3>Etc</h3>
@@ -301,6 +301,10 @@
         // layoutMode : 'clearFloat',
         masonry : {
           columnWidth : 120
+        },
+        cellsByRow : {
+          columnWidth : 240,
+          rowHeight : 240
         },
         animationEngine : $.browser.opera ? 'jquery' : 'best-available',
         // animationEngine : 'jquery',

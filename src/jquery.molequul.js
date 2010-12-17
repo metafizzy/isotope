@@ -459,6 +459,8 @@
       this[ namespace ].cols = Math.floor( this.width / this[ namespace ].columnWidth ) ;
       this[ namespace ].cols = Math.max( this[ namespace ].cols, 1 );
       
+      console.log( 'cols for ' + namespace, this[ namespace ].cols )
+      
       return this;
       
     }
@@ -565,7 +567,7 @@
   };
   
   
-  // ====================== rows ======================
+  // ====================== clearFloat ======================
     
   $.Molequul.prototype._clearFloatLayout = function( $elems ) {
     var instance = this;
@@ -609,7 +611,35 @@
     this.width = this.element.width();
     return this.reLayout()
   };
-    
+
+
+  // ====================== cellsByRow ======================
+  
+  $.Molequul.prototype._cellsByRowReset = function() {
+    this.cellsByRow = {};
+    this._getCols('cellsByRow');
+    this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
+    return this;
+  };
+  
+  $.Molequul.prototype._cellsByRowLayout = function( $elems ) {
+    var instance = this;
+    this.cellsByRow.atomsLen = $elems.length;
+    $elems.each( function( i ){
+      var $this = $(this),
+          x = ( i % instance.cellsByRow.cols ) * instance.cellsByRow.columnWidth + instance.posLeft,
+          y = ~~( i / instance.cellsByRow.cols ) * instance.cellsByRow.rowHeight + instance.posTop;
+      console.log( x, y )
+      
+      instance._pushPosition( $this, x, y );
+      
+    });
+  };
+  
+  $.Molequul.prototype._cellsByRowGetContainerSize = function() {
+    console.log( Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) )
+    return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+  };
   
 
   
