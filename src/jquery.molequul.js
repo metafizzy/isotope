@@ -459,8 +459,6 @@
       this[ namespace ].cols = Math.floor( this.width / this[ namespace ].columnWidth ) ;
       this[ namespace ].cols = Math.max( this[ namespace ].cols, 1 );
       
-      console.log( 'cols for ' + namespace, this[ namespace ].cols )
-      
       return this;
       
     }
@@ -627,18 +625,28 @@
     this.cellsByRow.atomsLen = $elems.length;
     $elems.each( function( i ){
       var $this = $(this),
-          x = ( i % instance.cellsByRow.cols ) * instance.cellsByRow.columnWidth + instance.posLeft,
-          y = ~~( i / instance.cellsByRow.cols ) * instance.cellsByRow.rowHeight + instance.posTop;
-      console.log( x, y )
-      
+          x = ( i % instance.cellsByRow.cols ) * instance.cellsByRow.columnWidth 
+              + instance.posLeft,
+          y = ~~( i / instance.cellsByRow.cols ) * instance.cellsByRow.rowHeight 
+              + instance.posTop;
       instance._pushPosition( $this, x, y );
-      
     });
+    return this;
   };
   
   $.Molequul.prototype._cellsByRowGetContainerSize = function() {
-    console.log( Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) )
     return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+  };
+  
+  $.Molequul.prototype._cellsByRowResize = function() {
+    var prevCols = this.cellsByRow.cols;
+    this._getCols('cellsByRow');
+    
+    // if column count has changed, do a new column cound
+    if ( this.cellsByRow.cols !== prevCols ) {
+      this.reLayout();
+    }
+    return this;
   };
   
 
