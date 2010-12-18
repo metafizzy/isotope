@@ -613,42 +613,47 @@
 
   // ====================== cellsByRow ======================
   
-  $.Molequul.prototype._cellsByRowReset = function() {
-    this.cellsByRow = {};
-    this._getCols('cellsByRow');
-    this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
-    return this;
-  };
-  
-  $.Molequul.prototype._cellsByRowLayout = function( $elems ) {
-    var instance = this,
-        cols = this.cellsByRow.cols;
-    this.cellsByRow.atomsLen = $elems.length;
-    $elems.each( function( i ){
-      var $this = $(this),
-          x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth
-              - $this.outerWidth(true) / 2 + instance.posLeft,
-          y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight 
-              - $this.outerHeight(true) / 2 + instance.posTop;
-      instance._pushPosition( $this, x, y );
-    });
-    return this;
-  };
-  
-  $.Molequul.prototype._cellsByRowGetContainerSize = function() {
-    return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
-  };
-  
-  $.Molequul.prototype._cellsByRowResize = function() {
-    var prevCols = this.cellsByRow.cols;
-    this._getCols('cellsByRow');
-    
-    // if column count has changed, do a new column cound
-    if ( this.cellsByRow.cols !== prevCols ) {
-      this.reLayout();
+  $.extend( $.Molequul.prototype, {
+
+    _cellsByRowReset : function() {
+      this.cellsByRow = {};
+      this._getCols('cellsByRow');
+      this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
+      return this;
+    },
+
+    _cellsByRowLayout : function( $elems ) {
+      var instance = this,
+          cols = this.cellsByRow.cols;
+      this.cellsByRow.atomsLen = $elems.length;
+      $elems.each( function( i ){
+        var $this = $(this),
+            x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth
+                - $this.outerWidth(true) / 2 + instance.posLeft,
+            y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight 
+                - $this.outerHeight(true) / 2 + instance.posTop;
+        instance._pushPosition( $this, x, y );
+      });
+      return this;
+    },
+
+    _cellsByRowGetContainerSize : function() {
+      return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+    },
+
+    _cellsByRowResize : function() {
+      var prevCols = this.cellsByRow.cols;
+      this._getCols('cellsByRow');
+
+      // if column count has changed, do a new column cound
+      if ( this.cellsByRow.cols !== prevCols ) {
+        this.reLayout();
+      }
+      return this;
     }
-    return this;
-  };
+  });
+  
+
   
 
   
