@@ -117,7 +117,7 @@
       console.time('initializeMe');
       $demo.molequul({
         itemSelector : '.element',
-        layoutMode : '{{ page.layout_options limit:1 }}',
+        layoutMode : '{% for layout in page.layout_options limit:1 %}{{ layout }}{% endfor %}',
         masonry : {
           columnWidth : 120
         },

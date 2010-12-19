@@ -669,6 +669,60 @@
     }
   });
   
+  // ====================== fitColumns ======================
+  
+  $.extend( $.Molequul.prototype, {
+    
+    _fitColumnsReset : function() {
+      this.fitColumns = {
+        x : 0,
+        y : 0,
+        width : 0
+      };
+      return this;
+    },
+    
+    _fitColumnsLayout : function( $elems ) {
+      var instance = this;
+      this.height = this.element.height();
+      return $elems.each( function() {
+        var $this = $(this),
+            atomW = $this.outerWidth(true),
+            atomH = $this.outerHeight(true),
+            x, y;
+
+        if ( instance.fitColumns.y !== 0  &&  atomH + instance.fitColumns.y > instance.height ) {
+          // if this element cannot fit in the current column
+          instance.fitColumns.x = instance.fitColumns.width;
+          instance.fitColumns.y = 0;
+        } 
+
+        // position the atom
+        x = instance.fitColumns.x + instance.posLeft;
+        y = instance.fitColumns.y + instance.posTop;
+        instance._pushPosition( $this, x, y );
+
+        instance.fitColumns.width = Math.max( instance.fitColumns.x + atomW, instance.fitColumns.width );
+        instance.fitColumns.y += atomH;
+
+      });
+    },
+    
+    _fitColumnsGetContainerSize : function () {
+      return { width : this.fitColumns.width };
+    },
+    
+    _fitColumnsResize : function() {
+      return this.reLayout();
+    }
+    
+    
+  });
+  
+
+  
+  // ====================== cellsByColumn ======================
+  
   $.extend( $.Molequul.prototype, {
 
     _cellsByColumnReset : function() {
@@ -708,6 +762,9 @@
       return this;
     }
   });
+  
+  
+
   
 
   
