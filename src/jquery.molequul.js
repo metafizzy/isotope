@@ -337,6 +337,7 @@
     
     
     reLayout : function( callback ) {
+      // console.log( this[ '_' +  this.options.layoutMode + 'Reset' ] )
       return this
         [ '_' +  this.options.layoutMode + 'Reset' ]()
         .layout( this.$filteredAtoms, callback )
@@ -668,7 +669,104 @@
       return this;
     }
   });
+
+  // ====================== masonryHorizontal ======================
   
+  
+  $.extend( $.Molequul.prototype, {
+
+    _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
+      // here, `this` refers to a child element or "brick"
+          // get the minimum Y value from the columns
+      var minimumX  = Math.min.apply( Math, setX ),
+          setWidth  = minimumX + $brick.outerWidth(true),
+          i         = setX.length,
+          smallRow  = i,
+          setSpan   = this.masonryHorizontal.rows + 1 - i,
+          x, y ;
+      // Which column has the minY value, closest to the left
+      while (i--) {
+        if ( setX[i] === minimumX ) {
+          smallRow = i;
+        }
+      }
+
+      // position the brick
+      x = minimumX;
+      y = this.masonryHorizontal.rowHeight * smallRow + this.posTop;
+      this._pushPosition( $brick, x, y );
+
+      // apply setHeight to necessary columns
+      for ( i=0; i < setSpan; i++ ) {
+        this.masonryHorizontal.rowXs[ smallRow + i ] = setWidth;
+      }
+
+    },
+    
+    _masonryHorizontalLayout : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
+        var $this  = $(this),
+            //how many rows does this brick span
+            rowSpan = Math.ceil( $this.outerHeight(true) / instance.masonryHorizontal.rowHeight );
+        rowSpan = Math.min( rowSpan, instance.masonryHorizontal.rows );
+
+        if ( rowSpan === 1 ) {
+          // if brick spans only one column, just like singleMode
+          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rows, instance.masonryHorizontal.rowXs );
+        } else {
+          // brick spans more than one row
+          // how many different places could this brick fit horizontally
+          var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
+              groupX = [],
+              groupRowX;
+
+          // for each group potential horizontal position
+          for ( var i=0; i < groupCount; i++ ) {
+            // make an array of colY values for that one group
+            groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
+            // and get the max value of the array
+            groupX[i] = Math.max.apply( Math, groupRowX );
+          }
+
+          instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
+        }
+      });
+    },
+    
+    _masonryHorizontalReset : function() {
+      // layout-specific props
+      this.masonryHorizontal = {};
+      // FIXME shouldn't have to call this again
+      this._getRows('masonryHorizontal');
+      var i = this.masonryHorizontal.rows;
+      this.masonryHorizontal.rowXs = [];
+      while (i--) {
+        this.masonryHorizontal.rowXs.push( this.posLeft );
+      }
+      return this;
+    },
+    
+    _masonryHorizontalResize : function() {
+      var prevRows = this.masonryHorizontal.rows;
+      // get updated colCount
+      this._getRows('masonryHorizontal');
+      if ( this.masonryHorizontal.rows !== prevRows ) {
+        // if column count has changed, do a new column cound
+        this.reLayout();
+      }
+
+      return this;
+    },
+    
+    _masonryHorizontalGetContainerSize : function() {
+      var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
+      return { width: containerWidth };
+    }
+
+  });
+  
+
   // ====================== fitColumns ======================
   
   $.extend( $.Molequul.prototype, {
