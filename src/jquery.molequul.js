@@ -461,6 +461,22 @@
       
       return this;
       
+    },
+
+    _getRows : function( namespace ) {
+      this[ namespace ].rowHeight = ( this.options[ namespace ] && this.options[ namespace ].rowHeight ) || this.$allAtoms.outerHeight(true);
+      
+      // if colW == 0, back out before divide by zero
+      if ( !this[ namespace ].rowHeight ) {
+        window.console && console.error('Row height calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
+        return this;
+      }
+      this.height = this.element.height();
+      this[ namespace ].rows = Math.floor( this.height / this[ namespace ].rowHeight ) ;
+      this[ namespace ].rows = Math.max( this[ namespace ].rows, 1 );
+      
+      return this;
+      
     }
 
   };
@@ -647,6 +663,46 @@
 
       // if column count has changed, do a new column cound
       if ( this.cellsByRow.cols !== prevCols ) {
+        this.reLayout();
+      }
+      return this;
+    }
+  });
+  
+  $.extend( $.Molequul.prototype, {
+
+    _cellsByColumnReset : function() {
+      this.cellsByColumn = {};
+      this._getRows('cellsByColumn');
+      this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
+      return this;
+    },
+
+    _cellsByColumnLayout : function( $elems ) {
+      var instance = this,
+          rows = this.cellsByColumn.rows;
+      this.cellsByColumn.atomsLen = $elems.length;
+      $elems.each( function( i ){
+        var $this = $(this),
+            x = ( ~~( i / rows ) + 0.5 )  * instance.cellsByColumn.columnWidth
+                - $this.outerWidth(true) / 2 + instance.posLeft,
+            y = ( i % rows + 0.5 ) * instance.cellsByColumn.rowHeight 
+                - $this.outerHeight(true) / 2 + instance.posTop;
+        instance._pushPosition( $this, x, y );
+      });
+      return this;
+    },
+
+    _cellsByColumnGetContainerSize : function() {
+      return { width : Math.ceil( this.cellsByColumn.atomsLen / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
+    },
+
+    _cellsByColumnResize : function() {
+      var prevRows = this.cellsByColumn.rows;
+      this._getRows('cellsByColumn');
+
+      // if column count has changed, do a new column cound
+      if ( this.cellsByColumn.rows !== prevRows ) {
         this.reLayout();
       }
       return this;

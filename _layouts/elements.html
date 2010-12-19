@@ -4,265 +4,84 @@
   <meta charset="utf-8" />
   <title>{{ page.title }}</title>
   
-  <style media="screen">
-    body {
-      padding: 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 13px;
-      line-height: 1.5em;
-      background: #1D1D1D;
-      color: #FFF;
-    }
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
 
-    a {
-      color: #FB4;
-      text-decoration: none;
-    }
+</head>
+<body{% if page.body_class %} class="{{ page.body_class}}"{% endif %}>
 
-    .wrap {
-      background: transparent;
-      border: 4px solid #FFF;
-      padding: 20px;
-    }
+  <section id="options">
+    
+    <h1>{{ page.title }}</h1>
 
-    .element {
-      width: 110px;
-      height: 110px;
-      margin: 5px;
-      float: left;
-      background: white;
-      overflow: hidden;
-      position: relative;
-      color: #222;
-      border-top-right-radius: 1.2em;
-    }
-
-    .xray .element {
-      border-width: 5px;
-      border-style: solid;
-      width: 100px;
-      height: 100px;
-      background-color: hsla( 0, 0%, 14%, 0.8 ) !important;
-    }
-
-    .element.alkali          { background-color: hsl(   0, 100%, 50%); }
-    .element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
-    .element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
-    .element.actinoid        { background-color: hsl( 108, 100%, 50%); }
-    .element.transition      { background-color: hsl( 144, 100%, 50%); }
-    .element.post-transition { background-color: hsl( 180, 100%, 50%); }
-    .element.metalloid       { background-color: hsl( 216, 100%, 50%); }
-    .element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
-    .element.halogen         { background-color: hsl( 288, 100%, 50%); }
-    .element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
+    <h3>Filters</h3>
+    
+    <ul id="filters">
+      <li><a href="#show-all">show all</a></li>
+      <li><a href="#metalloid">metalloid</a></li>
+      <li>
+        <a href="#metal">metal</a>
+        <ul>
+          <li><a href="#alkali">alkali</a></li>
+          <li><a href="#alkaline-earth">alkaline-earth</a></li>
+          <li><a href="#lanthanoid">lanthanoid</a></li>
+          <li><a href="#actinoid">actinoid</a></li>
+          <li><a href="#transition">transition</a></li>
+          <li><a href="#post-transition">post-transition</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#nonmetal">nonmetal</a>
+        <ul>
+          <li><a href="#other">other</a></li>
+          <li><a href="#halogen">halogen</a></li>
+          <li><a href="#noble-gas">noble-gas</a></li>
+        </ul>
+      </li>
+    </ul>
 
 
-    .xray .element.alkali          { color: hsl(   0, 100%, 50%); background-color: inherit; }
-    .xray .element.alkaline-earth  { color: hsl(  36, 100%, 50%); background-color: inherit; }
-    .xray .element.lanthanoid      { color: hsl(  72, 100%, 50%); background-color: inherit; }
-    .xray .element.actinoid        { color: hsl( 108, 100%, 50%); background-color: inherit; }
-    .xray .element.transition      { color: hsl( 144, 100%, 50%); background-color: inherit; }
-    .xray .element.post-transition { color: hsl( 180, 100%, 50%); background-color: inherit; }
-    .xray .element.metalloid       { color: hsl( 216, 100%, 50%); background-color: inherit; }
-    .xray .element.other.nonmetal  { color: hsl( 252, 100%, 50%); background-color: inherit; }
-    .xray .element.halogen         { color: hsl( 288, 100%, 50%); background-color: inherit; }
-    .xray .element.noble-gas       { color: hsl( 324, 100%, 50%); background-color: inherit; }
+    <h3>Sort Ascending</h3>
 
+    <ul id="sort-asc" class="sort asc options">
+      <li><a href="#original-order">original-order</a></li>
+      <li><a href="#name">name</a></li>
+      <li><a href="#symbol">symbol</a></li>
+      <li><a href="#number">number</a></li>
+      <li><a href="#weight">weight</a></li>
+      <li><a href="#category">category</a></li>
+    </ul>
 
-    .element * {
-      position: absolute;
-      margin: 0;
-    }
+    <h3>Sort Descending</h3>
 
-    .element .symbol {
-      left: 0.2em;
-      top: 0.4em;
-      font-size: 3.8em;
-      line-height: 1.0em;
-      color: #FFF;
-    }
-    .element.large .symbol {
-      font-size: 4.5em;
-    }
+    <ul id="sort-desc" class="sort desc options">
+      <li><a href="#original-order">original-order</a></li>
+      <li><a href="#name">name</a></li>
+      <li><a href="#symbol">symbol</a></li>
+      <li><a href="#number">number</a></li>
+      <li><a href="#weight">weight</a></li>
+      <li><a href="#category">category</a></li>
+    </ul>
 
-    .xray .element .symbol {
-      left: 0.1em;
-      top: 0.3em;
-      color: inherit;
-    }
-    .xray .element.large .symbol {
-      font-size: 4.2em;
-    }
-
-    .xray .element.fake {
-      background-color: hsla( 0, 0%, 25%, 0.8 ) !important;
-    }
-
-    .element.fake .symbol {
-      color: #000;
-    }
-
-    .xray .element.fake .symbol {
-      color: inherit;
-    }
-
-
-    .element .name {
-      left: 0.5em;
-      bottom: 1.6em;
-      font-size: 1.05em;
-    }
-
-    .element .weight {
-      font-size: 0.9em;
-      left: 0.5em;
-      bottom: 0.5em;
-    }
-
-    .element .number {
-      font-size: 1.25em;
-      font-weight: bold;
-      color: hsla(0,0%,0%,.5);
-      right: 0.5em;
-      top: 0.5em;
-    }
-    .xray .element .number { color: inherit; }
-
-    .variable-sizes .element.width2 { width: 230px; }
-    .variable-sizes.xray .element.width2 { width: 220px; }
-
-    .variable-sizes .element.height2 { height: 230px; }
-    .variable-sizes.xray .element.height2 { height: 220px; }
-
-    .variable-sizes .element.width2.height2 {
-      font-size: 2.0em;
-    }
-
-    .element.large,
-    .variable-sizes .element.large,
-    .variable-sizes .element.large.width2.height2 {
-      font-size: 3.0em;
-      width: 350px;
-      height: 350px;
-      z-index: 100;
-    }
-    .xray .element.large,
-    .xray .variable-sizes .element.large,
-    .xray .variable-sizes .element.large.width2,
-    .xray .variable-sizes .element.large.height2 {
-      width: 340px;
-      height: 340px;
-    }
-
-    .wrap.molequul,
-    .molequul .element {
-      -webkit-transition-duration: 1.0s;
-         -moz-transition-duration: 1.0s;
-  /*           -o-transition-duration: 1.0s;*/
-              transition-duration: 1.0s;
-
-    }
-
-    .wrap.molequul {
-      -webkit-transition-property: height;
-         -moz-transition-property: height;
-  /*           -o-transition-property: height;*/
-              transition-property: height;
-    }
-
-    .molequul .element {
-      -webkit-transition-property: -webkit-transform, opacity;
-         -moz-transition-property:    -moz-transform, opacity;
-  /*           -o-transition-property:      -o-transform, opacity;*/
-              transition-property:         transform, opacity;
-    }
-
-
-    #filters li li,
-    .options li {
-      display: inline-block;
-      margin-right: 0.5em;
-      list-style: none;
-    }
-
-    .molequul-hidden {
-      pointer-events: none;
-    }
-
-  </style>
-
-
-  </head>
-  <body>
-
-  <h1>the elements</h1>
-
-  <h3>Filters</h3>
-
-  <ul id="filters">
-    <li><a href="#show-all">show all</a></li>
-    <li><a href="#metalloid">metalloid</a></li>
-    <li>
-      <a href="#metal">metal</a>
-      <ul>
-        <li><a href="#alkali">alkali</a></li>
-        <li><a href="#alkaline-earth">alkaline-earth</a></li>
-        <li><a href="#lanthanoid">lanthanoid</a></li>
-        <li><a href="#actinoid">actinoid</a></li>
-        <li><a href="#transition">transition</a></li>
-        <li><a href="#post-transition">post-transition</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#nonmetal">nonmetal</a>
-      <ul>
-        <li><a href="#other">other</a></li>
-        <li><a href="#halogen">halogen</a></li>
-        <li><a href="#noble-gas">noble-gas</a></li>
-      </ul>
-    </li>
-  </ul>
-
-
-  <h3>Sort Ascending</h3>
-
-  <ul id="sort-asc" class="sort asc options">
-    <li><a href="#original-order">original-order</a></li>
-    <li><a href="#name">name</a></li>
-    <li><a href="#symbol">symbol</a></li>
-    <li><a href="#number">number</a></li>
-    <li><a href="#weight">weight</a></li>
-    <li><a href="#category">category</a></li>
-  </ul>
-
-  <h3>Sort Descending</h3>
-
-  <ul id="sort-desc" class="sort desc options">
-    <li><a href="#original-order">original-order</a></li>
-    <li><a href="#name">name</a></li>
-    <li><a href="#symbol">symbol</a></li>
-    <li><a href="#number">number</a></li>
-    <li><a href="#weight">weight</a></li>
-    <li><a href="#category">category</a></li>
-  </ul>
-
-  <h3>Layouts</h3>
+    <h3>Layouts</h3>
   
-  <ul id="layouts" class="options">
-    <li><a href="#masonry">masonry</a></li>
-    <li><a href="#clearFloat">clearFloat</a></li>
-    <li><a href="#cellsByRow">cellsByRow</a></li>
-  </ul>
+    <ul id="layouts" class="options">
+      {% for layout in page.layout_options %}
+        <li><a href="#{{ layout }}">{{ layout }}</a></li>
+      {% endfor %}
+    </ul>
 
-  <h3>Etc</h3>
+    <h3>Etc</h3>
 
-  <ul id="etc" class="options">
+    <ul id="etc" class="options">
 
-    <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
-    <li id="insert"><a href="#insert">Insert new elements</a></li>
-    <li id="append"><a href='#append'>Append new elements</a></li>
-    <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
-  </ul>
+      <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
+      <li id="insert"><a href="#insert">Insert new elements</a></li>
+      <li id="append"><a href='#append'>Append new elements</a></li>
+      <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
+    </ul>
+  </section> <!-- #options -->
+
+  
 
   {{ content }}
   
@@ -298,11 +117,15 @@
       console.time('initializeMe');
       $demo.molequul({
         itemSelector : '.element',
-        // layoutMode : 'clearFloat',
+        layoutMode : '{{ page.layout_options limit:1 }}',
         masonry : {
           columnWidth : 120
         },
         cellsByRow : {
+          columnWidth : 240,
+          rowHeight : 240
+        },
+        cellsByColumn : {
           columnWidth : 240,
           rowHeight : 240
         },
@@ -372,7 +195,7 @@
       });
 
 
-      // toggle masonry / clearFloat layout
+      // change layout
       $('#layouts a').click(function(){
         var mode = $(this).attr('href').slice(1);
         $demo.molequul({ layoutMode : mode });

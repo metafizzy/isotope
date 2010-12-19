@@ -1,0 +1,13 @@
+Molequul
+========
+
+**An exquisite filtering, sorting, layout jQuery plugin.**
+
+Features
+--------
+
+
+Issues
+------
+
++ Must reset `width: auto` or `height: auto` when switching from vertical to horizontal layouts
