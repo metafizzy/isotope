@@ -448,37 +448,26 @@
 
     },
     
-    _getCols : function( namespace ) {
-      this[ namespace ].columnWidth = ( this.options[ namespace ] && this.options[ namespace ].columnWidth ) || this.$allAtoms.outerWidth(true);
+    _getSegments : function( namespace, isRows ) {
+      var measure = isRows ? 'rowHeight' : 'columnWidth',
+          size = isRows ? 'height' : 'width',
+          UCSize = isRows ? 'Height' : 'Width',
+          segments = isRows ? 'rows' : 'cols';
+      
+      this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
       
       // if colW == 0, back out before divide by zero
-      if ( !this[ namespace ].columnWidth ) {
-        window.console && console.error('Column width calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.');
+      if ( !this[ namespace ][ measure ] ) {
+        $.error( UCSize + ' of ' + segments + 'calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.')
         return this;
       }
-      this.width = this.element.width();
-      this[ namespace ].cols = Math.floor( this.width / this[ namespace ].columnWidth ) ;
-      this[ namespace ].cols = Math.max( this[ namespace ].cols, 1 );
+      this[ size ] = this.element[ size ]();
+      this[ namespace ][ segments ] = Math.floor( this[ size ] / this[ namespace ][ measure ] ) ;
+      this[ namespace ][ segments ] = Math.max( this[ namespace ][ segments ], 1 );
       
       return this;
       
     },
-
-    _getRows : function( namespace ) {
-      this[ namespace ].rowHeight = ( this.options[ namespace ] && this.options[ namespace ].rowHeight ) || this.$allAtoms.outerHeight(true);
-      
-      // if colW == 0, back out before divide by zero
-      if ( !this[ namespace ].rowHeight ) {
-        window.console && console.error('Row height calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.');
-        return this;
-      }
-      this.height = this.element.height();
-      this[ namespace ].rows = Math.floor( this.height / this[ namespace ].rowHeight ) ;
-      this[ namespace ].rows = Math.max( this[ namespace ].rows, 1 );
-      
-      return this;
-      
-    }
 
   };
   
@@ -553,7 +542,7 @@
     // layout-specific props
     this.masonry = {};
     // FIXME shouldn't have to call this again
-    this._getCols('masonry');
+    this._getSegments('masonry');
     var i = this.masonry.cols;
     this.masonry.colYs = [];
     while (i--) {
@@ -567,7 +556,7 @@
   $.Ionizer.prototype._masonryResize = function() {
     var prevColCount = this.masonry.cols;
     // get updated colCount
-    this._getCols('masonry');
+    this._getSegments('masonry');
     if ( this.masonry.cols !== prevColCount ) {
       // if column count has changed, do a new column cound
       this.reLayout();
@@ -634,7 +623,7 @@
 
     _cellsByRowReset : function() {
       this.cellsByRow = {};
-      this._getCols('cellsByRow');
+      this._getSegments('cellsByRow');
       this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
       return this;
     },
@@ -660,7 +649,7 @@
 
     _cellsByRowResize : function() {
       var prevCols = this.cellsByRow.cols;
-      this._getCols('cellsByRow');
+      this._getSegments('cellsByRow');
 
       // if column count has changed, do a new column cound
       if ( this.cellsByRow.cols !== prevCols ) {
@@ -738,7 +727,7 @@
       // layout-specific props
       this.masonryHorizontal = {};
       // FIXME shouldn't have to call this again
-      this._getRows('masonryHorizontal');
+      this._getSegments( 'masonryHorizontal', true );
       var i = this.masonryHorizontal.rows;
       this.masonryHorizontal.rowXs = [];
       while (i--) {
@@ -750,7 +739,7 @@
     _masonryHorizontalResize : function() {
       var prevRows = this.masonryHorizontal.rows;
       // get updated colCount
-      this._getRows('masonryHorizontal');
+      this._getSegments( 'masonryHorizontal', true );
       if ( this.masonryHorizontal.rows !== prevRows ) {
         // if column count has changed, do a new column cound
         this.reLayout();
@@ -825,7 +814,7 @@
 
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};
-      this._getRows('cellsByColumn');
+      this._getSegments( 'cellsByColumn', true );
       this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
       return this;
     },
@@ -851,7 +840,7 @@
 
     _cellsByColumnResize : function() {
       var prevRows = this.cellsByColumn.rows;
-      this._getRows('cellsByColumn');
+      this._getSegments( 'cellsByColumn', true );
 
       // if column count has changed, do a new column cound
       if ( this.cellsByColumn.rows !== prevRows ) {
