@@ -449,20 +449,20 @@
     },
     
     _getSegments : function( namespace, isRows ) {
-      var measure = isRows ? 'rowHeight' : 'columnWidth',
-          size = isRows ? 'height' : 'width',
-          UCSize = isRows ? 'Height' : 'Width',
+      var measure  = isRows ? 'rowHeight' : 'columnWidth',
+          size     = isRows ? 'height' : 'width',
+          UCSize   = isRows ? 'Height' : 'Width',
           segments = isRows ? 'rows' : 'cols';
       
       this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ][ measure ] ) {
-        $.error( UCSize + ' of ' + segments + 'calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.')
+        $.error( measure + 'calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.')
         return this;
       }
       this[ size ] = this.element[ size ]();
-      this[ namespace ][ segments ] = Math.floor( this[ size ] / this[ namespace ][ measure ] ) ;
+      this[ namespace ][ segments ] = Math.floor( this[ size ] / this[ namespace ][ measure ] );
       this[ namespace ][ segments ] = Math.max( this[ namespace ][ segments ], 1 );
       
       return this;
