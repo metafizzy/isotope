@@ -477,144 +477,151 @@
   
   // ====================== Masonry ======================
   
-  $.Ionizer.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
-    // here, `this` refers to a child element or "brick"
-        // get the minimum Y value from the columns
-    var minimumY  = Math.min.apply( Math, setY ),
-        setHeight = minimumY + $brick.outerHeight(true),
-        i         = setY.length,
-        shortCol  = i,
-        setSpan   = this.masonry.cols + 1 - i,
-        x, y ;
-    // Which column has the minY value, closest to the left
-    while (i--) {
-      if ( setY[i] === minimumY ) {
-        shortCol = i;
-      }
-    }
-    
-    // position the brick
-    x = this.masonry.columnWidth * shortCol + this.posLeft;
-    y = minimumY;
-    this._pushPosition( $brick, x, y );
-
-    // apply setHeight to necessary columns
-    for ( i=0; i < setSpan; i++ ) {
-      this.masonry.colYs[ shortCol + i ] = setHeight;
-    }
-
-  };
+  $.extend( $.Ionizer.prototype, {
   
-  
-  $.Ionizer.prototype._masonryLayout = function( $elems ) {
-    var instance = this;
-    $elems.each(function(){
-      var $this  = $(this),
-          //how many columns does this brick span
-          colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
-      colSpan = Math.min( colSpan, instance.masonry.cols );
-
-      if ( colSpan === 1 ) {
-        // if brick spans only one column, just like singleMode
-        instance._masonryPlaceBrick( $this, instance.masonry.cols, instance.masonry.colYs );
-      } else {
-        // brick spans more than one column
-        // how many different places could this brick fit horizontally
-        var groupCount = instance.masonry.cols + 1 - colSpan,
-            groupY = [],
-            groupColY;
-
-        // for each group potential horizontal position
-        for ( var i=0; i < groupCount; i++ ) {
-          // make an array of colY values for that one group
-          groupColY = instance.masonry.colYs.slice( i, i+colSpan );
-          // and get the max value of the array
-          groupY[i] = Math.max.apply( Math, groupColY );
+    _masonryPlaceBrick : function( $brick, setCount, setY ) {
+      // here, `this` refers to a child element or "brick"
+          // get the minimum Y value from the columns
+      var minimumY  = Math.min.apply( Math, setY ),
+          setHeight = minimumY + $brick.outerHeight(true),
+          i         = setY.length,
+          shortCol  = i,
+          setSpan   = this.masonry.cols + 1 - i,
+          x, y ;
+      // Which column has the minY value, closest to the left
+      while (i--) {
+        if ( setY[i] === minimumY ) {
+          shortCol = i;
         }
-        
-        instance._masonryPlaceBrick( $this, groupCount, groupY );
       }
-    });
-  };
+    
+      // position the brick
+      x = this.masonry.columnWidth * shortCol + this.posLeft;
+      y = minimumY;
+      this._pushPosition( $brick, x, y );
+
+      // apply setHeight to necessary columns
+      for ( i=0; i < setSpan; i++ ) {
+        this.masonry.colYs[ shortCol + i ] = setHeight;
+      }
+
+    },
   
-  // reset
-  $.Ionizer.prototype._masonryReset = function() {
-    // layout-specific props
-    this.masonry = {};
-    // FIXME shouldn't have to call this again
-    this._getSegments('masonry');
-    var i = this.masonry.cols;
-    this.masonry.colYs = [];
-    while (i--) {
-      this.masonry.colYs.push( this.posTop );
-    }
-    return this;
-  };
+  
+    _masonryLayout : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
+        var $this  = $(this),
+            //how many columns does this brick span
+            colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
+        colSpan = Math.min( colSpan, instance.masonry.cols );
+
+        if ( colSpan === 1 ) {
+          // if brick spans only one column, just like singleMode
+          instance._masonryPlaceBrick( $this, instance.masonry.cols, instance.masonry.colYs );
+        } else {
+          // brick spans more than one column
+          // how many different places could this brick fit horizontally
+          var groupCount = instance.masonry.cols + 1 - colSpan,
+              groupY = [],
+              groupColY;
+
+          // for each group potential horizontal position
+          for ( var i=0; i < groupCount; i++ ) {
+            // make an array of colY values for that one group
+            groupColY = instance.masonry.colYs.slice( i, i+colSpan );
+            // and get the max value of the array
+            groupY[i] = Math.max.apply( Math, groupColY );
+          }
+        
+          instance._masonryPlaceBrick( $this, groupCount, groupY );
+        }
+      });
+    };
+  
+    // reset
+    _masonryReset : function() {
+      // layout-specific props
+      this.masonry = {};
+      // FIXME shouldn't have to call this again
+      this._getSegments('masonry');
+      var i = this.masonry.cols;
+      this.masonry.colYs = [];
+      while (i--) {
+        this.masonry.colYs.push( this.posTop );
+      }
+      return this;
+    },
   
 
   
-  $.Ionizer.prototype._masonryResize = function() {
-    var prevColCount = this.masonry.cols;
-    // get updated colCount
-    this._getSegments('masonry');
-    if ( this.masonry.cols !== prevColCount ) {
-      // if column count has changed, do a new column cound
-      this.reLayout();
-    }
+    _masonryResize : function() {
+      var prevColCount = this.masonry.cols;
+      // get updated colCount
+      this._getSegments('masonry');
+      if ( this.masonry.cols !== prevColCount ) {
+        // if column count has changed, do a new column cound
+        this.reLayout();
+      }
 
-    return this;
-  };
+      return this;
+    },
   
-  $.Ionizer.prototype._masonryGetContainerSize = function() {
-    var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
-    return { height: containerHeight };
-  };
+    _masonryGetContainerSize : function() {
+      var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
+      return { height: containerHeight };
+    }
   
+  });
   
   // ====================== clearFloat ======================
+  
+  $.extend( $.Ionizer.prototype, {
     
-  $.Ionizer.prototype._clearFloatLayout = function( $elems ) {
-    var instance = this;
-    return $elems.each( function() {
-      var $this = $(this),
-          atomW = $this.outerWidth(true),
-          atomH = $this.outerHeight(true),
-          x, y;
+    _clearFloatLayout : function( $elems ) {
+      var instance = this;
+      return $elems.each( function() {
+        var $this = $(this),
+            atomW = $this.outerWidth(true),
+            atomH = $this.outerHeight(true),
+            x, y;
       
-      if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
-        // if this element cannot fit in the current row
-        instance.clearFloat.x = 0;
-        instance.clearFloat.y = instance.clearFloat.height;
-      } 
+        if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
+          // if this element cannot fit in the current row
+          instance.clearFloat.x = 0;
+          instance.clearFloat.y = instance.clearFloat.height;
+        } 
       
-      // position the atom
-      x = instance.clearFloat.x + instance.posLeft;
-      y = instance.clearFloat.y + instance.posTop;
-      instance._pushPosition( $this, x, y );
+        // position the atom
+        x = instance.clearFloat.x + instance.posLeft;
+        y = instance.clearFloat.y + instance.posTop;
+        instance._pushPosition( $this, x, y );
   
-      instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
-      instance.clearFloat.x += atomW;
+        instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
+        instance.clearFloat.x += atomW;
   
-    });
-  };
+      });
+    },
   
-  $.Ionizer.prototype._clearFloatReset = function() {
-    this.clearFloat = {
-      x : 0,
-      y : 0,
-      height : 0
-    };
-    return this;
-  };
+    _clearFloatReset : function() {
+      this.clearFloat = {
+        x : 0,
+        y : 0,
+        height : 0
+      };
+      return this;
+    },
   
-  $.Ionizer.prototype._clearFloatGetContainerSize = function () {
-    return { height : this.clearFloat.height };
-  };
+    _clearFloatGetContainerSize : function () {
+      return { height : this.clearFloat.height };
+    },
   
-  $.Ionizer.prototype._clearFloatResize = function() {
-    this.width = this.element.width();
-    return this.reLayout()
-  };
+    _clearFloatResize : function() {
+      this.width = this.element.width();
+      return this.reLayout()
+    }
+  
+  });
 
 
   // ====================== cellsByRow ======================
