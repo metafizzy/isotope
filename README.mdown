@@ -3,11 +3,23 @@ Ionize
 
 **An exquisite filtering, sorting, layout jQuery plugin.**
 
+Requires jQuery versions 1.4.3 and up. 
+
 Features
 --------
 
++ Developed for progressive enhancement. Positioning and animation take advantage of CSS3 transforms and transitions when available.
++ Dynamic layouts
++ Sort elements according to any attribute, text, or anything
++ Easy filtering
++ Animated interaction for dynamic layout
++ Develop your own layout with the plugin's integrated layout API
 
-Issues
-------
+Licensing
+---------
 
-+ Must reset `width: auto` or `height: auto` when switching from vertical to horizontal layouts
+Use on commercial (for-profit) sites requires one-time license fee per developer-seat. Purchase yours at [metafizzy.net/licensing](http://metafizzy.net/licensing).
+
+Free for personal (non-commercial) use.
+
+Copyright (c) 2011 David DeSandro / Metafizzy LLC
