@@ -537,7 +537,7 @@
           instance._masonryPlaceBrick( $this, groupCount, groupY );
         }
       });
-    };
+    },
   
     // reset
     _masonryReset : function() {

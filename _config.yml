@@ -701,7 +701,7 @@ elements:
   - categories: [actinoid, metal, inner-transition-element]
     othercategory: f
     number: 102
-    symbol: No
+    symbol: 'No'
     name: Nobelium
     weight: (259)
   - categories: [actinoid, metal, inner-transition-element]

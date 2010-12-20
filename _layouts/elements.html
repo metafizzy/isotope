@@ -117,7 +117,7 @@
 
 
       // console.log('starting')
-      console.time('initializeMe');
+      // console.time('initializeMe');
       $demo.ionize({
         itemSelector : '.element',
         // layoutMode : 'clearFloat',
@@ -155,7 +155,7 @@
           }
         }
       });
-      console.timeEnd('initializeMe');
+      // console.timeEnd('initializeMe');
 
 
       $('#filters').find('a').click(function(){
@@ -210,11 +210,13 @@
         
         if ( wasHorizontal !== isHorizontal ) {
           // need to do some clean up for transitions and sizes
-          var style = isHorizontal ? { height: '80%' } : { width: 'auto' };
+          var style = isHorizontal ? 
+            { height: '80%', width: $demo.width() } : 
+            { width: 'auto' };
           $demo.addClass('no-transition').css( style );
           setTimeout(function(){
             $demo.removeClass('no-transition').ionize({ layoutMode : mode });
-          }, 1 )
+          }, 100 )
         } else {
           // go ahead and apply new layout
           $demo.ionize({ layoutMode : mode });
