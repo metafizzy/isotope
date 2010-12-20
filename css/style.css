@@ -152,8 +152,8 @@ a {
   height: 340px;
 }
 
-.wrap.molequul,
-.molequul .element {
+.wrap.ionize,
+.ionize .element {
   -webkit-transition-duration: 1.0s;
      -moz-transition-duration: 1.0s;
 /*     -o-transition-duration: 1.0s;*/
@@ -161,14 +161,14 @@ a {
 
 }
 
-.wrap.molequul {
+.wrap.ionize {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
 /*     -o-transition-property: height, width;*/
           transition-property: height, width;
 }
 
-.molequul .element {
+.ionize .element {
   -webkit-transition-property: -webkit-transform, opacity;
      -moz-transition-property:    -moz-transform, opacity;
 /*     -o-transition-property:      -o-transform, opacity;*/
@@ -183,7 +183,7 @@ a {
   list-style: none;
 }
 
-.molequul-hidden {
+.ionize-hidden {
   pointer-events: none;
 }
 

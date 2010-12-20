@@ -1,4 +1,4 @@
-Molequul
+Ionize
 ========
 
 **An exquisite filtering, sorting, layout jQuery plugin.**

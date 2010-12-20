@@ -1,26 +1,26 @@
 /*************************************************
-**  jQuery Molequul version 0.1
+**  jQuery Ionize version 0.1
 **  Copyright David DeSandro
 **************************************************/
 (function( $, undefined ) {
 
   // our "Widget" object constructor
-  $.Molequul = function( options, element ){
+  $.Ionizer = function( options, element ){
     this.element = $( element );
 
     this._create( options );
     this._init();
   };
 
-  $.Molequul.prototype = {
+  $.Ionizer.prototype = {
 
     options : {
       // columnWidth : 150,
       resizeable: true,
       layoutMode : 'masonry',
       masonrySingleMode : false,
-      containerClass : 'molequul',
-      hiddenClass : 'molequul-hidden',
+      containerClass : 'ionize',
+      hiddenClass : 'ionize-hidden',
       hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
         { opacity : 0, scale : 0.001 } :
         { opacity : 0 },
@@ -97,7 +97,7 @@
       this.posLeft = Math.round( $cursor.position().left );
       $cursor.remove();
 
-      // add molequul class first time around
+      // add ionize class first time around
       var instance = this;
       setTimeout( function() {
         instance.element.addClass( instance.options.containerClass );
@@ -109,7 +109,7 @@
       
       // bind resize method
       if ( this.options.resizeable ) {
-        $(window).bind('smartresize.molequul', function() { instance.element.molequul('resize') } );
+        $(window).bind('smartresize.ionize', function() { instance.element.ionize('resize') } );
       }
       
     },
@@ -192,7 +192,7 @@
           sortData[ key ] = getSortData[ key ]( $this, instance );
         }
         // apply sort data to $element
-        $this.data( 'molequul-sort-data', sortData );
+        $this.data( 'ionize-sort-data', sortData );
         // increment element count
         // console.log( instance.elemCount )
         instance.elemCount ++;
@@ -239,7 +239,7 @@
       
       var instance = this,
           getSorter = function( elem ) {
-            return $(elem).data('molequul-sort-data')[ instance.options.sortBy ];
+            return $(elem).data('ionize-sort-data')[ instance.options.sortBy ];
           },
           sortDir = this.options.sortAscending ? 1 : -1;
           sortFn = function( alpha, beta ) {
@@ -306,7 +306,7 @@
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'molequul' ) ) ? 
+      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'ionize' ) ) ? 
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
@@ -345,7 +345,7 @@
     
     // ====================== Convenience methods ======================
     
-    // adds a jQuery object of items to a molequul container
+    // adds a jQuery object of items to a ionize container
     addAtoms : function( $content, callback ) {
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
@@ -440,11 +440,11 @@
           width: 'auto',
           height: 'auto'
         })
-        .unbind('.molequul')
+        .unbind('.ionize')
         .removeClass( this.options.containerClass )
-        .removeData('molequul');
+        .removeData('ionize');
       
-      $(window).unbind('.molequul');
+      $(window).unbind('.ionize');
 
     },
     
@@ -453,7 +453,7 @@
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ].columnWidth ) {
-        window.console && console.error('Column width calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
+        window.console && console.error('Column width calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.');
         return this;
       }
       this.width = this.element.width();
@@ -469,7 +469,7 @@
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ].rowHeight ) {
-        window.console && console.error('Row height calculated to be zero. Stopping Molequul plugin before divide by zero. Check that the width of first child inside the molequul container is not zero.');
+        window.console && console.error('Row height calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.');
         return this;
       }
       this.height = this.element.height();
@@ -488,7 +488,7 @@
   
   // ====================== Masonry ======================
   
-  $.Molequul.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
+  $.Ionizer.prototype._masonryPlaceBrick = function( $brick, setCount, setY ) {
     // here, `this` refers to a child element or "brick"
         // get the minimum Y value from the columns
     var minimumY  = Math.min.apply( Math, setY ),
@@ -517,7 +517,7 @@
   };
   
   
-  $.Molequul.prototype._masonryLayout = function( $elems ) {
+  $.Ionizer.prototype._masonryLayout = function( $elems ) {
     var instance = this;
     $elems.each(function(){
       var $this  = $(this),
@@ -549,7 +549,7 @@
   };
   
   // reset
-  $.Molequul.prototype._masonryReset = function() {
+  $.Ionizer.prototype._masonryReset = function() {
     // layout-specific props
     this.masonry = {};
     // FIXME shouldn't have to call this again
@@ -564,7 +564,7 @@
   
 
   
-  $.Molequul.prototype._masonryResize = function() {
+  $.Ionizer.prototype._masonryResize = function() {
     var prevColCount = this.masonry.cols;
     // get updated colCount
     this._getCols('masonry');
@@ -576,7 +576,7 @@
     return this;
   };
   
-  $.Molequul.prototype._masonryGetContainerSize = function() {
+  $.Ionizer.prototype._masonryGetContainerSize = function() {
     var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
     return { height: containerHeight };
   };
@@ -584,7 +584,7 @@
   
   // ====================== clearFloat ======================
     
-  $.Molequul.prototype._clearFloatLayout = function( $elems ) {
+  $.Ionizer.prototype._clearFloatLayout = function( $elems ) {
     var instance = this;
     return $elems.each( function() {
       var $this = $(this),
@@ -609,7 +609,7 @@
     });
   };
   
-  $.Molequul.prototype._clearFloatReset = function() {
+  $.Ionizer.prototype._clearFloatReset = function() {
     this.clearFloat = {
       x : 0,
       y : 0,
@@ -618,11 +618,11 @@
     return this;
   };
   
-  $.Molequul.prototype._clearFloatGetContainerSize = function () {
+  $.Ionizer.prototype._clearFloatGetContainerSize = function () {
     return { height : this.clearFloat.height };
   };
   
-  $.Molequul.prototype._clearFloatResize = function() {
+  $.Ionizer.prototype._clearFloatResize = function() {
     this.width = this.element.width();
     return this.reLayout()
   };
@@ -630,7 +630,7 @@
 
   // ====================== cellsByRow ======================
   
-  $.extend( $.Molequul.prototype, {
+  $.extend( $.Ionizer.prototype, {
 
     _cellsByRowReset : function() {
       this.cellsByRow = {};
@@ -673,7 +673,7 @@
   // ====================== masonryHorizontal ======================
   
   
-  $.extend( $.Molequul.prototype, {
+  $.extend( $.Ionizer.prototype, {
 
     _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
       // here, `this` refers to a child element or "brick"
@@ -769,7 +769,7 @@
 
   // ====================== fitColumns ======================
   
-  $.extend( $.Molequul.prototype, {
+  $.extend( $.Ionizer.prototype, {
     
     _fitColumnsReset : function() {
       this.fitColumns = {
@@ -821,7 +821,7 @@
   
   // ====================== cellsByColumn ======================
   
-  $.extend( $.Molequul.prototype, {
+  $.extend( $.Ionizer.prototype, {
 
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};

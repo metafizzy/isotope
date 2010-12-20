@@ -91,7 +91,7 @@
   <script src="../src/mini-modernizr.js"></script>
   <script src="../src/jquery.opto-transform.js"></script>
   <script src="../src/jquery.smartresize.js"></script>
-  <script src="../src/jquery.molequul.js"></script>
+  <script src="../src/jquery.ionize.js"></script>
   <script src="../src/jquery.ui.widget.js"></script>
   <script src="../js/fake-element.js"></script>
   <script>
@@ -115,7 +115,7 @@
 
       // console.log('starting')
       console.time('initializeMe');
-      $demo.molequul({
+      $demo.ionize({
         itemSelector : '.element',
         layoutMode : '{% for layout in page.layout_options limit:1 %}{{ layout }}{% endfor %}',
         masonry : {
@@ -161,7 +161,7 @@
         filterName = filterName === '.show-all' ? '*' : filterName;
         // var filterTest = 'filter ' + filterName;
         // console.time( filterTest );
-        $demo.molequul({ filter: filterName })
+        $demo.ionize({ filter: filterName })
         // console.timeEnd( filterTest );
         return false;
       });
@@ -173,7 +173,7 @@
             asc = $this.parents('.sort').hasClass('asc');
         // var sortTest = 'sort ' + sortName + ' ' + direction;
         // console.time( sortTest );
-        $demo.molequul({ 
+        $demo.ionize({ 
           sortBy : sortName,
           sortAscending : asc
         });
@@ -185,7 +185,7 @@
       $demo.find('.element').live('click', function(){
         $(this).toggleClass('large');
         // console.time('relayout');
-        $demo.molequul('reLayout');
+        $demo.ionize('reLayout');
         // console.timeEnd('relayout');
       });
 
@@ -193,7 +193,7 @@
       $('#toggle-sizes').find('a').click(function(){
         $demo
           .toggleClass('variable-sizes')
-          .molequul('reLayout');
+          .ionize('reLayout');
         return false;
       });
 
@@ -201,7 +201,7 @@
       // change layout
       $('#layouts a').click(function(){
         var mode = $(this).attr('href').slice(1);
-        $demo.molequul({ layoutMode : mode });
+        $demo.ionize({ layoutMode : mode });
         return false;
       });
 
@@ -214,10 +214,10 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        // $demo.append( $newEls ).molequul( 'appendToLayout', $newEls );
-        $demo.molequul( 'insert', $newEls );
-        // $demo.append( $newEls ).molequul( 'addAtoms', $newEls ).molequul();
-        // $demo.molequul()
+        // $demo.append( $newEls ).ionize( 'appendToLayout', $newEls );
+        $demo.ionize( 'insert', $newEls );
+        // $demo.append( $newEls ).ionize( 'addAtoms', $newEls ).ionize();
+        // $demo.ionize()
         // console.log( next )
 
         return false;
@@ -230,13 +230,13 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        $demo.append( $newEls ).molequul( 'appended', $newEls );
+        $demo.append( $newEls ).ionize( 'appended', $newEls );
 
         return false;
       });
 
       $('#shuffle a').click(function(){
-        $demo.molequul('shuffle');
+        $demo.ionize('shuffle');
         return false;
       });
 
