@@ -161,6 +161,15 @@ a {
 
 }
 
+.wrap.ionize.no-transition,
+.ionize.no-transition .element {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+/*     -o-transition-duration: 0s;*/
+          transition-duration: 0s;
+
+}
+
 .wrap.ionize {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
@@ -189,7 +198,7 @@ a {
 
 /**** Horizontal ****/
 
-.horizontal #options {
+/*.horizontal #options {
   width: 300px;
   position: absolute;
   left: 20px;
@@ -201,4 +210,8 @@ a {
   position: relative;
   margin-left: 340px;
   top: 20px;
+}*/
+
+.horizontal .wrap {
+  height: 80%;
 }

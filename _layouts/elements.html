@@ -65,9 +65,12 @@
     <h3>Layouts</h3>
   
     <ul id="layouts" class="options">
-      {% for layout in page.layout_options %}
-        <li><a href="#{{ layout }}">{{ layout }}</a></li>
-      {% endfor %}
+      <li><a href="#masonry">masonry</a></li>
+      <li><a href="#clearFloat">clearFloat</a></li>
+      <li><a href="#cellsByRow">cellsByRow</a></li>
+      <li><a href="#masonryHorizontal" class="horizontal">masonryHorizontal</a></li>
+      <li><a href="#fitColumns" class="horizontal">fitColumns</a></li>
+      <li><a href="#cellsByColumn" class="horizontal">cellsByColumn</a></li>
     </ul>
 
     <h3>Etc</h3>
@@ -117,7 +120,7 @@
       console.time('initializeMe');
       $demo.ionize({
         itemSelector : '.element',
-        layoutMode : '{% for layout in page.layout_options limit:1 %}{{ layout }}{% endfor %}',
+        // layoutMode : 'clearFloat',
         masonry : {
           columnWidth : 120
         },
@@ -197,11 +200,27 @@
         return false;
       });
 
+      var isHorizontal = false;
 
       // change layout
       $('#layouts a').click(function(){
         var mode = $(this).attr('href').slice(1);
-        $demo.ionize({ layoutMode : mode });
+            wasHorizontal = isHorizontal;
+        isHorizontal = $(this).hasClass('horizontal');
+        
+        if ( wasHorizontal !== isHorizontal ) {
+          // need to do some clean up for transitions and sizes
+          var style = isHorizontal ? { height: '80%' } : { width: 'auto' };
+          $demo.addClass('no-transition').css( style );
+          setTimeout(function(){
+            $demo.removeClass('no-transition').ionize({ layoutMode : mode });
+          }, 1 )
+        } else {
+          // go ahead and apply new layout
+          $demo.ionize({ layoutMode : mode });
+          
+        }
+        
         return false;
       });
 
