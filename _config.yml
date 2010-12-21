@@ -22,6 +22,12 @@ elements:
     weight: 151.964
   - categories: [alkaline-earth, metal]
     othercategory: s
+    number: 38
+    symbol: Sr
+    name: Strontium
+    weight: 87.62
+  - categories: [alkaline-earth, metal]
+    othercategory: s
     number: 4
     symbol: Be
     name: Beryllium
@@ -56,12 +62,6 @@ elements:
     symbol: Cd
     name: Cadmium
     weight: 112.411
-  - categories: [post-transition, metal]
-    othercategory: p
-    number: 49
-    symbol: In
-    name: Indium
-    weight: 114.818
   - categories: [metalloid]
     othercategory: p
     number: 32
@@ -80,30 +80,24 @@ elements:
     symbol: As
     name: Arsenic
     weight: 74.9216
-  - categories: [noble-gas, nonmetal]
-    othercategory: p
-    number: 36
-    symbol: Kr
-    name: Krypton
-    weight: 83.798
   - categories: [alkali, metal]
     othercategory: s
     number: 37
     symbol: Rb
     name: Rubidium
     weight: 85.4678
-  - categories: [alkaline-earth, metal]
-    othercategory: s
-    number: 38
-    symbol: Sr
-    name: Strontium
-    weight: 87.62
   - categories: [transition, metal]
     othercategory: d
     number: 39
     symbol: Y
     name: Yttrium
     weight: 88.90585
+  - categories: [metalloid]
+    othercategory: p
+    number: 84
+    symbol: Po
+    name: Polonium
+    weight: (209)
   - categories: [transition, metal]
     othercategory: d
     number: 40
@@ -140,12 +134,6 @@ elements:
     symbol: F
     name: Fluorine
     weight: 18.9984032
-  - categories: [post-transition, metal]
-    othercategory: p
-    number: 13
-    symbol: Al
-    name: Aluminium
-    weight: 26.9815386
   - categories: [metalloid]
     othercategory: p
     number: 14
@@ -176,12 +164,12 @@ elements:
     symbol: B
     name: Boron
     weight: 10.811
-  - categories: [other, nonmetal]
+  - categories: [noble-gas, nonmetal]
     othercategory: p
-    number: 6
-    symbol: C
-    name: Carbon
-    weight: 12.0107
+    number: 36
+    symbol: Kr
+    name: Krypton
+    weight: 83.798
   - categories: [post-transition, metal]
     othercategory: p
     number: 114
@@ -200,18 +188,18 @@ elements:
     symbol: Zn
     name: Zinc
     weight: 65.38
-  - categories: [noble-gas, nonmetal]
-    othercategory: s
-    number: 2
-    symbol: He
-    name: Helium
-    weight: 4.002602
-  - categories: [alkali, metal]
-    othercategory: s
-    number: 3
-    symbol: Li
-    name: Lithium
-    weight: 6.941
+  - categories: [transition, metal]
+    othercategory: d
+    number: 80
+    symbol: Hg
+    name: Mercury
+    weight: 200.59
+  - categories: [post-transition, metal]
+    othercategory: p
+    number: 13
+    symbol: Al
+    name: Aluminium
+    weight: 26.9815386
   - categories: [transition, metal]
     othercategory: d
     number: 47
@@ -224,6 +212,12 @@ elements:
     symbol: Sc
     name: Scandium
     weight: 44.955912
+  - categories: [alkali, metal]
+    othercategory: s
+    number: 3
+    symbol: Li
+    name: Lithium
+    weight: 6.941
   - categories: [transition, metal]
     othercategory: d
     number: 22
@@ -272,18 +266,24 @@ elements:
     symbol: V
     name: Vanadium
     weight: 50.9415
-  - categories: [lanthanoid, metal, inner-transition-element]
-    othercategory: f
-    number: 70
-    symbol: Yb
-    name: Ytterbium
-    weight: 173.054
   - categories: [transition, metal]
     othercategory: d
     number: 41
     symbol: Nb
     name: Niobium
     weight: 92.90638
+  - categories: [lanthanoid, metal, inner-transition-element]
+    othercategory: f
+    number: 70
+    symbol: Yb
+    name: Ytterbium
+    weight: 173.054
+  - categories: [noble-gas, nonmetal]
+    othercategory: s
+    number: 2
+    symbol: He
+    name: Helium
+    weight: 4.002602
   - categories: [transition, metal]
     othercategory: d
     number: 77
@@ -326,12 +326,6 @@ elements:
     symbol: Sn
     name: Tin
     weight: 118.71
-  - categories: [metalloid]
-    othercategory: p
-    number: 51
-    symbol: Sb
-    name: Antimony
-    weight: 121.76
   - categories: [lanthanoid, metal, inner-transition-element]
     othercategory: f
     number: 69
@@ -356,6 +350,12 @@ elements:
     symbol: Hf
     name: Hafnium
     weight: 178.49
+  - categories: [metalloid]
+    othercategory: p
+    number: 51
+    symbol: Sb
+    name: Antimony
+    weight: 121.76
   - categories: [transition, metal]
     othercategory: d
     number: 73
@@ -374,12 +374,36 @@ elements:
     symbol: W
     name: Tungsten
     weight: 183.84
-  - categories: [transition, metal]
-    othercategory: d
-    number: 75
-    symbol: Re
-    name: Rhenium
-    weight: 186.207
+  - categories: [halogen, nonmetal]
+    othercategory: p
+    number: 35
+    symbol: Br
+    name: Bromine
+    weight: 79.904
+  - categories: [post-transition, metal]
+    othercategory: p
+    number: 49
+    symbol: In
+    name: Indium
+    weight: 114.818
+  - categories: [actinoid, metal, inner-transition-element]
+    othercategory: f
+    number: 101
+    symbol: Md
+    name: Mendelevium
+    weight: (258)
+  - categories: [alkaline-earth, metal]
+    othercategory: s
+    number: 88
+    symbol: Ra
+    name: Radium
+    weight: (226)
+  - categories: [other, nonmetal]
+    othercategory: p
+    number: 34
+    symbol: Se
+    name: Selenium
+    weight: 78.96
   - categories: [transition, metal]
     othercategory: d
     number: 76
@@ -388,64 +412,46 @@ elements:
     weight: 190.23
   - categories: [actinoid, metal, inner-transition-element]
     othercategory: f
-    number: 101
-    symbol: Md
-    name: Mendelevium
-    weight: (258)
-  - categories: [actinoid, metal, inner-transition-element]
-    othercategory: f
     number: 102
     symbol: 'No'
     name: Nobelium
     weight: (259)
-  - categories: [other, nonmetal]
-    othercategory: p
-    number: 34
-    symbol: Se
-    name: Selenium
-    weight: 78.96
-  - categories: [halogen, nonmetal]
-    othercategory: p
-    number: 35
-    symbol: Br
-    name: Bromine
-    weight: 79.904
+  - categories: [transition, metal]
+    othercategory: d
+    number: 75
+    symbol: Re
+    name: Rhenium
+    weight: 186.207
   - categories: [actinoid, metal, inner-transition-element]
     othercategory: d
     number: 103
     symbol: Lr
     name: Lawrencium
     weight: (262)
-  - categories: [transition, metal]
-    othercategory: d
-    number: 80
-    symbol: Hg
-    name: Mercury
-    weight: 200.59
   - categories: [post-transition, metal]
     othercategory: p
     number: 81
     symbol: Tl
     name: Thallium
     weight: 204.3833
-  - categories: [post-transition, metal]
-    othercategory: p
-    number: 82
-    symbol: Pb
-    name: Lead
-    weight: 207.2
   - categories: [lanthanoid, metal, inner-transition-element]
     othercategory: f
     number: 58
     symbol: Ce
     name: Cerium
     weight: 140.116
+  - categories: [other, nonmetal]
+    othercategory: p
+    number: 6
+    symbol: C
+    name: Carbon
+    weight: 12.0107
   - categories: [post-transition, metal]
     othercategory: p
-    number: 83
-    symbol: Bi
-    name: Bismuth
-    weight: 208.9804
+    number: 82
+    symbol: Pb
+    name: Lead
+    weight: 207.2
   - categories: [transition, metal]
     othercategory: d
     number: 26
@@ -458,18 +464,18 @@ elements:
     symbol: Co
     name: Cobalt
     weight: 58.933195
-  - categories: [metalloid]
-    othercategory: p
-    number: 84
-    symbol: Po
-    name: Polonium
-    weight: (209)
   - categories: [transition, metal]
     othercategory: d
     number: 44
     symbol: Ru
     name: Ruthenium
     weight: 101.07
+  - categories: [post-transition, metal]
+    othercategory: p
+    number: 83
+    symbol: Bi
+    name: Bismuth
+    weight: 208.9804
   - categories: [transition, metal]
     othercategory: d
     number: 45
@@ -494,12 +500,6 @@ elements:
     symbol: Fr
     name: Francium
     weight: (223)
-  - categories: [alkaline-earth, metal]
-    othercategory: s
-    number: 88
-    symbol: Ra
-    name: Radium
-    weight: (226)
   - categories: [transition, metal]
     othercategory: d
     number: 104
