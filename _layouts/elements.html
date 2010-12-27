@@ -94,7 +94,7 @@
   <script src="../src/mini-modernizr.js"></script>
   <script src="../src/jquery.opto-transform.js"></script>
   <script src="../src/jquery.smartresize.js"></script>
-  <script src="../src/jquery.ionize.js"></script>
+  <script src="../src/jquery.isotope.js"></script>
   <script src="../src/jquery.ui.widget.js"></script>
   <script src="../js/fake-element.js"></script>
   <script>
@@ -118,7 +118,7 @@
 
       // console.log('starting')
       // console.time('initializeMe');
-      $demo.ionize({
+      $demo.isotope({
         itemSelector : '.element',
         // layoutMode : 'clearFloat',
         masonry : {
@@ -164,7 +164,7 @@
         filterName = filterName === '.show-all' ? '*' : filterName;
         // var filterTest = 'filter ' + filterName;
         // console.time( filterTest );
-        $demo.ionize({ filter: filterName })
+        $demo.isotope({ filter: filterName })
         // console.timeEnd( filterTest );
         return false;
       });
@@ -176,7 +176,7 @@
             asc = $this.parents('.sort').hasClass('asc');
         // var sortTest = 'sort ' + sortName + ' ' + direction;
         // console.time( sortTest );
-        $demo.ionize({ 
+        $demo.isotope({ 
           sortBy : sortName,
           sortAscending : asc
         });
@@ -188,7 +188,7 @@
       $demo.find('.element').live('click', function(){
         $(this).toggleClass('large');
         // console.time('relayout');
-        $demo.ionize('reLayout');
+        $demo.isotope('reLayout');
         // console.timeEnd('relayout');
       });
 
@@ -196,7 +196,7 @@
       $('#toggle-sizes').find('a').click(function(){
         $demo
           .toggleClass('variable-sizes')
-          .ionize('reLayout');
+          .isotope('reLayout');
         return false;
       });
 
@@ -215,11 +215,11 @@
             { width: 'auto' };
           $demo.addClass('no-transition').css( style );
           setTimeout(function(){
-            $demo.removeClass('no-transition').ionize({ layoutMode : mode });
+            $demo.removeClass('no-transition').isotope({ layoutMode : mode });
           }, 100 )
         } else {
           // go ahead and apply new layout
-          $demo.ionize({ layoutMode : mode });
+          $demo.isotope({ layoutMode : mode });
           
         }
         
@@ -235,10 +235,10 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        // $demo.append( $newEls ).ionize( 'appendToLayout', $newEls );
-        $demo.ionize( 'insert', $newEls );
-        // $demo.append( $newEls ).ionize( 'addAtoms', $newEls ).ionize();
-        // $demo.ionize()
+        // $demo.append( $newEls ).isotope( 'appendToLayout', $newEls );
+        $demo.isotope( 'insert', $newEls );
+        // $demo.append( $newEls ).isotope( 'addAtoms', $newEls ).isotope();
+        // $demo.isotope()
         // console.log( next )
 
         return false;
@@ -251,13 +251,13 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        $demo.append( $newEls ).ionize( 'appended', $newEls );
+        $demo.append( $newEls ).isotope( 'appended', $newEls );
 
         return false;
       });
 
       $('#shuffle a').click(function(){
-        $demo.ionize('shuffle');
+        $demo.isotope('shuffle');
         return false;
       });
 

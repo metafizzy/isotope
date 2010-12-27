@@ -152,8 +152,8 @@ a {
   height: 340px;
 }
 
-.wrap.ionize,
-.ionize .element {
+.wrap.isotope,
+.isotope .element {
   -webkit-transition-duration: 1.0s;
      -moz-transition-duration: 1.0s;
 /*     -o-transition-duration: 1.0s;*/
@@ -161,8 +161,8 @@ a {
 
 }
 
-.wrap.ionize.no-transition,
-.ionize.no-transition .element {
+.wrap.isotope.no-transition,
+.isotope.no-transition .element {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
 /*     -o-transition-duration: 0s;*/
@@ -170,14 +170,14 @@ a {
 
 }
 
-.wrap.ionize {
+.wrap.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
 /*     -o-transition-property: height, width;*/
           transition-property: height, width;
 }
 
-.ionize .element {
+.isotope .element {
   -webkit-transition-property: -webkit-transform, opacity;
      -moz-transition-property:    -moz-transform, opacity;
 /*     -o-transition-property:      -o-transform, opacity;*/
@@ -192,7 +192,7 @@ a {
   list-style: none;
 }
 
-.ionize-hidden {
+.isotope-hidden {
   pointer-events: none;
 }
 

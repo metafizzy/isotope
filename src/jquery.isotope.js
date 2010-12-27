@@ -5,22 +5,22 @@
 (function( $, undefined ) {
 
   // our "Widget" object constructor
-  $.Ionizer = function( options, element ){
+  $.Isotope = function( options, element ){
     this.element = $( element );
 
     this._create( options );
     this._init();
   };
 
-  $.Ionizer.prototype = {
+  $.Isotope.prototype = {
 
     options : {
       // columnWidth : 150,
       resizeable: true,
       layoutMode : 'masonry',
       masonrySingleMode : false,
-      containerClass : 'ionize',
-      hiddenClass : 'ionize-hidden',
+      containerClass : 'isotope',
+      hiddenClass : 'isotope-hidden',
       hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
         { opacity : 0, scale : 0.001 } :
         { opacity : 0 },
@@ -97,7 +97,7 @@
       this.posLeft = Math.round( $cursor.position().left );
       $cursor.remove();
 
-      // add ionize class first time around
+      // add isotope class first time around
       var instance = this;
       setTimeout( function() {
         instance.element.addClass( instance.options.containerClass );
@@ -109,7 +109,7 @@
       
       // bind resize method
       if ( this.options.resizeable ) {
-        $(window).bind('smartresize.ionize', function() { instance.element.ionize('resize') } );
+        $(window).bind('smartresize.isotope', function() { instance.element.isotope('resize') } );
       }
       
     },
@@ -192,7 +192,7 @@
           sortData[ key ] = getSortData[ key ]( $this, instance );
         }
         // apply sort data to $element
-        $this.data( 'ionize-sort-data', sortData );
+        $this.data( 'isotope-sort-data', sortData );
         // increment element count
         // console.log( instance.elemCount )
         instance.elemCount ++;
@@ -239,7 +239,7 @@
       
       var instance = this,
           getSorter = function( elem ) {
-            return $(elem).data('ionize-sort-data')[ instance.options.sortBy ];
+            return $(elem).data('isotope-sort-data')[ instance.options.sortBy ];
           },
           sortDir = this.options.sortAscending ? 1 : -1;
           sortFn = function( alpha, beta ) {
@@ -306,7 +306,7 @@
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'ionize' ) ) ? 
+      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'isotope' ) ) ? 
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
@@ -345,7 +345,7 @@
     
     // ====================== Convenience methods ======================
     
-    // adds a jQuery object of items to a ionize container
+    // adds a jQuery object of items to a isotope container
     addAtoms : function( $content, callback ) {
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
@@ -440,11 +440,11 @@
           width: 'auto',
           height: 'auto'
         })
-        .unbind('.ionize')
+        .unbind('.isotope')
         .removeClass( this.options.containerClass )
-        .removeData('ionize');
+        .removeData('isotope');
       
-      $(window).unbind('.ionize');
+      $(window).unbind('.isotope');
 
     },
     
@@ -458,7 +458,7 @@
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ][ measure ] ) {
-        $.error( measure + 'calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the ionize container is not zero.')
+        $.error( measure + 'calculated to be zero. Stopping Ionize plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.')
         return this;
       }
       this[ size ] = this.element[ size ]();
@@ -477,7 +477,7 @@
   
   // ====================== Masonry ======================
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
   
     _masonryPlaceBrick : function( $brick, setCount, setY ) {
       // here, `this` refers to a child element or "brick"
@@ -576,7 +576,7 @@
   
   // ====================== clearFloat ======================
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
     
     _clearFloatLayout : function( $elems ) {
       var instance = this;
@@ -626,7 +626,7 @@
 
   // ====================== cellsByRow ======================
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
 
     _cellsByRowReset : function() {
       this.cellsByRow = {};
@@ -669,7 +669,7 @@
   // ====================== masonryHorizontal ======================
   
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
 
     _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
       // here, `this` refers to a child element or "brick"
@@ -765,7 +765,7 @@
 
   // ====================== fitColumns ======================
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
     
     _fitColumnsReset : function() {
       this.fitColumns = {
@@ -817,7 +817,7 @@
   
   // ====================== cellsByColumn ======================
   
-  $.extend( $.Ionizer.prototype, {
+  $.extend( $.Isotope.prototype, {
 
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};

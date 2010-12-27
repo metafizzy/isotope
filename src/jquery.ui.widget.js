@@ -59,6 +59,6 @@
   };
   
   
-  $.widget.bridge( 'ionize', $.Ionizer );
+  $.widget.bridge( 'isotope', $.Isotope );
 
 })( jQuery );
