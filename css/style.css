@@ -43,7 +43,7 @@ body {
 .iso-container {
   background: transparent;
   border: 1px solid #FFF;
-  padding: 20px;
+  padding: 5px;
 }
 
 .element {
@@ -239,8 +239,8 @@ body {
 
 #options li a {
   display: inline-block;
-  padding: 0.5em;
-  background-color: #FB2;
+  padding: 0.4em 0.5em;
+  background-color: #AAA;
   color: #222;
   font-weight: bold;
   text-shadow: 0 1px hsla( 0, 0%, 100%, 0.5 );
@@ -273,12 +273,12 @@ body {
 }
 
 #options .floated li:first-child a {
-  border-radius: 10px 0 0 10px;
+  border-radius: 7px 0 0 7px;
   border-left: none;
 }
 
 #options .floated li:last-child a {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 7px 7px 0;
 }
 
 #options .option-set li a.selected {
