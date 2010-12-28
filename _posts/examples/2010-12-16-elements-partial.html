@@ -4,8 +4,7 @@ layout: elements
 category: examples
 ---
 
-
-<div id="demo" class="wrap">
+<div id="demo" class="iso-container">
   {% for element in site.elements limit:10 offset:60 %}
     {% include element-partial.html %}
   {% endfor %}

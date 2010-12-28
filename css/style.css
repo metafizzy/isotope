@@ -1,6 +1,10 @@
-html {
-  height: 100%;
+/**** Base styles ****/
+
+* {
+  margin: 0;
+  padding: 0;
 }
+
 
 body {
   padding: 20px;
@@ -9,17 +13,36 @@ body {
   line-height: 1.5em;
   background: #1D1D1D;
   color: #FFF;
-  height: 100%;
 }
+
+
+h1, h2, h3, p, ul, ol, pre, dl {
+  margin-bottom: 1.0em;
+}
+
+
+ul, ol {
+  margin-left: 1.5em;
+}
+
 
 a {
   color: #FB4;
   text-decoration: none;
 }
 
-.wrap {
+
+/**** Isotope styles ****/
+
+/* required for containers to inherit vertical size from window */
+html,
+body {
+  height: 100%;
+}
+
+.iso-container {
   background: transparent;
-  border: 4px solid #FFF;
+  border: 1px solid #FFF;
   padding: 20px;
 }
 
@@ -152,7 +175,7 @@ a {
   height: 340px;
 }
 
-.wrap.isotope,
+.iso-container.isotope,
 .isotope .element {
   -webkit-transition-duration: 1.0s;
      -moz-transition-duration: 1.0s;
@@ -161,7 +184,7 @@ a {
 
 }
 
-.wrap.isotope.no-transition,
+.iso-container.isotope.no-transition,
 .isotope.no-transition .element {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
@@ -170,7 +193,7 @@ a {
 
 }
 
-.wrap.isotope {
+.iso-container.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
 /*     -o-transition-property: height, width;*/
@@ -184,16 +207,84 @@ a {
           transition-property:         transform, opacity;
 }
 
+/**** Example Options ****/
 
-#filters li li,
-.options li {
-  display: inline-block;
-  margin-right: 0.5em;
+#options {
+  padding-bottom: 1.0em;
+}
+
+#options h3 {
+  margin-bottom: 0.2em;
+}
+
+#options ul {
+  margin: 0;
   list-style: none;
+}
+
+#options ul ul {
+  margin-left: 1.5em;
+}
+
+#options .floated li {
+  float: left;
 }
 
 .isotope-hidden {
   pointer-events: none;
+}
+
+#options li {
+}
+
+#options li a {
+  display: inline-block;
+  padding: 0.5em;
+  background-color: #FB2;
+  color: #222;
+  font-weight: bold;
+  text-shadow: 0 1px hsla( 0, 0%, 100%, 0.5 );
+  background-image: -moz-linear-gradient(-90deg, 
+    hsla( 0, 0%, 100%, 0.4 ) , 
+    hsla( 0, 0%, 100%, 0.0 ) 
+  );
+  background-image: -webkit-gradient(linear, 0 top, 0 bottom, 
+    from( hsla( 0, 0%, 100%, 0.4 ) ), 
+    to(   hsla( 0, 0%, 100%, 0.0 ) )
+  );
+    margin-bottom: 0.2em;
+}
+
+#options li a:hover {
+  background-color: #2BF;
+}
+
+#options li a:active {
+  background-color: #29D;
+  -webkit-box-shadow: inset 0 2px 8px hsla( 0, 0%, 0%, 0.6 );
+     -moz-box-shadow: inset 0 2px 8px hsla( 0, 0%, 0%, 0.6 );
+       -o-box-shadow: inset 0 2px 8px hsla( 0, 0%, 0%, 0.6 );
+          box-shadow: inset 0 2px 8px hsla( 0, 0%, 0%, 0.6 );
+}
+
+#options .floated li a {
+  border-left:  1px solid hsla( 0, 0%, 100%, 0.5 );
+  border-right: 1px solid hsla( 0, 0%,   0%, 0.2 );
+}
+
+#options .floated li:first-child a {
+  border-radius: 10px 0 0 10px;
+  border-left: none;
+}
+
+#options .floated li:last-child a {
+  border-radius: 0 10px 10px 0;
+}
+
+#options .option-set li a.selected {
+  background-color: #13F;
+  text-shadow: none;
+  color: white;
 }
 
 /**** Horizontal ****/
@@ -205,13 +296,21 @@ a {
   top: 20px;
 }
 
-.horizontal .wrap {
+.horizontal .iso-container {
   height: 80%;
   position: relative;
   margin-left: 340px;
   top: 20px;
 }*/
 
-.horizontal .wrap {
+.horizontal .iso-container {
   height: 80%;
 }
+
+
+
+/* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
+.clearfix:after { clear: both; }
+/* fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix { zoom: 1; }

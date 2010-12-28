@@ -9,18 +9,18 @@
 </head>
 <body{% if page.body_class %} class="{{ page.body_class}}"{% endif %}>
 
-  <section id="options">
+  <section id="options" class="clearfix">
     
     <h1>{{ page.title }}</h1>
 
     <h3>Filters</h3>
     
-    <ul id="filters">
-      <li><a href="#show-all">show all</a></li>
+    <ul id="filters" class="option-set">
+      <li><a href="#show-all" class="selected">show all</a></li>
       <li><a href="#metalloid">metalloid</a></li>
       <li>
         <a href="#metal">metal</a>
-        <ul>
+        <ul class="floated clearfix">
           <li><a href="#alkali">alkali</a></li>
           <li><a href="#alkaline-earth">alkaline-earth</a></li>
           <li><a href="#lanthanoid">lanthanoid</a></li>
@@ -31,7 +31,7 @@
       </li>
       <li>
         <a href="#nonmetal">nonmetal</a>
-        <ul>
+        <ul class="floated clearfix">
           <li><a href="#other">other</a></li>
           <li><a href="#halogen">halogen</a></li>
           <li><a href="#noble-gas">noble-gas</a></li>
@@ -42,30 +42,28 @@
 
     <h3>Sort Ascending</h3>
 
-    <ul id="sort-asc" class="sort asc options">
-      <li><a href="#original-order">original-order</a></li>
-      <li><a href="#name">name</a></li>
-      <li><a href="#symbol">symbol</a></li>
-      <li><a href="#number">number</a></li>
-      <li><a href="#weight">weight</a></li>
-      <li><a href="#category">category</a></li>
+    <ul id="sort-asc" class="sort asc option-set floated clearfix">
+      <li><a href="#original-order" class="selected">original-order asc</a></li>
+      <li><a href="#name">name asc</a></li>
+      <li><a href="#symbol">symbol asc</a></li>
+      <li><a href="#number">number asc</a></li>
+      <li><a href="#weight">weight asc</a></li>
+      <li><a href="#category">category asc</a></li>
     </ul>
 
-    <h3>Sort Descending</h3>
-
-    <ul id="sort-desc" class="sort desc options">
-      <li><a href="#original-order">original-order</a></li>
-      <li><a href="#name">name</a></li>
-      <li><a href="#symbol">symbol</a></li>
-      <li><a href="#number">number</a></li>
-      <li><a href="#weight">weight</a></li>
-      <li><a href="#category">category</a></li>
+    <ul id="sort-desc" class="sort desc option-set floated clearfix">
+      <li><a href="#original-order">original-order desc</a></li>
+      <li><a href="#name">name desc</a></li>
+      <li><a href="#symbol">symbol desc</a></li>
+      <li><a href="#number">number desc</a></li>
+      <li><a href="#weight">weight desc</a></li>
+      <li><a href="#category">category desc</a></li>
     </ul>
 
     <h3>Layouts</h3>
   
-    <ul id="layouts" class="options">
-      <li><a href="#masonry">masonry</a></li>
+    <ul id="layouts" class="option-set floated clearfix">
+      <li><a href="#masonry" class="selected">masonry</a></li>
       <li><a href="#clearFloat">clearFloat</a></li>
       <li><a href="#cellsByRow">cellsByRow</a></li>
       <li><a href="#masonryHorizontal" class="horizontal">masonryHorizontal</a></li>
@@ -75,7 +73,7 @@
 
     <h3>Etc</h3>
 
-    <ul id="etc" class="options">
+    <ul id="etc" class="floated clearfix">
 
       <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
       <li id="insert"><a href="#insert">Insert new elements</a></li>
@@ -264,6 +262,20 @@
       $('#xray').find('a').click(function(){
         $demo.toggleClass('xray');
       });
+      
+      
+      $('#options').find('.option-set a').click(function(){
+        var $this = $(this);
+        
+        // don't proceed if already selected
+        if ( $this.hasClass('selected') ) {
+          return;
+        }
+        
+        $this.parents('.option-set').find('.selected').removeClass('selected');
+        $this.addClass('selected');
+        
+      })
 
     });
   </script>
