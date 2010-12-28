@@ -15,10 +15,8 @@
   $.Isotope.prototype = {
 
     options : {
-      // columnWidth : 150,
       resizeable: true,
       layoutMode : 'masonry',
-      masonrySingleMode : false,
       containerClass : 'isotope',
       hiddenClass : 'isotope-hidden',
       hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
