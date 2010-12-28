@@ -1,0 +1,9 @@
+---
+
+title: Getting Started
+category: docs
+layout: doc
+
+---
+
+this is how you get started

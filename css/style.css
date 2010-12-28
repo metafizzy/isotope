@@ -11,7 +11,7 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 13px;
   line-height: 1.7em;
-  background: #1D1D1D;
+  background: #222;
   color: #FFF;
 }
 
@@ -322,6 +322,81 @@ body.doc {
   font-size: 14px;
   line-height: 1.7em;
 }
+
+.doc h2,
+.doc footer {
+  border-top: 1px solid #333;
+  padding-top: 0.8em;
+}
+
+pre {
+  padding: 0.5em;
+}
+
+pre, code {
+  background: black;
+  color: white;
+  font-family: 'Monaco', monospace, sans-serif;
+}
+
+.doc #content code {
+  font-size: 0.85em;
+  
+}
+
+.option-def dl {
+  background: #161616;
+}
+
+.option-def dl.header { background: #444; }
+
+.option-def dl dt,
+.option-def dl dd {
+  float: left;
+  padding: 0.5em;
+}
+
+.option-def dl dt {
+  width: 160px;
+}
+
+.option-def dl .option-type {
+  width: 60px;
+  font-size: 13px;
+  color: #AAA;
+  font-style: italic;
+}
+
+.option-def dl dd {
+  border-left: 1px solid #222;
+}
+
+
+
+/**** Pygments ****/
+
+code .s1,
+code .s { color: #78BD55; } /* string */
+code .mi, /* integer */
+code .cp, /* doctype */
+code .kc { color: #5298D4; } /*boolean*/
+code .k { color: #E39B79; } /* keyword */
+code .kd, /* storage */
+code .na { color: #A9D866; } /* markup attribute */
+code .p  { color: #EDB; } /* punctuation */
+code .o  { color: #F63; }   /* operator */
+code .nb { color: #AA97AC;} /* support */
+
+/* comment */
+code .c,
+code .c1 { color: #666; font-style: italic; }
+
+code .nt { color: #A0C8FC; } /* Markup open tag */
+
+code .nf { color: #9EA8B8; } /* css id */
+code .nc { color: #A78352; }  /* CSS class */
+code .m  { color: #DE8E50; } /* CSS value */
+code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 @media screen and (min-width: 768px) {
 

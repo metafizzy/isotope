@@ -1,0 +1,118 @@
+---
+
+title: Options
+category: docs
+layout: doc
+body_class: option-def
+
+---
+
+<dl class="header clearfix">
+  <dt><code>option</code></dt>
+  <dd class="option-type">Type</dd>
+  <dd class="default">Default</dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>animationEngine</code></dt>
+  <dd class="option-type">String</dd>
+  <dd class="default"><code><span class="s1">'best-available'</span></code></dd>
+</dl>
+
+Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful for relying on CSS transitions to handle animation.
+
+#### Values
+
+
++ `'best-available'`: if browser supports CSS transitions, Isotope uses `.css()`. If not, falls back to using `.animate()`.
++ `'css'`: Isotope uses `.css()`
++ `'jquery'`: Isotope uses `.animate()`
+
+<dl class="clearfix">
+  <dt><code>animationOptions</code></dt>
+  <dd class="option-type">Object</dd>
+  <dd class="default"><code>{ queue: <span class="kc">false</span> }</code></dd>
+</dl>
+
+When jQuery is the animation engine, these options will be used in <code>.animate()</code>. See the [jQuery API for animate options](http://api.jquery.com/animate/#animate-properties-options) for details.
+
+**Example:**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  animationOptions: {
+     duration: 750,
+     easing: 'linear',
+     queue: false
+   }
+});
+
+{% endhighlight %}
+
+<dl class="clearfix">
+  <dt><code>containerClass</code></dt>
+  <dd class="option-type">String</dd>
+  <dd class="default"><code><span class="s1">'isotope'</span></code></dd>
+</dl>
+
+The class applied to the container element.
+
+<dl class="clearfix">
+  <dt><code>filter</code></dt>
+  <dd class="option-type">Selector</dd>
+</dl>
+
+Setting a filter with show item elements that match the selector, and hide elements that do not match.
+
+<dl class="clearfix">
+  <dt><code>getSortData</code></dt>
+  <dd class="option-type">Object</dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>hiddenClass</code></dt>
+  <dd class="option-type">String</dd>
+  <dd class="default"><code><span class="s1">'isotope-hidden'</span></code></dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>hiddenStyle</code></dt>
+  <dd class="option-type">Object</dd>
+  <dd class="default"><code>{ opacity : <span class="mi">0</span>, scale : <span class="mi">0.001</span> }</code></dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>itemSelector</code></dt>
+  <dd class="option-type">Selector</dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>layoutMode</code></dt>
+  <dd class="option-type">String</dd>
+  <dd class="default"><code><span class="s1">'masonry'</span></code></dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>resizeable</code></dt>
+  <dd class="option-type">Boolean</dd>
+  <dd class="default"><code><span class="kc">true</span></code></dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>sortAscending</code></dt>
+  <dd class="option-type">Boolean</dd>
+  <dd class="default"><code><span class="kc">true</span></code></dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>sortBy</code></dt>
+  <dd class="option-type">String</dd>
+</dl>
+
+<dl class="clearfix">
+  <dt><code>visibleStyle</code></dt>
+  <dd class="option-type">Object</dd>
+  <dd class="default"><code>{ opacity : <span class="mi">1</span>, scale : <span class="mi">1</span> }</code></dd>
+</dl>
+
