@@ -10,9 +10,13 @@ body {
   padding: 20px;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 13px;
-  line-height: 1.5em;
+  line-height: 1.7em;
   background: #1D1D1D;
   color: #FFF;
+}
+
+section, nav, header, footer {
+  display: block;
 }
 
 
@@ -307,6 +311,36 @@ body {
   height: 80%;
 }
 
+
+/**** Docs ****/
+
+body.doc {
+  max-width: 640px;
+}
+
+.doc #content {
+  font-size: 14px;
+  line-height: 1.7em;
+}
+
+@media screen and (min-width: 768px) {
+
+  body.doc {
+    margin-left: 220px;
+  }
+  
+  .doc nav {
+    width: 200px;
+    position: fixed;
+    left: 10px;
+    font-size: 14px;
+  }
+
+  .doc nav h1 {
+    margin-top: 0;
+  }
+
+}
 
 
 /* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */

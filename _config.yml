@@ -1,4 +1,4 @@
-site_name: Isotope
+name: Isotope
 permalink: /:categories/:title.html
 
 elements:

@@ -6,4 +6,33 @@ layout: doc
 
 ---
 
-Isotope
+Isotope is a layout, filtering, and sorting plugin for jQuery.   
+
+## Features
+
+### Layout
+
+Isotope enables intelligent, dynamic layouts for listed items. Layouts can be arranged in columns, rows, grids, or more complexly like [Masonry](http://desandro.com/resources/jquery-masonry).
+
+### Filtering
+
+Items can be hidden and shown easily just by using simple jQuery selectors.
+
+### Sorting
+
+These items can then be rearranged in their order via sorting. Sorting relies on any data held within an item.
+
+### Progressive Enhancement 
+
+All these behaviors leverage animation to produce engaging interfaces. The best CSS transition and transform features are utilized when available.
+
+## License
+
+**Commercial use requires purchase of one-time license fee per developer seat.** Commercial licenses may be purchased at [metafizzy.co](http://metafizzy.co). Non-commercial use is free.
+
+Commercial use generally includes any application that makes you money. This includes portfolio sites and premium templates.
+
+## Code repository
+
+%% This project lives on GitHub at.... %%
+

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ site.name }}: {{ page.title }}</title>
+  
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+
+</head>
+<body class="doc {{ page.body_class }}">
+
+
+  
+  <nav id="docs-nav">
+    <h1>{{ site.name }}</h1>
+    
+    <ul>
+      {% for doc in site.categories.docs reversed %}
+        <li{% if page.title == doc.title %} class="current"{% endif %}><a href="..{{ doc.url }}">{{ doc.title }}</a></li>
+      {% endfor %}
+    </ul>
+    
+  </nav> <!-- #docs-nav -->
+  
+  <section id="content">
+    
+    <h1>{{ page.title }}</h1>
+
+    {{ content }}
+    
+    <footer>
+      Isotope by David DeSandro / Metafizzy
+    </footer>
+    
+  </section> <!-- #content -->
+  
+
+
+  
+</body>
+</html>
