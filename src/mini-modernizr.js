@@ -41,7 +41,7 @@ var getStyleProperty = (function(){
 // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
 
 /*!
- * Modernizr v1.6ish: miniModernizr for Ionize
+ * Modernizr v1.6ish: miniModernizr for Isotope
  * http://www.modernizr.com
  *
  * Developed by: 
@@ -77,7 +77,7 @@ var getStyleProperty = (function(){
  
 window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   
-  var version = '1.6ish: miniModernizr for Ionize',
+  var version = '1.6ish: miniModernizr for Isotope',
       miniModernizr = {},
       vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
       classes = [],

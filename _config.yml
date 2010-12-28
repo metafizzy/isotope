@@ -1,4 +1,4 @@
-site_name: Ionize
+site_name: Isotope
 permalink: /:categories/:title.html
 
 elements:
