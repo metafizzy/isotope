@@ -5,9 +5,9 @@
   padding: 0;
 }
 
-
 body {
   padding: 20px;
+/*  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;*/
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 13px;
   line-height: 1.7em;
@@ -23,7 +23,6 @@ section, nav, header, footer {
 h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
 }
-
 
 ul, ol {
   margin-left: 1.5em;
@@ -319,8 +318,8 @@ body.doc {
 }
 
 .doc #content {
-  font-size: 14px;
-  line-height: 1.7em;
+/*  font-size: 14px;
+  line-height: 1.7em;*/
 }
 
 .doc h2,
@@ -340,20 +339,31 @@ pre, code {
 }
 
 .doc #content code {
-  font-size: 0.85em;
-  
+  font-size: 12px;
+}
+
+.doc #content pre {
+  line-height: 1.6em;
 }
 
 .option-def dl {
-  background: #161616;
+  margin-top: 1.8em;
+  padding-top: 0.5em;
+  border-top: 1px solid #333;
 }
 
-.option-def dl.header { background: #444; }
 
 .option-def dl dt,
 .option-def dl dd {
   float: left;
-  padding: 0.5em;
+  padding: 0.5em 0.8em;;
+  background: #161616;
+  height: 2.0em;
+}
+
+.option-def dl.header dt,
+.option-def dl.header dd {
+  background: #444;
 }
 
 .option-def dl dt {
@@ -408,7 +418,6 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
     width: 200px;
     position: fixed;
     left: 10px;
-    font-size: 14px;
   }
 
   .doc nav h1 {

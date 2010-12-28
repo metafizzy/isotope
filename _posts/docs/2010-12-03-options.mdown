@@ -70,11 +70,35 @@ Setting a filter with show item elements that match the selector, and hide eleme
   <dd class="option-type">Object</dd>
 </dl>
 
+An object containing one or several methods to retrieve data for Sorting. The methods receive one parameter (`$elem` in the example below) which is a jQuery object representing each item element. The methods need to return a value.
+
+**Example**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  getSortData : {
+    symbol : function( $elem ) {
+      return $elem.attr('data-symbol');
+    },
+    number : function( $elem ) {
+      return parseInt( $elem.find('.number').text(), 10 );
+    },
+    name : function ( $elem ) {
+      return $elem.find('.name').text();
+    }
+  }
+});
+
+{% endhighlight %}
+
 <dl class="clearfix">
   <dt><code>hiddenClass</code></dt>
   <dd class="option-type">String</dd>
   <dd class="default"><code><span class="s1">'isotope-hidden'</span></code></dd>
 </dl>
+
+The class applied to item elements hidden by Filtering.
 
 <dl class="clearfix">
   <dt><code>hiddenStyle</code></dt>
@@ -82,10 +106,14 @@ Setting a filter with show item elements that match the selector, and hide eleme
   <dd class="default"><code>{ opacity : <span class="mi">0</span>, scale : <span class="mi">0.001</span> }</code></dd>
 </dl>
 
+The style applied to item elements hidden by Filtering.
+
 <dl class="clearfix">
   <dt><code>itemSelector</code></dt>
   <dd class="option-type">Selector</dd>
 </dl>
+
+Restricts Isotope item elements to selector.
 
 <dl class="clearfix">
   <dt><code>layoutMode</code></dt>
@@ -99,20 +127,30 @@ Setting a filter with show item elements that match the selector, and hide eleme
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
+Triggers layout logic when browser window is resized. 
+
 <dl class="clearfix">
   <dt><code>sortAscending</code></dt>
   <dd class="option-type">Boolean</dd>
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
+Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...". If false, items are sorted descending "Z, Y, X" or "9, 8, 7...".
+
 <dl class="clearfix">
   <dt><code>sortBy</code></dt>
   <dd class="option-type">String</dd>
 </dl>
+
+The property name of the method within the `getSortData` option to sort item elements.
+
+Looking at the `getSortData` example above, valid values would be `'symbol'`, `'number'`, or `'name'`.
 
 <dl class="clearfix">
   <dt><code>visibleStyle</code></dt>
   <dd class="option-type">Object</dd>
   <dd class="default"><code>{ opacity : <span class="mi">1</span>, scale : <span class="mi">1</span> }</code></dd>
 </dl>
+
+The style applied to item elements made visible by Filtering.
 
