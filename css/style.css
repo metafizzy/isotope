@@ -1,5 +1,13 @@
 /*
   HTML5 ✰ Boilerplate
+
+  style.css contains a reset, font normalization and some base styles.
+
+  credit is left where credit is due.
+  much inspiration was taken from these projects:
+    yui.yahooapis.com/2.8.1/build/base/base.css
+    camendesign.com/design/
+    praegnanz.de/weblog/htmlcssjs-kickstart
 */
 
 /*
@@ -85,8 +93,10 @@ pre, code, kbd, samp { font-family: monospace, sans-serif; }
 
 
 body, select, input, textarea {
-  color: #333;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  /* #444 looks better than black: twitter.com/H_FJ/statuses/11800719859 */
+  color: #444;
+  /* set your base font here, to apply evenly */
+  /* font-family: Georgia, serif;  */
 }
 
 /* headers (h1,h2,etc) have no default font-size or margin,
@@ -113,6 +123,13 @@ nav ul, nav li { margin: 0; }
 small { font-size: 85%; }
 strong, th { font-weight: bold; }
 
+td, td img { vertical-align: top; }
+
+/* set sub, sup without affecting line-height: gist.github.com/413930*/
+sub, sup { font-size: 75%; line-height: 0; position: relative; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
 pre {
   padding: 15px;
 
@@ -131,13 +148,32 @@ textarea { overflow: auto; } /* www.sitepoint.com/blogs/2010/08/20/ie-remove-tex
    by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
 input[type="radio"] { vertical-align: text-bottom; }
 input[type="checkbox"] { vertical-align: bottom; }
-
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
 
 /* hand cursor on clickable input elements */
 label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
 
 /* webkit browsers add a 2px margin outside the chrome of form elements */
 button, input, select, textarea { margin: 0; }
+
+/* colors for form validity */
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid {
+      border-radius: 1px;
+    -moz-box-shadow: 0px 0px 5px red;
+ -webkit-box-shadow: 0px 0px 5px red;
+         box-shadow: 0px 0px 5px red;
+}
+.no-boxshadow input:invalid,
+.no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+
+/* These selection declarations have to be separate.
+   No text-shadow: twitter.com/miketaylr/status/12228805301
+   Also: hot pink. */
+::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
+::selection { background:#FF5E99; color:#fff; text-shadow: none; }
 
 /*  j.mp/webkit-tap-highlight-color */
 a:link { -webkit-tap-highlight-color: #FF5E99; }
@@ -151,6 +187,35 @@ button {  width: auto; overflow: visible; }
 .ie7 img { -ms-interpolation-mode: bicubic; }
 
 
+
+/*
+ * Non-semantic helper classes
+ */
+
+/* for image replacement */
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+
+/* Hide for both screenreaders and browsers
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
+.hidden { display: none; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders
+   www.webaim.org/techniques/css/invisiblecontent/  &  j.mp/visuallyhidden
+   Updated to ensure no other style overrides the styles defined in this rule */
+.visuallyHidden {
+    border: 0 !important;
+    clip: rect(0 0 0 0);
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+}
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
 /* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
 .clearfix:after { clear: both; }
@@ -163,239 +228,9 @@ button {  width: auto; overflow: visible; }
 
 
  /* Primary Styles
-    Author: David DeSandro / Metafizzy
+    Author:
  */
 
-
-
-/**** Typography ****/
-
-
-
-/**** Screen ****/
-
-@media screen {
-  
-  /* required for elements inheriting vertical size */
-  html {
-    height: 100%;
-  }
-  
-  body {
-    padding: 20px;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 13px;
-    line-height: 1.5em;
-    background: #1D1D1D;
-    color: #FFF;
-    height: 100%;
-  }
-
-  a {
-    color: #FB4;
-    text-decoration: none;
-  }
-
-  .wrap {
-    background: transparent;
-    border: 4px solid #FFF;
-    padding: 20px;
-  }
-
-  .element {
-    width: 110px;
-    height: 110px;
-    margin: 5px;
-    float: left;
-    background: white;
-    overflow: hidden;
-    position: relative;
-    color: #222;
-    border-top-right-radius: 1.2em;
-  }
-
-  .xray .element {
-    border-width: 5px;
-    border-style: solid;
-    width: 100px;
-    height: 100px;
-    background-color: hsla( 0, 0%, 14%, 0.8 ) !important;
-  }
-
-  .element.alkali          { background-color: hsl(   0, 100%, 50%); }
-  .element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
-  .element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
-  .element.actinoid        { background-color: hsl( 108, 100%, 50%); }
-  .element.transition      { background-color: hsl( 144, 100%, 50%); }
-  .element.post-transition { background-color: hsl( 180, 100%, 50%); }
-  .element.metalloid       { background-color: hsl( 216, 100%, 50%); }
-  .element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
-  .element.halogen         { background-color: hsl( 288, 100%, 50%); }
-  .element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
-
-
-  .xray .element.alkali          { color: hsl(   0, 100%, 50%); background-color: inherit; }
-  .xray .element.alkaline-earth  { color: hsl(  36, 100%, 50%); background-color: inherit; }
-  .xray .element.lanthanoid      { color: hsl(  72, 100%, 50%); background-color: inherit; }
-  .xray .element.actinoid        { color: hsl( 108, 100%, 50%); background-color: inherit; }
-  .xray .element.transition      { color: hsl( 144, 100%, 50%); background-color: inherit; }
-  .xray .element.post-transition { color: hsl( 180, 100%, 50%); background-color: inherit; }
-  .xray .element.metalloid       { color: hsl( 216, 100%, 50%); background-color: inherit; }
-  .xray .element.other.nonmetal  { color: hsl( 252, 100%, 50%); background-color: inherit; }
-  .xray .element.halogen         { color: hsl( 288, 100%, 50%); background-color: inherit; }
-  .xray .element.noble-gas       { color: hsl( 324, 100%, 50%); background-color: inherit; }
-
-
-  .element * {
-    position: absolute;
-    margin: 0;
-  }
-
-  .element .symbol {
-    left: 0.2em;
-    top: 0.4em;
-    font-size: 3.8em;
-    line-height: 1.0em;
-    color: #FFF;
-  }
-  .element.large .symbol {
-    font-size: 4.5em;
-  }
-
-  .xray .element .symbol {
-    left: 0.1em;
-    top: 0.3em;
-    color: inherit;
-  }
-  .xray .element.large .symbol {
-    font-size: 4.2em;
-  }
-
-  .xray .element.fake {
-    background-color: hsla( 0, 0%, 25%, 0.8 ) !important;
-  }
-
-  .element.fake .symbol {
-    color: #000;
-  }
-
-  .xray .element.fake .symbol {
-    color: inherit;
-  }
-
-
-  .element .name {
-    left: 0.5em;
-    bottom: 1.6em;
-    font-size: 1.05em;
-  }
-
-  .element .weight {
-    font-size: 0.9em;
-    left: 0.5em;
-    bottom: 0.5em;
-  }
-
-  .element .number {
-    font-size: 1.25em;
-    font-weight: bold;
-    color: hsla(0,0%,0%,.5);
-    right: 0.5em;
-    top: 0.5em;
-  }
-  .xray .element .number { color: inherit; }
-
-  .variable-sizes .element.width2 { width: 230px; }
-  .variable-sizes.xray .element.width2 { width: 220px; }
-
-  .variable-sizes .element.height2 { height: 230px; }
-  .variable-sizes.xray .element.height2 { height: 220px; }
-
-  .variable-sizes .element.width2.height2 {
-    font-size: 2.0em;
-  }
-
-  .element.large,
-  .variable-sizes .element.large,
-  .variable-sizes .element.large.width2.height2 {
-    font-size: 3.0em;
-    width: 350px;
-    height: 350px;
-    z-index: 100;
-  }
-  .xray .element.large,
-  .xray .variable-sizes .element.large,
-  .xray .variable-sizes .element.large.width2,
-  .xray .variable-sizes .element.large.height2 {
-    width: 340px;
-    height: 340px;
-  }
-
-  .wrap.isotope,
-  .isotope .element {
-    -webkit-transition-duration: 1.0s;
-       -moz-transition-duration: 1.0s;
-  /*     -o-transition-duration: 1.0s;*/
-            transition-duration: 1.0s;
-
-  }
-
-  .wrap.isotope.no-transition,
-  .isotope.no-transition .element {
-    -webkit-transition-duration: 0s;
-       -moz-transition-duration: 0s;
-  /*     -o-transition-duration: 0s;*/
-            transition-duration: 0s;
-
-  }
-
-  .wrap.isotope {
-    -webkit-transition-property: height, width;
-       -moz-transition-property: height, width;
-  /*     -o-transition-property: height, width;*/
-            transition-property: height, width;
-  }
-
-  .isotope .element {
-    -webkit-transition-property: -webkit-transform, opacity;
-       -moz-transition-property:    -moz-transform, opacity;
-  /*     -o-transition-property:      -o-transform, opacity;*/
-            transition-property:         transform, opacity;
-  }
-
-
-  #filters li li,
-  .options li {
-    display: inline-block;
-    margin-right: 0.5em;
-    list-style: none;
-  }
-
-  .isotope-hidden {
-    pointer-events: none;
-  }
-
-  /**** Horizontal ****/
-
-  /*.horizontal #options {
-    width: 300px;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-  }
-
-  .horizontal .wrap {
-    height: 80%;
-    position: relative;
-    margin-left: 340px;
-    top: 20px;
-  }*/
-
-  .horizontal .wrap {
-    height: 80%;
-  }
-  
-}
 
 
 
@@ -411,7 +246,33 @@ button {  width: auto; overflow: visible; }
 
 
 /*
+ * media queries for responsive design
+ * these follow after primary styles so they will successfully override.
+ */
+
+@media all and (orientation:portrait) {
+  /* style adjustments for portrait mode goes here */
+
+}
+
+@media all and (orientation:landscape) {
+  /* style adjustments for landscape mode goes here */
+
+}
+
+/* Grade-A Mobile Browsers (Opera Mobile, Mobile Safari, Android Chrome)
+   consider this: www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/ */
+@media screen and (max-device-width: 480px) {
+
+
+  /* uncomment if you don't want iOS and WinMobile to mobile-optimize the text for you
+     j.mp/textsizeadjust
+  html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } */
+}
+
+/*
  * print styles
+ * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/
  */
 @media print {
   * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
@@ -434,3 +295,216 @@ button {  width: auto; overflow: visible; }
 
 
 
+body {
+  padding: 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5em;
+  background: #1D1D1D;
+  color: #FFF;
+  height: 100%;
+}
+
+a {
+  color: #FB4;
+  text-decoration: none;
+}
+
+.wrap {
+  background: transparent;
+  border: 4px solid #FFF;
+  padding: 20px;
+}
+
+.element {
+  width: 110px;
+  height: 110px;
+  margin: 5px;
+  float: left;
+  background: white;
+  overflow: hidden;
+  position: relative;
+  color: #222;
+  border-top-right-radius: 1.2em;
+}
+
+.xray .element {
+  border-width: 5px;
+  border-style: solid;
+  width: 100px;
+  height: 100px;
+  background-color: hsla( 0, 0%, 14%, 0.8 ) !important;
+}
+
+.element.alkali          { background-color: hsl(   0, 100%, 50%); }
+.element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
+.element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
+.element.actinoid        { background-color: hsl( 108, 100%, 50%); }
+.element.transition      { background-color: hsl( 144, 100%, 50%); }
+.element.post-transition { background-color: hsl( 180, 100%, 50%); }
+.element.metalloid       { background-color: hsl( 216, 100%, 50%); }
+.element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
+.element.halogen         { background-color: hsl( 288, 100%, 50%); }
+.element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
+
+
+.xray .element.alkali          { color: hsl(   0, 100%, 50%); background-color: inherit; }
+.xray .element.alkaline-earth  { color: hsl(  36, 100%, 50%); background-color: inherit; }
+.xray .element.lanthanoid      { color: hsl(  72, 100%, 50%); background-color: inherit; }
+.xray .element.actinoid        { color: hsl( 108, 100%, 50%); background-color: inherit; }
+.xray .element.transition      { color: hsl( 144, 100%, 50%); background-color: inherit; }
+.xray .element.post-transition { color: hsl( 180, 100%, 50%); background-color: inherit; }
+.xray .element.metalloid       { color: hsl( 216, 100%, 50%); background-color: inherit; }
+.xray .element.other.nonmetal  { color: hsl( 252, 100%, 50%); background-color: inherit; }
+.xray .element.halogen         { color: hsl( 288, 100%, 50%); background-color: inherit; }
+.xray .element.noble-gas       { color: hsl( 324, 100%, 50%); background-color: inherit; }
+
+
+.element * {
+  position: absolute;
+  margin: 0;
+}
+
+.element .symbol {
+  left: 0.2em;
+  top: 0.4em;
+  font-size: 3.8em;
+  line-height: 1.0em;
+  color: #FFF;
+}
+.element.large .symbol {
+  font-size: 4.5em;
+}
+
+.xray .element .symbol {
+  left: 0.1em;
+  top: 0.3em;
+  color: inherit;
+}
+.xray .element.large .symbol {
+  font-size: 4.2em;
+}
+
+.xray .element.fake {
+  background-color: hsla( 0, 0%, 25%, 0.8 ) !important;
+}
+
+.element.fake .symbol {
+  color: #000;
+}
+
+.xray .element.fake .symbol {
+  color: inherit;
+}
+
+
+.element .name {
+  left: 0.5em;
+  bottom: 1.6em;
+  font-size: 1.05em;
+}
+
+.element .weight {
+  font-size: 0.9em;
+  left: 0.5em;
+  bottom: 0.5em;
+}
+
+.element .number {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: hsla(0,0%,0%,.5);
+  right: 0.5em;
+  top: 0.5em;
+}
+.xray .element .number { color: inherit; }
+
+.variable-sizes .element.width2 { width: 230px; }
+.variable-sizes.xray .element.width2 { width: 220px; }
+
+.variable-sizes .element.height2 { height: 230px; }
+.variable-sizes.xray .element.height2 { height: 220px; }
+
+.variable-sizes .element.width2.height2 {
+  font-size: 2.0em;
+}
+
+.element.large,
+.variable-sizes .element.large,
+.variable-sizes .element.large.width2.height2 {
+  font-size: 3.0em;
+  width: 350px;
+  height: 350px;
+  z-index: 100;
+}
+.xray .element.large,
+.xray .variable-sizes .element.large,
+.xray .variable-sizes .element.large.width2,
+.xray .variable-sizes .element.large.height2 {
+  width: 340px;
+  height: 340px;
+}
+
+.wrap.isotope,
+.isotope .element {
+  -webkit-transition-duration: 1.0s;
+     -moz-transition-duration: 1.0s;
+/*     -o-transition-duration: 1.0s;*/
+          transition-duration: 1.0s;
+
+}
+
+.wrap.isotope.no-transition,
+.isotope.no-transition .element {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+/*     -o-transition-duration: 0s;*/
+          transition-duration: 0s;
+
+}
+
+.wrap.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+/*     -o-transition-property: height, width;*/
+          transition-property: height, width;
+}
+
+.isotope .element {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+/*     -o-transition-property:      -o-transform, opacity;*/
+          transition-property:         transform, opacity;
+}
+
+
+#filters li li,
+.options li {
+  display: inline-block;
+  margin-right: 0.5em;
+  list-style: none;
+}
+
+.isotope-hidden {
+  pointer-events: none;
+}
+
+/**** Horizontal ****/
+
+/*.horizontal #options {
+  width: 300px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.horizontal .wrap {
+  height: 80%;
+  position: relative;
+  margin-left: 340px;
+  top: 20px;
+}*/
+
+.horizontal .wrap {
+  height: 80%;
+}
