@@ -20,8 +20,8 @@ These are some methods
 </dl>
 
 <dl class="clearfix">
-  <dt>addAtoms</dt>
-  <dd><code>.isotope( <span class="s1">'addAtoms'</span>, $content, callback )</code></dd>
+  <dt>addItems</dt>
+  <dd><code>.isotope( <span class="s1">'addItems'</span>, $content, callback )</code></dd>
 </dl>
 
 <dl class="clearfix">

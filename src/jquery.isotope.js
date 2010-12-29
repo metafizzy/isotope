@@ -344,7 +344,7 @@
     // ====================== Convenience methods ======================
     
     // adds a jQuery object of items to a isotope container
-    addAtoms : function( $content, callback ) {
+    addItems : function( $content, callback ) {
       var $newAtoms = this._filterFind( $content, this.options.itemSelector );
       this._setupAtoms( $newAtoms );
       // add new atoms to atoms pools
@@ -361,7 +361,7 @@
       this.element.append( $content );
       
       var instance = this;
-      this.addAtoms( $content, function( $newAtoms ) {
+      this.addItems( $content, function( $newAtoms ) {
         $filteredAtoms = instance._filter( $newAtoms );
         instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
       });
@@ -372,12 +372,8 @@
     
     // convienence method for working with Infinite Scroll
     appended : function( $content, callback ) {
-      // var $newAtoms = this.addAtoms( $content );
-      // this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
-      // 
-      // return this.layout( $newAtoms, callback );
       var instance = this;
-      this.addAtoms( $content, function( $newAtoms ){
+      this.addItems( $content, function( $newAtoms ){
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
         instance.layout( $newAtoms, callback )
       });
