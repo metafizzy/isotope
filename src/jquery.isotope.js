@@ -274,7 +274,7 @@
     
 
     
-    // ====================== ClearFloat ======================
+    // ====================== fitRows ======================
     
 
 
@@ -568,11 +568,11 @@
   
   });
   
-  // ====================== clearFloat ======================
+  // ====================== fitRows ======================
   
   $.extend( $.Isotope.prototype, {
     
-    _clearFloatLayout : function( $elems ) {
+    _fitRowsLayout : function( $elems ) {
       var instance = this;
       return $elems.each( function() {
         var $this = $(this),
@@ -580,25 +580,25 @@
             atomH = $this.outerHeight(true),
             x, y;
       
-        if ( instance.clearFloat.x !== 0  &&  atomW + instance.clearFloat.x > instance.width ) {
+        if ( instance.fitRows.x !== 0  &&  atomW + instance.fitRows.x > instance.width ) {
           // if this element cannot fit in the current row
-          instance.clearFloat.x = 0;
-          instance.clearFloat.y = instance.clearFloat.height;
+          instance.fitRows.x = 0;
+          instance.fitRows.y = instance.fitRows.height;
         } 
       
         // position the atom
-        x = instance.clearFloat.x + instance.posLeft;
-        y = instance.clearFloat.y + instance.posTop;
+        x = instance.fitRows.x + instance.posLeft;
+        y = instance.fitRows.y + instance.posTop;
         instance._pushPosition( $this, x, y );
   
-        instance.clearFloat.height = Math.max( instance.clearFloat.y + atomH, instance.clearFloat.height );
-        instance.clearFloat.x += atomW;
+        instance.fitRows.height = Math.max( instance.fitRows.y + atomH, instance.fitRows.height );
+        instance.fitRows.x += atomW;
   
       });
     },
   
-    _clearFloatReset : function() {
-      this.clearFloat = {
+    _fitRowsReset : function() {
+      this.fitRows = {
         x : 0,
         y : 0,
         height : 0
@@ -606,11 +606,11 @@
       return this;
     },
   
-    _clearFloatGetContainerSize : function () {
-      return { height : this.clearFloat.height };
+    _fitRowsGetContainerSize : function () {
+      return { height : this.fitRows.height };
     },
   
-    _clearFloatResize : function() {
+    _fitRowsResize : function() {
       this.width = this.element.width();
       return this.reLayout()
     }
