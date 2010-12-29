@@ -7,48 +7,86 @@ body_class: option-def
 
 ---
 
-<dl class="clearfix">
-  <dt>name</dt>
-  <dd></dd>
-</dl>
 
-These are some methods
+<h2 id="addItems">addItems</h2>
 
-<dl class="clearfix">
-  <dt>appended</dt>
-  <dd><code>.isotope( <span class="s1">'appended'</span>, $content, callback )</code></dd>
-</dl>
+{% highlight javascript %}
 
-<dl class="clearfix">
-  <dt>addItems</dt>
-  <dd><code>.isotope( <span class="s1">'addItems'</span>, $content, callback )</code></dd>
-</dl>
+.isotope( 'addItems', $content, callback )
 
-<dl class="clearfix">
-  <dt>insert</dt>
-  <dd><code>.isotope( <span class="s1">'insert'</span>, $content, callback )</code></dd>
-</dl>
+{% endhighlight %}
 
-<dl class="clearfix">
-  <dt>reLayout</dt>
-  <dd><code>.isotope( <span class="s1">'reLayout'</span>, callback )</code></dd>
-</dl>
+Adds elements to the pool of item elements of the container, but does sort, filter or layout.
 
-<dl class="clearfix">
-  <dt>layout</dt>
-  <dd><code>.isotope( <span class="s1">'layout'</span>, $content, callback )</code></dd>
-</dl>
+<h2 id="appended">appended</h2>
 
-reLayout
+{% highlight javascript %}
 
-    reLayout : function( callback )
+.isotope( 'appended', $content, callback )
 
-layout
+{% endhighlight %}
 
-    layout : function( $elems, callback )
+Adds elements via `addItems` method, then triggers `layout` just for those new elements.
 
-resize
+Useful for Infinite Scroll.
 
-option
+<h2 id="destroy">destroy</h2>
 
-destroy
+{% highlight javascript %}
+
+.isotope( 'destroy' )
+
+{% endhighlight %}
+
+Removes Isotope functionality completely. Returns element back to pre-init state.
+
+<h2 id="insert">insert</h2>
+
+{% highlight javascript %}
+
+.isotope( 'insert', $content, callback )
+
+{% endhighlight %}
+
+Appends elements to container, adds items to via `addItems` method, and then triggers `reLayout` method so new elements are properly filtered, sorted and laid-out.
+
+<h2 id="layout">layout</h2>
+
+{% highlight javascript %}
+
+.isotope( 'layout', $content, callback )
+
+{% endhighlight %}
+
+Arranges new elements to the end of the layout.
+
+<h2 id="option">option</h2>
+
+{% highlight javascript %}
+
+.isotope( 'option', options )
+
+{% endhighlight %}
+
+Modifies options for plugin instance.
+
+<h2 id="reLayout">reLayout</h2>
+
+{% highlight javascript %}
+
+.isotope( 'reLayout', callback )
+
+{% endhighlight %}
+
+
+Resets layout properties and lays-out every item element.
+
+<h2 id="resize">resize</h2>
+
+{% highlight javascript %}
+
+.isotope( 'resize' )
+
+{% endhighlight %}
+
+Triggers layout-specific resize method.

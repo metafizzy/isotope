@@ -356,9 +356,11 @@ pre, code {
 .option-def dl dt,
 .option-def dl dd {
   float: left;
-  padding: 0.5em 0.8em;;
+  padding: 0 0.8em;;
   background: #161616;
-  height: 2.0em;
+/*  height: 2.0em;*/
+  line-height: 36px;
+  height: 36px;
 }
 
 .option-def dl.header dt,
@@ -367,7 +369,7 @@ pre, code {
 }
 
 .option-def dl dt {
-  width: 160px;
+/*  font-size: 14px;*/
 }
 
 .option-def dl .option-type {
