@@ -31,34 +31,7 @@
       <li><a href="#noble-gas">noble-gas</a></li>
     </ul>
 
-
-    <h3>Sort</h3>
-    
-    <ul id="sort" class="sort option-set">
-      <li>
-        <ul class="sort asc option-set floated clearfix">
-          <li><a href="#original-order" class="selected">original-order (asc)</a></li>
-          <li><a href="#name">name (asc)</a></li>
-          <li><a href="#symbol">symbol (asc)</a></li>
-          <li><a href="#number">number (asc)</a></li>
-          <li><a href="#weight">weight (asc)</a></li>
-          <li><a href="#category">category (asc)</a></li>
-        </ul>
-      </li>
-      <li>
-        <ul class="sort desc option-set floated clearfix">
-          <li><a href="#original-order">original-order (desc)</a></li>
-          <li><a href="#name">name (desc)</a></li>
-          <li><a href="#symbol">symbol (desc)</a></li>
-          <li><a href="#number">number (desc)</a></li>
-          <li><a href="#weight">weight (desc)</a></li>
-          <li><a href="#category">category (desc)</a></li>
-        </ul>
-      </li>
-    </ul>
-
-
-
+    {% include sort-buttons.html %}
 
 
     {% include layout-options.html %}
@@ -158,20 +131,7 @@
         return false;
       });
 
-      $('#sort a').click(function(){
-        // get href attribute, minus the #
-        var $this = $(this),
-            sortName = $this.attr('href').slice(1),
-            asc = $this.parents('.sort').hasClass('asc');
-        // var sortTest = 'sort ' + sortName + ' ' + direction;
-        // console.time( sortTest );
-        $demo.isotope({ 
-          sortBy : sortName,
-          sortAscending : asc
-        });
-        // console.timeEnd( sortTest );
-        return false;
-      });
+      {% include sort-buttons.js %}
 
       // change size of clicked element
       $demo.find('.element').live('click', function(){

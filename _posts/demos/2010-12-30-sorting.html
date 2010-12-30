@@ -1,6 +1,6 @@
 ---
 layout: nil
-title: Layout Modes
+title: Sorting
 category: demos
 ---
 <!doctype html>
@@ -18,18 +18,17 @@ category: demos
   
   <section id="copy">
     
-    <p>Isotope has a versatile layout engine that can accommodate multiple layout modes. See the docs on <a href="../docs/layout-modes.html">layout modes</a>.</p>
     
   </section>
   
   <section id="options" class="clearfix">
     
-    {% include layout-options.html %}
+    {% include sort-buttons.html %}
 
   </section> <!-- #options -->
   
   <div id="demo" class="iso-container variable-sizes">
-    {% for element in site.elements_ordered limit:20 %}
+    {% for element in site.elements_best_of %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #demo -->
@@ -45,36 +44,30 @@ category: demos
       
       var $demo = $('#demo');
 
-      // hacky way of adding random size classes
-      $demo.find('.element').each(function(){
-        if ( Math.random() > 0.6 ) {
-          $(this).addClass('width2');
-        }
-        if ( Math.random() > 0.6 ) {
-          $(this).addClass('height2');
-        }
-      });
       
       $demo.isotope({
         itemSelector : '.element',
-        masonry : {
-          columnWidth : 120
-        },
-        masonryHorizontal : {
-          rowHeight: 120
-        },
-        cellsByRow : {
-          columnWidth : 240,
-          rowHeight : 240
-        },
-        cellsByColumn : {
-          columnWidth : 240,
-          rowHeight : 240
-        },
         animationEngine : $.browser.opera ? 'jquery' : 'best-available',
+        getSortData : {
+          symbol : function( $elem ) {
+            return $elem.attr('data-symbol');
+          },
+          category : function( $elem ) {
+            return $elem.attr('data-category');
+          },
+          number : function( $elem ) {
+            return parseInt( $elem.find('.number').text(), 10 );
+          },
+          weight : function( $elem ) {
+            return parseInt( $elem.find('.weight').text().replace( /[\(\)]/g, ''), 10 );
+          },
+          name : function ( $elem ) {
+            return $elem.find('.name').text();
+          }
+        }
       });
       
-      {% include layout-change.js %}
+      {% include sort-buttons.js %}
       
       {% include option-buttons.js %}
       
