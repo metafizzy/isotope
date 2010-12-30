@@ -27,7 +27,8 @@
         { opacity : 1 },
       animationEngine : 'best-available',
       animationOptions: {
-        queue: false
+        queue: false,
+        duration: 800
       },
       sortBy : 'original-order',
       sortAscending : true

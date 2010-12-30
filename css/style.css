@@ -181,10 +181,10 @@ body {
 
 .iso-container.isotope,
 .isotope .element {
-  -webkit-transition-duration: 1.0s;
-     -moz-transition-duration: 1.0s;
-/*     -o-transition-duration: 1.0s;*/
-          transition-duration: 1.0s;
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+/*     -o-transition-duration: 0.8s;*/
+          transition-duration: 0.8s;
 
 }
 
@@ -295,6 +295,10 @@ body {
 
 .horizontal .iso-container {
   height: 80%;
+}
+
+#copy {
+  max-width: 640px;
 }
 
 
