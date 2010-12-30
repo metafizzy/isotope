@@ -13,7 +13,7 @@ body_class: option-def
   <dd class="default">Default</dd>
 </dl>
 
-<h2 id="animationEngine">animationEngine</h2>
+## animationEngine
 
 <dl class="clearfix">
   <dt><code>animationEngine</code></dt>
@@ -30,7 +30,7 @@ Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful f
 + `'css'`: Isotope uses `.css()`
 + `'jquery'`: Isotope uses `.animate()`
 
-<h2 id="animationOptions">animationOptions</h2>
+## animationOptions
 
 <dl class="clearfix">
   <dt><code>animationOptions</code></dt>
@@ -40,7 +40,7 @@ Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful f
 
 When jQuery is the animation engine, these options will be used in <code>.animate()</code>. See the [jQuery API for animate options](http://api.jquery.com/animate/#animate-properties-options) for details.
 
-**Example:**
+### Example
 
 {% highlight javascript %}
 
@@ -54,7 +54,7 @@ $('#container').isotope({
 
 {% endhighlight %}
 
-<h2 id="containerClass">containerClass</h2>
+## containerClass
 
 <dl class="clearfix">
   <dt><code>containerClass</code></dt>
@@ -64,7 +64,7 @@ $('#container').isotope({
 
 The class applied to the container element.
 
-<h2 id="filter">filter</h2>
+## filter
 
 <dl class="clearfix">
   <dt><code>filter</code></dt>
@@ -73,7 +73,7 @@ The class applied to the container element.
 
 Setting a filter with show item elements that match the selector, and hide elements that do not match.
 
-<h2 id="getSortData">getSortData</h2>
+## getSortData
 
 <dl class="clearfix">
   <dt><code>getSortData</code></dt>
@@ -82,7 +82,7 @@ Setting a filter with show item elements that match the selector, and hide eleme
 
 An object containing one or several methods to retrieve data for Sorting. The methods receive one parameter (`$elem` in the example below) which is a jQuery object representing each item element. The methods need to return a value.
 
-**Example**
+### Example
 
 {% highlight javascript %}
 
@@ -102,7 +102,7 @@ $('#container').isotope({
 
 {% endhighlight %}
 
-<h2 id="hiddenClass">hiddenClass</h2>
+## hiddenClass
 
 <dl class="clearfix">
   <dt><code>hiddenClass</code></dt>
@@ -112,7 +112,7 @@ $('#container').isotope({
 
 The class applied to item elements hidden by Filtering.
 
-<h2 id="hiddenStyle">hiddenStyle</h2>
+## hiddenStyle
 
 <dl class="clearfix">
   <dt><code>hiddenStyle</code></dt>
@@ -122,7 +122,7 @@ The class applied to item elements hidden by Filtering.
 
 The style applied to item elements hidden by Filtering.
 
-<h2 id="itemSelector">itemSelector</h2>
+## itemSelector
 
 <dl class="clearfix">
   <dt><code>itemSelector</code></dt>
@@ -131,7 +131,7 @@ The style applied to item elements hidden by Filtering.
 
 Restricts Isotope item elements to selector.
 
-<h2 id="layoutMode">layoutMode</h2>
+## layoutMode
 
 <dl class="clearfix">
   <dt><code>layoutMode</code></dt>
@@ -139,7 +139,7 @@ Restricts Isotope item elements to selector.
   <dd class="default"><code><span class="s1">'masonry'</span></code></dd>
 </dl>
 
-<h2 id="resizeable">resizeable</h2>
+## resizeable
 
 <dl class="clearfix">
   <dt><code>resizeable</code></dt>
@@ -149,7 +149,7 @@ Restricts Isotope item elements to selector.
 
 Triggers layout logic when browser window is resized. 
 
-<h2 id="sortAscending">sortAscending</h2>
+## sortAscending
 
 <dl class="clearfix">
   <dt><code>sortAscending</code></dt>
@@ -159,7 +159,7 @@ Triggers layout logic when browser window is resized.
 
 Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...". If false, items are sorted descending "Z, Y, X" or "9, 8, 7...".
 
-<h2 id="sortBy">sortBy</h2>
+## sortBy
 
 <dl class="clearfix">
   <dt><code>sortBy</code></dt>
@@ -170,7 +170,7 @@ The property name of the method within the `getSortData` option to sort item ele
 
 Looking at the `getSortData` example above, valid values would be `'symbol'`, `'number'`, or `'name'`.
 
-<h2 id="visibleStyle">visibleStyle</h2>
+## visibleStyle
 
 <dl class="clearfix">
   <dt><code>visibleStyle</code></dt>
@@ -180,7 +180,7 @@ Looking at the `getSortData` example above, valid values would be `'symbol'`, `'
 
 The style applied to item elements made visible by Filtering.
 
-<h2 id="layout-specific">Layout-specific options</h2>
+## Layout-specific options
 
 In addition the general options listed above, certain layout modes each have their own options. In order to avoid conflict, these options are set with an option that matches the name of the layout mode.
 

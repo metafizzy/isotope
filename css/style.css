@@ -333,6 +333,10 @@ pre, code {
   line-height: 1.6em;
 }
 
+h3#options {
+  padding-bottom: 0;
+}
+
 .option-def dl {
 /*  margin-top: 1.8em;*/
 /*  padding-top: 0.5em;*/
