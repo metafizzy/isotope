@@ -1,12 +1,13 @@
 ---
-title: Elements Complete
+title: Elements Partial
 layout: elements
-category: examples
+category: demos
 ---
 
 <div id="demo" class="iso-container">
-  {% for element in site.elements %}
+  {% for element in site.elements limit:10 offset:60 %}
     {% include element-partial.html %}
   {% endfor %}
 </div>
+
 

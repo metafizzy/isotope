@@ -17,9 +17,9 @@ layout: default
     {% endfor %}
   </ul>
   
-  <h2>Examples</h2>
+  <h2>Demos</h2>
   <ul>
-    {% for example in site.categories.examples reversed %}
-      <li><a href=".{{ example.url }}">{{ example.title }}</a></li>
+    {% for demo in site.categories.demos reversed %}
+      <li><a href=".{{ demo.url }}">{{ demo.title }}</a></li>
     {% endfor %}
   </ul>
