@@ -1,0 +1,80 @@
+---
+layout: nil
+title: Filtering
+category: demos
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ page.title }}</title>
+  
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+
+</head>
+<body>
+
+  <h1>{{ page.title }}</h1>
+  
+  <section id="copy">
+    
+    
+  </section>
+  
+  <section id="options" class="clearfix">
+    
+    <h3>Filters</h3>
+
+    <ul id="filters" class="option-set floated clearfix">
+      <li><a href="#filter" data-filter="*" class="selected">show all</a></li>
+      <li><a href="#filter" data-filter=".metal">metal</a></li>
+      <li><a href="#filter" data-filter=".transition">transition</a></li>
+      <li><a href="#filter" data-filter=".post-transition">post-transition</a></li>
+      <li><a href="#filter" data-filter=".nonmetal">nonmetal</a></li>
+      <li><a href="#filter" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</a></li>
+      <li><a href="#filter" data-filter=":not(.transition)">not transition</a></li>
+      <li><a href="#filter" data-filter=".metal:not(.transition)">metal and not transition</a></li>
+    </ul>
+
+  </section> <!-- #options -->
+  
+  <div id="demo" class="iso-container">
+    {% for element in site.elements_best_of %}
+      {% include element-partial.html %}
+    {% endfor %}
+  </div> <!-- #demo -->
+  
+  <script src="../js/jquery-1.4.4.min.js"></script>
+  <script src="../src/mini-modernizr.js"></script>
+  <script src="../src/jquery.opto-transform.js"></script>
+  <script src="../src/jquery.smartresize.js"></script>
+  <script src="../src/jquery.isotope.js"></script>
+  <script src="../src/jquery.ui.widget.js"></script>
+  <script>
+    $(function(){
+      
+      var $demo = $('#demo');
+
+      $demo.isotope({
+        itemSelector : '.element',
+        animationEngine : $.browser.opera ? 'jquery' : 'best-available'
+      });
+      
+      // filter buttons
+      $('#filters').find('a').click(function(){
+        // get href attribute, minus the #, plus a . to make it a class
+        var filterName = $(this).attr('data-filter');
+        // var filterTest = 'filter ' + filterName;
+        // console.time( filterTest );
+        $demo.isotope({ filter: filterName })
+        // console.timeEnd( filterTest );
+        return false;
+      });
+      
+      {% include option-buttons.js %}
+      
+    });
+  </script>
+  
+</body>
+</html>
