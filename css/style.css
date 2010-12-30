@@ -47,6 +47,7 @@ body {
   background: transparent;
   border: 1px solid #FFF;
   padding: 5px;
+  margin-bottom: 20px;
 }
 
 .element {
@@ -271,7 +272,7 @@ body {
 }
 
 #options .floated li a {
-  border-left:  1px solid hsla( 0, 0%, 100%, 0.5 );
+  border-left:  1px solid hsla( 0, 0%, 100%, 0.3 );
   border-right: 1px solid hsla( 0, 0%,   0%, 0.2 );
 }
 
@@ -291,20 +292,6 @@ body {
 }
 
 /**** Horizontal ****/
-
-/*.horizontal #options {
-  width: 300px;
-  position: absolute;
-  left: 20px;
-  top: 20px;
-}
-
-.horizontal .iso-container {
-  height: 80%;
-  position: relative;
-  margin-left: 340px;
-  top: 20px;
-}*/
 
 .horizontal .iso-container {
   height: 80%;
