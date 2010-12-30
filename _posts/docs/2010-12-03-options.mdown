@@ -23,7 +23,7 @@ body_class: option-def
 
 Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful for relying on CSS transitions to handle animation.
 
-### Values
+### Values {#animationEngine-values}
 
 
 + `'best-available'`: if browser supports CSS transitions, Isotope uses `.css()`. If not, falls back to using `.animate()`.
@@ -72,6 +72,10 @@ The class applied to the container element.
 </dl>
 
 Setting a filter with show item elements that match the selector, and hide elements that do not match.
+
+### Values {#filter-values}
+
++ `'*'` Shows all item elements
 
 ## getSortData
 

@@ -31,9 +31,10 @@ category: demos
       <li><a href="#filter" data-filter=".transition">transition</a></li>
       <li><a href="#filter" data-filter=".post-transition">post-transition</a></li>
       <li><a href="#filter" data-filter=".nonmetal">nonmetal</a></li>
+      <li><a href="#filter" data-filter=".inner-transition-element">inner-transition-element</a></li>
       <li><a href="#filter" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</a></li>
       <li><a href="#filter" data-filter=":not(.transition)">not transition</a></li>
-      <li><a href="#filter" data-filter=".metal:not(.transition)">metal and not transition</a></li>
+      <li><a href="#filter" data-filter=".metal:not(.transition)">metal but not transition</a></li>
     </ul>
 
   </section> <!-- #options -->
@@ -61,13 +62,9 @@ category: demos
       });
       
       // filter buttons
-      $('#filters').find('a').click(function(){
-        // get href attribute, minus the #, plus a . to make it a class
-        var filterName = $(this).attr('data-filter');
-        // var filterTest = 'filter ' + filterName;
-        // console.time( filterTest );
-        $demo.isotope({ filter: filterName })
-        // console.timeEnd( filterTest );
+      $('#filters a').click(function(){
+        var selector = $(this).attr('data-filter');
+        $demo.isotope({ filter: selector });
         return false;
       });
       

@@ -1,0 +1,71 @@
+---
+
+title: Filtering
+category: docs
+layout: doc
+
+---
+
+Isotope can hide and show item elements via the `filter` option. The `filter` option accepts a jQuery selector. Items that match that selector will be shown. Items that do not match will be hidden.
+
+[**See Demo: Filtering**](../demos/filtering.html)
+
+## Markup
+
+Each item element has several identifying classes. In this case, `transition`, `metal`, `lanthanoid`, `alkali`, etc.
+
+{% highlight html %}
+
+<div id="demo" class="iso-container"> 
+  <div class="element transition metal">...</div>
+  <div class="element post-transition metal">...</div>
+  <div class="element alkali metal">...</div>
+  <div class="element transition metal">...</div>
+  <div class="element lanthanoid metal inner-transition-element">...</div> 
+  <div class="element halogen nonmetal">...</div> 
+  <div class="element alkaline-earth metal">...</div>
+  ...
+</div>
+
+{% endhighlight %}
+
+## jQuery script
+
+To show only `.metal` items, the jQuery script would be:
+
+{% highlight javascript %}
+
+$('#demo').isotope({ filter: '.metal' });
+
+{% endhighlight %}
+
+Filtering selectors work just as expected. `.alkali, alkaline-earth` with show both `.alkali` AND ` .alkaline-earth` items, and hide all others.  `.metal:not(.transition)` will show `.metal` item elements that are not `.transition`.
+
+## Buttons
+
+Let's use a basic list for our buttons
+
+{% highlight html %}
+
+<ul id="filters">
+  <li><a href="#" data-filter="*">show all</a></li>
+  <li><a href="#" data-filter=".metal">metal</a></li>
+  <li><a href="#" data-filter=".transition">transition</a></li>
+  <li><a href="#" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</a></li>
+  <li><a href="#" data-filter=":not(.transition)">not transition</a></li>
+  <li><a href="#" data-filter=".metal:not(.transition)">metal but not transition</a></li>
+</ul>
+
+{% endhighlight %}
+
+Here we set the filter for each link with a `data-filter` attribute. In our jQuery script, whenever a link is clicked, we'll use this attribute as the filter secltor.
+
+{% highlight javascript %}
+
+$('#filters a').click(function(){
+  var selector = $(this).attr('data-filter');
+  $('#demo').isotope({ filter: selector });
+  return false;
+});
+
+{% endhighlight %}
