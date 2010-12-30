@@ -347,16 +347,16 @@ pre, code {
 }
 
 .option-def dl {
-  margin-top: 1.8em;
-  padding-top: 0.5em;
-  border-top: 1px solid #333;
+/*  margin-top: 1.8em;*/
+/*  padding-top: 0.5em;*/
+/*  border-top: 1px solid #333;*/
 }
 
 
 .option-def dl dt,
 .option-def dl dd {
   float: left;
-  padding: 0 0.8em;;
+  padding: 0 1.2em;;
   background: #161616;
 /*  height: 2.0em;*/
   line-height: 36px;
@@ -373,7 +373,7 @@ pre, code {
 }
 
 .option-def dl .option-type {
-  width: 60px;
+/*  width: 60px;*/
   font-size: 13px;
   color: #AAA;
   font-style: italic;

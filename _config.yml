@@ -756,3 +756,107 @@ elements_partial:
     symbol: Ra
     name: Radium
     weight: (226)
+    
+elements_ordered:
+  - categories: [ other, nonmetal ]
+    number: 1
+    symbol: H
+    name: Hydrogen
+    weight: 1.00794
+  - categories: [noble-gas, nonmetal]
+    number: 2
+    symbol: He
+    name: Helium
+    weight: 4.002602
+  - categories: [alkali, metal]
+    number: 3
+    symbol: Li
+    name: Lithium
+    weight: 6.941
+  - categories: [alkaline-earth, metal]
+    number: 4
+    symbol: Be
+    name: Beryllium
+    weight: 9.012182
+  - categories: [metalloid]
+    number: 5
+    symbol: B
+    name: Boron
+    weight: 10.811
+  - categories: [other, nonmetal]
+    othercategory: p
+    number: 6
+    symbol: C
+    name: Carbon
+    weight: 12.0107
+  - categories: [other, nonmetal]
+    number: 7
+    symbol: N
+    name: Nitrogen
+    weight: 14.0067
+  - categories: [other, nonmetal]
+    number: 8
+    symbol: O
+    name: Oxygen
+    weight: 15.9994
+  - categories: [halogen, nonmetal]
+    number: 9
+    symbol: F
+    name: Fluorine
+    weight: 18.9984032
+  - categories: [noble-gas, nonmetal]
+    number: 10
+    symbol: Ne
+    name: Neon
+    weight: 20.1797
+  - categories: [alkali, metal]
+    number: 11
+    symbol: Na
+    name: Sodium
+    weight: 22.98976928
+  - categories: [alkaline-earth, metal]
+    number: 12
+    symbol: Mg
+    name: Magnesium
+    weight: 24.305
+  - categories: [post-transition, metal]
+    number: 13
+    symbol: Al
+    name: Aluminium
+    weight: 26.9815386
+  - categories: [metalloid]
+    number: 14
+    symbol: Si
+    name: Silicon
+    weight: 28.0855
+  - categories: [other, nonmetal]
+    number: 15
+    symbol: P
+    name: Phosphorus
+    weight: 30.973762
+  - categories: [other, nonmetal]
+    number: 16
+    symbol: S
+    name: Sulfur
+    weight: 32.065
+  - categories: [halogen, nonmetal]
+    number: 17
+    symbol: Cl
+    name: Chlorine
+    weight: 35.453
+  - categories: [noble-gas, nonmetal]
+    number: 18
+    symbol: Ar
+    name: Argon
+    weight: 39.948
+  - categories: [alkali, metal]
+    number: 19
+    symbol: K
+    name: Potassium
+    weight: 39.0983
+  - categories: [alkaline-earth, metal]
+    number: 20
+    symbol: Ca
+    name: Calcium
+    weight: 40.078
+

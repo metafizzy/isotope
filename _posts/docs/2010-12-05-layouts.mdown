@@ -1,0 +1,136 @@
+---
+
+title: Layouts
+category: docs
+layout: doc
+body_class: option-def
+
+---
+
+Isotope is versatile in that it can accommodate multiple layout modes. You can set and change the layout mode via the `layoutMode` option.
+
+### Example
+
+{% highlight javascript %}
+
+$('#container').isotope({ layoutMode: 'fitRows' });
+
+{% endhighlight %}
+
+Six layout modes are built into Isotope.
+
+<h2 id="masonry">masonry</h2>
+
+masonry is the default layout mode for Isotope. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
+
+**Options**
+
+<dl class="clearfix">
+  <dt><code>columnWidth</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+
+The width of one column in the grid. If no value is set for `columnWidth`, default is the width of the first item element.
+
+**Example**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  masonry: {
+    columnWidth: 240
+  }
+});
+
+{% endhighlight %}
+
+<h2 id="fitRows">fitRows</h2>
+
+Item elements are arranged into rows. Similar to what you would expect from a layout that uses `float: left`
+
+<h2 id="cellsByRow">cellsByRow</h2>
+
+A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`.
+
+**Options**
+
+<dl class="clearfix">
+  <dt><code>columnWidth</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+<dl class="clearfix">
+  <dt><code>rowHeight</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+
+**Example**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  layoutMode: 'cellsByRow',
+  cellsByRow: {
+    columnWidth: 240,
+    rowHeight: 360
+  }
+});
+
+{% endhighlight %}
+
+<h2 id="masonryHorizontal">masonryHorizontal</h2>
+
+The horizontal equivalent of masonry layout. Instead of progressing top-to-bottom, masonryHorizontal layout will progress left-to-right. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
+
+**Options**
+
+<dl class="clearfix">
+  <dt><code>rowHeight</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+
+The width of one column in the grid. If no value is set for `rowHeight`, default is the height of the first item element.
+
+**Example**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  masonryHorizontal: {
+    rowHeight: 360
+  }
+});
+
+{% endhighlight %}
+
+<h2 id="fitRows">fitColumns</h2>
+
+Item elements are arranged into columns. The horizontal equivalent of fitRows. Columns progress from left to right. Items within those columns are arranged top-to-bottom.
+
+<h2 id="cellsByRow">cellsByColumn</h2>
+
+A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
+
+**Options**
+
+<dl class="clearfix">
+  <dt><code>columnWidth</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+<dl class="clearfix">
+  <dt><code>rowHeight</code></dt>
+  <dd class="option-type">Integer</dd>
+</dl>
+
+**Example**
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  layoutMode: 'cellsByRow',
+  cellsByRow: {
+    columnWidth: 240,
+    rowHeight: 360
+  }
+});
+
+{% endhighlight %}

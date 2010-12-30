@@ -3,7 +3,6 @@
 title: Methods
 category: docs
 layout: doc
-body_class: option-def
 
 ---
 
