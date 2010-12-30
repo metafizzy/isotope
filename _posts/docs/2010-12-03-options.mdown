@@ -35,7 +35,7 @@ Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful f
 <dl class="clearfix">
   <dt><code>animationOptions</code></dt>
   <dd class="option-type">Object</dd>
-  <dd class="default"><code>{ queue: <span class="kc">false</span> }</code></dd>
+  <dd class="default"><code>{ queue: <span class="kc">false</span>, duration: <span class="mi">800</span> }</code></dd>
 </dl>
 
 When jQuery is the animation engine, these options will be used in <code>.animate()</code>. See the [jQuery API for animate options](http://api.jquery.com/animate/#animate-properties-options) for details.
