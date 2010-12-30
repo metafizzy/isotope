@@ -13,6 +13,8 @@ body_class: option-def
   <dd class="default">Default</dd>
 </dl>
 
+<h2 id="animationEngine">animationEngine</h2>
+
 <dl class="clearfix">
   <dt><code>animationEngine</code></dt>
   <dd class="option-type">String</dd>
@@ -21,12 +23,14 @@ body_class: option-def
 
 Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful for relying on CSS transitions to handle animation.
 
-#### Values
+### Values
 
 
 + `'best-available'`: if browser supports CSS transitions, Isotope uses `.css()`. If not, falls back to using `.animate()`.
 + `'css'`: Isotope uses `.css()`
 + `'jquery'`: Isotope uses `.animate()`
+
+<h2 id="animationOptions">animationOptions</h2>
 
 <dl class="clearfix">
   <dt><code>animationOptions</code></dt>
@@ -50,6 +54,8 @@ $('#container').isotope({
 
 {% endhighlight %}
 
+<h2 id="containerClass">containerClass</h2>
+
 <dl class="clearfix">
   <dt><code>containerClass</code></dt>
   <dd class="option-type">String</dd>
@@ -58,12 +64,16 @@ $('#container').isotope({
 
 The class applied to the container element.
 
+<h2 id="filter">filter</h2>
+
 <dl class="clearfix">
   <dt><code>filter</code></dt>
   <dd class="option-type">Selector</dd>
 </dl>
 
 Setting a filter with show item elements that match the selector, and hide elements that do not match.
+
+<h2 id="getSortData">getSortData</h2>
 
 <dl class="clearfix">
   <dt><code>getSortData</code></dt>
@@ -92,6 +102,8 @@ $('#container').isotope({
 
 {% endhighlight %}
 
+<h2 id="hiddenClass">hiddenClass</h2>
+
 <dl class="clearfix">
   <dt><code>hiddenClass</code></dt>
   <dd class="option-type">String</dd>
@@ -99,6 +111,8 @@ $('#container').isotope({
 </dl>
 
 The class applied to item elements hidden by Filtering.
+
+<h2 id="hiddenStyle">hiddenStyle</h2>
 
 <dl class="clearfix">
   <dt><code>hiddenStyle</code></dt>
@@ -108,6 +122,8 @@ The class applied to item elements hidden by Filtering.
 
 The style applied to item elements hidden by Filtering.
 
+<h2 id="itemSelector">itemSelector</h2>
+
 <dl class="clearfix">
   <dt><code>itemSelector</code></dt>
   <dd class="option-type">Selector</dd>
@@ -115,11 +131,15 @@ The style applied to item elements hidden by Filtering.
 
 Restricts Isotope item elements to selector.
 
+<h2 id="layoutMode">layoutMode</h2>
+
 <dl class="clearfix">
   <dt><code>layoutMode</code></dt>
   <dd class="option-type">String</dd>
   <dd class="default"><code><span class="s1">'masonry'</span></code></dd>
 </dl>
+
+<h2 id="resizeable">resizeable</h2>
 
 <dl class="clearfix">
   <dt><code>resizeable</code></dt>
@@ -129,6 +149,8 @@ Restricts Isotope item elements to selector.
 
 Triggers layout logic when browser window is resized. 
 
+<h2 id="sortAscending">sortAscending</h2>
+
 <dl class="clearfix">
   <dt><code>sortAscending</code></dt>
   <dd class="option-type">Boolean</dd>
@@ -136,6 +158,8 @@ Triggers layout logic when browser window is resized.
 </dl>
 
 Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...". If false, items are sorted descending "Z, Y, X" or "9, 8, 7...".
+
+<h2 id="sortBy">sortBy</h2>
 
 <dl class="clearfix">
   <dt><code>sortBy</code></dt>
@@ -146,6 +170,8 @@ The property name of the method within the `getSortData` option to sort item ele
 
 Looking at the `getSortData` example above, valid values would be `'symbol'`, `'number'`, or `'name'`.
 
+<h2 id="visibleStyle">visibleStyle</h2>
+
 <dl class="clearfix">
   <dt><code>visibleStyle</code></dt>
   <dd class="option-type">Object</dd>
@@ -154,3 +180,24 @@ Looking at the `getSortData` example above, valid values would be `'symbol'`, `'
 
 The style applied to item elements made visible by Filtering.
 
+<h2 id="layout-specific">Layout-specific options</h2>
+
+In addition the general options listed above, certain layout modes each have their own options. In order to avoid conflict, these options are set with an option that matches the name of the layout mode.
+
+See [Layouts](layouts.html) for each layout mode's available options.
+
+For example, if your layout switched from `masonry` to `cellsByRow`:
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  masonry: {
+    columnWidth: 120
+  },
+  cellsByRow: {
+    columnWidth: 220,
+    rowHeight: 220
+  }
+});
+
+{% endhighlight %}
