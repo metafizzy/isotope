@@ -5,7 +5,7 @@ category: demos
 ---
 
 <div id="demo" class="iso-container">
-  {% for element in site.elements limit:10 offset:60 %}
+  {% for element in site.elements_best_of %}
     {% include element-partial.html %}
   {% endfor %}
 </div>

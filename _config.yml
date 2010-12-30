@@ -860,3 +860,80 @@ elements_ordered:
     name: Calcium
     weight: 40.078
 
+elements_best_of:
+  - categories: [transition, metal]
+    number: 79
+    symbol: Au
+    name: Gold
+    weight: 196.966569
+  - categories: [metalloid]
+    number: 51
+    symbol: Sb
+    name: Antimony
+    weight: 121.76
+  - categories: [post-transition, metal]
+    number: 82
+    symbol: Pb
+    name: Lead
+    weight: 207.2
+  - categories: [transition, metal]
+    number: 47
+    symbol: Ag
+    name: Silver
+    weight: 107.8682
+  - categories: [alkali, metal]
+    number: 19
+    symbol: K
+    name: Potassium
+    weight: 39.0983
+  - categories: [transition, metal]
+    number: 74
+    symbol: W
+    name: Tungsten
+    weight: 183.84
+  - categories: [transition, metal]
+    number: 80
+    symbol: Hg
+    name: Mercury
+    weight: 200.59
+  - categories: [post-transition, metal]
+    number: 50
+    symbol: Sn
+    name: Tin
+    weight: 118.71
+  - categories: [transition, metal]
+    number: 26
+    symbol: Fe
+    name: Iron
+    weight: 55.845
+  - categories: [lanthanoid, metal, inner-transition-element]
+    number: 70
+    symbol: Yb
+    name: Ytterbium
+    weight: 173.054
+  - categories: [halogen, nonmetal]
+    number: 17
+    symbol: Cl
+    name: Chlorine
+    weight: 35.453
+  - categories: [noble-gas, nonmetal]
+    number: 36
+    symbol: Kr
+    name: Krypton
+    weight: 83.798
+  - categories: [other, nonmetal]
+    number: 6
+    symbol: C
+    name: Carbon
+    weight: 12.0107
+  - categories: [actinoid, metal, inner-transition-element]
+    number: 92
+    symbol: U
+    name: Uranium
+    weight: 238.02891
+  - categories: [alkaline-earth, metal]
+    number: 88
+    symbol: Ra
+    name: Radium
+    weight: (226)
+
