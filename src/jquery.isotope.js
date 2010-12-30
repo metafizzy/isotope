@@ -304,7 +304,8 @@
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      var styleFn = ( this.applyStyleFnName === 'animate' && !$.data( this.element, 'isotope' ) ) ? 
+      
+      var styleFn = ( this.applyStyleFnName === 'animate' && !this.isLaidOut ) ? 
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
@@ -324,6 +325,8 @@
       if ( callback ) {
         callback.call( $elems );
       }
+      
+      this.isLaidOut = true;
 
       return this;
     },
