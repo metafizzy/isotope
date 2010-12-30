@@ -139,6 +139,10 @@ Restricts Isotope item elements to selector.
   <dd class="default"><code><span class="s1">'masonry'</span></code></dd>
 </dl>
 
+See also docs on [Layout Modes](layout-modes.html).
+
+[**See Example: Layout Modes**](../demos/layout-modes.html)
+
 ## resizeable
 
 <dl class="clearfix">

@@ -7,9 +7,9 @@ body_class: option-def
 
 ---
 
-Isotope is versatile in that it can accommodate multiple layout modes. You can set and change the layout mode via the `layoutMode` option.
+Isotope has a versatile layout engine that can accommodate multiple layout modes. You can set and change the layout mode via the `layoutMode` option.
 
-[**See Example: Layout Modes**](../examples/layout-modes.html)
+[**See Example: Layout Modes**](../demos/layout-modes.html)
 
 ### Example
 
