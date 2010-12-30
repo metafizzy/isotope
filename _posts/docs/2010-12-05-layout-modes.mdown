@@ -9,7 +9,7 @@ body_class: option-def
 
 Isotope has a versatile layout engine that can accommodate multiple layout modes. You can set and change the layout mode via the `layoutMode` option.
 
-[**See Example: Layout Modes**](../demos/layout-modes.html)
+[**See Demo: Layout Modes**](../demos/layout-modes.html)
 
 ### Example
 
@@ -25,7 +25,7 @@ Six layout modes are built into Isotope.
 
 masonry is the default layout mode for Isotope. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
 
-### Options
+### Options {#masonry-options}
 
 <dl class="clearfix">
   <dt><code>columnWidth</code></dt>
@@ -34,7 +34,7 @@ masonry is the default layout mode for Isotope. Item elements are arranged intel
 
 The width of one column in the grid. If no value is set for `columnWidth`, default is the width of the first item element.
 
-### Example
+### Example {#masonry-example}
 
 {% highlight javascript %}
 
@@ -54,7 +54,7 @@ Item elements are arranged into rows. Similar to what you would expect from a la
 
 A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`.
 
-### Options
+### Options {#cellsByRow-options}
 
 <dl class="clearfix">
   <dt><code>columnWidth</code></dt>
@@ -65,7 +65,7 @@ A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`
   <dd class="option-type">Integer</dd>
 </dl>
 
-### Example
+### Example {#cellsByRow-example}
 
 {% highlight javascript %}
 
@@ -83,7 +83,7 @@ $('#container').isotope({
 
 The horizontal equivalent of masonry layout. Instead of progressing top-to-bottom, masonryHorizontal layout will progress left-to-right. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
 
-### Options
+### Options {#masonryHorizontal-options}
 
 <dl class="clearfix">
   <dt><code>rowHeight</code></dt>
@@ -92,7 +92,7 @@ The horizontal equivalent of masonry layout. Instead of progressing top-to-botto
 
 The width of one column in the grid. If no value is set for `rowHeight`, default is the height of the first item element.
 
-### Example
+### Example {#masonryHorizontal-example}
 
 {% highlight javascript %}
 
@@ -112,7 +112,7 @@ Item elements are arranged into columns. The horizontal equivalent of fitRows. C
 
 A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
 
-### Options
+### Options {#cellsByColumn-options}
 
 <dl class="clearfix">
   <dt><code>columnWidth</code></dt>
@@ -123,7 +123,7 @@ A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`
   <dd class="option-type">Integer</dd>
 </dl>
 
-### Example
+### Example {#cellsByColumn-example}
 
 {% highlight javascript %}
 
@@ -134,5 +134,19 @@ $('#container').isotope({
     rowHeight: 360
   }
 });
+
+{% endhighlight %}
+
+## Horizontal layouts
+
+Horizontal layout modes (masonryHorizontal, fitColumns, and cellsByColumn) need a container that has a height value. Be sure that your CSS has height set.
+
+{% highlight css %}
+
+#container {
+  /* either of these will work for horizontal Isotope layouts */
+  height: 80%;
+  height: 480px;
+}
 
 {% endhighlight %}
