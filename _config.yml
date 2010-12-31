@@ -9,13 +9,13 @@ elements:
     symbol: Na
     name: Sodium
     weight: 22.98976928
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 91
     symbol: Pa
     name: Protactinium
     weight: 231.03588
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 63
     symbol: Eu
@@ -39,7 +39,7 @@ elements:
     symbol: Mn
     name: Manganese
     weight: 54.938045
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 94
     symbol: Pu
@@ -51,7 +51,7 @@ elements:
     symbol: Cu
     name: Copper
     weight: 63.546
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 60
     symbol: Nd
@@ -69,7 +69,7 @@ elements:
     symbol: Ge
     name: Germanium
     weight: 72.64
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 67
     symbol: Ho
@@ -111,7 +111,7 @@ elements:
     symbol: N
     name: Nitrogen
     weight: 14.0067
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 96
     symbol: Cm
@@ -123,7 +123,7 @@ elements:
     symbol: O
     name: Oxygen
     weight: 15.9994
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 97
     symbol: Bk
@@ -141,7 +141,7 @@ elements:
     symbol: Si
     name: Silicon
     weight: 28.0855
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 99
     symbol: Es
@@ -237,7 +237,7 @@ elements:
     symbol: Xe
     name: Xenon
     weight: 131.293
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 66
     symbol: Dy
@@ -249,7 +249,7 @@ elements:
     symbol: Cs
     name: Caesium
     weight: 132.9054519
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: d
     number: 71
     symbol: Lu
@@ -273,7 +273,7 @@ elements:
     symbol: Nb
     name: Niobium
     weight: 92.90638
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 70
     symbol: Yb
@@ -309,7 +309,7 @@ elements:
     symbol: Mo
     name: Molybdenum
     weight: 95.96
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 95
     symbol: Am
@@ -327,7 +327,7 @@ elements:
     symbol: Sn
     name: Tin
     weight: 118.71
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 69
     symbol: Tm
@@ -363,7 +363,7 @@ elements:
     symbol: Ta
     name: Tantalum
     weight: 180.94788
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 59
     symbol: Pr
@@ -387,7 +387,7 @@ elements:
     symbol: In
     name: Indium
     weight: 114.818
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 101
     symbol: Md
@@ -411,7 +411,7 @@ elements:
     symbol: Os
     name: Osmium
     weight: 190.23
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 102
     symbol: 'No'
@@ -423,7 +423,7 @@ elements:
     symbol: Re
     name: Rhenium
     weight: 186.207
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: d
     number: 103
     symbol: Lr
@@ -435,7 +435,7 @@ elements:
     symbol: Tl
     name: Thallium
     weight: 204.3833
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 58
     symbol: Ce
@@ -489,7 +489,7 @@ elements:
     symbol: Rn
     name: Radon
     weight: (222)
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 68
     symbol: Er
@@ -585,7 +585,7 @@ elements:
     symbol: Uup
     name: Ununpentium
     weight: (288)
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 62
     symbol: Sm
@@ -603,7 +603,7 @@ elements:
     symbol: Uuo
     name: Ununoctium
     weight: (294)
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 57
     symbol: La
@@ -621,43 +621,43 @@ elements:
     symbol: Cn
     name: Copernicium
     weight: (285)
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 61
     symbol: Pm
     name: Promethium
     weight: (145)
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 89
     symbol: Ac
     name: Actinium
     weight: (227)
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 90
     symbol: Th
     name: Thorium
     weight: 232.03806
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 64
     symbol: Gd
     name: Gadolinium
     weight: 157.25
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     othercategory: f
     number: 65
     symbol: Tb
     name: Terbium
     weight: 158.92535
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 92
     symbol: U
     name: Uranium
     weight: 238.02891
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 93
     symbol: Np
@@ -675,13 +675,13 @@ elements:
     symbol: Cr
     name: Chromium
     weight: 51.9961
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 98
     symbol: Cf
     name: Californium
     weight: (251)
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 100
     symbol: Fm
@@ -714,7 +714,7 @@ elements:
 
 
 elements_partial:
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     othercategory: f
     number: 94
     symbol: Pu
@@ -906,7 +906,7 @@ elements_best_of:
     symbol: Fe
     name: Iron
     weight: 55.845
-  - categories: [lanthanoid, metal, inner-transition-element]
+  - categories: [lanthanoid, metal, inner-transition]
     number: 70
     symbol: Yb
     name: Ytterbium
@@ -926,7 +926,7 @@ elements_best_of:
     symbol: C
     name: Carbon
     weight: 12.0107
-  - categories: [actinoid, metal, inner-transition-element]
+  - categories: [actinoid, metal, inner-transition]
     number: 92
     symbol: U
     name: Uranium

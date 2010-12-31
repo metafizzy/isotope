@@ -21,7 +21,7 @@ Each item element has several identifying classes. In this case, `transition`, `
   <div class="element post-transition metal">...</div>
   <div class="element alkali metal">...</div>
   <div class="element transition metal">...</div>
-  <div class="element lanthanoid metal inner-transition-element">...</div> 
+  <div class="element lanthanoid metal inner-transition">...</div> 
   <div class="element halogen nonmetal">...</div> 
   <div class="element alkaline-earth metal">...</div>
   ...
