@@ -1,0 +1,85 @@
+---
+layout: nil
+title: reLayout
+category: demos
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ page.title }}</title>
+  
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+
+</head>
+<body>
+
+  <h1>{{ page.title }}</h1>
+  
+  <section id="copy">
+    <p>Use the <code>reLayout</code> method to easily arrange item elements after a change.</p>
+    <p>Click on any item element to change its size.</p>
+  </section>
+  
+  <section id="options">
+    <ul>
+      <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
+    </ul>
+  </section>
+  
+  <div id="demo" class="iso-container clickable">
+    {% for element in site.elements_ordered limit:20 %}
+      {% include element-partial.html %}
+    {% endfor %}
+  </div> <!-- #demo -->
+  
+  <script src="../js/jquery-1.4.4.min.js"></script>
+  <script src="../src/mini-modernizr.js"></script>
+  <script src="../src/jquery.opto-transform.js"></script>
+  <script src="../src/jquery.smartresize.js"></script>
+  <script src="../src/jquery.isotope.js"></script>
+  <script src="../src/jquery.ui.widget.js"></script>
+  <script>
+    $(function(){
+      
+      var $demo = $('#demo');
+      
+      // hacky way of adding random size classes
+      $demo.find('.element').each(function(){
+        if ( Math.random() > 0.6 ) {
+          $(this).addClass('width2');
+        }
+        if ( Math.random() > 0.6 ) {
+          $(this).addClass('height2');
+        }
+      });
+      
+      $demo.isotope({
+        itemSelector: '.element',
+        masonry : {
+          columnWidth : 120
+        }
+      });
+      
+      // toggle variable sizes of all elements
+      $('#toggle-sizes a').click(function(){
+        $demo
+          .toggleClass('variable-sizes')
+          .isotope('reLayout');
+        return false;
+      });
+      
+      // change size of clicked element
+      $demo.find('.element').live('click', function(){
+        $(this).toggleClass('large');
+        // console.time('relayout');
+        $demo.isotope('reLayout');
+        // console.timeEnd('relayout');
+      });
+      
+      
+    });
+  </script>
+  
+</body>
+</html>
