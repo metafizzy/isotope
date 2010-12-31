@@ -126,6 +126,16 @@ The class applied to item elements hidden by Filtering.
 
 The style applied to item elements hidden by Filtering.
 
+## itemClass
+
+<dl class="clearfix">
+  <dt><code>itemClass</code></dt>
+  <dd class="option-type">String</dd>
+  <dd class="default"><code><span class="s1">'isotope-item'</span></code></dd>
+</dl>
+
+The class applied to item elements.
+
 ## itemSelector
 
 <dl class="clearfix">

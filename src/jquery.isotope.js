@@ -18,6 +18,7 @@
       resizeable: true,
       layoutMode : 'masonry',
       containerClass : 'isotope',
+      itemClass : 'isotope-item',
       hiddenClass : 'isotope-hidden',
       hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
         { opacity : 0, scale : 0.001 } :
@@ -178,7 +179,7 @@
         atomStyle.top = 0;
       }
 
-      $atoms.css( atomStyle );
+      $atoms.css( atomStyle ).addClass( this.options.itemClass );
       
       var instance = this;
       $atoms.each(function(){

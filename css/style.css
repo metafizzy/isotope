@@ -179,8 +179,8 @@ body {
   height: 340px;
 }
 
-.iso-container.isotope,
-.isotope .element {
+.isotope,
+.isotope .isotope-item {
   -webkit-transition-duration: 0.8s;
      -moz-transition-duration: 0.8s;
 /*     -o-transition-duration: 0.8s;*/
@@ -188,8 +188,8 @@ body {
 
 }
 
-.iso-container.isotope.no-transition,
-.isotope.no-transition .element {
+.isotope.no-transition,
+.isotope.no-transition .isotope-item {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
 /*     -o-transition-duration: 0s;*/
@@ -197,14 +197,14 @@ body {
 
 }
 
-.iso-container.isotope {
+.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
 /*     -o-transition-property: height, width;*/
           transition-property: height, width;
 }
 
-.isotope .element {
+.isotope .isotope-item {
   -webkit-transition-property: -webkit-transform, opacity;
      -moz-transition-property:    -moz-transform, opacity;
 /*     -o-transition-property:      -o-transform, opacity;*/
