@@ -22,6 +22,10 @@ Items can be hidden and shown easily just by using simple jQuery selectors.
 
 These items can then be rearranged in their order via sorting. Sorting relies on any data held within an item.
 
+### Interoperabilty
+
+All functionality built into Isotope was designed to work together. You can sort AND filter AND modify the layout all in one plugin call.
+
 ### Progressive Enhancement 
 
 All these behaviors leverage animation to produce engaging interfaces. The best CSS transition and transform features are utilized when available.

@@ -311,6 +311,7 @@ body.doc {
 .doc #content {
 /*  font-size: 14px;
   line-height: 1.7em;*/
+  margin-bottom: 20px;
 }
 
 .doc h2,
