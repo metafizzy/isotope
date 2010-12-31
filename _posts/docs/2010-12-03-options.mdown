@@ -178,6 +178,10 @@ The property name of the method within the `getSortData` option to sort item ele
 
 Looking at the `getSortData` example above, valid values would be `'symbol'`, `'number'`, or `'name'`.
 
+### Values {#sortBy-values}
+
++ `'original-order'` Sorts item elements by their original order.
+
 ## visibleStyle
 
 <dl class="clearfix">
