@@ -205,15 +205,6 @@ body {
 
 }
 
-.isotope.no-transition,
-.isotope.no-transition .isotope-item {
-  -webkit-transition-duration: 0s;
-     -moz-transition-duration: 0s;
-/*     -o-transition-duration: 0s;*/
-          transition-duration: 0s;
-
-}
-
 .isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
@@ -226,6 +217,14 @@ body {
      -moz-transition-property:    -moz-transform, opacity;
 /*     -o-transition-property:      -o-transform, opacity;*/
           transition-property:         transform, opacity;
+}
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+/*     -o-transition-duration: 0s;*/
+          transition-duration: 0s;
 }
 
 /**** Example Options ****/

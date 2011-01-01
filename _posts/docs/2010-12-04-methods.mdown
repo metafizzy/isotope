@@ -80,6 +80,8 @@ Modifies options for plugin instance.
 
 Resets layout properties and lays-out every item element.
 
+[**See Demo: reLayout**](../demos/relayout.html)
+
 ## resize
 
 {% highlight javascript %}
