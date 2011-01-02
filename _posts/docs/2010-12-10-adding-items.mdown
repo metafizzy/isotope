@@ -1,0 +1,36 @@
+---
+
+title: Adding items
+category: docs
+layout: doc
+
+---
+
+If your application dynamically adds new content, Isotope provides several methods to add items.
+
+## addItems
+
+The `addItems` method adds new content to an Isotope container. This applies the proper styles to the items so they can be positioned and any sorting data is retrieved. But that's it. The new content will _not_ be filtered, sorted, or positioned properly, nor will it be appended to the container element.
+
+{% highlight javascript %}
+
+var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
+$('#container').append( $newItems ).isotope({ 'addItems', $newItems });
+
+{% endhighlight %}
+
+## insert
+
+More likely, you want to use the `insert` method, which does everything that `addItems` misses. `insert` will append the content to the container, filter the new content, sort all the content, then trigger a `reLayout` so all item elements are properly laid out.
+
+{% highlight javascript %}
+
+var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
+$('#container').isotope({ 'insert', $newItems });
+
+{% endhighlight %}
+
+## appended
+
+The `appended` method is a convienence method triggers `addItems` on new content, then lays out _only the new content_ at the end of the layout. This method is useful if you know you only want to add new content to the end, and not have it processed with filtering or sorting.  `appended` is the best method to use with Infinite Scroll.
+
