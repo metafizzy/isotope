@@ -3,10 +3,13 @@
 title: Introduction
 category: docs
 layout: doc
+related: etc
 
 ---
 
-Isotope is a layout, filtering, and sorting plugin for jQuery.   
+Isotope is a layout, filtering, and sorting plugin for jQuery.
+
+Top notch performance that can handle
 
 ## Features
 

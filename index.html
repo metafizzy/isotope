@@ -1,20 +1,54 @@
 ---
 title: Index
-layout: default
+layout: nil
 ---
-
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ site.name }}</title>
+  
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 
   
 </head>
 <body>
   
-  <h1>{{ page.title }}</h1>
+  <h1>{{ site.name }}</h1>
+  
+  <section id="options">
+    <h2>Filter</h2>
+    <ul id="filter" class="option-set floated clearfix">
+      <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
+      <li><a href="#features" data-filter=".feature">features</a></li>
+      <li><a href="#docs" data-filter=".doc">docs</a></li>
+      <li><a href="#demos" data-filter=".demo">demos</a></li>
+    </ul>
+    <h2>Sort</h2>
+    <ul id="sort" class="option-set floated clearfix">
+      <li><a href="#type" data-sort="original-order" class="selected">type</a></li>
+      <li><a href="#related" data-sort="related">related</a></li>
+    </ul>
+  </section>
+  
+  <ul id="super-list">
+    <li class="feature" data-category="feature" data-related="etc"><span>Aggressively enhanced for CSS3 transforms &amp; transitions</span></li>
+    <li class="feature" data-category="feature" data-related="layout"><span>Dynamic, intelligent layouts</span></li>
+    <li class="feature" data-category="feature" data-related="filtering"><span>Reveal and hide items with filtering</span></li>
+    <li class="feature" data-category="feature" data-related="sorting"><span>Re-order items with sorting</span></li>
+    <li class="feature" data-category="feature" data-related="sorting"><span>Get sorting data from just about anything</span></li>
+    <li class="feature" data-category="feature" data-related="methods"><span>Built on jQuery UI's widget bridge for powerful methods</span></li>
+    {% for doc in site.categories.docs reversed %}
+      <li class="doc" data-category="doc" data-related="{{ doc.related }}"><a href=".{{ doc.url }}">Docs: {{ doc.title }}</a></li>
+    {% endfor %}
+    {% for demo in site.categories.demos reversed %}
+      <li class="demo" data-category="demo" data-related="{{ demo.related }}"><a href=".{{ demo.url }}">Demo: {{ demo.title }}</a></li>
+    {% endfor %}
+  </ul>
+  
   
   <h2>Docs</h2>
   <ul>
-    {% for doc in site.categories.docs reversed %}
-      <li><a href=".{{ doc.url }}">{{ doc.title }}</a></li>
-    {% endfor %}
   </ul>
   
   <h2>Demos</h2>
@@ -23,3 +57,43 @@ layout: default
       <li><a href=".{{ demo.url }}">{{ demo.title }}</a></li>
     {% endfor %}
   </ul>
+  
+  <script src="js/jquery-1.4.4.min.js"></script>
+  <script src="src/mini-modernizr.js"></script>
+  <script src="src/jquery.opto-transform.js"></script>
+  <script src="src/jquery.smartresize.js"></script>
+  <script src="src/jquery.isotope.js"></script>
+  <script src="src/jquery.ui.widget.js"></script>
+  <script>
+    $(function(){
+      
+      $list = $('#super-list');
+      
+      $list.isotope({
+        layoutMode : 'fitRows',
+        getSortData : {
+          related : function( $elem ) {
+            return $elem.attr('data-related');
+          }
+        }
+      });
+      
+      $('#filter a').click(function(){
+        var filterName = $(this).attr('data-filter');
+        $list.isotope({ filter : filterName });
+        return false;
+      });
+      
+      $('#sort a').click(function(){
+        var sortName = $(this).attr('data-sort');
+        $list.isotope({ sortBy : sortName });
+        return false;
+      });
+      
+      {% include option-buttons.js %}
+      
+    });
+  </script>
+
+</body>
+</html>

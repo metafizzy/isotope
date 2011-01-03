@@ -3,6 +3,7 @@
 title: Sorting
 category: docs
 layout: doc
+related: sorting
 
 ---
 
@@ -12,7 +13,7 @@ Isotope can rearrange item elements via sorting.
 
 ## Markup
 
-In our example, each item element has several data points that can be used for sorting.
+In our example, each item element has several data points that can be used for sorting. There's the elemental symbol, number, name of the element, weight, and category.
 
 
 {% highlight html %}
@@ -35,7 +36,6 @@ In our example, each item element has several data points that can be used for s
 
 {% endhighlight %}
 
-There's the elemental symbol, number, name of the element, weight, and category.
 
 ## getSortData
 

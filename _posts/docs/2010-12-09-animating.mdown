@@ -3,6 +3,7 @@
 title: Animating
 category: docs
 layout: doc
+related: animating
 
 ---
 

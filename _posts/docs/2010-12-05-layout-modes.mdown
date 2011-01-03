@@ -4,6 +4,7 @@ title: Layout Modes
 category: docs
 layout: doc
 body_class: option-def
+related: layout
 
 ---
 

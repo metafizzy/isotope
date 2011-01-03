@@ -3,6 +3,7 @@
 title: Getting Started
 category: docs
 layout: doc
+related: etc
 
 ---
 

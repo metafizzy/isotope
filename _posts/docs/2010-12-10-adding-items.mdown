@@ -3,6 +3,7 @@
 title: Adding items
 category: docs
 layout: doc
+related: methods
 
 ---
 

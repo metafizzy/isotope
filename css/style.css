@@ -440,9 +440,46 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 }
 
+/**** Super list ****/
+
+#super-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+#super-list li {
+  display: inline-block;
+  font-size: 28px;
+  line-height: 1.2em;
+  margin: 2px;
+  font-weight: 300;
+}
+
+#super-list li.feature { background: #111; }
+#super-list li span,
+#super-list li a {
+  display: block;
+  padding: 0.2em 0.5em;
+}
+#super-list li a {
+  color: #222;
+/*  font-weight: bold;*/
+}
+#super-list li.doc  a { background: #3CF; }
+#super-list li.demo a { background: #FC3; }
+
+#super-list li a:hover,
+#super-list li a.doc:hover,
+#super-list li a.demo:hover {
+  background: white;
+}
 
 /* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
 .clearfix:after { clear: both; }
 /* fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
 .clearfix { zoom: 1; }
+
+
