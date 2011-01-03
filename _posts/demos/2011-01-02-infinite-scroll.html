@@ -1,0 +1,58 @@
+---
+title: Infinite Scroll
+layout: demo
+category: demos
+related: layout
+infinite_scroll: true
+---
+
+  <section id="copy">
+
+  </section>
+
+  <div id="demo" class="iso-container variable-sizes">
+    {% for element in site.elements limit:20 %}
+      {% include element-partial.html %}
+    {% endfor %}
+  </div> <!-- #demo -->
+  
+  <nav id="page_nav">
+    <a href="../pages/2.html"></a>
+  </nav>
+
+  <script src="../js/jquery-1.4.4.min.js"></script>
+  <script src="../src/mini-modernizr.js"></script>
+  <script src="../src/jquery.opto-transform.js"></script>
+  <script src="../src/jquery.smartresize.js"></script>
+  <script src="../src/jquery.isotope.js"></script>
+  <script src="../src/jquery.ui.widget.js"></script>
+  <script src="../js/jquery.infinitescroll.min.js"></script>
+  <script>
+    $(function(){
+
+      var $demo = $('#demo');
+    
+      $demo.isotope({
+        itemSelector : '.element',
+      });
+      
+      $demo.infinitescroll({
+        navSelector  : '#page_nav',    // selector for the paged navigation 
+        nextSelector : '#page_nav a',  // selector for the NEXT link (to page 2)
+        itemSelector : '.element',     // selector for all items you'll retrieve
+        donetext  : 'No more pages to load.',
+        debug: false,
+        errorCallback: function() { 
+          // fade out the error message after 2 seconds
+          $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');   
+        }
+        },
+        // call Isotope as a callback
+        function( newElements ) { 
+          $(this).isotope({ appended: $( newElements ) }); 
+        }
+      );
+      
+    
+    });
+  </script>

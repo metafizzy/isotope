@@ -1,0 +1,7 @@
+---
+title: Infinite Scroll Page 6
+category: pages
+layout: inf-scroll-page
+page_position: 60
+infinite_scroll: true
+---
