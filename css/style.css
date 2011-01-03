@@ -260,16 +260,16 @@ body {
 #options li a {
   display: inline-block;
   padding: 0.4em 0.5em;
-  background-color: #AAA;
+  background-color: #DDD;
   color: #222;
   font-weight: bold;
   text-shadow: 0 1px hsla( 0, 0%, 100%, 0.5 );
   background-image: -moz-linear-gradient(-90deg, 
-    hsla( 0, 0%, 100%, 0.3 ) , 
+    hsla( 0, 0%, 100%, 0.5 ) , 
     hsla( 0, 0%, 100%, 0.0 ) 
   );
   background-image: -webkit-gradient(linear, 0 top, 0 bottom, 
-    from( hsla( 0, 0%, 100%, 0.3 ) ), 
+    from( hsla( 0, 0%, 100%, 0.5 ) ), 
     to(   hsla( 0, 0%, 100%, 0.0 ) )
   );
     margin-bottom: 0.2em;
