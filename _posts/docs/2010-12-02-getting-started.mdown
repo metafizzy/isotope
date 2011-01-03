@@ -8,3 +8,14 @@ related: etc
 ---
 
 this is how you get started
+
+Isotope requires jQuery 1.4.3 and greater.
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  // options
+  itemSelector : '.item-class'
+});
+
+{% endhighlight %}
