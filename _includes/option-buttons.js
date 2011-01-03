@@ -4,11 +4,9 @@
         var $this = $(this);
 
         // don't proceed if already selected
-        if ( $this.hasClass('selected') ) {
-          return;
+        if ( !$this.hasClass('selected') ) {
+          $this.parents('.option-set').find('.selected').removeClass('selected');
+          $this.addClass('selected');
         }
-
-        $this.parents('.option-set').find('.selected').removeClass('selected');
-        $this.addClass('selected');
 
       });
