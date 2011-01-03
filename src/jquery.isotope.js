@@ -578,7 +578,9 @@
   $.extend( $.Isotope.prototype, {
     
     _fitRowsLayout : function( $elems ) {
+      this.width = this.element.width();
       var instance = this;
+      
       return $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
@@ -616,7 +618,6 @@
     },
   
     _fitRowsResize : function() {
-      this.width = this.element.width();
       return this.reLayout()
     }
   
