@@ -194,7 +194,18 @@ body {
   color: white;
 }
 
-/**** CSS3 transitions ****/
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
 
 .isotope,
 .isotope .isotope-item {
@@ -250,9 +261,7 @@ body {
   float: left;
 }
 
-.isotope-hidden {
-  pointer-events: none;
-}
+
 
 #options li {
 }

@@ -70,3 +70,24 @@ $('#filters a').click(function(){
 });
 
 {% endhighlight %}
+
+## Recommended CSS
+
+If you choose to use the filtering functionality, add the following CSS to your stylesheet:
+
+{% highlight css %}
+
+/**** Isotope filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+{% endhighlight %}
+
+These styles ensure that hidden items will not interfer with interactions.
