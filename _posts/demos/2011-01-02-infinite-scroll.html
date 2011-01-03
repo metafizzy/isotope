@@ -11,7 +11,7 @@ infinite_scroll: true
   </section>
 
   <div id="demo" class="iso-container variable-sizes">
-    {% for element in site.elements limit:20 %}
+    {% for element in site.elements_ordered limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #demo -->
@@ -48,8 +48,9 @@ infinite_scroll: true
         }
         },
         // call Isotope as a callback
-        function( newElements ) { 
-          $(this).isotope({ appended: $( newElements ) }); 
+        function( newElements ) {
+          console.log('isotoping', newElements.length )
+          $demo.isotope( 'appended', $( newElements ) ); 
         }
       );
       

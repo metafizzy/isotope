@@ -2,6 +2,6 @@
 title: Infinite Scroll Page 4
 category: pages
 layout: inf-scroll-page
-page_position: 40
+page_position: 60
 infinite_scroll: true
 ---
