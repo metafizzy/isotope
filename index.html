@@ -10,21 +10,36 @@ layout: nil
   
   <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 
+  <style media="screen">
+    #options > * {
+      float: left;
+      margin-right: 10px;
+    }
+    
+    #options h2 {
+      line-height: 32px;
+      margin-bottom: 0;
+    }
+    
+    #options ul {
+      margin-right: 20px;
+    }
+  </style>
   
 </head>
 <body>
   
   <h1>{{ site.name }}</h1>
   
-  <section id="options">
-    <h2>Filter</h2>
+  <section id="options" class="clearfix">
+    <h2>Filter:</h2>
     <ul id="filter" class="option-set floated clearfix">
       <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
       <li><a href="#features" data-filter=".feature">features</a></li>
       <li><a href="#docs" data-filter=".doc">docs</a></li>
       <li><a href="#demos" data-filter=".demo">demos</a></li>
     </ul>
-    <h2>Sort</h2>
+    <h2>Sort:</h2>
     <ul id="sort" class="option-set floated clearfix">
       <li><a href="#type" data-sort="original-order" class="selected">type</a></li>
       <li><a href="#related" data-sort="related">related</a></li>
