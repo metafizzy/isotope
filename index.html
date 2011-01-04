@@ -16,13 +16,22 @@ layout: nil
       margin-right: 10px;
     }
     
+    #options .option-combo {
+      display: inline-block;
+      
+    }
+    
     #options h2 {
-      line-height: 32px;
+      line-height: 34px;
       margin-bottom: 0;
+      margin-right: 5px;
+      display: inline-block;
+      vertical-align: top;
     }
     
     #options ul {
       margin-right: 20px;
+      display: inline-block;
     }
   </style>
   
@@ -32,27 +41,43 @@ layout: nil
   <h1>{{ site.name }}</h1>
   
   <section id="options" class="clearfix">
-    <h2>Filter:</h2>
-    <ul id="filter" class="option-set floated clearfix">
-      <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
-      <li><a href="#features" data-filter=".feature">features</a></li>
-      <li><a href="#docs" data-filter=".doc">docs</a></li>
-      <li><a href="#demos" data-filter=".demo">demos</a></li>
-    </ul>
-    <h2>Sort:</h2>
-    <ul id="sort" class="option-set floated clearfix">
-      <li><a href="#type" data-sort="original-order" class="selected">type</a></li>
-      <li><a href="#related" data-sort="related">related</a></li>
-    </ul>
+    <div class="option-combo">
+      <h2>Filter:</h2>
+      <ul id="filter" class="option-set floated clearfix">
+        <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
+        <li><a href="#features" data-filter=".feature">features</a></li>
+        <li><a href="#docs" data-filter=".doc">docs</a></li>
+        <li><a href="#demos" data-filter=".demo">demos</a></li>
+      </ul>
+    </div>
+    <div class="option-combo">
+      <h2>Sort:</h2>
+      <ul id="sort" class="option-set floated clearfix">
+        <li><a href="#type" data-sort="original-order" class="selected">original order</a></li>
+        <li><a href="#related" data-sort="related">related</a></li>
+        <li><a href="#length" data-sort="length">length</a></li>
+      </ul>
+    </div>
+    <div class="option-combo">
+      <h2>Layout: </h2>
+      <ul id="layouts" class="option-set floated clearfix">
+        <li><a href="#fitRows" class="selected">fitRows</a></li>
+        <li><a href="#verticalList">verticalList</a></li>
+        <li><a href="#masonry">masonry</a></li>
+      </ul>
+    </div>
   </section>
   
-  <ul id="super-list">
-    <li class="feature" data-category="feature" data-related="etc"><span>Aggressively enhanced for CSS3 transforms &amp; transitions</span></li>
+  <ul id="super-list" class="fitRows">
+    
+    <li class="feature" data-category="feature" data-related="etc"><span>An exquisite jQuery plugin for magical layouts</span></li>
+    <li class="feature" data-category="feature" data-related="filtering"><span>Reveal &amp; hide items with filtering</span></li>
+    <li class="feature" data-category="feature" data-related="sorting"><span>Re&ndash;order items with sorting</span></li>
     <li class="feature" data-category="feature" data-related="layout"><span>Dynamic, intelligent layouts</span></li>
-    <li class="feature" data-category="feature" data-related="filtering"><span>Reveal and hide items with filtering</span></li>
-    <li class="feature" data-category="feature" data-related="sorting"><span>Re-order items with sorting</span></li>
-    <li class="feature" data-category="feature" data-related="sorting"><span>Get sorting data from just about anything</span></li>
-    <li class="feature" data-category="feature" data-related="methods"><span>Built on jQuery UI's widget bridge for powerful methods</span></li>
+    <li class="feature" data-category="feature" data-related="animating"><span>Captivating animations</span></li>
+    <li class="feature" data-category="feature" data-related="sorting"><span>Sort items by just about anything</span></li>
+    <li class="feature" data-category="feature" data-related="methods"><span>Powerful methods, simple syntax</span></li>
+    <li class="feature" data-category="feature" data-related="animating"><span>Aggressively enhanced for CSS3 transforms &amp; transitions</span></li>
     {% for doc in site.categories.docs reversed %}
       <li class="doc" data-category="doc" data-related="{{ doc.related }}"><a href=".{{ doc.url }}">Docs: {{ doc.title }}</a></li>
     {% endfor %}
@@ -61,17 +86,6 @@ layout: nil
     {% endfor %}
   </ul>
   
-  
-  <h2>Docs</h2>
-  <ul>
-  </ul>
-  
-  <h2>Demos</h2>
-  <ul>
-    {% for demo in site.categories.demos reversed %}
-      <li><a href=".{{ demo.url }}">{{ demo.title }}</a></li>
-    {% endfor %}
-  </ul>
   
   <script src="js/jquery-1.4.4.min.js"></script>
   <script src="src/mini-modernizr.js"></script>
@@ -86,9 +100,15 @@ layout: nil
       
       $list.isotope({
         layoutMode : 'fitRows',
+        masonry : {
+          columnWidth: 220,
+        },
         getSortData : {
           related : function( $elem ) {
             return $elem.attr('data-related');
+          },
+          length : function( $elem ) {
+            return $elem.text().length;
           }
         }
       });
@@ -102,6 +122,16 @@ layout: nil
       $('#sort a').click(function(){
         var sortName = $(this).attr('data-sort');
         $list.isotope({ sortBy : sortName });
+        return false;
+      });
+      
+      var currentLayout = 'fitRows';
+      
+      $('#layouts a').click(function(){
+        var layoutName = $(this).attr('href').slice(1);
+        $list.removeClass( currentLayout ).addClass( layoutName );
+        currentLayout = layoutName;
+        $list.isotope({ layoutMode : layoutName });
         return false;
       });
       

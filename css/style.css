@@ -485,6 +485,13 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   background: white;
 }
 
+#super-list.masonry li {
+  width: 216px;
+}
+#super-list.masonry li.feature {
+  width: 436px;
+}
+
 /* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
 .clearfix:after { clear: both; }
