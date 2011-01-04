@@ -55,7 +55,7 @@ layout: nil
       <ul id="sort" class="option-set floated clearfix">
         <li><a href="#type" data-sort="original-order" class="selected">original order</a></li>
         <li><a href="#related" data-sort="related">related</a></li>
-        <li><a href="#length" data-sort="length">length</a></li>
+        <li><a href="#width" data-sort="width">width</a></li>
       </ul>
     </div>
     <div class="option-combo">
@@ -107,8 +107,8 @@ layout: nil
           related : function( $elem ) {
             return $elem.attr('data-related');
           },
-          length : function( $elem ) {
-            return $elem.text().length;
+          width : function( $elem ) {
+            return $elem.width();
           }
         }
       });
