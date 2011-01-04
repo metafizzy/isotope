@@ -665,6 +665,39 @@
       return this;
     }
   });
+  
+  
+  // ====================== verticalList ======================
+  
+  $.extend( $.Isotope.prototype, {
+
+    _verticalListReset : function() {
+      this.verticalList = {
+        y : 0
+      };
+      return this;
+    },
+
+    _verticalListLayout : function( $elems ) {
+      var instance = this;
+      $elems.each( function( i ){
+        var $this = $(this),
+            y = instance.verticalList.y + instance.posTop;
+        instance._pushPosition( $this, instance.posLeft, y );
+        instance.verticalList.y += $this.outerHeight(true)
+      });
+      return this;
+    },
+
+    _verticalListGetContainerSize : function() {
+      return { height : this.verticalList.y + this.posTop };
+    },
+
+    _verticalListResize : function() {
+      this.reLayout();
+      return this;
+    }
+  });
 
   // ====================== masonryHorizontal ======================
   
