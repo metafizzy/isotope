@@ -7,7 +7,7 @@ infinite_scroll: true
 ---
 
   <section id="copy">
-
+    <p>Isotope is interoperable with <a href="http://www.infinite-scroll.com/">Infinite Scroll</a> by Paul Irish. Use the <a href="../docs/methods.html#appended"><code>appended</code></a> method to add new items to the Isotope layout.</p>
   </section>
 
   <div id="demo" class="iso-container variable-sizes">
@@ -49,7 +49,6 @@ infinite_scroll: true
         },
         // call Isotope as a callback
         function( newElements ) {
-          console.log('isotoping', newElements.length )
           $demo.isotope( 'appended', $( newElements ) ); 
         }
       );
