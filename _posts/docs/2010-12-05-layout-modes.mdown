@@ -53,7 +53,7 @@ Item elements are arranged into rows. Similar to what you would expect from a la
 
 ## cellsByRow
 
-A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`.
+A grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`.
 
 ### Options {#cellsByRow-options}
 
@@ -111,7 +111,7 @@ Item elements are arranged into columns. The horizontal equivalent of fitRows. C
 
 ## cellsByColumn
 
-A grid layout. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
+A grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
 
 ### Options {#cellsByColumn-options}
 
