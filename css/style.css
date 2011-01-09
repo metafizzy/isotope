@@ -34,13 +34,6 @@ h2 {
   line-height: 1.1em;
 }
 
-h3 {
-  color: #FEC;
-  background: hsla( 0, 0%, 0%, 0.15 );
-  padding: 2px 0.5em;
-  margin-bottom: 0.5em;
-}
-
 ul, ol {
   margin-left: 1.5em;
 }
@@ -53,7 +46,6 @@ a {
 
 a:hover { 
   color: #4BF; 
-  border-bottom: 1px dotted;
 }
 
 a:active {
@@ -365,6 +357,10 @@ body.doc {
   margin-bottom: 20px;
 }
 
+.doc a:hover {
+  border-bottom: 1px dotted;
+}
+
 @media screen and (min-width: 768px) {
 
   body.doc {
@@ -390,6 +386,9 @@ body.doc {
   margin-bottom: 0.5em;
 }
 
+#docs-nav h1 a { color: #4FB; }
+#docs-nav h1 a:hover { color: #4BF; }
+
 #docs-nav ul {
   list-style: none;
   margin: 0;
@@ -408,6 +407,15 @@ body.doc {
 }
 
 /**** Doc content ****/
+
+.doc h3 {
+  color: #FEC;
+  background: hsla( 0, 0%, 0%, 0.15 );
+  padding: 2px 0.5em;
+  margin-bottom: 0.5em;
+}
+
+
 
 .doc h2,
 .doc footer {
