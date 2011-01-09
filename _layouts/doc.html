@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>{{ site.name }} Docs: {{ page.title }}</title>
+  <title>{{ page.title }} &middot; {{ site.name }} Docs</title>
   
   <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
 
@@ -12,7 +12,7 @@
 
   
   <nav id="docs-nav">
-    <h1>{{ site.name }}</h1>
+    <h1><a href="../">{{ site.name }}</a> Docs</h1>
     
     <ul>
       {% for doc in site.categories.docs reversed %}
@@ -29,7 +29,7 @@
     {{ content }}
     
     <footer>
-      Isotope by David DeSandro / Metafizzy
+      {{ site.name }} by David DeSandro / Metafizzy
     </footer>
     
   </section> <!-- #content -->
