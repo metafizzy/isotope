@@ -6,7 +6,29 @@ layout: doc
 related: etc
 
 ---
-
+ 
 ## Images
 
-Most layout modes (i.e masonry, fitRows) need to measure the size of each item before 
+Most layout modes (i.e masonry, fitRows) need to measure the size of each item to appropriately account for its space in the layout. Unloaded images can cause item elements to overlap one another. Isotope layouts should be initialized after all inner content has loaded. For images, the best method is to specify the width and height of images inline.
+
+{% highlight html %}
+
+<img src="img-file.jpg" width="280" height="160" />
+
+{% endhighlight %}
+
+If you’re using a PHP-based CMS, you can use the [getimagesize](http://php.net/manual/en/function.getimagesize.php) function.
+
+Another solution is to initialize Isotope inside `$(window).load()` instead of `$(document).ready()`.
+
+{% highlight javascript %}
+
+$(window).load(function(){
+  $('#container').isotope({
+    // options...
+  });
+});
+
+{% endhighlight %}
+
+
