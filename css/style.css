@@ -11,7 +11,7 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 13px;
   line-height: 1.7em;
-  background: #262222;
+  background: #1F1E1D;
   color: #FFF;
 }
 
@@ -22,6 +22,23 @@ section, nav, header, footer {
 
 h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.1em;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1.1em;
+}
+
+h3 {
+  color: #FEC;
+  background: hsla( 0, 0%, 0%, 0.15 );
+  padding: 2px 0.5em;
+  margin-bottom: 0.5em;
 }
 
 ul, ol {
