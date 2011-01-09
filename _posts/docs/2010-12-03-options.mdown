@@ -207,7 +207,7 @@ The style applied to item elements made visible by Filtering.
 
 In addition the general options listed above, certain layout modes each have their own options. In order to avoid conflict, these options are set with an option that matches the name of the layout mode.
 
-See [Layout modes](layout-modes.html) for each layout mode's available options.
+See docs on [layout modes](layout-modes.html) for each layout mode's available options.
 
 For example, if your layout switched from `masonry` to `cellsByRow`:
 
