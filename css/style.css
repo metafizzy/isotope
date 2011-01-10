@@ -482,7 +482,23 @@ h3#options {
   border-left: 1px solid #222;
 }
 
+/* Tagline */
 
+.doc .tagline {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+/* Commercial license blurb */
+
+.doc #commercial {
+  background: white;
+  padding: 10px;
+  font-size: 14px;
+  color: #1F1F1D;
+}
+
+.doc #commercial a { font-weight: bold;}
 
 /**** Pygments ****/
 
