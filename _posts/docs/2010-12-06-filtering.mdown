@@ -42,7 +42,7 @@ $('#demo').isotope({ filter: '.metal' });
 
 Filtering selectors work just as expected. `.alkali, alkaline-earth` with show both `.alkali` AND ` .alkaline-earth` items, and hide all others.  `.metal:not(.transition)` will show `.metal` item elements that are not `.transition`.
 
-## Buttons
+## Creating interactive buttons
 
 Let's use a basic list for our buttons
 
@@ -59,7 +59,7 @@ Let's use a basic list for our buttons
 
 {% endhighlight %}
 
-Here we set the filter for each link with a `data-filter` attribute. In our jQuery script, whenever a link is clicked, we'll use this attribute as the filter secltor.
+Here we set the filter for each link with a `data-filter` attribute. In our jQuery script, whenever a link is clicked, we'll use this attribute as the filter selector.
 
 {% highlight javascript %}
 
@@ -90,4 +90,4 @@ If you choose to use the filtering functionality, add the following CSS to your 
 
 {% endhighlight %}
 
-These styles ensure that hidden items will not interfer with interactions.
+These styles ensure that hidden items will not interfere with interactions.

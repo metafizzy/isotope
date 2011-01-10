@@ -44,6 +44,4 @@ Both Typekit and Google WebFont Loader provide font events to control scripts ba
 
 Additionally, you can use the `$(window).load()` pattern above to wait for all content, including @font-face fonts, to load before initializing Isotope.
 
-## Opera
-
 

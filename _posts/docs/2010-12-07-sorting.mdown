@@ -119,7 +119,7 @@ $('#demo').isotope({
 
 {% endhighlight %}
 
-## Buttons
+## Creating interactive buttons
 
 We can use a simple list for our buttons.
 

@@ -489,6 +489,12 @@ h3#options {
   font-weight: 300;
 }
 
+/* as-is from MIT */
+
+.doc .as-is {
+  font-size: 95%;
+}
+
 /* Commercial license blurb */
 
 .doc #commercial {

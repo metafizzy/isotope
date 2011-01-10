@@ -1,25 +1,36 @@
 Isotope
 ========
 
-**An exquisite filtering, sorting, layout jQuery plugin.**
+**An exquisite jQuery plugin for magical layouts. Enables filtering, sorting, and dynamic layouts.**
 
-Requires jQuery versions 1.4.3 and up. 
+This package has all the documentation and demos to get you started.
 
-Features
---------
-
-+ Developed for progressive enhancement. Positioning and animation take advantage of CSS3 transforms and transitions when available.
-+ Dynamic layouts
-+ Sort elements according to any attribute, text, or anything
-+ Easy filtering
-+ Animated interaction for dynamic layout
-+ Develop your own layout with the plugin's integrated layout API
+View this project live at ...
 
 Licensing
 ---------
 
-Use on commercial (for-profit) sites requires one-time license fee per developer-seat. Purchase yours at [metafizzy.net/licensing](http://metafizzy.net/licensing).
+**Commercial use requires purchase of one-time license fee per developer seat.** Commercial use  includes any application that makes you money. This includes portfolio sites and premium templates. Commercial licenses may be purchased at [metafizzy.co](http://metafizzy.co).
 
-Free for personal (non-commercial) use.
+Use in non-commercial and personal applications is free.
+
+Viewing this project locally
+----------------------------
+
+### Via Jekyll
+
+The documentation and example pages are generated using [Jekyll](https://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can pull or fork this repo and then run from Terminal:
+
+    $ git pull git@github.com:desandro/isotope.git
+    $ cd isotope/
+    $ jekyll --server --auto
+
+And then view the live site at [localhost:4000](http://localhost:4000)
+
+### Via download
+
+You can download a zip of all the flat HTML files from [Downloads](http://github.com/desandro/isotope/downloads).
+
+* * *
 
 Copyright (c) 2011 David DeSandro / Metafizzy LLC

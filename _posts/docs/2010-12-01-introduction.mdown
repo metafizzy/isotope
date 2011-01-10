@@ -11,19 +11,34 @@ related: etc
 
 ## Features
 
-+ **Layout modes**: Intelligent, dynamic layouts that can't be achieved with CSS alone.
-+ **Filtering**: Hide and reveal item elements easily with jQuery selectors.
-+ **Sorting**: Re-order item elements with sorting. Sorting data can be extracted from just about anything.
-+ **Interoperabilty**: features can be utilized together for a cohesive experience.
-+ **Progressive enhancement**: Isotope's engaging animations take advantage of the best CSS transition and transform features when available, but also fall back to Javascript animation for lesser browsers.
++ [**Layout modes**](layout-modes.html): Intelligent, dynamic layouts that can't be achieved with CSS alone.
++ [**Filtering**](filtering.html): Hide and reveal item elements easily with jQuery selectors.
++ [**Sorting**](sorting.html): Re-order item elements with sorting. Sorting data can be extracted from just about anything.
++ **Interoperability**: features can be utilized together for a cohesive experience.
++ **Progressive enhancement**: Isotope's [animation engine](animating.html) takes advantage of CSS transitions and transforms when available, but will also fall back to Javascript animation for lesser browsers.
 
 ## License
 
 <p id="commercial">
-  <strong>Commercial use requires purchase of one-time license fee per developer seat.</strong> Commercial use  includes any application that makes you money. This includes portfolio sites and premium templates. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
+  <strong>Commercial use requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
 </p>
 
 Use in non-commercial and personal applications is free.
+
+<p class="as-is">
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</p>
+
 
 ## Getting started
 
@@ -60,7 +75,7 @@ There are a number of [options](options.html) you can specify.  Within the optio
 
 ## Code repository
 
-%% This project lives on GitHub at.... %%
+This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and download this entire project.
 
 ## Acknowledgments
 

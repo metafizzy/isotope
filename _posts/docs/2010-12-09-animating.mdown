@@ -7,7 +7,7 @@ related: animating
 
 ---
 
-Isotope was developed to take advantage of the best browser features available. 
+Isotope was developed to take advantage of the best browser features available. For animations, you can use CSS3 transitions and transforms in capable browsers. Isotope provides Javascript animation fall back for lesser browsers.
 
 
 ## animationEngine

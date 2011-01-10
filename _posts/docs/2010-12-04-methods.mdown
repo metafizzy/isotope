@@ -68,7 +68,9 @@ Appends elements to container, adds items to via `addItems` method, and then tri
 
 {% endhighlight %}
 
-Arranges new elements to the end of the layout.
+Positions specified elements in layout.
+
+`layout` will only position specified elements, and those elements will be positioned at the end of layout. Whereas `reLayout` will position all elements in the Isotope widget.
 
 ## option
 
