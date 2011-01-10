@@ -7,9 +7,13 @@ related: etc
 
 ---
  
-## Images
+## Unloaded Content
+ 
+Most layout modes (i.e masonry, fitRows) need to measure the size of each item to appropriately account for its space in the layout. Unloaded content like images and @font-face fonts can throw off layout and cause item elements to overlap one another. Ideally, Isotope layouts should be initialized after all inner content has loaded.
+ 
+### Images
 
-Most layout modes (i.e masonry, fitRows) need to measure the size of each item to appropriately account for its space in the layout. Unloaded images can cause item elements to overlap one another. Isotope layouts should be initialized after all inner content has loaded. For images, the best method is to specify the width and height of images inline.
+For images, the best method is to specify the width and height of images inline.
 
 {% highlight html %}
 
@@ -30,5 +34,16 @@ $(window).load(function(){
 });
 
 {% endhighlight %}
+
+### @font-face fonts
+
+Both Typekit and Google WebFont Loader provide font events to control scripts based on how fonts are loaded. 
+
++ [Typekit font events](http://blog.typekit.com/2010/10/18/more-control-with-typekits-font-events/)
++ [Google WebFont Loader: Events](http://code.google.com/apis/webfonts/docs/webfont_loader.html#Events)
+
+Additionally, you can use the `$(window).load()` pattern above to wait for all content, including @font-face fonts, to load before initializing Isotope.
+
+## Opera
 
 
