@@ -15,7 +15,7 @@
   $.Isotope.prototype = {
 
     options : {
-      resizeable: true,
+      resizable: true,
       layoutMode : 'masonry',
       containerClass : 'isotope',
       itemClass : 'isotope-item',
@@ -50,8 +50,6 @@
       this.elemCount = 0;
       // need to get atoms
       this.$allAtoms = this._filterFind( this.element.children(), this.options.itemSelector );
-      
-      // console.log( 'all atoms', this.$allAtoms.length )
       
       this.element.css({
         overflow : 'hidden',
@@ -103,13 +101,11 @@
         instance.element.addClass( instance.options.containerClass );
       }, 0 );
       
-      // do any layout-specific setup
-      // this.width = this.element.width();
-      // this._getMasonryColCount();
-      
       // bind resize method
-      if ( this.options.resizeable ) {
-        $(window).bind('smartresize.isotope', function() { instance.element.isotope('resize') } );
+      if ( this.options.resizable ) {
+        $(window).bind( 'smartresize.isotope', function() { 
+          instance.element.isotope('resize') 
+        });
       }
       
     },
@@ -194,7 +190,6 @@
         // apply sort data to $element
         $this.data( 'isotope-sort-data', sortData );
         // increment element count
-        // console.log( instance.elemCount )
         instance.elemCount ++;
       });
 
@@ -340,7 +335,6 @@
     
     
     reLayout : function( callback ) {
-      // console.log( this[ '_' +  this.options.layoutMode + 'Reset' ] )
       return this
         [ '_' +  this.options.layoutMode + 'Reset' ]()
         .layout( this.$filteredAtoms, callback )
