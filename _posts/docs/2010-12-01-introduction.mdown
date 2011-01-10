@@ -43,3 +43,11 @@ Commercial use generally includes any application that makes you money. This inc
 
 %% This project lives on GitHub at.... %%
 
+## Acknowledgments
+
++ [**Juriy Zaytsev aka "kangax"**](http://perfectionkills.com) for [getStyleProperty](http://perfectionkills.com/feature-testing-css-properties/) which is used within Isotope
++ [**Faruk Ateş**](http://farukat.es) and [**Paul Irish**](http://paul-irish.com) for [Modernizr](http://www.modernizr.com/)
++ [**Louis-Rémi Babé**](http://twitter.com/#!/Louis_Remi) for [jQuery smartresize](https://github.com/lrbabe/jquery-smartresize) which is used within Isotope and [jQuery transform](https://github.com/lrbabe/jquery.transform.js) which clued me in to using jQuery 1.4.3's CSS hooks
++ [Eric Hynds](http://www.erichynds.com/) for his article [Using $.widget.bridge Outside of the Widget Factory](http://www.erichynds.com/jquery/using-jquery-ui-widget-factory-bridge/) which provided the architecture for the plugin
++ [Ralph Holzmann](http://twitter.com/#!/ralphholzmann) for re-writing the [jQuery Plugins/Authoring tutorial](http://docs.jquery.com/Plugins/Authoring) and opened my eyes to [Plugin Methods](http://docs.jquery.com/Plugins/Authoring#Plugin_Methods) paradigm
+
