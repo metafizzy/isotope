@@ -7,6 +7,13 @@ related: methods
 
 ---
 
+Isotope offers several methods to extend functionality. Isotope's methods follow the jQuery UI pattern.
+
+{% highlight javascript %}
+
+$('#container').isotope( 'methodName', [optionalParameters] )
+
+{% endhighlight %}
 
 ## addItems
 
