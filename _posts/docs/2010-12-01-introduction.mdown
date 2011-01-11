@@ -77,6 +77,10 @@ There are a number of [options](options.html) you can specify.  Within the optio
 
 This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and download this entire project.
 
+## A word about moderation
+
+Isotope enables a wealth of functionality. But just because you can take advantage of its numerous features together, doesn't mean you necessarily should. For each each feature you implement with Isotope, consider the benefit you extend to your users, at the cost of another level of complexity to your interface.
+
 ## Acknowledgments
 
 + [**Faruk Ateş**](http://farukat.es) and [**Paul Irish**](http://paul-irish.com) for [Modernizr](http://www.modernizr.com/)
