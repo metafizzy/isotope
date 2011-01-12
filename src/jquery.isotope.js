@@ -451,7 +451,7 @@
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ][ measure ] ) {
-        $.error( measure + 'calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.')
+        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.')
         return this;
       }
       this[ size ] = this.element[ size ]();
