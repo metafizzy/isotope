@@ -53,6 +53,8 @@ a:active {
   background: black;
 }
 
+a img { border: none; }
+
 /**** Isotope styles ****/
 
 /* required for containers to inherit vertical size from window */
