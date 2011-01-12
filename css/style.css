@@ -344,6 +344,18 @@ body {
   max-width: 640px;
 }
 
+/**** Photo demo ****/
+
+.photos .photo {
+  width: 320px;
+  margin: 5px;
+  float: left;
+}
+
+.photos .photo img {
+  display: block;
+  width: 100%;
+}
 
 /**** Docs ****/
 
