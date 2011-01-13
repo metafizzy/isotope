@@ -9,7 +9,7 @@ related: etc
     <p>This is a basic demo of Isotope. Resize the browser window to see the layout animate.</p>
   </section>
   
-  <div id="container" class="iso-container">
+  <div id="container">
     {% for element in site.elements_ordered limit:20 %}
       {% include element-partial.html %}
     {% endfor %}

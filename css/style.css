@@ -66,9 +66,8 @@ body {
   height: 100%;
 }
 
-.iso-container {
-  background: transparent;
-  border: 1px solid #FFF;
+#container {
+  border: 1px solid #666;
   padding: 5px;
   margin-bottom: 20px;
 }
@@ -341,7 +340,7 @@ body {
 
 /**** Horizontal ****/
 
-.horizontal .iso-container {
+.horizontal #container {
   height: 80%;
 }
 
