@@ -424,11 +424,15 @@ body.doc {
 
 .doc h3 {
   color: #FEC;
-  background: hsla( 0, 0%, 0%, 0.15 );
+  background: hsla( 0, 0%, 75%, 0.05 );
   padding: 2px 0.5em;
   margin-bottom: 0.5em;
 }
 
+.doc h4 {
+  margin-bottom: 0.5em;
+  font-size: 14px;
+}
 
 
 .doc h2,

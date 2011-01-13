@@ -13,6 +13,8 @@ Most layout modes (i.e masonry, fitRows) need to measure the size of each item t
  
 ### Images
 
+#### Inline dimensions
+
 For images, the best method is to specify the width and height of images inline.
 
 {% highlight html %}
@@ -22,6 +24,22 @@ For images, the best method is to specify the width and height of images inline.
 {% endhighlight %}
 
 If you’re using a PHP-based CMS, you can use the [getimagesize](http://php.net/manual/en/function.getimagesize.php) function.
+
+#### imagesLoaded plugin
+
+The next best solution is to use the imagesLoaded plugin included with Isotope. It's a fork of [Paul Irish's plugin](https://gist.github.com/268257) that finds all the images in a context, and fires  a callback function once all the images have loaded.
+
+{% highlight javascript %}
+
+$('#container').imagesLoaded( function(){
+  $(this).isotope({
+    itemSelector : '.item',
+  });
+});
+
+{% endhighlight %}
+
+#### `$(window).load()`
 
 Another solution is to initialize Isotope inside `$(window).load()` instead of `$(document).ready()`.
 
