@@ -95,12 +95,3 @@ Resets layout properties and lays-out every item element.
 
 [**See Demo: reLayout**](../demos/relayout.html)
 
-## resize
-
-{% highlight javascript %}
-
-.isotope( 'resize' )
-
-{% endhighlight %}
-
-Triggers layout-specific resize method.
