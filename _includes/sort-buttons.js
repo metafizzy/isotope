@@ -7,7 +7,7 @@
             asc = $this.parents('.sort').hasClass('asc');
         // var sortTest = 'sort ' + sortName + ' ' + direction;
         // console.time( sortTest );
-        $demo.isotope({ 
+        $container.isotope({ 
           sortBy : sortName,
           sortAscending : asc
         });

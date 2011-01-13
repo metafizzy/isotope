@@ -19,13 +19,13 @@ photos:
 
   </section>
 
-  <div id="demo" class="iso-container photos">
+  <div id="container" class="iso-container photos">
     {% for photo in page.photos %}
       <div class="photo">
         {{ photo }}
       </div>
     {% endfor %}
-  </div> <!-- #demo -->
+  </div> <!-- #container -->
   
   <nav id="page_nav">
     <a href="../pages/2.html"></a>
@@ -41,9 +41,9 @@ photos:
   <script>
     $(function(){
 
-      var $demo = $('#demo');
+      var $container = $('#container');
     
-      $demo.imagesLoaded( function(){
+      $container.imagesLoaded( function(){
         $(this).isotope({
           itemSelector : '.photo',
         });

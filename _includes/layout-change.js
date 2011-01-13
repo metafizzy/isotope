@@ -9,15 +9,15 @@
         if ( wasHorizontal !== isHorizontal ) {
           // need to do some clean up for transitions and sizes
           var style = isHorizontal ? 
-            { height: '80%', width: $demo.width() } : 
+            { height: '80%', width: $container.width() } : 
             { width: 'auto' };
-          $demo.addClass('no-transition').css( style );
+          $container.addClass('no-transition').css( style );
           setTimeout(function(){
-            $demo.removeClass('no-transition').isotope({ layoutMode : mode });
+            $container.removeClass('no-transition').isotope({ layoutMode : mode });
           }, 100 )
         } else {
           // go ahead and apply new layout
-          $demo.isotope({ layoutMode : mode });
+          $container.isotope({ layoutMode : mode });
     
         }
   

@@ -9,11 +9,11 @@ related: etc
     <p>This is a basic demo of Isotope. Resize the browser window to see the layout animate.</p>
   </section>
   
-  <div id="demo" class="iso-container">
+  <div id="container" class="iso-container">
     {% for element in site.elements_ordered limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
-  </div> <!-- #demo -->
+  </div> <!-- #container -->
   
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../src/mini-modernizr.js"></script>
@@ -24,9 +24,9 @@ related: etc
   <script>
     $(function(){
       
-      var $demo = $('#demo');
+      var $container = $('#container');
       
-      $demo.isotope({
+      $container.isotope({
         itemSelector: '.element'
       });
       

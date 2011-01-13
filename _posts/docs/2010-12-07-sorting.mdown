@@ -18,7 +18,7 @@ In our example, each item element has several data points that can be used for s
 
 {% highlight html %}
 
-<div id="demo">
+<div id="container">
   <div class="element transition metal" data-category="transition"> 
     <p class="number">79</p> 
     <h3 class="symbol">Au</h3> 
@@ -47,7 +47,7 @@ In the example above, to get element name, we would need to get the text from th
 
 {% highlight javascript %}
 
-$('#demo').isotope({
+$('#container').isotope({
   getSortData : {
     name : function ( $elem ) {
       return $elem.find('.name').text();
@@ -113,7 +113,7 @@ With our example, we can use `'name'`, `'symbol'`, `'number'`, `'weight'` and `'
 
 {% highlight javascript %}
 
-$('#demo').isotope({ sortBy : 'symbol' });
+$('#container').isotope({ sortBy : 'symbol' });
 
 {% endhighlight %}
 
@@ -125,7 +125,7 @@ By default, Isotope sorts data in ascension. If our data for name is "Gold, Anti
 
 {% highlight javascript %}
 
-$('#demo').isotope({ 
+$('#container').isotope({ 
   sortBy : 'name',
   sortAscending : false
 });
@@ -155,7 +155,7 @@ When one of these links is clicked, we can use the `href` attribute as the value
 $('#sort a').click(function(){
   // get href attribute, minus the '#'
   var sortName = $(this).attr('href').slice(1);
-  $('#demo').isotope({ sortBy : sortName });
+  $('#container').isotope({ sortBy : sortName });
   return false;
 });
 

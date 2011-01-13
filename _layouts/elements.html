@@ -65,10 +65,10 @@
 
     $(function(){
 
-      var $demo = $('#demo');
+      var $container = $('#container');
 
       // hacky way of adding random size classes
-      $demo.find('.element').each(function(){
+      $container.find('.element').each(function(){
         if ( Math.random() > 0.6 ) {
           $(this).addClass('width2');
         }
@@ -80,7 +80,7 @@
 
       // console.log('starting')
       // console.time('initializeMe');
-      $demo.isotope({
+      $container.isotope({
         itemSelector : '.element',
         // layoutMode : 'fitRows',
         masonry : {
@@ -126,7 +126,7 @@
         filterName = filterName === '.show-all' ? '*' : filterName;
         // var filterTest = 'filter ' + filterName;
         // console.time( filterTest );
-        $demo.isotope({ filter: filterName })
+        $container.isotope({ filter: filterName })
         // console.timeEnd( filterTest );
         return false;
       });
@@ -134,16 +134,16 @@
       {% include sort-buttons.js %}
 
       // change size of clicked element
-      $demo.find('.element').live('click', function(){
+      $container.find('.element').live('click', function(){
         $(this).toggleClass('large');
         // console.time('relayout');
-        $demo.isotope('reLayout');
+        $container.isotope('reLayout');
         // console.timeEnd('relayout');
       });
 
       // toggle variable sizes of all elements
       $('#toggle-sizes').find('a').click(function(){
-        $demo
+        $container
           .toggleClass('variable-sizes')
           .isotope('reLayout');
         return false;
@@ -154,12 +154,12 @@
       {% include add-buttons.js %}
 
       $('#shuffle a').click(function(){
-        $demo.isotope('shuffle');
+        $container.isotope('shuffle');
         return false;
       });
 
       $('#xray').find('a').click(function(){
-        $demo.toggleClass('xray');
+        $container.toggleClass('xray');
       });
       
       

@@ -17,7 +17,7 @@ Each item element has several identifying classes. In this case, `transition`, `
 
 {% highlight html %}
 
-<div id="demo" class="iso-container"> 
+<div id="container" class="iso-container"> 
   <div class="element transition metal">...</div>
   <div class="element post-transition metal">...</div>
   <div class="element alkali metal">...</div>
@@ -36,7 +36,7 @@ To show only `.metal` items, the jQuery script would be:
 
 {% highlight javascript %}
 
-$('#demo').isotope({ filter: '.metal' });
+$('#container').isotope({ filter: '.metal' });
 
 {% endhighlight %}
 
@@ -65,7 +65,7 @@ Here we set the filter for each link with a `data-filter` attribute. In our jQue
 
 $('#filters a').click(function(){
   var selector = $(this).attr('data-filter');
-  $('#demo').isotope({ filter: selector });
+  $('#container').isotope({ filter: selector });
   return false;
 });
 

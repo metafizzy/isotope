@@ -16,11 +16,11 @@ related: methods
     </ul>
   </section>
   
-  <div id="demo" class="iso-container clickable">
+  <div id="container" class="iso-container clickable">
     {% for element in site.elements_ordered limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
-  </div> <!-- #demo -->
+  </div> <!-- #container -->
   
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../src/mini-modernizr.js"></script>
@@ -31,10 +31,10 @@ related: methods
   <script>
     $(function(){
       
-      var $demo = $('#demo');
+      var $container = $('#container');
       
       // hacky way of adding random size classes
-      $demo.find('.element').each(function(){
+      $container.find('.element').each(function(){
         if ( Math.random() > 0.6 ) {
           $(this).addClass('width2');
         }
@@ -43,7 +43,7 @@ related: methods
         }
       });
       
-      $demo.isotope({
+      $container.isotope({
         itemSelector: '.element',
         masonry : {
           columnWidth : 120
@@ -52,17 +52,17 @@ related: methods
       
       // toggle variable sizes of all elements
       $('#toggle-sizes a').click(function(){
-        $demo
+        $container
           .toggleClass('variable-sizes')
           .isotope('reLayout');
         return false;
       });
       
       // change size of clicked element
-      $demo.find('.element').live('click', function(){
+      $container.find('.element').live('click', function(){
         $(this).toggleClass('large');
         // console.time('relayout');
-        $demo.isotope('reLayout');
+        $container.isotope('reLayout');
         // console.timeEnd('relayout');
       });
       

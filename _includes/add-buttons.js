@@ -6,10 +6,10 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        // $demo.append( $newEls ).isotope( 'appendToLayout', $newEls );
-        $demo.isotope( 'insert', $newEls );
-        // $demo.append( $newEls ).isotope( 'addAtoms', $newEls ).isotope();
-        // $demo.isotope()
+        // $container.append( $newEls ).isotope( 'appendToLayout', $newEls );
+        $container.isotope( 'insert', $newEls );
+        // $container.append( $newEls ).isotope( 'addAtoms', $newEls ).isotope();
+        // $container.isotope()
         // console.log( next )
 
         return false;
@@ -22,7 +22,7 @@
           newEls += fakeElement.create();
         }
         var $newEls = $( newEls )
-        $demo.append( $newEls ).isotope( 'appended', $newEls );
+        $container.append( $newEls ).isotope( 'appended', $newEls );
 
         return false;
       });
