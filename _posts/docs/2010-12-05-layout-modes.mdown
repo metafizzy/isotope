@@ -16,7 +16,7 @@ Isotope has a versatile layout engine that can accommodate multiple layout modes
 
 {% highlight javascript %}
 
-$('#container').isotope({ layoutMode: 'fitRows' });
+$('#container').isotope({ layoutMode : 'fitRows' });
 
 {% endhighlight %}
 
@@ -40,8 +40,8 @@ The width of one column in the grid. If no value is set for `columnWidth`, defau
 {% highlight javascript %}
 
 $('#container').isotope({
-  masonry: {
-    columnWidth: 240
+  masonry : {
+    columnWidth : 240
   }
 });
 
@@ -71,10 +71,10 @@ A grid layout where items are centered inside each cell. The grid is defined by 
 {% highlight javascript %}
 
 $('#container').isotope({
-  layoutMode: 'cellsByRow',
-  cellsByRow: {
-    columnWidth: 240,
-    rowHeight: 360
+  layoutMode : 'cellsByRow',
+  cellsByRow : {
+    columnWidth : 240,
+    rowHeight : 360
   }
 });
 
@@ -98,8 +98,8 @@ The width of one column in the grid. If no value is set for `rowHeight`, default
 {% highlight javascript %}
 
 $('#container').isotope({
-  masonryHorizontal: {
-    rowHeight: 360
+  masonryHorizontal : {
+    rowHeight : 360
   }
 });
 
@@ -129,10 +129,10 @@ A grid layout where items are centered inside each cell. The grid is defined by 
 {% highlight javascript %}
 
 $('#container').isotope({
-  layoutMode: 'cellsByRow',
-  cellsByRow: {
-    columnWidth: 240,
-    rowHeight: 360
+  layoutMode : 'cellsByRow',
+  cellsByRow : {
+    columnWidth : 240,
+    rowHeight : 360
   }
 });
 
