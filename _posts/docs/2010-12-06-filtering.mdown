@@ -7,7 +7,7 @@ related: filtering
 
 ---
 
-Isotope can hide and show item elements via the `filter` option. The `filter` option accepts a jQuery selector. Items that match that selector will be shown. Items that do not match will be hidden.
+Isotope can hide and show item elements via the [`filter`](options.html#filter) option. The `filter` option accepts a jQuery selector. Items that match that selector will be shown. Items that do not match will be hidden.
 
 [**See Demo: Filtering**](../demos/filtering.html)
 
