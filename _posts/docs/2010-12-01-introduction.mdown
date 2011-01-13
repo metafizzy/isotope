@@ -56,6 +56,8 @@ $('#container').isotope({
 
 {% endhighlight %}
 
+[**See Demo: Basic**](../demos/basic.html)
+
 There are a number of [options](options.html) you can specify.  Within the options is where you can [set the layout mode](layout-modes.html), [filter items](filtering.html),  and [sort items](sorting.html).
 
 ## Code repository

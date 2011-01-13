@@ -12,7 +12,7 @@ Isotope was developed to take advantage of the best browser features available. 
 
 ## animationEngine
 
-You can control how Isotope handles animation with the `animationEngine` option. This option has three values which control which jQuery method `.css()` or `.animate()` is used to apply styles.
+You can control how Isotope handles animation with the [`animationEngine`](options.html#animationengine) option. This option has three values which control whether jQuery applies styles with`.css()` or `.animate()`.
 
 + `'best-available'`: if browser supports CSS transitions, Isotope uses `.css()`. If not, falls back to using `.animate()`.
 + `'css'`: Isotope uses `.css()`

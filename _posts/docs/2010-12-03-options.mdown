@@ -85,7 +85,9 @@ Setting a filter with show item elements that match the selector, and hide eleme
   <dd class="option-type">Object</dd>
 </dl>
 
-An object containing one or several methods to retrieve data for Sorting. The methods receive one parameter (`$elem` in the example below) which is a jQuery object representing each item element. The methods need to return a value.
+An object containing one or several methods to retrieve data for Sorting. The methods receive one parameter (`$elem` in the example below) which is a jQuery object representing each item element. The methods need to return a value. See [docs on sorting](sorting.html) for more details.
+
+[**See Demo: Sorting**](../demos/sorting.html)
 
 ### Example
 
@@ -158,10 +160,10 @@ See also docs on [Layout Modes](layout-modes.html).
 
 [**See Demo: Layout Modes**](../demos/layout-modes.html)
 
-## resizeable
+## resizable
 
 <dl class="clearfix">
-  <dt><code>resizeable</code></dt>
+  <dt><code>resizable</code></dt>
   <dd class="option-type">Boolean</dd>
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
@@ -176,7 +178,9 @@ Triggers layout logic when browser window is resized.
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
-Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...". If false, items are sorted descending "Z, Y, X" or "9, 8, 7...".
+Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...". If false, items are sorted descending "Z, Y, X" or "9, 8, 7...". See [docs on sorting](sorting.html) for more details.
+
+[**See Demo: Sorting**](../demos/sorting.html)
 
 ## sortBy
 
@@ -185,9 +189,9 @@ Used with sorting. If true, items are sorted ascending: "1, 2, 3" or "A, B, C...
   <dd class="option-type">String</dd>
 </dl>
 
-The property name of the method within the `getSortData` option to sort item elements.
+The property name of the method within the `getSortData` option to sort item elements.  See [docs on sorting](sorting.html) for more details.
 
-Looking at the `getSortData` example above, valid values would be `'symbol'`, `'number'`, or `'name'`.
+[**See Demo: Sorting**](../demos/sorting.html)
 
 ### Values {#sortBy-values}
 

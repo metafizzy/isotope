@@ -23,8 +23,9 @@ $('#container').isotope( 'methodName', [optionalParameters] )
 
 {% endhighlight %}
 
-Adds elements to the pool of item elements of the container, but does sort, filter or layout. More details in [Adding items](adding-items.html).
+Adds elements to the pool of item elements of the container, but does sort, filter or layout. See [Adding items](adding-items.html) for more details.
 
+[**See Demo: Adding items**](../demos/adding-items.html)
 
 ## appended
 
@@ -34,9 +35,9 @@ Adds elements to the pool of item elements of the container, but does sort, filt
 
 {% endhighlight %}
 
-Adds elements via `addItems` method, then triggers `layout` just for those new elements. Useful for Infinite Scroll. More details in [Adding items](adding-items.html).
+Adds elements via `addItems` method, then triggers `layout` just for those new elements. Useful for Infinite Scroll. See [Adding items](adding-items.html) for more details.
 
-[**See Demo: Adding items**](../demos/adding-items.html).
+[**See Demo: Adding items**](../demos/adding-items.html)
 
 ## destroy
 
@@ -56,7 +57,7 @@ Removes Isotope functionality completely. Returns element back to pre-init state
 
 {% endhighlight %}
 
-Appends elements to container, adds items to via `addItems` method, and then triggers `reLayout` method so new elements are properly filtered, sorted and laid-out. More details in [Adding items](adding-items.html).
+Appends elements to container, adds items to via `addItems` method, and then triggers `reLayout` method so new elements are properly filtered, sorted and laid-out. See [Adding items](adding-items.html) for more details.
 
 [**See Demo: Adding items**](../demos/adding-items.html).
 

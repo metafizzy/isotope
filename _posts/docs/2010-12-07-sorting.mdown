@@ -39,7 +39,7 @@ In our example, each item element has several data points that can be used for s
 
 ## getSortData
 
-In order to extract this data from the element, we need to pass in a function to get it via the `getSortData` option.  This option accepts an object, whose values are the functions to extract the data.
+In order to extract this data from the element, we need to pass in a function to get it via the [`getSortData`](options.html#getsortdata) option.  This option accepts an object, whose values are the functions to extract the data.
 
 Each function receives one argument, which represents a jQuery object for each item element. With that argument, the function needs to return the data point.
 
@@ -77,7 +77,7 @@ getSortData : {
 
 {% endhighlight %}
 
-The data extracted can be anything accessible in the item element via jQuery. To extract the category data, we can use the `.attr()`.
+The data extracted can be anything accessible in the item element via jQuery. To extract the category data held within the `data-category` attribute, we can use the `.attr()`.
 
 {% highlight javascript %}
 
@@ -85,6 +85,19 @@ getSortData : {
   // ...
   category : function ( $elem ) {
     return $elem.attr('data-category');
+  }
+}
+
+{% endhighlight %}
+
+Get creative! You can sort the list in the [index page](../../) by the width of each item element.
+
+{% highlight javascript %}
+
+getSortData : {
+  // ...
+  width : function( $elem ) {
+    return $elem.width();
   }
 }
 
