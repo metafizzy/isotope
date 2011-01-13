@@ -39,16 +39,19 @@ ul, ol {
 }
 
 
-a {
+a,
+a code {
   color: #FB4;
   text-decoration: none;
 }
 
-a:hover { 
+a:hover,
+a:hover code { 
   color: #4BF; 
 }
 
-a:active {
+a:active,
+a:active code {
   color: #1FB;
   background: black;
 }
