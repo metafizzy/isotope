@@ -17,7 +17,7 @@ Each item element has several identifying classes. In this case, `transition`, `
 
 {% highlight html %}
 
-<div id="container" class="iso-container"> 
+<div id="container">
   <div class="element transition metal">...</div>
   <div class="element post-transition metal">...</div>
   <div class="element alkali metal">...</div>
