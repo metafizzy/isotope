@@ -1,0 +1,34 @@
+---
+
+title: License
+category: docs
+layout: doc
+related: z-etc
+
+---
+
+Isotope may be used in non-commercial and personal applications for free.
+
+For commercial applications, you may license Isotope with the purchase of a one-time fee per developer seat (how many of you will be using developing with it) . Once purchased, you may use Isotope in all your future commercial applications. Commercial licenses may be purchased at [metafizzy.co](http://metafizzy.co).
+
+## Isotope Commercial License Agreement
+
+This Commercial License Agreement (the **Agreement**) is a binding legal agreement between you and Metafizzy LLC (**Metafizzy**). By installing, copying, or using Isotope (the **Software**), you agree to be bound by these terms of this Agreement.
+
+### Usage
+
+This Agreement grants a non-exclusive, non-transferable license to use the Software to design and develop software (**Applications**).
+
+You are granted 1 license for you as 1 designated user to use the Software for the purpose of developing Applications (**Developer**).  You must purchase another separate license to the Software for each and any additional Developer. For example, if your company has 5 developers using the Software, you need to purchase 5 licenses.
+
+You are granted the right to use and to modify the source code of the Software for use in Applications.    You own any original work authored by you; Metafizzy continues to retain all copyright and other intellectual property rights in the Software.  You are not permitted to move, remove, edit, or obscure any copyright, trademark, attribution, warning or disclaimer notices in the Software.
+
+You may use the Software only to create Applications that are significantly different than and do not compete with the Software. You are granted the license to distribute the Software as part of your Applications on a royalty-free basis. Users of your Applications are not permitted to use the Software or your modifications of the Software for development purposes unless they also purchase a separate commercial license from Metafizzy for each of the users.
+
+### Warranties and Remedies
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. METAFIZZY'S ENTIRE 
+LIABILITY AND YOUR EXCLUSIVE REMEDY UNDER THIS AGREEMENT SHALL BE RETURN 
+OF THE PRICE PAID FOR THE SOFTWARE.
