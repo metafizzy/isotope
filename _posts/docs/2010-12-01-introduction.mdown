@@ -20,7 +20,7 @@ related: a-intro
 ## Licensing
 
 <p id="commercial">
-  <strong>Commercial use requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
+  <strong>Commercial use of Isotope requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
 </p>
 
 Use in non-commercial and personal applications is free.

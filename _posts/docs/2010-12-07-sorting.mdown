@@ -89,7 +89,7 @@ getSortData : {
 
 {% endhighlight %}
 
-Get creative! You can sort the list in the [index page](../../) by the width of each item element.
+Get creative! You can sort the list in the [index page](../) by the width of each item element.
 
 {% highlight javascript %}
 
