@@ -398,12 +398,22 @@ body.doc {
 /**** Doc page nav ****/
 
 #docs-nav h1 {
-  font-size: 20px;
+  font-size: 19px;
   margin-bottom: 0.5em;
 }
 
-#docs-nav h1 a { color: #4FB; }
-#docs-nav h1 a:hover { color: #4BF; }
+#docs-nav h1 a,
+#demo-nav a { color: #4FB; }
+#docs-nav h1 a:hover,
+#demo-nav a:hover { color: #4BF; }
+
+#demo-nav {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #333;
+}
 
 #docs-nav ul {
   list-style: none;
