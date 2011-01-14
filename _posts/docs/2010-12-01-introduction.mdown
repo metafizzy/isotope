@@ -3,7 +3,7 @@
 title: Introduction
 category: docs
 layout: doc
-related: etc
+related: a-intro
 
 ---
 

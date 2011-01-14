@@ -3,7 +3,7 @@
 title: Troubleshooting
 category: docs
 layout: doc
-related: etc
+related: z-etc
 
 ---
  

@@ -4,7 +4,7 @@ title: Options
 category: docs
 layout: doc
 body_class: option-def
-related: etc
+related: a-intro
 
 ---
 
