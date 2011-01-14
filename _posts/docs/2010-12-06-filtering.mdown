@@ -4,6 +4,11 @@ title: Filtering
 category: docs
 layout: doc
 related: filtering
+toc:
+  - { title: Markup, anchor: markup }
+  - { title: jQuery script, anchor: jquery_script }
+  - { title: Creating interactive buttons, anchor: creating_interactive_buttons }
+  - { title: Recommended CSS, anchor: recommended_css }
 
 ---
 

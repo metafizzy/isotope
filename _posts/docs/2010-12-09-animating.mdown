@@ -4,13 +4,17 @@ title: Animating
 category: docs
 layout: doc
 related: animating
+toc:
+  - { title: animationEngine option, anchor: animationengine_option }
+  - { title: CSS transitions, anchor: css_transitions }
+  - { title: Variations, anchor: variations }
 
 ---
 
 Isotope was developed to take advantage of the best browser features available. For animations, you can use CSS3 transitions and transforms in capable browsers. Isotope provides Javascript animation fall back for lesser browsers.
 
 
-## animationEngine
+## animationEngine option
 
 You can control how Isotope handles animation with the [`animationEngine`](options.html#animationengine) option. This option has three values which control whether jQuery applies styles with`.css()` or `.animate()`.
 

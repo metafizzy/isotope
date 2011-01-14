@@ -5,6 +5,22 @@ category: docs
 layout: doc
 body_class: option-def
 related: a-intro
+toc:
+  - { title: animationEngine, anchor: animationengine }
+  - { title: animationOptions, anchor: animationoptions }
+  - { title: containerClass, anchor: containerclass }
+  - { title: filter, anchor: filter }
+  - { title: getSortData, anchor: getsortdata }
+  - { title: hiddenClass, anchor: hiddenclass }
+  - { title: hiddenStyle, anchor: hiddenstyle }
+  - { title: itemClass, anchor: itemclass }
+  - { title: itemSelector, anchor: itemselector }
+  - { title: layoutMode, anchor: layoutmode }
+  - { title: resizable, anchor: resizable }
+  - { title: sortAscending, anchor: sortascending }
+  - { title: sortBy, anchor: sortby }
+  - { title: visibleStyle, anchor: visiblestyle }
+  - { title: Layout-specific options, anchor: layoutspecific_options }
 
 ---
 

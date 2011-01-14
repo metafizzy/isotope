@@ -16,7 +16,17 @@
     
     <ul>
       {% for doc in site.categories.docs reversed %}
-        <li{% if page.title == doc.title %} class="current"{% endif %}><a href="..{{ doc.url }}">{{ doc.title }}</a></li>
+        {% if page.title == doc.title %}
+        <li class="current"><a href="#content">{{ doc.title }}</a>
+          <ul class="toc">
+            {% for item in page.toc %}
+            <li><a href="#{{ item.anchor }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="..{{ doc.url }}">{{ doc.title }}</a>
+        {% endif %}
       {% endfor %}
     </ul>
     

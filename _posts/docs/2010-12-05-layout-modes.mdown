@@ -5,6 +5,14 @@ category: docs
 layout: doc
 body_class: option-def
 related: layout
+toc:
+  - { title: masonry, anchor: masonry }
+  - { title: fitRows, anchor: fitrows }
+  - { title: cellsByRow, anchor: cellsbyrow }
+  - { title: masonryHorizontal, anchor: masonryhorizontal }
+  - { title: fitColumns, anchor: fitcolumns }
+  - { title: cellsByColumn, anchor: cellsbycolumn }
+  - { title: Horizontal layouts, anchor: horizontal_layouts }
 
 ---
 

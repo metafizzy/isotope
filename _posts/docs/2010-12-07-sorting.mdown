@@ -4,6 +4,12 @@ title: Sorting
 category: docs
 layout: doc
 related: sorting
+toc:
+  - { title: Markup, anchor: markup }
+  - { title: getSortData option, anchor: getsortdata_option }
+  - { title: sortBy option, anchor: sortby_option }
+  - { title: sortAscending option, anchor: sortascending_option }
+  - { title: Creating interactive buttons, anchor: creating_interactive_buttons }
 
 ---
 
@@ -36,7 +42,7 @@ Any group of similar items have their own data. It could be a text value, like a
 {% endhighlight %}
 
 
-## getSortData
+## getSortData option
 
 In order to extract this data from the element, we need to pass in a function to get it via the [`getSortData`](options.html#getsortdata) option.  This option accepts an object, whose values are the functions to extract the data.
 
@@ -102,7 +108,7 @@ getSortData : {
 
 {% endhighlight %}
 
-## sortBy
+## sortBy option
 
 For every method set in `getSortData`, Isotope uses that method to build the data for sorting. The data cache is built on initialization so it can be quickly accessed when sorting. With the methods above, we have built data for an item elements name, symbol, number, weight and category.
 
@@ -118,7 +124,7 @@ $('#container').isotope({ sortBy : 'symbol' });
 
 There is an additional sorting data built in to Isotope `'original-order'`. Sorting with `'original-order'` will use the original order of the item elements to arrange them in the layout.
 
-## sortAscending
+## sortAscending option
 
 By default, Isotope sorts data in ascension. If our data for name is "Gold, Antimony, Lead, Iron, Silver", when sorted by name, the elements will be ordered ABC.. : "Antimony, Gold, Iron, Lead, Silver."  To reverse the order and sort data in descension, set `sortAscending` to `false`.
 

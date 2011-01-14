@@ -384,9 +384,13 @@ body.doc {
   }
   
   .doc nav {
-    width: 200px;
+    width: 210px;
     position: fixed;
     left: 10px;
+    top: 0px;
+    padding-top: 20px;
+    height: 100%;
+    overflow: auto;
   }
 
   .doc nav h1 {
@@ -431,8 +435,21 @@ body.doc {
   background: black;
   color: #1BF;
 }
+#docs-nav ul .current a:hover { color: white; }
+  
+#docs-nav ul .current .toc a {
+  font-size: 12px;
+  padding-left: 1.2em;
+  font-weight: normal;
+}
 
 /**** Doc content ****/
+
+.doc h2:target { 
+  padding: 10px;
+  background: white;
+  color: #222;
+}
 
 .doc h3 {
   color: #FEC;
