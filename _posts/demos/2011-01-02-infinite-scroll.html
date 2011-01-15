@@ -10,7 +10,7 @@ infinite_scroll: true
     <p>Isotope is interoperable with <a href="http://www.infinite-scroll.com/">Infinite Scroll</a> by Paul Irish. Use the <a href="../docs/methods.html#appended"><code>appended</code></a> method to add new items to the Isotope layout.</p>
   </section>
 
-  <div id="container" class="variable-sizes clearfix">
+  <div id="container" class="variable-sizes clearfix infinite-scrolling">
     {% for element in site.elements_ordered limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
