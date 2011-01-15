@@ -1,17 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>{{ page.title }}</title>
-  
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+{% include html-head.html %}
 
-</head>
-<body{% if page.body_class %} class="{{ page.body_class}}"{% endif %}>
+  <p id="demo-nav"><a href="../">{{ site.name }}</a> Demo</p>
+
+  <h1>{{ page.title }}</h1>
 
   <section id="options" class="clearfix">
-    
-    <h1>{{ page.title }}</h1>
 
     <h3>Filters</h3>
 

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ page.title }} &middot; {{ site.name }} {% if page.category == 'docs' %}Docs{% elsif page.category == 'demos' %}Demo{% endif %}</title>
+  
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+  
+  <!-- scripts at bottom of page -->
+
+</head>
+<body class="{% if page.category == 'docs' %}doc{% elsif page.category == 'demos' %}demo{% endif %} {{ page.body_class }}">
