@@ -1,4 +1,13 @@
+/**
+ * Isotope v0.1
+ * An exquisite jQuery plugin for magical layouts
+ * http://desandro.com/resources/isotope
+ * Copyright 2011 David DeSandro / Metafizzy
+ */
+
+
 // ========================= getStyleProperty by kangax ===============================
+// http://perfectionkills.com/feature-testing-css-properties/
 
 var getStyleProperty = (function(){
 
@@ -20,8 +29,6 @@ var getStyleProperty = (function(){
       return (_cache[propName] = propName);
     }
     
-    // console.log('getting prop', propName)
-
     // capitalize
     uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
@@ -141,12 +148,16 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
 
 
-
-// ========================= jQuery transform extensions ===============================
-
 // jQuery
 (function( $, undefined ){
 
+  // ========================= optoTransform ===============================
+
+  /**
+   *  Progressively enhanced CSS transforms
+   *  Uses hardware accelerated 3D transforms for Safari
+   *  or falls back to 2D transforms.
+   */
   $.optoTransform = {
     
     transformProp : getStyleProperty('transform'),
@@ -309,10 +320,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
 
 
-/*************************************************
-**  jQuery Isotope version 0.1
-**  Copyright David DeSandro
-**************************************************/
+// ========================= Isotope ===============================
 
 
   // our "Widget" object constructor
@@ -540,7 +548,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     
     // ====================== Sorting ======================
     
-    // used on all the filtered atoms, $atoms.filtered
+    // used on all the filtered atoms
     _sort : function() {
       
       var instance = this,
@@ -576,16 +584,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       this.styleQueue.push({ $el: $elem, style: position });
     },
 
-    // ====================== masonry ======================
-    
-
-    
-
-    
-    // ====================== fitRows ======================
-    
-
-
 
     // ====================== General Layout ======================
 
@@ -597,10 +595,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           layoutMethod = '_' + layoutMode;
 
       // layout logic
-      // if ( layoutMethod === '_masonry' ) {
-      //   layoutMethod += this.options.masonrySingleMode ? 'SingleColumn' : 'MultiColumn';
-      // }
-      
       this[ '_' +  layoutMode + 'Layout' ]( $elems );
       
 
@@ -752,6 +746,9 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
     },
     
+    // calculates number of rows or columns
+    // requires columnWidth or rowHeight to be set on namespaced object
+    // i.e. this.masonry.columnWidth = 200
     _getSegments : function( namespace, isRows ) {
       var measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
@@ -1196,13 +1193,15 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   });
   
   
+  
+  // ======================= imagesLoaded Plugin  ===============================
+  // A fork of http://gist.github.com/268257 by Paul Irish
 
   // mit license. paul irish. 2010.
   // webkit fix from Oren Solomianik. thx!
 
   // callback function is passed the last image to load
   //   as an argument, and the collection as `this`
-
 
   $.fn.imagesLoaded = function(callback){
     var elems = this.find('img'),
@@ -1228,7 +1227,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   };
   
 
-
+// ======================= jQuery Widget bridge  ===============================
 
 
 /*!
