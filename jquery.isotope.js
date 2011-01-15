@@ -1,3 +1,318 @@
+// ========================= getStyleProperty by kangax ===============================
+
+var getStyleProperty = (function(){
+
+  var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
+  var _cache = { };
+
+  function getStyleProperty(propName, element) {
+    element = element || document.documentElement;
+    var style = element.style,
+        prefixed,
+        uPropName;
+
+    // check cache only when no element is given
+    if (arguments.length == 1 && typeof _cache[propName] == 'string') {
+      return _cache[propName];
+    }
+    // test standard property first
+    if (typeof style[propName] == 'string') {
+      return (_cache[propName] = propName);
+    }
+    
+    // console.log('getting prop', propName)
+
+    // capitalize
+    uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
+
+    // test vendor specific properties
+    for (var i=0, l=prefixes.length; i<l; i++) {
+      prefixed = prefixes[i] + uPropName;
+      if (typeof style[prefixed] == 'string') {
+        return (_cache[propName] = prefixed);
+      }
+    }
+  }
+
+  return getStyleProperty;
+})();
+
+// ========================= miniModernizr ===============================
+// <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
+
+/*!
+ * Modernizr v1.6ish: miniModernizr for Isotope
+ * http://www.modernizr.com
+ *
+ * Developed by: 
+ * - Faruk Ates  http://farukat.es/
+ * - Paul Irish  http://paulirish.com/
+ *
+ * Copyright (c) 2009-2010
+ * Dual-licensed under the BSD or MIT licenses.
+ * http://www.modernizr.com/license/
+ */
+
+ 
+/*
+ * Modernizr is a script that detects native CSS3 and HTML5 features
+ * available in the current UA and provides an object containing all
+ * features with a true/false value, depending on whether the UA has
+ * native support for it or not.
+ * 
+ * Modernizr will also add classes to the <html> element of the page,
+ * one for each feature it detects. If the UA supports it, a class
+ * like "cssgradients" will be added. If not, the class name will be
+ * "no-cssgradients". This allows for simple if-conditionals in your
+ * CSS, giving you fine control over the look & feel of your website.
+ * 
+ * This version whittles down the script just to check support for
+ * CSS transitions, transforms, and 3D transforms.
+ * 
+ * @author        Faruk Ates
+ * @author        Paul Irish
+ * @copyright     (c) 2009-2010 Faruk Ates.
+ * @contributor   Ben Alman
+ */
+ 
+window.Modernizr = window.Modernizr || (function(window,doc,undefined){
+  
+  var version = '1.6ish: miniModernizr for Isotope',
+      miniModernizr = {},
+      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+      classes = [],
+      docElement = document.documentElement,
+
+      tests = [
+        {
+          name : 'csstransforms',
+          result : function() {
+            return !!getStyleProperty('transform');
+          }
+        },
+        {
+          name : 'csstransforms3d',
+          result : function() {
+            var test = !!getStyleProperty('perspective');
+            // double check for Chrome's false positive
+            if ( test ){
+              var st = document.createElement('style'),
+                  div = document.createElement('div'),
+                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
+
+              st.textContent = mq + '{#modernizr{height:3px}}';
+              (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
+              div.id = 'modernizr';
+              docElement.appendChild(div);
+
+              test = div.offsetHeight === 3;
+
+              st.parentNode.removeChild(st);
+              div.parentNode.removeChild(div);
+            }
+            return !!test;
+          }
+        },
+        {
+          name : 'csstransitions',
+          result : function() {
+            return !!getStyleProperty('transitionProperty');
+          }
+        }
+      ]
+  ;
+
+
+  // Run through all tests and detect their support in the current UA.
+  for ( var i = 0, len = tests.length; i < len; i++ ) {
+    var test = tests[i],
+        result = test.result();
+    miniModernizr[ test.name ] = result;
+    var className = ( result ?  '' : 'no-' ) + test.name;
+    classes.push( className );
+  }
+
+  // Add the new classes to the <html> element.
+  docElement.className += ' ' + classes.join( ' ' );
+
+  return miniModernizr;
+  
+})(this,this.document);
+
+
+
+
+// ========================= jQuery transform extensions ===============================
+(function($){  
+
+
+  $.optoTransform = {
+    
+    transformProp : getStyleProperty('transform'),
+    
+    fnUtils : Modernizr.csstransforms3d ? 
+      { // 2d transform functions
+        translate : function ( position ) {
+          return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
+        },
+        scale : function ( scale ) {
+          return 'scale3d(' + scale + ', ' + scale + ', 1) ';
+        }
+      } :
+      { // 3d transform functions
+        translate : function ( position ) {
+          return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
+        },
+        scale :  function ( scale ) {
+          return 'scale(' + scale + ') ';
+        }
+      }
+    ,
+    
+    set : function( elem, name, value ) {
+
+      // unpack current transform data
+      var data =  $( elem ).data('transform') || {},
+      // extend new value over current data
+          newData = {},
+          fnName,
+          transformObj = {};
+      // overwrite new data
+      newData[ name ] = value;
+      $.extend( data, newData );
+
+      for ( fnName in data ) {
+        var transformValue = data[ fnName ],
+            getFn = $.optoTransform.fnUtils[ fnName ];
+        transformObj[ fnName ] = getFn( transformValue );
+      }
+
+      // get proper order
+      // ideally, we could loop through this give an array, but since we only have
+      // a couple transforms we're keeping track of, we'll do it like so
+      var translateFn = transformObj.translate || '',
+          scaleFn = transformObj.scale || '',
+          valueFns = translateFn + scaleFn;
+
+      // set data back in elem
+      $( elem ).data( 'transform', data );
+
+      // sorting so scale always comes before 
+      value = valueFns;
+
+      // set name to vendor specific property
+      elem.style[ $.optoTransform.transformProp ] = valueFns;
+
+    }
+  };
+  
+  // ==================== scale ===================
+  
+  $.cssNumber.scale = true;
+  
+  $.cssHooks.scale = {
+    set: function( elem, value ) {
+
+      if ( typeof value === 'string' ) {
+        value = parseFloat( value );
+      }
+
+      $.optoTransform.set( elem, 'scale', value )
+
+    },
+    get: function( elem, computed ) {
+      var transform = $.data( elem, 'transform' );
+      return transform && transform.scale ? transform.scale : 1;
+    }
+  }
+
+  $.fx.step.scale = function( fx ) {
+    $.cssHooks.scale.set( fx.elem, fx.now+fx.unit );
+  };
+  
+  
+  // ==================== translate ===================
+    
+  $.cssNumber.translate = true;
+  
+  $.cssHooks.translate = {
+    set: function( elem, value ) {
+
+      // all this would be for public ease-of-use,
+      // but we're leaving it out since this add-on is
+      // only for internal-plugin use
+      // if ( typeof value === 'string' ) {
+      //   value = value.split(' ');
+      // }
+      // 
+      //  
+      // var i, val;
+      // for ( i = 0; i < 2; i++ ) {
+      //   val = value[i];
+      //   if ( typeof val === 'string' ) {
+      //     val = parseInt( val );
+      //   }
+      // }
+
+      $.optoTransform.set( elem, 'translate', value )
+
+    },
+    
+    get: function( elem, computed ) {
+      var transform = $.data( elem, 'transform' );
+      return transform && transform.translate ? transform.translate : [ 0, 0 ];
+    }
+  }
+
+
+})( jQuery );
+
+
+
+/*!
+ * smartresize: debounced resize event for jQuery
+ * http://github.com/lrbabe/jquery-smartresize
+ *
+ * Copyright (c) 2009 Louis-Remi Babe
+ * Licensed under the GPL license.
+ * http://docs.jquery.com/License
+ *
+ */
+(function($){  
+
+  var $event = $.event,
+      resizeTimeout;
+
+  $event.special.smartresize = {
+    setup: function() {
+      $(this).bind( "resize", $event.special.smartresize.handler );
+    },
+    teardown: function() {
+      $(this).unbind( "resize", $event.special.smartresize.handler );
+    },
+    handler: function( event, execAsap ) {
+      // Save the context
+      var context = this,
+          args = arguments;
+
+      // set correct event type
+      event.type = "smartresize";
+
+      if ( resizeTimeout ) { clearTimeout( resizeTimeout ); }
+      resizeTimeout = setTimeout(function() {
+        jQuery.event.handle.apply( context, args );
+      }, execAsap === "execAsap"? 0 : 100 );
+    }
+  };
+
+  $.fn.smartresize = function( fn ) {
+    return fn ? this.bind( "smartresize", fn ) : this.trigger( "smartresize", ["execAsap"] );
+  };
+
+})( jQuery );
+
+
+
 /*************************************************
 **  jQuery Isotope version 0.1
 **  Copyright David DeSandro
@@ -920,4 +1235,71 @@
   
 
   
+})( jQuery );
+
+
+
+/*!
+ * jQuery UI Widget 1.8.5
+ *
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Widget
+ */
+(function( $, undefined ) {
+
+  $.widget = $.widget || {};
+
+  $.widget.bridge = $.widget.bridge || function( name, object ) {
+  	$.fn[ name ] = function( options ) {
+  		var isMethodCall = typeof options === "string",
+  			args = Array.prototype.slice.call( arguments, 1 ),
+  			returnValue = this;
+
+  		// allow multiple hashes to be passed on init
+  		options = !isMethodCall && args.length ?
+  			$.extend.apply( null, [ true, options ].concat(args) ) :
+  			options;
+
+  		// prevent calls to internal methods
+  		if ( isMethodCall && options.charAt( 0 ) === "_" ) {
+  			return returnValue;
+  		}
+
+  		if ( isMethodCall ) {
+  			this.each(function() {
+  				var instance = $.data( this, name );
+  				if ( !instance ) {
+  					return $.error( "cannot call methods on " + name + " prior to initialization; " +
+  						"attempted to call method '" + options + "'" );
+  				}
+  				if ( !$.isFunction( instance[options] ) ) {
+  					return $.error( "no such method '" + options + "' for " + name + " widget instance" );
+  				}
+  				var methodValue = instance[ options ].apply( instance, args );
+  				if ( methodValue !== instance && methodValue !== undefined ) {
+  					returnValue = methodValue;
+  					return false;
+  				}
+  			});
+  		} else {
+  			this.each(function() {
+  				var instance = $.data( this, name );
+  				if ( instance ) {
+  					instance.option( options || {} )._init();
+  				} else {
+  					$.data( this, name, new object( options, this ) );
+  				}
+  			});
+  		}
+
+  		return returnValue;
+  	};
+  };
+  
+  
+  $.widget.bridge( 'isotope', $.Isotope );
+
 })( jQuery );
