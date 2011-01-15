@@ -1,6 +1,6 @@
 ---
 
-title: Layout Modes
+title: Layout modes
 category: docs
 layout: doc
 body_class: option-def
@@ -18,7 +18,7 @@ toc:
 
 Isotope has a versatile layout engine that can accommodate multiple layout modes. You can set and change the layout mode via the `layoutMode` option.
 
-[**See Demo: Layout Modes**](../demos/layout-modes.html)
+[**See Demo: Layout modes**](../demos/layout-modes.html)
 
 ### Example
 

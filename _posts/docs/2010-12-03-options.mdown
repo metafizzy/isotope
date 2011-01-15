@@ -174,9 +174,9 @@ Restricts Isotope item elements to selector.
   <dd class="default"><code><span class="s1">'masonry'</span></code></dd>
 </dl>
 
-See also docs on [Layout Modes](layout-modes.html).
+See also docs on [Layout modes](layout-modes.html).
 
-[**See Demo: Layout Modes**](../demos/layout-modes.html)
+[**See Demo: Layout modes**](../demos/layout-modes.html)
 
 ## resizable
 
@@ -247,4 +247,4 @@ $('#container').isotope({
 
 {% endhighlight %}
 
-[**See Demo: Layout Modes**](../demos/layout-modes.html)
+[**See Demo: Layout modes**](../demos/layout-modes.html)
