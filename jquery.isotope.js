@@ -143,8 +143,9 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
 
 // ========================= jQuery transform extensions ===============================
-(function($){  
 
+// jQuery
+(function( $, undefined ){
 
   $.optoTransform = {
     
@@ -265,8 +266,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   }
 
 
-})( jQuery );
-
 
 
 /*!
@@ -278,7 +277,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
  * http://docs.jquery.com/License
  *
  */
-(function($){  
 
   var $event = $.event,
       resizeTimeout;
@@ -309,15 +307,13 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     return fn ? this.bind( "smartresize", fn ) : this.trigger( "smartresize", ["execAsap"] );
   };
 
-})( jQuery );
-
 
 
 /*************************************************
 **  jQuery Isotope version 0.1
 **  Copyright David DeSandro
 **************************************************/
-(function( $, undefined ) {
+
 
   // our "Widget" object constructor
   $.Isotope = function( options, element ){
@@ -1232,10 +1228,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   };
   
 
-  
-
-  
-})( jQuery );
 
 
 
@@ -1248,7 +1240,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
  *
  * http://docs.jquery.com/UI/Widget
  */
-(function( $, undefined ) {
 
   $.widget = $.widget || {};
 
