@@ -440,7 +440,7 @@ body.doc {
 }
 
 #docs-nav ul .current a {
-  background: black;
+  background: hsla( 0, 0%, 0%, 0.3 );
   color: #1BF;
 }
 #docs-nav ul .current a:hover { color: white; }
@@ -452,6 +452,12 @@ body.doc {
 }
 
 /**** Doc content ****/
+
+.doc h2,
+.doc footer {
+  border-top: 1px solid #333;
+  padding-top: 0.8em;
+}
 
 .doc h2:target { 
   padding: 10px;
@@ -472,8 +478,8 @@ body.doc {
 }
 
 
-.doc h2,
-.doc footer {
+footer {
+  font-size: 12px;
   border-top: 1px solid #333;
   padding-top: 0.8em;
 }

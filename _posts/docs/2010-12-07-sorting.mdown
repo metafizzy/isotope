@@ -112,7 +112,7 @@ getSortData : {
 
 For every method set in `getSortData`, Isotope uses that method to build the data for sorting. The data cache is built on initialization so it can be quickly accessed when sorting. With the methods above, we have built data for an item elements name, symbol, number, weight and category.
 
-Sorting elements is done with the `sortBy` option. The value needs to match the property name used in the `getSortData` object.
+Sorting elements is done with the [`sortBy` option](options.html#sortby). The value needs to match the property name used in the `getSortData` object.
 
 With our example, we can use `'name'`, `'symbol'`, `'number'`, `'weight'` and `'category'`.
 
@@ -126,7 +126,7 @@ There is an additional sorting data built in to Isotope `'original-order'`. Sort
 
 ## sortAscending option
 
-By default, Isotope sorts data in ascension. If our data for name is "Gold, Antimony, Lead, Iron, Silver", when sorted by name, the elements will be ordered ABC.. : "Antimony, Gold, Iron, Lead, Silver."  To reverse the order and sort data in descension, set `sortAscending` to `false`.
+By default, Isotope sorts data in ascension. If our data for name is "Gold, Antimony, Lead, Iron, Silver", when sorted by name, the elements will be ordered ABC.. : "Antimony, Gold, Iron, Lead, Silver."  To reverse the order and sort data in descension, set [`sortAscending`](options.html#sortascending) to `false`.
 
 {% highlight javascript %}
 
