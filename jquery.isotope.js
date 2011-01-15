@@ -768,7 +768,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       
       return this;
       
-    },
+    }
 
   };
   
