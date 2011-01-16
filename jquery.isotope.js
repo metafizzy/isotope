@@ -347,7 +347,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
         { opacity : 1, scale : 1 } :
         { opacity : 1 },
-      animationEngine : 'best-available',
+      animationEngine : $.browser.opera ? 'jquery' : 'best-available',
       animationOptions: {
         queue: false,
         duration: 800
