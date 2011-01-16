@@ -342,11 +342,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       itemClass : 'isotope-item',
       hiddenClass : 'isotope-hidden',
       hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
-        { opacity : 0, scale : 0.001 } :
-        { opacity : 0 },
+        { opacity : 0, scale : 0.001 } : // browsers support CSS transforms, not Opera
+        { opacity : 0 }, // other browsers, including Opera
       visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
-        { opacity : 1, scale : 1 } :
-        { opacity : 1 },
+        { opacity : 1, scale : 1 } : // browsers support CSS transforms, not Opera
+        { opacity : 1 },  // other browsers, including Opera
       animationEngine : $.browser.opera ? 'jquery' : 'best-available',
       animationOptions: {
         queue: false,

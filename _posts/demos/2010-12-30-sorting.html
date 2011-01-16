@@ -32,7 +32,6 @@ related: sorting
       
       $container.isotope({
         itemSelector : '.element',
-        animationEngine : $.browser.opera ? 'jquery' : 'best-available',
         getSortData : {
           symbol : function( $elem ) {
             return $elem.attr('data-symbol');

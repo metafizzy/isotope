@@ -8,6 +8,7 @@ toc:
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
+  - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
 
 ---
  
@@ -66,4 +67,24 @@ Both Typekit and Google WebFont Loader provide font events to control scripts ba
 
 Additionally, you can use the `$(window).load()` pattern above to wait for all content, including @font-face fonts, to load before initializing Isotope.
 
+## CSS transforms in Opera
+
+Currently, [using CSS transforms in Opera distorts text rendering](http://dropshado.ws/post/1260101028/opera-transform-issues). To avoid this issue, I recommend disabling Isotope to use transforms.  
+
+Isotope's default options are already set to not use CSS transforms in Opera.
+
+{% highlight javascript %}
+
+// Isotope default options
+hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
+  { opacity : 0, scale : 0.001 } : // browsers support CSS transforms, not Opera
+  { opacity : 0 }, // other browsers, including Opera
+visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
+  { opacity : 1, scale : 1 } : // browsers support CSS transforms, not Opera
+  { opacity : 1 }, // other browsers, including Opera
+animationEngine : $.browser.opera ? 'jquery' : 'best-available',
+
+{% endhighlight %}
+
+Also note that the [recommended transition CSS](animating.html#css_transitions) is missing declarations for Opera.
 
