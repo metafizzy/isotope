@@ -21,6 +21,9 @@ fakeElement.create = function() {
       name = letter1 + fakeElement.getRandom('vowels') + letter2 + fakeElement.getRandom('vowels') + fakeElement.getRandom('constanants') + fakeElement.getRandom('suffices');
       number = ~~( 21 + Math.random() * 100 );
       weight = ~~( number * 2 + Math.random() * 15 );
-
-  return '<div class="' + className + '" data-symbol="' + symbol + '" data-category="' + category + '"><p class="number">' + number + '</p><h3 class="symbol">' + symbol + '</h3><h2 class="name">' + name + '</h2><p class="weight">' + weight + '</p></div>';
+      
+  return '<div class="' + className + '" data-symbol="' + symbol + 
+    '" data-category="' + category + '"><p class="number">' + number + 
+    '</p><h3 class="symbol">' + symbol + '</h3><h2 class="name">' + name + 
+    '</h2><p class="weight">' + weight + '</p></div>';
 };

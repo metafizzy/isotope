@@ -30,6 +30,7 @@ To enable animation with CSS transitions, you'll need the following code in your
 
 .isotope,
 .isotope .isotope-item {
+  /* change duration value to whatever you like */
   -webkit-transition-duration: 0.8s;
      -moz-transition-duration: 0.8s;
           transition-duration: 0.8s;

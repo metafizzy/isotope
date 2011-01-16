@@ -83,7 +83,7 @@ Isotope enables a wealth of functionality. But just because you can take advanta
 + [**Jacek Galanciak**](http://razorjack.net/) for [jQuery Quicksand](http://razorjack.net/quicksand/), an early kernel of inspiration
 + [**Ralph Holzmann**](http://twitter.com/#!/ralphholzmann) for re-writing the [jQuery Plugins/Authoring tutorial](http://docs.jquery.com/Plugins/Authoring) and opened my eyes to [Plugin Methods](http://docs.jquery.com/Plugins/Authoring#Plugin_Methods) pattern
 + [**Eric Hynds**](http://www.erichynds.com/) for his article [Using $.widget.bridge Outside of the Widget Factory](http://www.erichynds.com/jquery/using-jquery-ui-widget-factory-bridge/) which provided the architecture for Isotope
-+ [**Paul Irish**](http://paul-irish.com) for [Infinite Scroll](http://infinite-scroll.com) (included with docs), the [imagesLoaded plugin](https://gist.github.com/268257) (included with Isotope), [Debounced resize() plugin](http://paulirish.com/demo/resize) (provided base for smartresize), and of course [Modernizr](http://www.modernizr.com/) 
++ [**Paul Irish**](http://paul-irish.com) for [Infinite Scroll](http://infinite-scroll.com) (included with docs), the [imagesLoaded plugin](http://gist.github.com/268257) (included with Isotope), [Debounced resize() plugin](http://paulirish.com/demo/resize) (provided base for smartresize), and of course [Modernizr](http://www.modernizr.com/) 
 + The [**jQuery UI Team**](http://jqueryui.com/about) for [$.widget.bridge](https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js#L62-107) (used within Isotope)
 + [**Juriy Zaytsev aka "kangax"**](http://perfectionkills.com) for [getStyleProperty](http://perfectionkills.com/feature-testing-css-properties/) (used within Isotope)
 

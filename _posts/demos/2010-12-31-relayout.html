@@ -57,9 +57,7 @@ related: methods
       // change size of clicked element
       $container.find('.element').live('click', function(){
         $(this).toggleClass('large');
-        // console.time('relayout');
         $container.isotope('reLayout');
-        // console.timeEnd('relayout');
       });
       
       
