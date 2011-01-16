@@ -385,24 +385,39 @@ body.doc {
   border-bottom: 1px dotted;
 }
 
-@media screen and (min-width: 768px) {
+
+body.doc {
+  margin-left: 220px;
+}
+
+.doc nav {
+  width: 210px;
+  position: fixed;
+  left: 10px;
+  top: 0px;
+  padding-top: 20px;
+  height: 100%;
+  overflow: auto;
+}
+
+.doc nav h1 {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
 
   body.doc {
-    margin-left: 220px;
+    margin-left: 0px;
   }
   
   .doc nav {
-    width: 210px;
-    position: fixed;
-    left: 10px;
-    top: 0px;
-    padding-top: 20px;
-    height: 100%;
-    overflow: auto;
-  }
-
-  .doc nav h1 {
-    margin-top: 0;
+    width: auto;
+    position: relative;
+    left: auto;
+    top: auto;
+    padding-top: 0px;
+    height: auto;
+    margin-bottom: 20px;
   }
 
 }
