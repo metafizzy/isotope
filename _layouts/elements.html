@@ -44,6 +44,7 @@
 
   {{ content }}
   
+  {% include footer.html %}
 
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../jquery.isotope.js"></script>
@@ -66,8 +67,6 @@
       });
 
 
-      // console.log('starting')
-      // console.time('initializeMe');
       $container.isotope({
         itemSelector : '.element',
         // layoutMode : 'fitRows',
@@ -105,17 +104,13 @@
           }
         }
       });
-      // console.timeEnd('initializeMe');
 
 
       $('#filters').find('a').click(function(){
         // get href attribute, minus the #, plus a . to make it a class
         var filterName = '.' + $(this).attr('href').slice(1);
         filterName = filterName === '.show-all' ? '*' : filterName;
-        // var filterTest = 'filter ' + filterName;
-        // console.time( filterTest );
         $container.isotope({ filter: filterName })
-        // console.timeEnd( filterTest );
         return false;
       });
 
@@ -124,9 +119,7 @@
       // change size of clicked element
       $container.find('.element').live('click', function(){
         $(this).toggleClass('large');
-        // console.time('relayout');
         $container.isotope('reLayout');
-        // console.timeEnd('relayout');
       });
 
       // toggle variable sizes of all elements
