@@ -768,17 +768,12 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       
       return this;
       
-    }
+    },
 
-  };
-  
-  
   // ====================== LAYOUTS ======================
   
   
   // ====================== Masonry ======================
-  
-  $.extend( $.Isotope.prototype, {
   
     _masonryPlaceBrick : function( $brick, setCount, setY ) {
       // here, `this` refers to a child element or "brick"
@@ -854,8 +849,6 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       return this;
     },
   
-
-  
     _masonryResize : function() {
       var prevColCount = this.masonry.cols;
       // get updated colCount
@@ -871,14 +864,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     _masonryGetContainerSize : function() {
       var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
       return { height: containerHeight };
-    }
-  
-  });
+    },
+
   
   // ====================== fitRows ======================
   
-  $.extend( $.Isotope.prototype, {
-    
     _fitRowsLayout : function( $elems ) {
       this.width = this.element.width();
       var instance = this;
@@ -921,15 +911,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   
     _fitRowsResize : function() {
       return this.reLayout()
-    }
+    },
   
-  });
-
 
   // ====================== cellsByRow ======================
   
-  $.extend( $.Isotope.prototype, {
-
     _cellsByRowReset : function() {
       this.cellsByRow = {};
       this._getSegments('cellsByRow');
@@ -965,14 +951,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         this.reLayout();
       }
       return this;
-    }
-  });
+    },
   
   
   // ====================== verticalList ======================
   
-  $.extend( $.Isotope.prototype, {
-
     _verticalListReset : function() {
       this.verticalList = {
         y : 0
@@ -998,14 +981,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     _verticalListResize : function() {
       this.reLayout();
       return this;
-    }
-  });
+    },
+
 
   // ====================== masonryHorizontal ======================
   
-  
-  $.extend( $.Isotope.prototype, {
-
     _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
       // here, `this` refers to a child element or "brick"
           // get the minimum Y value from the columns
@@ -1093,15 +1073,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     _masonryHorizontalGetContainerSize : function() {
       var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
       return { width: containerWidth };
-    }
+    },
 
-  });
-  
 
   // ====================== fitColumns ======================
   
-  $.extend( $.Isotope.prototype, {
-    
     _fitColumnsReset : function() {
       this.fitColumns = {
         x : 0,
@@ -1143,17 +1119,12 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     
     _fitColumnsResize : function() {
       return this.reLayout();
-    }
+    },
     
-    
-  });
-  
 
   
   // ====================== cellsByColumn ======================
   
-  $.extend( $.Isotope.prototype, {
-
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};
       this._getSegments( 'cellsByColumn', true );
@@ -1190,8 +1161,8 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       }
       return this;
     }
-  });
-  
+
+  };
   
   
   // ======================= imagesLoaded Plugin  ===============================
