@@ -151,14 +151,16 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 // jQuery
 (function( $, undefined ){
 
-  // ========================= optoTransform ===============================
+
+  // ========================= isoTransform ===============================
 
   /**
+   *  provides hooks for .css({ scale: value, translate: x y })
    *  Progressively enhanced CSS transforms
    *  Uses hardware accelerated 3D transforms for Safari
    *  or falls back to 2D transforms.
    */
-  $.optoTransform = {
+  $.isoTransform = {
     
     transformProp : getStyleProperty('transform'),
     
@@ -195,7 +197,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
       for ( fnName in data ) {
         var transformValue = data[ fnName ],
-            getFn = $.optoTransform.fnUtils[ fnName ];
+            getFn = $.isoTransform.fnUtils[ fnName ];
         transformObj[ fnName ] = getFn( transformValue );
       }
 
@@ -213,7 +215,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       value = valueFns;
 
       // set name to vendor specific property
-      elem.style[ $.optoTransform.transformProp ] = valueFns;
+      elem.style[ $.isoTransform.transformProp ] = valueFns;
 
     }
   };
@@ -229,7 +231,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         value = parseFloat( value );
       }
 
-      $.optoTransform.set( elem, 'scale', value )
+      $.isoTransform.set( elem, 'scale', value )
 
     },
     get: function( elem, computed ) {
@@ -266,7 +268,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       //   }
       // }
 
-      $.optoTransform.set( elem, 'translate', value )
+      $.isoTransform.set( elem, 'translate', value )
 
     },
     
@@ -726,7 +728,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       });
       
       if ( this.usingTransforms ) {
-        atomUnstyle[ $.optoTransform.transformProp ] = 'none';
+        atomUnstyle[ $.isoTransform.transformProp ] = 'none';
       }
       
       this.$allAtoms
