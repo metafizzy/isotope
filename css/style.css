@@ -84,14 +84,6 @@ body {
   border-top-right-radius: 1.2em;
 }
 
-.xray .element {
-  border-width: 5px;
-  border-style: solid;
-  width: 100px;
-  height: 100px;
-  background-color: hsla( 0, 0%, 14%, 0.8 ) !important;
-}
-
 .element.alkali          { background-color: hsl(   0, 100%, 50%); }
 .element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
 .element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
@@ -102,18 +94,6 @@ body {
 .element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
 .element.halogen         { background-color: hsl( 288, 100%, 50%); }
 .element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
-
-
-.xray .element.alkali          { color: hsl(   0, 100%, 50%); background-color: inherit; }
-.xray .element.alkaline-earth  { color: hsl(  36, 100%, 50%); background-color: inherit; }
-.xray .element.lanthanoid      { color: hsl(  72, 100%, 50%); background-color: inherit; }
-.xray .element.actinoid        { color: hsl( 108, 100%, 50%); background-color: inherit; }
-.xray .element.transition      { color: hsl( 144, 100%, 50%); background-color: inherit; }
-.xray .element.post-transition { color: hsl( 180, 100%, 50%); background-color: inherit; }
-.xray .element.metalloid       { color: hsl( 216, 100%, 50%); background-color: inherit; }
-.xray .element.other.nonmetal  { color: hsl( 252, 100%, 50%); background-color: inherit; }
-.xray .element.halogen         { color: hsl( 288, 100%, 50%); background-color: inherit; }
-.xray .element.noble-gas       { color: hsl( 324, 100%, 50%); background-color: inherit; }
 
 
 .element * {
@@ -132,27 +112,9 @@ body {
   font-size: 4.5em;
 }
 
-.xray .element .symbol {
-  left: 0.1em;
-  top: 0.3em;
-  color: inherit;
-}
-.xray .element.large .symbol {
-  font-size: 4.2em;
-}
-
-.xray .element.fake {
-  background-color: hsla( 0, 0%, 25%, 0.8 ) !important;
-}
-
 .element.fake .symbol {
   color: #000;
 }
-
-.xray .element.fake .symbol {
-  color: inherit;
-}
-
 
 .element .name {
   left: 0.5em;
@@ -173,13 +135,10 @@ body {
   right: 0.5em;
   top: 0.5em;
 }
-.xray .element .number { color: inherit; }
 
 .variable-sizes .element.width2 { width: 230px; }
-.variable-sizes.xray .element.width2 { width: 220px; }
 
 .variable-sizes .element.height2 { height: 230px; }
-.variable-sizes.xray .element.height2 { height: 220px; }
 
 .variable-sizes .element.width2.height2 {
   font-size: 2.0em;
@@ -192,13 +151,6 @@ body {
   width: 350px;
   height: 350px;
   z-index: 100;
-}
-.xray .element.large,
-.xray .variable-sizes .element.large,
-.xray .variable-sizes .element.large.width2,
-.xray .variable-sizes .element.large.height2 {
-  width: 340px;
-  height: 340px;
 }
 
 .clickable .element:hover {

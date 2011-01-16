@@ -44,7 +44,6 @@
 
   {{ content }}
   
-  <p id="xray"><a href='#xray'>Toggle X-ray mode</a></p>
 
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../jquery.isotope.js"></script>
@@ -147,11 +146,6 @@
         return false;
       });
 
-      $('#xray').find('a').click(function(){
-        $container.toggleClass('xray');
-      });
-      
-      
       {% include option-buttons.js %}
 
     });
