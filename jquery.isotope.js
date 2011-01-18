@@ -956,31 +956,31 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     },
   
   
-  // ====================== verticalList ======================
+  // ====================== straightDown ======================
   
-    _verticalListReset : function() {
-      this.verticalList = {
+    _straightDownReset : function() {
+      this.straightDown = {
         y : 0
       };
       return this;
     },
 
-    _verticalListLayout : function( $elems ) {
+    _straightDownLayout : function( $elems ) {
       var instance = this;
       $elems.each( function( i ){
         var $this = $(this),
-            y = instance.verticalList.y + instance.posTop;
+            y = instance.straightDown.y + instance.posTop;
         instance._pushPosition( $this, instance.posLeft, y );
-        instance.verticalList.y += $this.outerHeight(true)
+        instance.straightDown.y += $this.outerHeight(true)
       });
       return this;
     },
 
-    _verticalListGetContainerSize : function() {
-      return { height : this.verticalList.y + this.posTop };
+    _straightDownGetContainerSize : function() {
+      return { height : this.straightDown.y + this.posTop };
     },
 
-    _verticalListResize : function() {
+    _straightDownResize : function() {
       this.reLayout();
       return this;
     },
