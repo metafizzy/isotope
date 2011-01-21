@@ -152,6 +152,9 @@ $('#container').isotope({
 
 {% endhighlight %}
 
+## straightDown
+
+Item elements are arranged vertically top to bottom. Useful for simple lists.
 
 ## Horizontal layouts
 
