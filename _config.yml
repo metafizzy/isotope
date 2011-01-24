@@ -1,6 +1,7 @@
 name: Isotope
 permalink: /:categories/:title.html
 pygments: true
+exclude: [ Rakefile ]
 
 elements:
   - categories: [alkali, metal]
