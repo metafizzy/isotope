@@ -1,7 +1,7 @@
 name: Isotope
 permalink: /:categories/:title.html
 pygments: true
-isotope_js: jquery.isotope.js
+isotope_js: jquery.isotope.min.js
 exclude: [ Rakefile ]
 
 elements:
