@@ -600,7 +600,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 #super-list.masonry li {
   width: 216px;
 }
-#super-list.masonry li.feature {
+#super-list.masonry li.feature,
+#super-list.masonry li.link {
   width: 436px;
 }
 
