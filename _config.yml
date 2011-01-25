@@ -1,6 +1,7 @@
 name: Isotope
 permalink: /:categories/:title.html
 pygments: true
+isotope_js: jquery.isotope.js
 
 elements:
   - categories: [alkali, metal]
