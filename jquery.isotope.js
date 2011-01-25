@@ -62,24 +62,8 @@ var getStyleProperty = (function(){
 
  
 /*
- * Modernizr is a script that detects native CSS3 and HTML5 features
- * available in the current UA and provides an object containing all
- * features with a true/false value, depending on whether the UA has
- * native support for it or not.
- * 
- * Modernizr will also add classes to the <html> element of the page,
- * one for each feature it detects. If the UA supports it, a class
- * like "cssgradients" will be added. If not, the class name will be
- * "no-cssgradients". This allows for simple if-conditionals in your
- * CSS, giving you fine control over the look & feel of your website.
- * 
  * This version whittles down the script just to check support for
  * CSS transitions, transforms, and 3D transforms.
- * 
- * @author        Faruk Ates
- * @author        Paul Irish
- * @copyright     (c) 2009-2010 Faruk Ates.
- * @contributor   Ben Alman
  */
  
 window.Modernizr = window.Modernizr || (function(window,doc,undefined){
@@ -165,7 +149,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     transformProp : getStyleProperty('transform'),
     
     fnUtils : Modernizr.csstransforms3d ? 
-      { // 2d transform functions
+      { // 3D transform functions
         translate : function ( position ) {
           return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
         },
@@ -173,7 +157,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           return 'scale3d(' + scale + ', ' + scale + ', 1) ';
         }
       } :
-      { // 3d transform functions
+      { // 2D transform functions
         translate : function ( position ) {
           return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
         },
