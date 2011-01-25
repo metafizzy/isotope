@@ -22,14 +22,14 @@ task :min do
   end
 end
 
-desc "Zips _site/ into isotope-site.zip"
+desc "Zips _site/ into isotope-site.zip on to Desktop"
 task :zip do
   # makes isotope-site/ directory
   sh 'mkdir isotope-site;' 
   # copies _site/
   sh 'cp -r _site/ isotope-site;'
   # zips isotope-site/
-  sh 'zip -r isotope-site isotope-site/;' 
+  sh 'zip -r ~/Desktop/isotope-site.zip isotope-site/;' 
   # removes isotope-site/
   sh 'rm -rf isotope-site;'
 end
