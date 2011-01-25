@@ -2,6 +2,10 @@
  * Isotope v0.1
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
+ *
+ * Commercial use requires one-time license fee
+ * http://metafizzy.co/#licenses
+ *
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
