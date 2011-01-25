@@ -1204,50 +1204,50 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   $.widget = $.widget || {};
 
   $.widget.bridge = $.widget.bridge || function( name, object ) {
-  	$.fn[ name ] = function( options ) {
-  		var isMethodCall = typeof options === "string",
-  			args = Array.prototype.slice.call( arguments, 1 ),
-  			returnValue = this;
+    $.fn[ name ] = function( options ) {
+      var isMethodCall = typeof options === "string",
+        args = Array.prototype.slice.call( arguments, 1 ),
+        returnValue = this;
 
-  		// allow multiple hashes to be passed on init
-  		options = !isMethodCall && args.length ?
-  			$.extend.apply( null, [ true, options ].concat(args) ) :
-  			options;
+      // allow multiple hashes to be passed on init
+      options = !isMethodCall && args.length ?
+        $.extend.apply( null, [ true, options ].concat(args) ) :
+        options;
 
-  		// prevent calls to internal methods
-  		if ( isMethodCall && options.charAt( 0 ) === "_" ) {
-  			return returnValue;
-  		}
+      // prevent calls to internal methods
+      if ( isMethodCall && options.charAt( 0 ) === "_" ) {
+        return returnValue;
+      }
 
-  		if ( isMethodCall ) {
-  			this.each(function() {
-  				var instance = $.data( this, name );
-  				if ( !instance ) {
-  					return $.error( "cannot call methods on " + name + " prior to initialization; " +
-  						"attempted to call method '" + options + "'" );
-  				}
-  				if ( !$.isFunction( instance[options] ) ) {
-  					return $.error( "no such method '" + options + "' for " + name + " widget instance" );
-  				}
-  				var methodValue = instance[ options ].apply( instance, args );
-  				if ( methodValue !== instance && methodValue !== undefined ) {
-  					returnValue = methodValue;
-  					return false;
-  				}
-  			});
-  		} else {
-  			this.each(function() {
-  				var instance = $.data( this, name );
-  				if ( instance ) {
-  					instance.option( options || {} )._init();
-  				} else {
-  					$.data( this, name, new object( options, this ) );
-  				}
-  			});
-  		}
+      if ( isMethodCall ) {
+        this.each(function() {
+          var instance = $.data( this, name );
+          if ( !instance ) {
+            return $.error( "cannot call methods on " + name + " prior to initialization; " +
+              "attempted to call method '" + options + "'" );
+          }
+          if ( !$.isFunction( instance[options] ) ) {
+            return $.error( "no such method '" + options + "' for " + name + " widget instance" );
+          }
+          var methodValue = instance[ options ].apply( instance, args );
+          if ( methodValue !== instance && methodValue !== undefined ) {
+            returnValue = methodValue;
+            return false;
+          }
+        });
+      } else {
+        this.each(function() {
+          var instance = $.data( this, name );
+          if ( instance ) {
+            instance.option( options || {} )._init();
+          } else {
+            $.data( this, name, new object( options, this ) );
+          }
+        });
+      }
 
-  		return returnValue;
-  	};
+      return returnValue;
+    };
   };
   
   
