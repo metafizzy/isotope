@@ -23,7 +23,7 @@ toc:
 + [**Filtering**](filtering.html): Hide and reveal item elements easily with jQuery selectors.
 + [**Sorting**](sorting.html): Re-order item elements with sorting. Sorting data can be extracted from just about anything.
 + **Interoperability**: features can be utilized together for a cohesive experience.
-+ **Progressive enhancement**: Isotope's [animation engine](animating.html) takes advantage of CSS transitions and transforms when available, but will also fall back to Javascript animation for lesser browsers.
++ **Progressive enhancement**: Isotope's [animation engine](animating.html) takes advantage of the best browser features when available &mdash; CSS transitions and transforms, GPU acceleration &mdash; but will also fall back to JavaScript animation for lesser browsers.
 
 ## Licensing
 
