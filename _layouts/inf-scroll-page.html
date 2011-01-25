@@ -1,6 +1,6 @@
 {% include html-head.html %}
 
-  <p id="demo-nav"><a href="../">{{ site.name }}</a> Demo</p>
+  <p id="demo-nav"><a href="../index.html">{{ site.name }}</a> Demo</p>
 
   <h1>{{ page.title }}</h1>
   
@@ -11,8 +11,10 @@
     {% endfor %}
   </div>
   
+  {% include footer.html %}
+  
   <script src="../js/jquery-1.4.4.min.js"></script>
-  <script src="../jquery.isotope.js"></script>
+  <script src="../{{ site.isotope_js }}"></script>
   <script>
     $(function(){
       
@@ -26,5 +28,4 @@
     });
   </script>
   
-</body>
-</html>
+{% include html-foot.html %}

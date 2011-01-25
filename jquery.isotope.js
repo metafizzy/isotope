@@ -1,7 +1,11 @@
 /**
  * Isotope v0.1
  * An exquisite jQuery plugin for magical layouts
- * http://desandro.com/resources/isotope
+ * http://isotope.metafizzy.co
+ *
+ * Commercial use requires one-time license fee
+ * http://metafizzy.co/#licenses
+ *
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
@@ -18,14 +22,15 @@ var getStyleProperty = (function(){
     element = element || document.documentElement;
     var style = element.style,
         prefixed,
-        uPropName;
+        uPropName,
+        i, l;
 
     // check cache only when no element is given
-    if (arguments.length == 1 && typeof _cache[propName] == 'string') {
+    if (arguments.length === 1 && typeof _cache[propName] === 'string') {
       return _cache[propName];
     }
     // test standard property first
-    if (typeof style[propName] == 'string') {
+    if (typeof style[propName] === 'string') {
       return (_cache[propName] = propName);
     }
     
@@ -33,16 +38,16 @@ var getStyleProperty = (function(){
     uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
     // test vendor specific properties
-    for (var i=0, l=prefixes.length; i<l; i++) {
+    for (i=0, l=prefixes.length; i<l; i++) {
       prefixed = prefixes[i] + uPropName;
-      if (typeof style[prefixed] == 'string') {
+      if (typeof style[prefixed] === 'string') {
         return (_cache[propName] = prefixed);
       }
     }
   }
 
   return getStyleProperty;
-})();
+}());
 
 // ========================= miniModernizr ===============================
 // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
@@ -62,24 +67,8 @@ var getStyleProperty = (function(){
 
  
 /*
- * Modernizr is a script that detects native CSS3 and HTML5 features
- * available in the current UA and provides an object containing all
- * features with a true/false value, depending on whether the UA has
- * native support for it or not.
- * 
- * Modernizr will also add classes to the <html> element of the page,
- * one for each feature it detects. If the UA supports it, a class
- * like "cssgradients" will be added. If not, the class name will be
- * "no-cssgradients". This allows for simple if-conditionals in your
- * CSS, giving you fine control over the look & feel of your website.
- * 
  * This version whittles down the script just to check support for
  * CSS transitions, transforms, and 3D transforms.
- * 
- * @author        Faruk Ates
- * @author        Paul Irish
- * @copyright     (c) 2009-2010 Faruk Ates.
- * @contributor   Ben Alman
  */
  
 window.Modernizr = window.Modernizr || (function(window,doc,undefined){
@@ -89,6 +78,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
       classes = [],
       docElement = document.documentElement,
+      i, l,
 
       tests = [
         {
@@ -131,7 +121,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
 
   // Run through all tests and detect their support in the current UA.
-  for ( var i = 0, len = tests.length; i < len; i++ ) {
+  for ( i = 0, len = tests.length; i < len; i++ ) {
     var test = tests[i],
         result = test.result();
     miniModernizr[ test.name ] = result;
@@ -144,7 +134,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
   return miniModernizr;
   
-})(this,this.document);
+}(this,this.document));
 
 
 
@@ -165,7 +155,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     transformProp : getStyleProperty('transform'),
     
     fnUtils : Modernizr.csstransforms3d ? 
-      { // 2d transform functions
+      { // 3D transform functions
         translate : function ( position ) {
           return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
         },
@@ -173,7 +163,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           return 'scale3d(' + scale + ', ' + scale + ', 1) ';
         }
       } :
-      { // 3d transform functions
+      { // 2D transform functions
         translate : function ( position ) {
           return 'translate(' + position[0] + 'px, ' + position[1] + 'px) ';
         },
@@ -231,14 +221,14 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         value = parseFloat( value );
       }
 
-      $.isoTransform.set( elem, 'scale', value )
+      $.isoTransform.set( elem, 'scale', value );
 
     },
     get: function( elem, computed ) {
       var transform = $.data( elem, 'transform' );
       return transform && transform.scale ? transform.scale : 1;
     }
-  }
+  };
 
   $.fx.step.scale = function( fx ) {
     $.cssHooks.scale.set( fx.elem, fx.now+fx.unit );
@@ -268,7 +258,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       //   }
       // }
 
-      $.isoTransform.set( elem, 'translate', value )
+      $.isoTransform.set( elem, 'translate', value );
 
     },
     
@@ -276,7 +266,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       var transform = $.data( elem, 'transform' );
       return transform && transform.translate ? transform.translate : [ 0, 0 ];
     }
-  }
+  };
 
 
 
@@ -425,7 +415,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       // bind resize method
       if ( this.options.resizable ) {
         $(window).bind( 'smartresize.isotope', function() { 
-          instance.element.isotope('resize') 
+          instance.element.isotope('resize');
         });
       }
       
@@ -449,7 +439,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       });
 
       if ( this.isNew.filter ) {
-        this.$filteredAtoms = this._filter( this.$allAtoms )
+        this.$filteredAtoms = this._filter( this.$allAtoms );
       } else {
         this.$filteredAtoms = this.$allAtoms;
       }
@@ -642,9 +632,8 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     
     
     reLayout : function( callback ) {
-      return this
-        [ '_' +  this.options.layoutMode + 'Reset' ]()
-        .layout( this.$filteredAtoms, callback )
+      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
+        .layout( this.$filteredAtoms, callback );
     },
     
     // ====================== Convenience methods ======================
@@ -681,7 +670,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       var instance = this;
       this.addItems( $content, function( $newAtoms ){
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
-        instance.layout( $newAtoms, callback )
+        instance.layout( $newAtoms, callback );
       });
     },
     
@@ -761,7 +750,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ][ measure ] ) {
-        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.')
+        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.');
         return this;
       }
       this[ size ] = this.element[ size ]();
@@ -822,10 +811,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           // how many different places could this brick fit horizontally
           var groupCount = instance.masonry.cols + 1 - colSpan,
               groupY = [],
-              groupColY;
+              groupColY,
+              i;
 
           // for each group potential horizontal position
-          for ( var i=0; i < groupCount; i++ ) {
+          for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
             groupColY = instance.masonry.colYs.slice( i, i+colSpan );
             // and get the max value of the array
@@ -956,31 +946,31 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     },
   
   
-  // ====================== verticalList ======================
+  // ====================== straightDown ======================
   
-    _verticalListReset : function() {
-      this.verticalList = {
+    _straightDownReset : function() {
+      this.straightDown = {
         y : 0
       };
       return this;
     },
 
-    _verticalListLayout : function( $elems ) {
+    _straightDownLayout : function( $elems ) {
       var instance = this;
       $elems.each( function( i ){
         var $this = $(this),
-            y = instance.verticalList.y + instance.posTop;
+            y = instance.straightDown.y + instance.posTop;
         instance._pushPosition( $this, instance.posLeft, y );
-        instance.verticalList.y += $this.outerHeight(true)
+        instance.straightDown.y += $this.outerHeight(true)
       });
       return this;
     },
 
-    _verticalListGetContainerSize : function() {
-      return { height : this.verticalList.y + this.posTop };
+    _straightDownGetContainerSize : function() {
+      return { height : this.straightDown.y + this.posTop };
     },
 
-    _verticalListResize : function() {
+    _straightDownResize : function() {
       this.reLayout();
       return this;
     },
@@ -1216,50 +1206,50 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   $.widget = $.widget || {};
 
   $.widget.bridge = $.widget.bridge || function( name, object ) {
-  	$.fn[ name ] = function( options ) {
-  		var isMethodCall = typeof options === "string",
-  			args = Array.prototype.slice.call( arguments, 1 ),
-  			returnValue = this;
+    $.fn[ name ] = function( options ) {
+      var isMethodCall = typeof options === "string",
+        args = Array.prototype.slice.call( arguments, 1 ),
+        returnValue = this;
 
-  		// allow multiple hashes to be passed on init
-  		options = !isMethodCall && args.length ?
-  			$.extend.apply( null, [ true, options ].concat(args) ) :
-  			options;
+      // allow multiple hashes to be passed on init
+      options = !isMethodCall && args.length ?
+        $.extend.apply( null, [ true, options ].concat(args) ) :
+        options;
 
-  		// prevent calls to internal methods
-  		if ( isMethodCall && options.charAt( 0 ) === "_" ) {
-  			return returnValue;
-  		}
+      // prevent calls to internal methods
+      if ( isMethodCall && options.charAt( 0 ) === "_" ) {
+        return returnValue;
+      }
 
-  		if ( isMethodCall ) {
-  			this.each(function() {
-  				var instance = $.data( this, name );
-  				if ( !instance ) {
-  					return $.error( "cannot call methods on " + name + " prior to initialization; " +
-  						"attempted to call method '" + options + "'" );
-  				}
-  				if ( !$.isFunction( instance[options] ) ) {
-  					return $.error( "no such method '" + options + "' for " + name + " widget instance" );
-  				}
-  				var methodValue = instance[ options ].apply( instance, args );
-  				if ( methodValue !== instance && methodValue !== undefined ) {
-  					returnValue = methodValue;
-  					return false;
-  				}
-  			});
-  		} else {
-  			this.each(function() {
-  				var instance = $.data( this, name );
-  				if ( instance ) {
-  					instance.option( options || {} )._init();
-  				} else {
-  					$.data( this, name, new object( options, this ) );
-  				}
-  			});
-  		}
+      if ( isMethodCall ) {
+        this.each(function() {
+          var instance = $.data( this, name );
+          if ( !instance ) {
+            return $.error( "cannot call methods on " + name + " prior to initialization; " +
+              "attempted to call method '" + options + "'" );
+          }
+          if ( !$.isFunction( instance[options] ) ) {
+            return $.error( "no such method '" + options + "' for " + name + " widget instance" );
+          }
+          var methodValue = instance[ options ].apply( instance, args );
+          if ( methodValue !== instance && methodValue !== undefined ) {
+            returnValue = methodValue;
+            return false;
+          }
+        });
+      } else {
+        this.each(function() {
+          var instance = $.data( this, name );
+          if ( instance ) {
+            instance.option( options || {} )._init();
+          } else {
+            $.data( this, name, new object( options, this ) );
+          }
+        });
+      }
 
-  		return returnValue;
-  	};
+      return returnValue;
+    };
   };
   
   

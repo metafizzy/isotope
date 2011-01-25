@@ -1,7 +1,7 @@
 {% include html-head.html %}
   
   <nav id="docs-nav">
-    <h1><a href="../">{{ site.name }}</a> Docs</h1>
+    <h1><a href="../index.html">{{ site.name }}</a> Docs</h1>
     
     <ul>
       {% for doc in site.categories.docs reversed %}
@@ -31,8 +31,4 @@
     
   </section> <!-- #content -->
   
-
-
-  
-</body>
-</html>
+{% include html-foot.html %}

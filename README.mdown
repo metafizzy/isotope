@@ -5,12 +5,12 @@ Isotope
 
 This package has all the documentation and demos to get you started.
 
-View this project live at ...
+View this project live at [isotope.metafizzy.co](http://isotope.metafizzy.co)
 
 Licensing
 ---------
 
-**Commercial use requires purchase of one-time license fee per developer seat.** Commercial use  includes any application that makes you money. This includes portfolio sites and premium templates. Commercial licenses may be purchased at [metafizzy.co](http://metafizzy.co).
+**Commercial use requires purchase of one-time license fee per developer seat.** Commercial use  includes any application that makes you money. This includes portfolio sites and premium templates. Commercial licenses may be purchased at [metafizzy.co](http://metafizzy.co#licenses).
 
 Use in non-commercial and personal applications is free.
 

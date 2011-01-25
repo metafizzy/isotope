@@ -77,23 +77,23 @@ body {
   height: 110px;
   margin: 5px;
   float: left;
-  background: white;
   overflow: hidden;
   position: relative;
+  background: #888;
   color: #222;
   border-top-right-radius: 1.2em;
 }
 
-.element.alkali          { background-color: hsl(   0, 100%, 50%); }
-.element.alkaline-earth  { background-color: hsl(  36, 100%, 50%); }
-.element.lanthanoid      { background-color: hsl(  72, 100%, 50%); }
-.element.actinoid        { background-color: hsl( 108, 100%, 50%); }
-.element.transition      { background-color: hsl( 144, 100%, 50%); }
-.element.post-transition { background-color: hsl( 180, 100%, 50%); }
-.element.metalloid       { background-color: hsl( 216, 100%, 50%); }
-.element.other.nonmetal  { background-color: hsl( 252, 100%, 50%); }
-.element.halogen         { background-color: hsl( 288, 100%, 50%); }
-.element.noble-gas       { background-color: hsl( 324, 100%, 50%); }
+.element.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
+.element.alkaline-earth  { background: #F80; background: hsl(  36, 100%, 50%); }
+.element.lanthanoid      { background: #FF0; background: hsl(  72, 100%, 50%); }
+.element.actinoid        { background: #0F0; background: hsl( 108, 100%, 50%); }
+.element.transition      { background: #0F8; background: hsl( 144, 100%, 50%); }
+.element.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
+.element.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
+.element.other.nonmetal  { background: #00F; background: hsl( 252, 100%, 50%); }
+.element.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
+.element.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
 
 
 .element * {
@@ -586,16 +586,16 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 }
 #super-list li a {
   color: #222;
-/*  font-weight: bold;*/
 }
 #super-list li.doc  a { background: #3CF; }
 #super-list li.demo a { background: #FC3; }
+#super-list li.link a { background: #E58; color: white; }
 
-#super-list li a:hover,
-#super-list li a.doc:hover,
-#super-list li a.demo:hover {
+#super-list li a:hover {
   background: white;
 }
+
+#super-list li.link a:hover { color: #222; }
 
 #super-list.masonry li {
   width: 216px;

@@ -47,7 +47,7 @@ layout: nil
         <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
         <li><a href="#features" data-filter=".feature">features</a></li>
         <li><a href="#docs" data-filter=".doc">docs</a></li>
-        <li><a href="#containers" data-filter=".demo">demos</a></li>
+        <li><a href="#demos" data-filter=".demo">demos</a></li>
       </ul>
     </div>
     <div class="option-combo">
@@ -62,7 +62,7 @@ layout: nil
       <h2>Layout: </h2>
       <ul id="layouts" class="option-set floated clearfix">
         <li><a href="#fitRows" class="selected">fitRows</a></li>
-        <li><a href="#verticalList">verticalList</a></li>
+        <li><a href="#straightDown">straightDown</a></li>
         <li><a href="#masonry">masonry</a></li>
       </ul>
     </div>
@@ -84,13 +84,16 @@ layout: nil
     {% for demo in site.categories.demos reversed %}
       <li class="demo" data-category="demo" data-related="{{ demo.related }}"><a href=".{{ demo.url }}">Demo: {{ demo.title }}</a></li>
     {% endfor %}
+    <li class="link" data-related="z-etc"><a href="jquery.isotope.min.js">Download jquery.isotope.min.js</a></li>
+    <li class="link" data-related="z-etc"><a href="#">Download this project</a></li>
+    <li class="link" data-related="z-etc"><a href="http://github.com/desandro/isotope">Isotope on GitHub</a></li>
   </ul>
   
   {% include footer.html %}
   
   
   <script src="js/jquery-1.4.4.min.js"></script>
-  <script src="jquery.isotope.js"></script>
+  <script src="{{ site.isotope_js }}"></script>
   <script>
     $(function(){
       
@@ -138,5 +141,4 @@ layout: nil
     });
   </script>
 
-</body>
-</html>
+{% include html-foot.html %}
