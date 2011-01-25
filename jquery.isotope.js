@@ -1,7 +1,7 @@
 /**
  * Isotope v0.1
  * An exquisite jQuery plugin for magical layouts
- * http://desandro.com/resources/isotope
+ * http://isotope.metafizzy.co
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
