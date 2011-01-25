@@ -22,14 +22,15 @@ var getStyleProperty = (function(){
     element = element || document.documentElement;
     var style = element.style,
         prefixed,
-        uPropName;
+        uPropName,
+        i, l;
 
     // check cache only when no element is given
-    if (arguments.length == 1 && typeof _cache[propName] == 'string') {
+    if (arguments.length === 1 && typeof _cache[propName] === 'string') {
       return _cache[propName];
     }
     // test standard property first
-    if (typeof style[propName] == 'string') {
+    if (typeof style[propName] === 'string') {
       return (_cache[propName] = propName);
     }
     
@@ -37,16 +38,16 @@ var getStyleProperty = (function(){
     uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
     // test vendor specific properties
-    for (var i=0, l=prefixes.length; i<l; i++) {
+    for (i=0, l=prefixes.length; i<l; i++) {
       prefixed = prefixes[i] + uPropName;
-      if (typeof style[prefixed] == 'string') {
+      if (typeof style[prefixed] === 'string') {
         return (_cache[propName] = prefixed);
       }
     }
   }
 
   return getStyleProperty;
-})();
+}());
 
 // ========================= miniModernizr ===============================
 // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
@@ -77,6 +78,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
       classes = [],
       docElement = document.documentElement,
+      i, l,
 
       tests = [
         {
@@ -119,7 +121,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
 
   // Run through all tests and detect their support in the current UA.
-  for ( var i = 0, len = tests.length; i < len; i++ ) {
+  for ( i = 0, len = tests.length; i < len; i++ ) {
     var test = tests[i],
         result = test.result();
     miniModernizr[ test.name ] = result;
@@ -132,7 +134,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
   return miniModernizr;
   
-})(this,this.document);
+}(this,this.document));
 
 
 
@@ -219,14 +221,14 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         value = parseFloat( value );
       }
 
-      $.isoTransform.set( elem, 'scale', value )
+      $.isoTransform.set( elem, 'scale', value );
 
     },
     get: function( elem, computed ) {
       var transform = $.data( elem, 'transform' );
       return transform && transform.scale ? transform.scale : 1;
     }
-  }
+  };
 
   $.fx.step.scale = function( fx ) {
     $.cssHooks.scale.set( fx.elem, fx.now+fx.unit );
@@ -256,7 +258,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       //   }
       // }
 
-      $.isoTransform.set( elem, 'translate', value )
+      $.isoTransform.set( elem, 'translate', value );
 
     },
     
@@ -264,7 +266,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       var transform = $.data( elem, 'transform' );
       return transform && transform.translate ? transform.translate : [ 0, 0 ];
     }
-  }
+  };
 
 
 
@@ -413,7 +415,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       // bind resize method
       if ( this.options.resizable ) {
         $(window).bind( 'smartresize.isotope', function() { 
-          instance.element.isotope('resize') 
+          instance.element.isotope('resize');
         });
       }
       
@@ -437,7 +439,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       });
 
       if ( this.isNew.filter ) {
-        this.$filteredAtoms = this._filter( this.$allAtoms )
+        this.$filteredAtoms = this._filter( this.$allAtoms );
       } else {
         this.$filteredAtoms = this.$allAtoms;
       }
@@ -630,9 +632,8 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     
     
     reLayout : function( callback ) {
-      return this
-        [ '_' +  this.options.layoutMode + 'Reset' ]()
-        .layout( this.$filteredAtoms, callback )
+      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
+        .layout( this.$filteredAtoms, callback );
     },
     
     // ====================== Convenience methods ======================
@@ -669,7 +670,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       var instance = this;
       this.addItems( $content, function( $newAtoms ){
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
-        instance.layout( $newAtoms, callback )
+        instance.layout( $newAtoms, callback );
       });
     },
     
@@ -749,7 +750,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       
       // if colW == 0, back out before divide by zero
       if ( !this[ namespace ][ measure ] ) {
-        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.')
+        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.');
         return this;
       }
       this[ size ] = this.element[ size ]();
@@ -810,10 +811,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           // how many different places could this brick fit horizontally
           var groupCount = instance.masonry.cols + 1 - colSpan,
               groupY = [],
-              groupColY;
+              groupColY,
+              i;
 
           // for each group potential horizontal position
-          for ( var i=0; i < groupCount; i++ ) {
+          for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
             groupColY = instance.masonry.colYs.slice( i, i+colSpan );
             // and get the max value of the array
