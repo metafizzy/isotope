@@ -572,6 +572,7 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 #super-list li {
   display: inline-block;
+  float: left;
   font-size: 28px;
   line-height: 1.2em;
   margin: 2px;
