@@ -19,13 +19,13 @@ Viewing this project locally
 
 ### Via Jekyll
 
-The documentation and example pages are generated using [Jekyll](https://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can pull or fork this repo and then run from Terminal:
+The documentation and demo pages are generated using [Jekyll](http://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can clone this repo and start Jekyll. From Terminal:
 
-    $ git pull git@github.com:desandro/isotope.git
+    $ git clone git@github.com:desandro/isotope.git
     $ cd isotope/
     $ jekyll --server --auto
 
-And then view the live site at [localhost:4000](http://localhost:4000)
+Then view the live site at [localhost:4000](http://localhost:4000)
 
 ### Via download
 
