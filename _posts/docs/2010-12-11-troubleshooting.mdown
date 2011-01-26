@@ -5,13 +5,33 @@ category: docs
 layout: doc
 related: z-etc
 toc:
+  - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }
+  - { title: Support license, anchor: support_license }
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
 
 ---
- 
+
+
+## Reporting bugs and issues
+
+[Report bugs and issues on GitHub](http://github.com/desandro/isotope/issues). 
+
+### Guidelines {: #issues-guidelines}
+
++ Look over open and closed issues before submitting yours.
++ Add a link to a live site with the bug. If the project is confidential, try re-creating it in [jsFiddle](http://jsfiddle.net).
+
+The issues tracker is for bugs and issues &mdash; when Isotope doesn't work as expected. It is not for implementation issues &mdash; when you are having trouble setting up Isotope. Consider a [Support License](http://metafizzy.co/#support-license) for implementation issues. If you're not sure, go ahead and submit an issue.
+
+## Support license
+
+If you've tried everything and would really like to get my eyes looking at your code, you can purchase a [Support License from Metafizzy](http://metafizzy.co/#support-license).
+
+Support License is included with Isotope Commercial License.
+
 ## Unloaded media
  
 Most layout modes (i.e masonry, fitRows) need to measure the size of each item to appropriately account for its space in the layout. Unloaded media files like images and @font-face fonts can throw off layout and cause item elements to overlap one another. Ideally, Isotope layouts should be initialized after all inner content has loaded.
@@ -64,8 +84,6 @@ Both Typekit and Google WebFont Loader provide font events to control scripts ba
 
 + [Typekit font events](http://blog.typekit.com/2010/10/18/more-control-with-typekits-font-events/)
 + [Google WebFont Loader: Events](http://code.google.com/apis/webfonts/docs/webfont_loader.html#Events)
-
-Additionally, you can use the `$(window).load()` pattern above to wait for all content, including @font-face fonts, to load before initializing Isotope.
 
 ## CSS transforms in Opera
 
