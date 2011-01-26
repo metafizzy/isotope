@@ -11,6 +11,10 @@
           var style = isHorizontal ? 
             { height: '80%', width: $container.width() } : 
             { width: 'auto' };
+          // stop any animation on container height / width
+          if ( $container.is(':animated') ) {
+            $container.stop();
+          }
           $container.addClass('no-transition').css( style );
           setTimeout(function(){
             $container.removeClass('no-transition').isotope({ layoutMode : mode });
