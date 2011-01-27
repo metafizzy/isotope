@@ -17,7 +17,8 @@ related: sorting
   </section> <!-- #options -->
   
   <div id="container" class="clearfix">
-    {% for element in site.elements_best_of %}
+    {% for elem_number in site.best_of_order %}
+      {% assign element = site.elements[elem_number] %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #container -->

@@ -17,7 +17,7 @@ related: methods
   </section>
   
   <div id="container" class="clickable clearfix">
-    {% for element in site.elements_ordered limit:20 %}
+    {% for element in site.elements limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #container -->

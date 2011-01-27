@@ -10,7 +10,7 @@ related: a-intro
   </section>
   
   <div id="container">
-    {% for element in site.elements_ordered limit:20 %}
+    {% for element in site.elements limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #container -->

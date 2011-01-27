@@ -11,7 +11,7 @@ infinite_scroll: true
   </section>
 
   <div id="container" class="variable-sizes clearfix infinite-scrolling">
-    {% for element in site.elements_ordered limit:20 %}
+    {% for element in site.elements limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #container -->

@@ -6,7 +6,7 @@
   
   <div id="container" class="variable-sizes">
     {% assign page_position = page.page_position %}
-    {% for element in site.elements_ordered limit:20 offset:page_position %}
+    {% for element in site.elements limit:20 offset:page_position %}
       {% include element-partial.html %}
     {% endfor %}
   </div>

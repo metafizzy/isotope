@@ -17,7 +17,7 @@ related: layouts
   </section> <!-- #options -->
   
   <div id="container" class="variable-sizes clearfix">
-    {% for element in site.elements_ordered limit:20 %}
+    {% for element in site.elements limit:20 %}
       {% include element-partial.html %}
     {% endfor %}
   </div> <!-- #container -->
