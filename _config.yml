@@ -597,51 +597,6 @@ elements:
     weight: 127.6
 
 
-elements_partial:
-  - categories: [actinoid, metal, inner-transition]
-    number: 94
-    symbol: Pu
-    name: Plutonium
-    weight: (244)
-  - categories: [other, nonmetal]
-    number: 7
-    symbol: N
-    name: Nitrogen
-    weight: 14.0067
-  - categories: [transition, metal]
-    number: 106
-    symbol: Sg
-    name: Seaborgium
-    weight: (271)
-  - categories: [halogen, nonmetal]
-    number: 17
-    symbol: Cl
-    name: Chlorine
-    weight: 35.453
-  - categories: [noble-gas, nonmetal]
-    number: 36
-    symbol: Kr
-    name: Krypton
-    weight: 83.798
-  - categories: [alkaline-earth, metal]
-    number: 56
-    symbol: Ba
-    name: Barium
-    weight: 137.327
-  - categories: [alkaline-earth, metal]
-    number: 88
-    symbol: Ra
-    name: Radium
-    weight: (226)
-
-
-
-
-
-
-
-
-    
 elements_ordered:
   - categories: [ other, nonmetal ]
     number: 1
