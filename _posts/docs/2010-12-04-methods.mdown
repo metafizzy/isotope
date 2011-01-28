@@ -12,6 +12,7 @@ toc:
   - { title: layout, anchor: layout }
   - { title: option, anchor: option }
   - { title: reLayout, anchor: relayout }
+  - { title: remove, anchor: remove }
 
 ---
 
@@ -103,3 +104,12 @@ Resets layout properties and lays-out every item element.
 
 [**See Demo: reLayout**](../demos/relayout.html)
 
+## remove
+
+{% highlight javascript %}
+
+.isotope( 'remove', $content )
+
+{% endhighlight %}
+
+Removes specified elements from Isotope widget and the DOM.

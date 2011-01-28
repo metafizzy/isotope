@@ -674,6 +674,16 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       });
     },
     
+    // removes elements from Isotope widget
+    remove : function( $content ) {
+
+      this.$allAtoms = this.$allAtoms.not( $content );
+      this.$filteredAtoms = this.$filteredAtoms.not( $content );
+
+      $content.remove();
+      
+    },
+    
     _shuffleArray : function ( array ) {
       var tmp, current, i = array.length;
       
