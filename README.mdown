@@ -17,6 +17,10 @@ Use in non-commercial and personal applications is free.
 Viewing this project locally
 ----------------------------
 
+### Via download
+
+You can download a zip of all the flat HTML files from [meta.metafizzy.co/files/isotope-site.zip](meta.metafizzy.co/files/isotope-site.zip).
+
 ### Via Jekyll
 
 The documentation and demo pages are generated using [Jekyll](http://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can clone this repo and start Jekyll. From Terminal:
@@ -26,10 +30,6 @@ The documentation and demo pages are generated using [Jekyll](http://github.com/
     $ jekyll --server --auto
 
 Then view the live site at [localhost:4000](http://localhost:4000)
-
-### Via download
-
-You can download a zip of all the flat HTML files from [Downloads](http://github.com/desandro/isotope/downloads).
 
 * * *
 
