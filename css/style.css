@@ -23,7 +23,7 @@ h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
 }
 
-h1, h2, #super-list, .element {
+h1, h2, #super-list, .element, .tagline {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -413,6 +413,7 @@ body.doc {
   background: hsla( 0, 0%, 0%, 0.3 );
   color: #1BF;
 }
+#docs-nav ul a:hover,
 #docs-nav ul .current a:hover { color: white; }
   
 #docs-nav ul .current .toc a {
