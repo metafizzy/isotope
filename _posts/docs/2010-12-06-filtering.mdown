@@ -45,7 +45,7 @@ $('#container').isotope({ filter: '.metal' });
 
 {% endhighlight %}
 
-Filtering selectors work just as expected. `.alkali, alkaline-earth` with show both `.alkali` AND ` .alkaline-earth` items, and hide all others.  `.metal:not(.transition)` will show `.metal` item elements that are not `.transition`.
+Filtering selectors work just as expected. `.alkali, .alkaline-earth` will show both `.alkali` AND ` .alkaline-earth` items, and hide all others. `.metal.transition` will show elements that have both `.metal` and `.transition` classes.  `.metal:not(.transition)` will show `.metal` item elements that are not `.transition`.
 
 ## Creating interactive buttons
 
