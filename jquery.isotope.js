@@ -698,21 +698,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       return array;
     },
     
-    logNames : function( $atoms ) {
-      var message = '';
-      $atoms.each(function(){
-        message += $(this).find('.name').text() + ', ';
-      });
-      window.console && console.log( message );
-    },
-    
     // HACKy should probably remove
     shuffle : function( callback ) {
       this.options.sortBy = 'shuffle';
       
-      this.logNames( this.$allAtoms );      
       this.$allAtoms = this._shuffleArray( this.$allAtoms );
-      this.logNames( this.$allAtoms );
       this.$filteredAtoms = this._filter( this.$allAtoms );
       
       return this.reLayout( callback );
