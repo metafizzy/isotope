@@ -84,7 +84,9 @@ body {
   position: relative;
   background: #888;
   color: #222;
-  border-top-right-radius: 1.2em;
+  -webkit-border-top-right-radius: 1.2em;
+      -moz-border-radius-topright: 1.2em;
+          border-top-right-radius: 1.2em;
 }
 
 .element.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
