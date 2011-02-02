@@ -17,6 +17,7 @@ toc:
   - { title: itemSelector, anchor: itemselector }
   - { title: layoutMode, anchor: layoutmode }
   - { title: resizable, anchor: resizable }
+  - { title: resizesContainer, anchor: resizescontainer }
   - { title: sortAscending, anchor: sortascending }
   - { title: sortBy, anchor: sortby }
   - { title: visibleStyle, anchor: visiblestyle }
@@ -187,6 +188,16 @@ See also docs on [Layout modes](layout-modes.html).
 </dl>
 
 Triggers layout logic when browser window is resized. 
+
+## resizesContainer
+
+<dl class="clearfix">
+  <dt><code>resizesContainer</code></dt>
+  <dd class="option-type">Boolean</dd>
+  <dd class="default"><code><span class="kc">true</span></code></dd>
+</dl>
+
+Isotope will set the height (for vertical layout modes) or width (for horizontal layout modes) of the container after layout. If `resizesContainer` is set to `false`, be sure to set a size for the container in your CSS, so it doesn't collapse when Isotope is triggered.
 
 ## sortAscending
 

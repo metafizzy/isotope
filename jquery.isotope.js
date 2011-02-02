@@ -343,8 +343,8 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         duration: 800
       },
       sortBy : 'original-order',
-      sortAscending : true
-
+      sortAscending : true,
+      resizesContainer : true
     },
     
     _filterFind: function( $elems, selector ) {
@@ -589,12 +589,11 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
       // layout logic
       this[ '_' +  layoutMode + 'Layout' ]( $elems );
       
-
       // set the size of the container
-      var containerStyle = this[ '_' +  layoutMode + 'GetContainerSize' ]();
-      this.styleQueue.push({ $el: this.element, style: containerStyle });
-
-
+      if ( this.options.resizesContainer ) {
+        var containerStyle = this[ '_' +  layoutMode + 'GetContainerSize' ]();
+        this.styleQueue.push({ $el: this.element, style: containerStyle });
+      }
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
