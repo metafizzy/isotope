@@ -50,7 +50,7 @@ A grid layout where items are centered inside each cell. The grid is defined by 
 {% highlight javascript %}
 
 $('#container').isotope({
-  layoutMode : 'cellsByRow',
+  layoutMode : 'cellsByColumn',
   cellsByRow : {
     columnWidth : 240,
     rowHeight : 360
