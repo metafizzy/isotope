@@ -39,7 +39,8 @@ $('#container').isotope({ 'insert', $newItems });
 
 ## appended method
 
-The [`appended` method](methods.html#appended) is a convenience method triggers `addItems` on new content, then lays out _only the new content_ at the end of the layout. This method is useful if you know you only want to add new content to the end, and not have it processed with filtering or sorting.  `appended` is the best method to use with Infinite Scroll.
+The [`appended` method](methods.html#appended) is a convenience method triggers `addItems` on new content, then lays out _only the new content_ at the end of the layout. This method is useful if you know you only want to add new content to the end, and **not** use filtering or sorting.  `appended` is the best method to use with Infinite Scroll.
 
 [**See Demo: Infinite Scroll**](../demos/infinite-scroll.html).
 
+See also [Infinite Scroll with filtering or sorting](troubleshooting.html#infinite_scroll_with_filtering_or_sorting)

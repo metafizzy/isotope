@@ -11,6 +11,7 @@ toc:
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
+  - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
 
 ---
 
@@ -105,4 +106,10 @@ animationEngine : $.browser.opera ? 'jquery' : 'best-available',
 {% endhighlight %}
 
 Also note that the [recommended transition CSS](animating.html#css_transitions) is missing declarations for Opera.
+
+## Infinite Scroll with filtering or sorting
+
+I recommend against using Infinite Scroll with filtering or sorting. This combination produces a unnecessarily complex user interaction that will frustrate your users. New content gets added, but part of it might be hidden. There is no way for the user to tell what gets hidden or re-arranged when Infinite Scroll adds more content. Exercise [moderation](introduction.html#moderation) with your Isotope implementation.
+
+If you do plan on implementing Infinite Scroll with filtering or sorting (which is a _bad idea_), use the `insert` method instead of `appended`.  
 
