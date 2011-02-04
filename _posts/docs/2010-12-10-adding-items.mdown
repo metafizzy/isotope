@@ -22,7 +22,7 @@ The [`addItems` method](methods.html#additems) adds new content to an Isotope co
 {% highlight javascript %}
 
 var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
-$('#container').append( $newItems ).isotope({ 'addItems', $newItems });
+$('#container').append( $newItems ).isotope( 'addItems', $newItems );
 
 {% endhighlight %}
 
@@ -33,7 +33,7 @@ More likely, you want to use the [`insert` method](methods.html#insert), which d
 {% highlight javascript %}
 
 var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
-$('#container').isotope({ 'insert', $newItems });
+$('#container').isotope( 'insert', $newItems );
 
 {% endhighlight %}
 
