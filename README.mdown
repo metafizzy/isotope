@@ -19,7 +19,7 @@ Viewing this project locally
 
 ### Via download
 
-You can download a zip of all the flat HTML files from [meta.metafizzy.co/files/isotope-site.zip](meta.metafizzy.co/files/isotope-site.zip).
+You can download a zip of all the flat HTML files from [meta.metafizzy.co/files/isotope-site.zip](http://meta.metafizzy.co/files/isotope-site.zip).
 
 ### Via Jekyll
 
