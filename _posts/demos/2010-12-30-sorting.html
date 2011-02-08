@@ -44,7 +44,7 @@ related: sorting
             return parseInt( $elem.find('.number').text(), 10 );
           },
           weight : function( $elem ) {
-            return parseInt( $elem.find('.weight').text().replace( /[\(\)]/g, ''), 10 );
+            return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
           },
           name : function ( $elem ) {
             return $elem.find('.name').text();
