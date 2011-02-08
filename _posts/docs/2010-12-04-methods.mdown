@@ -113,3 +113,13 @@ Resets layout properties and lays-out every item element.
 {% endhighlight %}
 
 Removes specified item elements from Isotope widget and the DOM.
+
+## updateSortData
+
+{% highlight javascript %}
+
+.isotope( 'updateSortData', $items )
+
+{% endhighlight %}
+
+Updates the sorting data on specified item elements. This method is useful if the data within an item is changed dynamically after Isotope has been initialized.
