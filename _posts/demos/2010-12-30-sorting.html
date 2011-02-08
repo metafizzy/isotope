@@ -26,10 +26,14 @@ related: sorting
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
-    $(function(){
-      
-      var $container = $('#container');
 
+    var $container = $('#container');
+    
+    {% include sort-buttons.js %}
+    
+    {% include option-buttons.js %}
+  
+    $(function(){
       
       $container.isotope({
         itemSelector : '.element',
@@ -51,10 +55,6 @@ related: sorting
           }
         }
       });
-      
-      {% include sort-buttons.js %}
-      
-      {% include option-buttons.js %}
       
     });
   </script>

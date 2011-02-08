@@ -39,22 +39,23 @@ related: filtering
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
+  
+    var $container = $('#container');
+
+    // filter buttons
+    $('#filters a').click(function(){
+      var selector = $(this).attr('data-filter');
+      $container.isotope({ filter: selector });
+      return false;
+    });
+    
+    {% include option-buttons.js %}
+
     $(function(){
-      
-      var $container = $('#container');
 
       $container.isotope({
         itemSelector : '.element'
       });
-      
-      // filter buttons
-      $('#filters a').click(function(){
-        var selector = $(this).attr('data-filter');
-        $container.isotope({ filter: selector });
-        return false;
-      });
-      
-      {% include option-buttons.js %}
       
     });
   </script>
