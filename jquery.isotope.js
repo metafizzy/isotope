@@ -488,7 +488,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
       $atoms.css( atomStyle ).addClass( this.options.itemClass );
       
-      this.updateItemsSortData( $atoms, true );
+      this.updateSortData( $atoms, true );
 
     },
     
@@ -526,7 +526,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     
     // ====================== Sorting ======================
     
-    updateItemsSortData : function( $atoms, isIncrementingElemCount ) {
+    updateSortData : function( $atoms, isIncrementingElemCount ) {
       var instance = this,
           getSortData = this.options.getSortData,
           key, $this, sortData;
