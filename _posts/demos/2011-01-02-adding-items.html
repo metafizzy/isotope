@@ -29,10 +29,13 @@ related: methods
   <script src="../{{ site.isotope_js }}"></script>
   <script src="../js/fake-element.js"></script>
   <script>
+
+    var $container = $('#container');
+
+    {% include add-buttons.js %}
+
     $(function(){
 
-      var $container = $('#container');
-    
       $container.isotope({
         itemSelector : '.element',
         getSortData : {
@@ -42,9 +45,6 @@ related: methods
         },
         sortBy : 'symbol'
       });
-    
-      {% include add-buttons.js %}
-    
     
     });
   </script>
