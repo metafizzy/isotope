@@ -28,11 +28,11 @@ $('#container').isotope( 'methodName', [optionalParameters] )
 
 {% highlight javascript %}
 
-.isotope( 'addItems', $content, callback )
+.isotope( 'addItems', $items, callback )
 
 {% endhighlight %}
 
-Adds elements to the pool of item elements of the container, but does sort, filter or layout. See [Adding items](adding-items.html) for more details. The argument within the callback is the group of elements that were added. 
+Adds item elements to the pool of item elements of the container, but does sort, filter or layout. See [Adding items](adding-items.html) for more details. The argument within the callback is the group of elements that were added. 
 
 [**See Demo: Adding items**](../demos/adding-items.html)
 
@@ -40,11 +40,11 @@ Adds elements to the pool of item elements of the container, but does sort, filt
 
 {% highlight javascript %}
 
-.isotope( 'appended', $content, callback )
+.isotope( 'appended', $items, callback )
 
 {% endhighlight %}
 
-Adds elements via `addItems` method, then triggers `layout` just for those new elements. Useful for Infinite Scroll. See [Adding items](adding-items.html) for more details.
+Adds item elements via `addItems` method, then triggers `layout` just for those new elements. Useful for Infinite Scroll. See [Adding items](adding-items.html) for more details.
 
 [**See Demo: Adding items**](../demos/adding-items.html)
 
@@ -62,11 +62,11 @@ Removes Isotope functionality completely. Returns element back to pre-init state
 
 {% highlight javascript %}
 
-.isotope( 'insert', $content, callback )
+.isotope( 'insert', $items, callback )
 
 {% endhighlight %}
 
-Appends elements to container, adds items to via `addItems` method, and then triggers `reLayout` method so new elements are properly filtered, sorted and laid-out. See [Adding items](adding-items.html) for more details.
+Appends items elements to container, adds items to via `addItems` method, and then triggers `reLayout` method so new elements are properly filtered, sorted and laid-out. See [Adding items](adding-items.html) for more details.
 
 [**See Demo: Adding items**](../demos/adding-items.html).
 
@@ -74,11 +74,11 @@ Appends elements to container, adds items to via `addItems` method, and then tri
 
 {% highlight javascript %}
 
-.isotope( 'layout', $content, callback )
+.isotope( 'layout', $items, callback )
 
 {% endhighlight %}
 
-Positions specified elements in layout.
+Positions specified item elements in layout.
 
 `layout` will only position specified elements, and those elements will be positioned at the end of layout. Whereas `reLayout` will position all elements in the Isotope widget.
 
@@ -108,8 +108,8 @@ Resets layout properties and lays-out every item element.
 
 {% highlight javascript %}
 
-.isotope( 'remove', $content )
+.isotope( 'remove', $items )
 
 {% endhighlight %}
 
-Removes specified elements from Isotope widget and the DOM.
+Removes specified item elements from Isotope widget and the DOM.
