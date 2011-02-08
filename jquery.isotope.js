@@ -488,21 +488,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
 
       $atoms.css( atomStyle ).addClass( this.options.itemClass );
       
-      var instance = this;
-      $atoms.each(function(){
-        var $this = $(this),
-            sortData = {},
-            getSortData = instance.options.getSortData,
-            key;
-        // get value for sort data based on fn( $elem ) passed in
-        for ( key in getSortData ) {
-          sortData[ key ] = getSortData[ key ]( $this, instance );
-        }
-        // apply sort data to $element
-        $this.data( 'isotope-sort-data', sortData );
-        // increment element count
-        instance.elemCount ++;
-      });
+      this.updateItemsSortData( $atoms, true );
 
     },
     
@@ -539,6 +525,25 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     },
     
     // ====================== Sorting ======================
+    
+    updateItemsSortData : function( $atoms, isIncrementingElemCount ) {
+      var instance = this,
+          getSortData = this.options.getSortData,
+          key, $this, sortData;
+      $atoms.each(function(){
+        $this = $(this);
+        sortData = {};
+        // get value for sort data based on fn( $elem ) passed in
+        for ( key in getSortData ) {
+          sortData[ key ] = getSortData[ key ]( $this, instance );
+        }
+        // apply sort data to $element
+        $this.data( 'isotope-sort-data', sortData );
+        if ( isIncrementingElemCount ) {
+          instance.elemCount ++;
+        }
+      });
+    },
     
     // used on all the filtered atoms
     _sort : function() {
