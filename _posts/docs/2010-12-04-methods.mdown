@@ -13,6 +13,7 @@ toc:
   - { title: option, anchor: option }
   - { title: reLayout, anchor: relayout }
   - { title: remove, anchor: remove }
+  - { title: updateSortData, anchor: updatesortdata }
 
 ---
 
