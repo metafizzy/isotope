@@ -25,9 +25,25 @@ related: methods
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
+  
+    var $container = $('#container');
+  
+    // toggle variable sizes of all elements
+    $('#toggle-sizes a').click(function(){
+      $container
+        .toggleClass('variable-sizes')
+        .isotope('reLayout');
+      return false;
+    });
+  
+    // change size of clicked element
+    $container.find('.element').live('click', function(){
+      $(this).toggleClass('large');
+      $container.isotope('reLayout');
+    });
+  
+  
     $(function(){
-      
-      var $container = $('#container');
       
       // hacky way of adding random size classes
       $container.find('.element').each(function(){
@@ -45,21 +61,6 @@ related: methods
           columnWidth : 120
         }
       });
-      
-      // toggle variable sizes of all elements
-      $('#toggle-sizes a').click(function(){
-        $container
-          .toggleClass('variable-sizes')
-          .isotope('reLayout');
-        return false;
-      });
-      
-      // change size of clicked element
-      $container.find('.element').live('click', function(){
-        $(this).toggleClass('large');
-        $container.isotope('reLayout');
-      });
-      
       
     });
   </script>

@@ -51,10 +51,45 @@
   <script src="../js/fake-element.js"></script>
   <script>
 
+    var $container = $('#container');
+
+    $('#filters').find('a').click(function(){
+      // get href attribute, minus the #, plus a . to make it a class
+      var filterName = '.' + $(this).attr('href').slice(1);
+      filterName = filterName === '.show-all' ? '*' : filterName;
+      $container.isotope({ filter: filterName })
+      return false;
+    });
+
+    {% include sort-buttons.js %}
+
+    // change size of clicked element
+    $container.find('.element').live('click', function(){
+      $(this).toggleClass('large');
+      $container.isotope('reLayout');
+    });
+
+    // toggle variable sizes of all elements
+    $('#toggle-sizes').find('a').click(function(){
+      $container
+        .toggleClass('variable-sizes')
+        .isotope('reLayout');
+      return false;
+    });
+
+    {% include layout-change.js %}
+
+    {% include add-buttons.js %}
+
+    $('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      return false;
+    });
+
+    {% include option-buttons.js %}
+    
 
     $(function(){
-
-      var $container = $('#container');
 
       // hacky way of adding random size classes
       $container.find('.element').each(function(){
@@ -97,7 +132,7 @@
             return parseInt( $elem.find('.number').text(), 10 );
           },
           weight : function( $elem ) {
-            return parseInt( $elem.find('.weight').text().replace( /[\(\)]/g, ''), 10 );
+            return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
           },
           name : function ( $elem ) {
             return $elem.find('.name').text();
@@ -105,41 +140,6 @@
         }
       });
 
-
-      $('#filters').find('a').click(function(){
-        // get href attribute, minus the #, plus a . to make it a class
-        var filterName = '.' + $(this).attr('href').slice(1);
-        filterName = filterName === '.show-all' ? '*' : filterName;
-        $container.isotope({ filter: filterName })
-        return false;
-      });
-
-      {% include sort-buttons.js %}
-
-      // change size of clicked element
-      $container.find('.element').live('click', function(){
-        $(this).toggleClass('large');
-        $container.isotope('reLayout');
-      });
-
-      // toggle variable sizes of all elements
-      $('#toggle-sizes').find('a').click(function(){
-        $container
-          .toggleClass('variable-sizes')
-          .isotope('reLayout');
-        return false;
-      });
-
-      {% include layout-change.js %}
-
-      {% include add-buttons.js %}
-
-      $('#shuffle a').click(function(){
-        $container.isotope('shuffle');
-        return false;
-      });
-
-      {% include option-buttons.js %}
 
     });
   </script>

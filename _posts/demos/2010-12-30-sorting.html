@@ -26,10 +26,14 @@ related: sorting
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
-    $(function(){
-      
-      var $container = $('#container');
 
+    var $container = $('#container');
+    
+    {% include sort-buttons.js %}
+    
+    {% include option-buttons.js %}
+  
+    $(function(){
       
       $container.isotope({
         itemSelector : '.element',
@@ -44,17 +48,13 @@ related: sorting
             return parseInt( $elem.find('.number').text(), 10 );
           },
           weight : function( $elem ) {
-            return parseInt( $elem.find('.weight').text().replace( /[\(\)]/g, ''), 10 );
+            return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
           },
           name : function ( $elem ) {
             return $elem.find('.name').text();
           }
         }
       });
-      
-      {% include sort-buttons.js %}
-      
-      {% include option-buttons.js %}
       
     });
   </script>

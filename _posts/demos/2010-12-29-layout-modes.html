@@ -25,9 +25,14 @@ related: layouts
   <script src="../js/jquery-1.4.4.min.js"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
+  
+    var $container = $('#container');
+
+    {% include layout-change.js %}
+    
+    {% include option-buttons.js %}
+
     $(function(){
-      
-      var $container = $('#container');
 
       // hacky way of adding random size classes
       $container.find('.element').each(function(){
@@ -56,10 +61,6 @@ related: layouts
           rowHeight : 240
         }
       });
-      
-      {% include layout-change.js %}
-      
-      {% include option-buttons.js %}
       
     });
   </script>
