@@ -97,9 +97,35 @@ layout: nil
   <script src="js/jquery-1.4.4.min.js"></script>
   <script src="{{ site.isotope_js }}"></script>
   <script>
+  
+    $list = $('#super-list');
+  
+    $('#filter a').click(function(){
+      var filterName = $(this).attr('data-filter');
+      $list.isotope({ filter : filterName });
+      return false;
+    });
+  
+    $('#sort a').click(function(){
+      var sortName = $(this).attr('data-sort');
+      $list.isotope({ sortBy : sortName });
+      return false;
+    });
+  
+    var currentLayout = 'fitRows';
+  
+    $('#layouts a').click(function(){
+      var layoutName = $(this).attr('href').slice(1);
+      $list.removeClass( currentLayout ).addClass( layoutName );
+      currentLayout = layoutName;
+      $list.isotope({ layoutMode : layoutName });
+      return false;
+    });
+  
+    {% include option-buttons.js %}
+
+
     $(function(){
-      
-      $list = $('#super-list');
       
       $list.isotope({
         layoutMode : 'fitRows',
@@ -115,30 +141,6 @@ layout: nil
           }
         }
       });
-      
-      $('#filter a').click(function(){
-        var filterName = $(this).attr('data-filter');
-        $list.isotope({ filter : filterName });
-        return false;
-      });
-      
-      $('#sort a').click(function(){
-        var sortName = $(this).attr('data-sort');
-        $list.isotope({ sortBy : sortName });
-        return false;
-      });
-      
-      var currentLayout = 'fitRows';
-      
-      $('#layouts a').click(function(){
-        var layoutName = $(this).attr('href').slice(1);
-        $list.removeClass( currentLayout ).addClass( layoutName );
-        currentLayout = layoutName;
-        $list.isotope({ layoutMode : layoutName });
-        return false;
-      });
-      
-      {% include option-buttons.js %}
       
     });
   </script>
