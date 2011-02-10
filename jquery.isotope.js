@@ -9,8 +9,6 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
-
-
 (function( window, $, undefined ){
 
   // ========================= getStyleProperty by kangax ===============================
