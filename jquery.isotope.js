@@ -9,137 +9,134 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
+(function( window, $, undefined ){
 
-// ========================= getStyleProperty by kangax ===============================
-// http://perfectionkills.com/feature-testing-css-properties/
+  // ========================= getStyleProperty by kangax ===============================
+  // http://perfectionkills.com/feature-testing-css-properties/
 
-var getStyleProperty = (function(){
+  var getStyleProperty = (function(){
 
-  var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
-  var _cache = { };
+    var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
+    var _cache = { };
 
-  function getStyleProperty(propName, element) {
-    element = element || document.documentElement;
-    var style = element.style,
-        prefixed,
-        uPropName,
-        i, l;
+    function getStyleProperty(propName, element) {
+      element = element || document.documentElement;
+      var style = element.style,
+          prefixed,
+          uPropName,
+          i, l;
 
-    // check cache only when no element is given
-    if (arguments.length === 1 && typeof _cache[propName] === 'string') {
-      return _cache[propName];
-    }
-    // test standard property first
-    if (typeof style[propName] === 'string') {
-      return (_cache[propName] = propName);
-    }
+      // check cache only when no element is given
+      if (arguments.length === 1 && typeof _cache[propName] === 'string') {
+        return _cache[propName];
+      }
+      // test standard property first
+      if (typeof style[propName] === 'string') {
+        return (_cache[propName] = propName);
+      }
     
-    // capitalize
-    uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
+      // capitalize
+      uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
-    // test vendor specific properties
-    for (i=0, l=prefixes.length; i<l; i++) {
-      prefixed = prefixes[i] + uPropName;
-      if (typeof style[prefixed] === 'string') {
-        return (_cache[propName] = prefixed);
+      // test vendor specific properties
+      for (i=0, l=prefixes.length; i<l; i++) {
+        prefixed = prefixes[i] + uPropName;
+        if (typeof style[prefixed] === 'string') {
+          return (_cache[propName] = prefixed);
+        }
       }
     }
-  }
 
-  return getStyleProperty;
-}());
+    return getStyleProperty;
+  }());
 
-// ========================= miniModernizr ===============================
-// <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
+  // ========================= miniModernizr ===============================
+  // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
 
-/*!
- * Modernizr v1.6ish: miniModernizr for Isotope
- * http://www.modernizr.com
- *
- * Developed by: 
- * - Faruk Ates  http://farukat.es/
- * - Paul Irish  http://paulirish.com/
- *
- * Copyright (c) 2009-2010
- * Dual-licensed under the BSD or MIT licenses.
- * http://www.modernizr.com/license/
- */
+  /*!
+   * Modernizr v1.6ish: miniModernizr for Isotope
+   * http://www.modernizr.com
+   *
+   * Developed by: 
+   * - Faruk Ates  http://farukat.es/
+   * - Paul Irish  http://paulirish.com/
+   *
+   * Copyright (c) 2009-2010
+   * Dual-licensed under the BSD or MIT licenses.
+   * http://www.modernizr.com/license/
+   */
 
  
-/*
- * This version whittles down the script just to check support for
- * CSS transitions, transforms, and 3D transforms.
- */
+  /*
+   * This version whittles down the script just to check support for
+   * CSS transitions, transforms, and 3D transforms.
+   */
  
-window.Modernizr = window.Modernizr || (function(window,doc,undefined){
+  window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   
-  var version = '1.6ish: miniModernizr for Isotope',
-      miniModernizr = {},
-      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-      classes = [],
-      docElement = document.documentElement,
-      i, l,
+    var version = '1.6ish: miniModernizr for Isotope',
+        miniModernizr = {},
+        vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+        classes = [],
+        docElement = document.documentElement,
+        i, len,
 
-      tests = [
-        {
-          name : 'csstransforms',
-          result : function() {
-            return !!getStyleProperty('transform');
-          }
-        },
-        {
-          name : 'csstransforms3d',
-          result : function() {
-            var test = !!getStyleProperty('perspective');
-            // double check for Chrome's false positive
-            if ( test ){
-              var st = document.createElement('style'),
-                  div = document.createElement('div'),
-                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
-
-              st.textContent = mq + '{#modernizr{height:3px}}';
-              (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
-              div.id = 'modernizr';
-              docElement.appendChild(div);
-
-              test = div.offsetHeight === 3;
-
-              st.parentNode.removeChild(st);
-              div.parentNode.removeChild(div);
+        tests = [
+          {
+            name : 'csstransforms',
+            result : function() {
+              return !!getStyleProperty('transform');
             }
-            return !!test;
+          },
+          {
+            name : 'csstransforms3d',
+            result : function() {
+              var test = !!getStyleProperty('perspective');
+              // double check for Chrome's false positive
+              if ( test ){
+                var st = document.createElement('style'),
+                    div = document.createElement('div'),
+                    mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
+
+                st.textContent = mq + '{#modernizr{height:3px}}';
+                (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
+                div.id = 'modernizr';
+                docElement.appendChild(div);
+
+                test = div.offsetHeight === 3;
+
+                st.parentNode.removeChild(st);
+                div.parentNode.removeChild(div);
+              }
+              return !!test;
+            }
+          },
+          {
+            name : 'csstransitions',
+            result : function() {
+              return !!getStyleProperty('transitionProperty');
+            }
           }
-        },
-        {
-          name : 'csstransitions',
-          result : function() {
-            return !!getStyleProperty('transitionProperty');
-          }
-        }
-      ]
-  ;
+        ]
+    ;
 
 
-  // Run through all tests and detect their support in the current UA.
-  for ( i = 0, len = tests.length; i < len; i++ ) {
-    var test = tests[i],
-        result = test.result();
-    miniModernizr[ test.name ] = result;
-    var className = ( result ?  '' : 'no-' ) + test.name;
-    classes.push( className );
-  }
+    // Run through all tests and detect their support in the current UA.
+    for ( i = 0, len = tests.length; i < len; i++ ) {
+      var test = tests[i],
+          result = test.result();
+      miniModernizr[ test.name ] = result;
+      var className = ( result ?  '' : 'no-' ) + test.name;
+      classes.push( className );
+    }
 
-  // Add the new classes to the <html> element.
-  docElement.className += ' ' + classes.join( ' ' );
+    // Add the new classes to the <html> element.
+    docElement.className += ' ' + classes.join( ' ' );
 
-  return miniModernizr;
+    return miniModernizr;
   
-}(this,this.document));
+  })(this,this.document);
 
-
-
-// jQuery
-(function( $, undefined ){
 
 
   // ========================= isoTransform ===============================
@@ -906,7 +903,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
     },
   
     _fitRowsResize : function() {
-      return this.reLayout()
+      return this.reLayout();
     },
   
 
@@ -965,7 +962,7 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
         var $this = $(this),
             y = instance.straightDown.y + instance.posTop;
         instance._pushPosition( $this, instance.posLeft, y );
-        instance.straightDown.y += $this.outerHeight(true)
+        instance.straightDown.y += $this.outerHeight(true);
       });
       return this;
     },
@@ -1026,10 +1023,10 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
           // how many different places could this brick fit horizontally
           var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
               groupX = [],
-              groupRowX;
+              groupRowX, i;
 
           // for each group potential horizontal position
-          for ( var i=0; i < groupCount; i++ ) {
+          for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
             groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
             // and get the max value of the array
@@ -1259,4 +1256,4 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   
   $.widget.bridge( 'isotope', $.Isotope );
 
-})( jQuery );
+})( window, jQuery );
