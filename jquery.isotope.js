@@ -10,6 +10,9 @@
  */
 
 
+
+(function( window, $, undefined ){
+
 // ========================= getStyleProperty by kangax ===============================
 // http://perfectionkills.com/feature-testing-css-properties/
 
@@ -33,7 +36,7 @@ var getStyleProperty = (function(){
     if (typeof style[propName] === 'string') {
       return (_cache[propName] = propName);
     }
-    
+  
     // capitalize
     uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
@@ -65,14 +68,14 @@ var getStyleProperty = (function(){
  * http://www.modernizr.com/license/
  */
 
- 
+
 /*
  * This version whittles down the script just to check support for
  * CSS transitions, transforms, and 3D transforms.
  */
- 
+
 window.Modernizr = window.Modernizr || (function(window,doc,undefined){
-  
+
   var version = '1.6ish: miniModernizr for Isotope',
       miniModernizr = {},
       vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
@@ -133,13 +136,9 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   docElement.className += ' ' + classes.join( ' ' );
 
   return miniModernizr;
-  
+
 }(this,this.document));
 
-
-
-// jQuery
-(function( $, undefined ){
 
 
   // ========================= isoTransform ===============================
@@ -1259,4 +1258,4 @@ window.Modernizr = window.Modernizr || (function(window,doc,undefined){
   
   $.widget.bridge( 'isotope', $.Isotope );
 
-})( jQuery );
+})( window, jQuery );
