@@ -79,7 +79,7 @@
         vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
         classes = [],
         docElement = document.documentElement,
-        i, l,
+        i, len,
 
         tests = [
           {
@@ -135,7 +135,7 @@
 
     return miniModernizr;
   
-  }(this,this.document));
+  })(this,this.document);
 
 
 
@@ -903,7 +903,7 @@
     },
   
     _fitRowsResize : function() {
-      return this.reLayout()
+      return this.reLayout();
     },
   
 
@@ -962,7 +962,7 @@
         var $this = $(this),
             y = instance.straightDown.y + instance.posTop;
         instance._pushPosition( $this, instance.posLeft, y );
-        instance.straightDown.y += $this.outerHeight(true)
+        instance.straightDown.y += $this.outerHeight(true);
       });
       return this;
     },
@@ -1023,10 +1023,10 @@
           // how many different places could this brick fit horizontally
           var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
               groupX = [],
-              groupRowX;
+              groupRowX, i;
 
           // for each group potential horizontal position
-          for ( var i=0; i < groupCount; i++ ) {
+          for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
             groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
             // and get the max value of the array
