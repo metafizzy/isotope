@@ -70,72 +70,97 @@
   /*
    * This version whittles down the script just to check support for
    * CSS transitions, transforms, and 3D transforms.
-   */
- 
-  window.Modernizr = window.Modernizr || (function(window,doc,undefined){
+  */
   
-    var version = '1.6ish: miniModernizr for Isotope',
-        miniModernizr = {},
-        vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-        classes = [],
-        docElement = document.documentElement,
-        i, len,
-
-        tests = [
-          {
-            name : 'csstransforms',
-            result : function() {
-              return !!getStyleProperty('transform');
-            }
-          },
-          {
-            name : 'csstransforms3d',
-            result : function() {
-              var test = !!getStyleProperty('perspective');
-              // double check for Chrome's false positive
-              if ( test ){
-                var st = document.createElement('style'),
-                    div = document.createElement('div'),
-                    mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
-
-                st.textContent = mq + '{#modernizr{height:3px}}';
-                (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
-                div.id = 'modernizr';
-                docElement.appendChild(div);
-
-                test = div.offsetHeight === 3;
-
-                st.parentNode.removeChild(st);
-                div.parentNode.removeChild(div);
-              }
-              return !!test;
-            }
-          },
-          {
-            name : 'csstransitions',
-            result : function() {
-              return !!getStyleProperty('transitionProperty');
-            }
+  var tests = [
+        {
+          name : 'csstransforms',
+          getResult : function() {
+            return !!getStyleProperty('transform');
           }
-        ]
-    ;
+        },
+        {
+          name : 'csstransforms3d',
+          getResult : function() {
+            var test = !!getStyleProperty('perspective');
+            // double check for Chrome's false positive
+            if ( test ){
+              var st = document.createElement('style'),
+                  div = document.createElement('div'),
+                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
 
+              st.textContent = mq + '{#modernizr{height:3px}}';
+              (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
+              div.id = 'modernizr';
+              docElement.appendChild(div);
 
-    // Run through all tests and detect their support in the current UA.
-    for ( i = 0, len = tests.length; i < len; i++ ) {
-      var test = tests[i],
-          result = test.result();
-      miniModernizr[ test.name ] = result;
-      var className = ( result ?  '' : 'no-' ) + test.name;
-      classes.push( className );
-    }
+              test = div.offsetHeight === 3;
 
-    // Add the new classes to the <html> element.
-    docElement.className += ' ' + classes.join( ' ' );
+              st.parentNode.removeChild(st);
+              div.parentNode.removeChild(div);
+            }
+            return !!test;
+          }
+        },
+        {
+          name : 'csstransitions',
+          getResult : function() {
+            return !!getStyleProperty('transitionProperty');
+          }
+        }
+      ],
 
-    return miniModernizr;
-  
-  })(this,this.document);
+      i, len = tests.length
+
+  ;
+
+   if ( window.Modernizr ) {
+     // hasOwnProperty shim by kangax needed for Safari 2.0 support
+     // var  _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
+     // if (!is(_hasOwnProperty, undefined) && !is(_hasOwnProperty.call, undefined)) {
+     //   hasOwnProperty = function (object, property) {
+     //     return _hasOwnProperty.call(object, property);
+     //   };
+     // }
+     // else {
+     //   hasOwnProperty = function (object, property) {
+     //     return ((property in object) && is(object.constructor.prototype[property], undefined));
+     //   };
+     // }
+     
+     for ( i=0; i < len; i++ ) {
+       var test = test[i];
+       
+       if ( !Modernizr.hasOwnProperty( test.name ) ) {
+         Modernizr.addTest( test.name, test.getResult );
+       }
+       
+     }
+   } else {
+     window.Modernizr = (function(){
+
+       var version = '1.6ish: miniModernizr for Isotope',
+           miniModernizr = {},
+           vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+           classes = [],
+           test, result, className;
+
+       // Run through all tests and detect their support in the current UA.
+       for ( i=0; i < len; i++ ) {
+         test = tests[i];
+         result = test.getResult();
+         miniModernizr[ test.name ] = result;
+         className = ( result ?  '' : 'no-' ) + test.name;
+         classes.push( className );
+       }
+
+       // Add the new classes to the <html> element.
+       document.documentElement.className += ' ' + classes.join( ' ' );
+
+       return miniModernizr;
+
+     })();
+   }
 
 
 
