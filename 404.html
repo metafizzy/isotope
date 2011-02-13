@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Page not found &middot; Isotope</title>
+  
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" />
+  
+  <style>
+    .page {
+      font-size: 10px;
+      width: 8em;
+      height: 10em;
+      color: white;
+      border: 0.5em solid;
+      margin: 10px;
+      float: left;
+      position: relative;
+    }
+    
+    .page div {
+      position: absolute;
+      top: -0.5em;
+      right: -0.5em;
+    }
+    
+    .page .fold {
+      width: 2.5em;
+      height: 2.5em;
+      border-left: 0.5em solid;
+      border-bottom: 0.5em solid;
+    }
+    
+    .page .corner-a {
+      border-top: 3em solid;
+      border-left: 3em solid transparent;
+    }
+    
+    .page .corner-b {
+      border-top: 2.3em solid #1F1E1D;
+      border-left: 2.3em solid transparent;
+    }
+    
+    .page p {
+      position: absolute;
+      width: 100%;
+      top: 0.75em;
+      font-size: 6em;
+      text-align: center;
+    }
+    
+    .page.bad {
+      font-size: 30px;
+      width: 280px;
+      height: 340px;
+      color: red;
+      z-index: 100;
+    }
+    
+    .page.bad p {
+      top: 0.8em;
+      font-size: 7em;
+    }
+    
+    .page.bad:hover  p {
+      color: white;
+    }
+    
+    #container {
+      border: none;
+      padding: 0;
+    }
+    
+    h2 {
+      font-weight: 300;
+    }
+  </style>
+  
+  <!-- scripts at bottom of page -->
+
+</head>
+<body>
+
+  <h1>Page not found</h1>
+  
+  <h2><a href="/">&larr; Back to Isotope index</a></h2>
+
+  <div id="container">
+    <div class="page bad" data-order="0">
+      <div class="fold"></div>
+      <div class="corner-a"></div>
+      <div class="corner-b"></div>
+      <p>&#x2715;</p>
+    </div>
+    <div class="page good">
+      <div class="fold"></div>
+      <div class="corner-a"></div>
+      <div class="corner-b"></div>
+      <p>&#x2713;</p>
+    </div>
+  </div>
+  
+
+  <script src="/js/jquery-1.4.4.min.js"></script>
+  <script src="/jquery.isotope.js"></script>
+  <script>
+    $(function(){
+      var $container = $('#container')
+          $goodPage = $('.page.good'),
+          pages = $([]);
+          
+      for ( var i=0; i < 30; i++) {
+        pages.push( $goodPage.clone()[0] )
+      }
+      
+      $container.append( $(pages) ).isotope({
+        masonry: {
+          columnWidth: 110,
+        }
+      });
+      
+      $('.page.bad').mouseenter(function(){
+        $container.isotope( 'shuffle' );
+      });
+      
+    });
+  </script>
+
+
+</body>
+</html>g
