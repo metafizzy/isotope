@@ -72,7 +72,9 @@
    * CSS transitions, transforms, and 3D transforms.
   */
   
-  var tests = [
+  var docElement = document.documentElement,
+      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+      tests = [
         {
           name : 'csstransforms',
           getResult : function() {
@@ -90,7 +92,7 @@
                   mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
 
               st.textContent = mq + '{#modernizr{height:3px}}';
-              (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
+              (document.head || document.getElementsByTagName('head')[0]).appendChild(st);
               div.id = 'modernizr';
               docElement.appendChild(div);
 
@@ -111,56 +113,42 @@
       ],
 
       i, len = tests.length
-
   ;
 
-   if ( window.Modernizr ) {
-     // hasOwnProperty shim by kangax needed for Safari 2.0 support
-     // var  _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
-     // if (!is(_hasOwnProperty, undefined) && !is(_hasOwnProperty.call, undefined)) {
-     //   hasOwnProperty = function (object, property) {
-     //     return _hasOwnProperty.call(object, property);
-     //   };
-     // }
-     // else {
-     //   hasOwnProperty = function (object, property) {
-     //     return ((property in object) && is(object.constructor.prototype[property], undefined));
-     //   };
-     // }
-     
-     for ( i=0; i < len; i++ ) {
-       var test = test[i];
-       
-       if ( !Modernizr.hasOwnProperty( test.name ) ) {
-         Modernizr.addTest( test.name, test.getResult );
-       }
-       
-     }
-   } else {
-     window.Modernizr = (function(){
+  if ( window.Modernizr ) {
+    // if there's a previous Modernzir, check if there are necessary tests
+    for ( i=0; i < len; i++ ) {
+      var test = tests[i];
+      if ( !Modernizr.hasOwnProperty( test.name ) ) {
+        // if test hasn't been run, use addTest to run it
+        Modernizr.addTest( test.name, test.getResult );
+      }
+    }
+  } else {
+    // or create new mini Modernizr that just has the 3 tests
+    window.Modernizr = (function(){
 
-       var version = '1.6ish: miniModernizr for Isotope',
-           miniModernizr = {},
-           vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-           classes = [],
-           test, result, className;
+      var miniModernizr = {
+            _version : '1.6ish: miniModernizr for Isotope'
+          },
+          classes = [],
+          test, result, className;
 
-       // Run through all tests and detect their support in the current UA.
-       for ( i=0; i < len; i++ ) {
-         test = tests[i];
-         result = test.getResult();
-         miniModernizr[ test.name ] = result;
-         className = ( result ?  '' : 'no-' ) + test.name;
-         classes.push( className );
-       }
+      // Run through tests
+      for ( i=0; i < len; i++ ) {
+        test = tests[i];
+        result = test.getResult();
+        miniModernizr[ test.name ] = result;
+        className = ( result ?  '' : 'no-' ) + test.name;
+        classes.push( className );
+      }
 
-       // Add the new classes to the <html> element.
-       document.documentElement.className += ' ' + classes.join( ' ' );
+      // Add the new classes to the <html> element.
+      docElement.className += ' ' + classes.join( ' ' );
 
-       return miniModernizr;
-
-     })();
-   }
+      return miniModernizr;
+    })();
+  }
 
 
 
