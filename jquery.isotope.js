@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110211
+ * Isotope v1.0.110212
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -70,72 +70,85 @@
   /*
    * This version whittles down the script just to check support for
    * CSS transitions, transforms, and 3D transforms.
-   */
- 
-  window.Modernizr = window.Modernizr || (function(window,doc,undefined){
+  */
   
-    var version = '1.6ish: miniModernizr for Isotope',
-        miniModernizr = {},
-        vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-        classes = [],
-        docElement = document.documentElement,
-        i, len,
-
-        tests = [
-          {
-            name : 'csstransforms',
-            result : function() {
-              return !!getStyleProperty('transform');
-            }
-          },
-          {
-            name : 'csstransforms3d',
-            result : function() {
-              var test = !!getStyleProperty('perspective');
-              // double check for Chrome's false positive
-              if ( test ){
-                var st = document.createElement('style'),
-                    div = document.createElement('div'),
-                    mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
-
-                st.textContent = mq + '{#modernizr{height:3px}}';
-                (doc.head || doc.getElementsByTagName('head')[0]).appendChild(st);
-                div.id = 'modernizr';
-                docElement.appendChild(div);
-
-                test = div.offsetHeight === 3;
-
-                st.parentNode.removeChild(st);
-                div.parentNode.removeChild(div);
-              }
-              return !!test;
-            }
-          },
-          {
-            name : 'csstransitions',
-            result : function() {
-              return !!getStyleProperty('transitionProperty');
-            }
+  var docElement = document.documentElement,
+      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+      tests = [
+        {
+          name : 'csstransforms',
+          getResult : function() {
+            return !!getStyleProperty('transform');
           }
-        ]
-    ;
+        },
+        {
+          name : 'csstransforms3d',
+          getResult : function() {
+            var test = !!getStyleProperty('perspective');
+            // double check for Chrome's false positive
+            if ( test ){
+              var st = document.createElement('style'),
+                  div = document.createElement('div'),
+                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
 
+              st.textContent = mq + '{#modernizr{height:3px}}';
+              (document.head || document.getElementsByTagName('head')[0]).appendChild(st);
+              div.id = 'modernizr';
+              docElement.appendChild(div);
 
-    // Run through all tests and detect their support in the current UA.
-    for ( i = 0, len = tests.length; i < len; i++ ) {
-      var test = tests[i],
-          result = test.result();
-      miniModernizr[ test.name ] = result;
-      var className = ( result ?  '' : 'no-' ) + test.name;
-      classes.push( className );
+              test = div.offsetHeight === 3;
+
+              st.parentNode.removeChild(st);
+              div.parentNode.removeChild(div);
+            }
+            return !!test;
+          }
+        },
+        {
+          name : 'csstransitions',
+          getResult : function() {
+            return !!getStyleProperty('transitionProperty');
+          }
+        }
+      ],
+
+      i, len = tests.length
+  ;
+
+  if ( window.Modernizr ) {
+    // if there's a previous Modernzir, check if there are necessary tests
+    for ( i=0; i < len; i++ ) {
+      var test = tests[i];
+      if ( !Modernizr.hasOwnProperty( test.name ) ) {
+        // if test hasn't been run, use addTest to run it
+        Modernizr.addTest( test.name, test.getResult );
+      }
     }
+  } else {
+    // or create new mini Modernizr that just has the 3 tests
+    window.Modernizr = (function(){
 
-    // Add the new classes to the <html> element.
-    docElement.className += ' ' + classes.join( ' ' );
+      var miniModernizr = {
+            _version : '1.6ish: miniModernizr for Isotope'
+          },
+          classes = [],
+          test, result, className;
 
-    return miniModernizr;
-  
-  })(this,this.document);
+      // Run through tests
+      for ( i=0; i < len; i++ ) {
+        test = tests[i];
+        result = test.getResult();
+        miniModernizr[ test.name ] = result;
+        className = ( result ?  '' : 'no-' ) + test.name;
+        classes.push( className );
+      }
+
+      // Add the new classes to the <html> element.
+      docElement.className += ' ' + classes.join( ' ' );
+
+      return miniModernizr;
+    })();
+  }
 
 
 
