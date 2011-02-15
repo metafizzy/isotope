@@ -752,7 +752,7 @@
     },
 
     // Removes all atoms from the widget and the DOM, then redraws the layout.
-    reset: function() {
+    flush: function() {
       this.$allAtoms.empty();
       this.$filteredAtoms.empty();
       this.element.children().empty();
