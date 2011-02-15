@@ -750,6 +750,14 @@
       $(window).unbind('.isotope');
 
     },
+
+    // Removes all atoms from the widget and the DOM, then redraws the layout.
+    reset: function() {
+      this.$allAtoms.empty();
+      this.$filteredAtoms.empty();
+      this.element.children().empty();
+      this.reLayout();
+    },
     
     // calculates number of rows or columns
     // requires columnWidth or rowHeight to be set on namespaced object
