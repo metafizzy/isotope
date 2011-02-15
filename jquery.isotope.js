@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110212
+ * Isotope v1.0.110214
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -1177,13 +1177,14 @@
   // mit license. paul irish. 2010.
   // webkit fix from Oren Solomianik. thx!
 
-  // callback function is passed the last image to load
-  //   as an argument, and the collection as `this`
-
   $.fn.imagesLoaded = function(callback){
     var elems = this.find('img'),
         len   = elems.length,
         _this = this;
+
+    if ( !elems.length ) {
+      callback.call( this );
+    }
 
     elems.bind('load',function(){
       if (--len <= 0){ 
@@ -1202,6 +1203,7 @@
 
     return this;
   };
+
   
 
 // ======================= jQuery Widget bridge  ===============================
