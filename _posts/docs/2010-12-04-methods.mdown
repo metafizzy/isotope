@@ -13,6 +13,7 @@ toc:
   - { title: option, anchor: option }
   - { title: reLayout, anchor: relayout }
   - { title: remove, anchor: remove }
+  - { title: flush, anchor: flush }
   - { title: updateSortData, anchor: updatesortdata }
 
 ---
@@ -114,6 +115,16 @@ Resets layout properties and lays-out every item element.
 {% endhighlight %}
 
 Removes specified item elements from Isotope widget and the DOM.
+
+## flush
+
+{% highlight javascript %}
+
+.isotope( 'flush' )
+
+{% endhighlight %}
+
+Removes all elements from the widget and from the DOM.
 
 ## updateSortData
 
