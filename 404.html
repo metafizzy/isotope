@@ -41,13 +41,16 @@
       border-left: 2.3em solid transparent;
     }
     
-    .page p {
+    .page h4 {
       position: absolute;
       width: 100%;
       top: 0.75em;
       font-size: 6em;
       text-align: center;
+      font-weight: normal;
     }
+    
+    /* bad page */
     
     .page.bad {
       font-size: 30px;
@@ -57,13 +60,71 @@
       z-index: 100;
     }
     
-    .page.bad p {
-      top: 0.8em;
+    .page.bad h4 {
+      top: 0.7em;
       font-size: 7em;
     }
     
-    .page.bad:hover  p {
+    .page.bad:hover h4  {
       color: white;
+    }
+    
+    .page.bad h1 {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: 5px;
+    }
+
+
+    /* back page */
+    
+    .page.back {
+      font-size: 20px;
+      width: 180px;
+      height: 220px;
+      color: #4BF;
+      z-index: 100;
+      background: #4BF;
+    }
+    
+    .page.back:hover {
+      background: yellow;
+      color: yellow;
+    }
+    
+    .page.back a {
+      width: 100%;
+      height: 100%;
+      display: block;
+      color: #111;
+    }
+    
+    .page.back .fold { color: #111; }
+    
+    .page.back .corner-b { 
+      
+      border-top-width: 2.5em;
+      border-left-width: 2.5em;
+    }
+    
+    .page.back h4 {
+      top: 0.6em;
+      font-size: 7em;
+      -webkit-transform: rotate(-135deg);
+         -moz-transform: rotate(-135deg);
+          -ms-transform: rotate(-135deg);
+           -o-transform: rotate(-135deg);
+              transform: rotate(-135deg);
+    }
+    
+    .page.back h2 {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 28px;
+      bottom: -10px;
+      font-weight: 300;
     }
     
     #container {
@@ -71,9 +132,6 @@
       padding: 0;
     }
     
-    h2 {
-      font-weight: 300;
-    }
   </style>
   
   <!-- scripts at bottom of page -->
@@ -81,22 +139,27 @@
 </head>
 <body>
 
-  <h1>Page not found</h1>
-  
-  <h2><a href="/">&larr; Back to Isotope index</a></h2>
-
   <div id="container">
     <div class="page bad" data-order="0">
       <div class="fold"></div>
       <div class="corner-a"></div>
       <div class="corner-b"></div>
-      <p>&#x2715;</p>
+      <h4>&#x2715;</h4>
+      <h1>Page not found</h1>
+    </div>
+    <div class="page back">
+      <a href="/">
+        <div class="fold"></div>
+        <div class="corner-b"></div>
+        <h4>&#x2794;</h4>
+        <h2>Back to Isotope index</h2>
+      </a>
     </div>
     <div class="page good">
       <div class="fold"></div>
       <div class="corner-a"></div>
       <div class="corner-b"></div>
-      <p>&#x2713;</p>
+      <h4>&#x2713;</h4>
     </div>
   </div>
   
