@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110214
+ * Isotope v1.0.110220
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -388,8 +388,7 @@
           this.applyStyleFnName = 'animate';
           jQueryAnimation = true;
           break;
-        case 'bestavailable' :
-        default :
+        default : // best available
           this.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
       }
       
@@ -539,12 +538,12 @@
     updateSortData : function( $atoms, isIncrementingElemCount ) {
       var instance = this,
           getSortData = this.options.getSortData,
-          key, $this, sortData;
+          $this, sortData;
       $atoms.each(function(){
         $this = $(this);
         sortData = {};
         // get value for sort data based on fn( $elem ) passed in
-        for ( key in getSortData ) {
+        for ( var key in getSortData ) {
           sortData[ key ] = getSortData[ key ]( $this, instance );
         }
         // apply sort data to $element
@@ -562,7 +561,7 @@
           getSorter = function( elem ) {
             return $(elem).data('isotope-sort-data')[ instance.options.sortBy ];
           },
-          sortDir = this.options.sortAscending ? 1 : -1;
+          sortDir = this.options.sortAscending ? 1 : -1,
           sortFn = function( alpha, beta ) {
             var a = getSorter( alpha ),
                 b = getSorter( beta );
@@ -671,7 +670,7 @@
       
       var instance = this;
       this.addItems( $content, function( $newAtoms ) {
-        $filteredAtoms = instance._filter( $newAtoms );
+        var $filteredAtoms = instance._filter( $newAtoms );
         instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
       });
       
