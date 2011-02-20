@@ -394,7 +394,7 @@
       
       this.usingTransforms = Modernizr.csstransforms && Modernizr.csstransitions && !jQueryAnimation;
 
-      this.positionFn = this.usingTransforms ? this._translate : this._positionAbs;
+      this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
       
       // sorting
       var originalOrderSorter = {
@@ -586,7 +586,7 @@
     },
 
     _pushPosition : function( $elem, x, y ) {
-      var position = this.positionFn( x, y );
+      var position = this.getPositionStyles( x, y );
       this.styleQueue.push({ $el: $elem, style: position });
     },
 
