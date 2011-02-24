@@ -171,7 +171,9 @@
         },
         scale : function ( scale ) {
           return 'scale3d(' + scale + ', ' + scale + ', 1) ';
-        }
+        },
+        rotate: function( angle ) {
+          return 'rotate3d(' + angle + ') ';
       } :
       { // 2D transform functions
         translate : function ( position ) {
@@ -179,7 +181,10 @@
         },
         scale :  function ( scale ) {
           return 'scale(' + scale + ') ';
-        }
+        },
+        rotate: function( angle ) {
+          return 'rotate(' + angle + ') ';
+		}
       }
     ,
     
@@ -206,7 +211,8 @@
       // a couple transforms we're keeping track of, we'll do it like so
       var translateFn = transformObj.translate || '',
           scaleFn = transformObj.scale || '',
-          valueFns = translateFn + scaleFn;
+          rotateFn = transformObj.rotate || '',
+          valueFns = translateFn + scaleFn + rotateFn;
 
       // set data back in elem
       $( elem ).data( 'transform', data );
@@ -279,6 +285,23 @@
   };
 
 
+  // ==================== rotate ===================
+    
+  $.cssNumber.rotate = true;
+  
+  $.cssHooks.rotate = {
+    set: function( elem, value ) {
+  
+      isoTransform.set( elem, 'rotate', value );
+  
+    },
+    
+    get: function( elem, computed ) {
+      var rotate = $.data( elem, 'rotate' );
+      return rotate && transform.rotate ? transform.rotate : '0deg';
+    }
+  };
+ 
 
 
 /*!
