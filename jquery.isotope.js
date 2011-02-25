@@ -184,15 +184,16 @@
     ,
     
     set : function( elem, name, value ) {
-
-      // unpack current transform data
-      var data =  $( elem ).data('transform') || {},
-      // extend new value over current data
+      var $elem = $(elem),
+          // unpack current transform data
+          data =  $elem.data('isoTransform') || {},
           newData = {},
           fnName,
           transformObj = {};
-      // overwrite new data
+
+      // i.e. newData.scale = 0.5
       newData[ name ] = value;
+      // extend new value over current data
       $.extend( data, newData );
 
       for ( fnName in data ) {
@@ -206,13 +207,11 @@
       // a couple transforms we're keeping track of, we'll do it like so
       var translateFn = transformObj.translate || '',
           scaleFn = transformObj.scale || '',
+          // sorting so translate always comes first
           valueFns = translateFn + scaleFn;
 
       // set data back in elem
-      $( elem ).data( 'transform', data );
-
-      // sorting so scale always comes before 
-      value = valueFns;
+      $elem.data( 'isoTransform', data );
 
       // set name to vendor specific property
       elem.style[ isoTransform.transformProp ] = valueFns;
@@ -597,8 +596,7 @@
     // accepts atoms-to-be-laid-out to start with
     layout : function( $elems, callback ) {
 
-      var layoutMode = this.options.layoutMode,
-          layoutMethod = '_' + layoutMode;
+      var layoutMode = this.options.layoutMode;
 
       // layout logic
       this[ '_' +  layoutMode + 'Layout' ]( $elems );
@@ -616,14 +614,10 @@
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
-
       // process styleQueue
-      $.each( this.styleQueue, function( i, obj ){
-                                       // have to extend animation to play nice with jQuery
-        obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
+      $.each( this.styleQueue, function( i, obj ) {
+        obj.$el[ styleFn ]( obj.style, animOpts );
       });
-      
-      
 
       // clear out queue for next time
       this.styleQueue = [];
@@ -735,7 +729,7 @@
       
       this.$allAtoms
         .css( atomUnstyle )
-        .removeClass( this.options.hiddenClass );
+        .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass );
       
       this.element
         .css({
@@ -757,8 +751,11 @@
       var measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
-          segments = isRows ? 'rows' : 'cols';
+          segments = isRows ? 'rows' : 'cols',
+          segmentsValue;
       
+      // i.e. this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
+      //    this.$allAtoms.outerWidth(true)
       this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
       
       // if colW == 0, back out before divide by zero
@@ -767,8 +764,9 @@
         return this;
       }
       this[ size ] = this.element[ size ]();
-      this[ namespace ][ segments ] = Math.floor( this[ size ] / this[ namespace ][ measure ] );
-      this[ namespace ][ segments ] = Math.max( this[ namespace ][ segments ], 1 );
+      segmentsValue = Math.floor( this[ size ] / this[ namespace ][ measure ] );
+      // i.e. this.masonry.cols = ....
+      this[ namespace ][ segments ] = Math.max( segmentsValue, 1 );
       
       return this;
       
@@ -838,6 +836,7 @@
           instance._masonryPlaceBrick( $this, groupCount, groupY );
         }
       });
+      return this;
     },
   
     // reset
@@ -878,7 +877,7 @@
       this.width = this.element.width();
       var instance = this;
       
-      return $elems.each( function() {
+      $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
@@ -899,6 +898,7 @@
         instance.fitRows.x += atomW;
   
       });
+      return this;
     },
   
     _fitRowsReset : function() {
@@ -1048,6 +1048,7 @@
           instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
         }
       });
+      return this;
     },
     
     _masonryHorizontalReset : function() {
@@ -1095,7 +1096,7 @@
     _fitColumnsLayout : function( $elems ) {
       var instance = this;
       this.height = this.element.height();
-      return $elems.each( function() {
+      $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
@@ -1116,6 +1117,7 @@
         instance.fitColumns.y += atomH;
 
       });
+      return this;
     },
     
     _fitColumnsGetContainerSize : function () {
