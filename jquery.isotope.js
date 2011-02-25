@@ -750,7 +750,8 @@
       var measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
-          segments = isRows ? 'rows' : 'cols';
+          segments = isRows ? 'rows' : 'cols',
+          segmentsValue;
       
       this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
       
@@ -760,8 +761,8 @@
         return this;
       }
       this[ size ] = this.element[ size ]();
-      this[ namespace ][ segments ] = Math.floor( this[ size ] / this[ namespace ][ measure ] );
-      this[ namespace ][ segments ] = Math.max( this[ namespace ][ segments ], 1 );
+      segmentsValue = Math.floor( this[ size ] / this[ namespace ][ measure ] );
+      this[ namespace ][ segments ] = Math.max( segmentsValue, 1 );
       
       return this;
       
