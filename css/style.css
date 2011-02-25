@@ -84,11 +84,6 @@ body {
   color: #FFF;
 }
 
-section, nav, header, footer {
-  display: block;
-}
-
-
 h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
 }
