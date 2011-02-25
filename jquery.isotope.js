@@ -831,6 +831,7 @@
           instance._masonryPlaceBrick( $this, groupCount, groupY );
         }
       });
+      return this;
     },
   
     // reset
@@ -871,7 +872,7 @@
       this.width = this.element.width();
       var instance = this;
       
-      return $elems.each( function() {
+      $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
@@ -892,6 +893,7 @@
         instance.fitRows.x += atomW;
   
       });
+      return this;
     },
   
     _fitRowsReset : function() {
@@ -1041,6 +1043,7 @@
           instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
         }
       });
+      return this;
     },
     
     _masonryHorizontalReset : function() {
@@ -1088,7 +1091,7 @@
     _fitColumnsLayout : function( $elems ) {
       var instance = this;
       this.height = this.element.height();
-      return $elems.each( function() {
+      $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
@@ -1109,6 +1112,7 @@
         instance.fitColumns.y += atomH;
 
       });
+      return this;
     },
     
     _fitColumnsGetContainerSize : function () {
