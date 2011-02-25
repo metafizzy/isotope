@@ -108,7 +108,6 @@ ul, ol {
   margin-left: 1.5em;
 }
 
-
 a,
 a code {
   color: #FB4;
@@ -263,17 +262,13 @@ body {
   float: left;
 }
 
-
-
-#options li {
-}
-
 #options li a {
   display: inline-block;
   padding: 0.4em 0.5em;
   background-color: #DDD;
   color: #222;
   font-weight: bold;
+  margin-bottom: 0.2em;
   text-shadow: 0 1px hsla( 0, 0%, 100%, 0.5 );
   background-image: -moz-linear-gradient(-90deg, 
     hsla( 0, 0%, 100%, 0.5 ) , 
@@ -283,7 +278,6 @@ body {
     from( hsla( 0, 0%, 100%, 0.5 ) ), 
     to(   hsla( 0, 0%, 100%, 0.0 ) )
   );
-    margin-bottom: 0.2em;
 }
 
 #options li a:hover {
@@ -348,8 +342,6 @@ body.doc {
 }
 
 .doc #content {
-/*  font-size: 14px;
-  line-height: 1.7em;*/
   margin-bottom: 20px;
 }
 
@@ -495,19 +487,11 @@ h3#options {
   padding-bottom: 0;
 }
 
-.option-def dl {
-/*  margin-top: 1.8em;*/
-/*  padding-top: 0.5em;*/
-/*  border-top: 1px solid #333;*/
-}
-
-
 .option-def dl dt,
 .option-def dl dd {
   float: left;
   padding: 0 1.2em;;
   background: #161616;
-/*  height: 2.0em;*/
   line-height: 36px;
   height: 36px;
 }
@@ -517,12 +501,7 @@ h3#options {
   background: #444;
 }
 
-.option-def dl dt {
-/*  font-size: 14px;*/
-}
-
 .option-def dl .option-type {
-/*  width: 60px;*/
   font-size: 13px;
   color: #AAA;
   font-style: italic;
