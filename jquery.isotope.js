@@ -728,7 +728,7 @@
       
       this.$allAtoms
         .css( atomUnstyle )
-        .removeClass( this.options.hiddenClass );
+        .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass );
       
       this.element
         .css({
