@@ -753,6 +753,8 @@
           segments = isRows ? 'rows' : 'cols',
           segmentsValue;
       
+      // i.e. this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
+      //    this.$allAtoms.outerWidth(true)
       this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
       
       // if colW == 0, back out before divide by zero
@@ -762,6 +764,7 @@
       }
       this[ size ] = this.element[ size ]();
       segmentsValue = Math.floor( this[ size ] / this[ namespace ][ measure ] );
+      // i.e. this.masonry.cols = ....
       this[ namespace ][ segments ] = Math.max( segmentsValue, 1 );
       
       return this;
