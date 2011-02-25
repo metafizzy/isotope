@@ -206,13 +206,11 @@
       // a couple transforms we're keeping track of, we'll do it like so
       var translateFn = transformObj.translate || '',
           scaleFn = transformObj.scale || '',
+          // sorting so translate always comes first
           valueFns = translateFn + scaleFn;
 
       // set data back in elem
       $( elem ).data( 'transform', data );
-
-      // sorting so scale always comes before 
-      value = valueFns;
 
       // set name to vendor specific property
       elem.style[ isoTransform.transformProp ] = valueFns;
