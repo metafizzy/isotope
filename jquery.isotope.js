@@ -597,8 +597,7 @@
     // accepts atoms-to-be-laid-out to start with
     layout : function( $elems, callback ) {
 
-      var layoutMode = this.options.layoutMode,
-          layoutMethod = '_' + layoutMode;
+      var layoutMode = this.options.layoutMode;
 
       // layout logic
       this[ '_' +  layoutMode + 'Layout' ]( $elems );
@@ -616,14 +615,10 @@
                     'css' : this.applyStyleFnName,
           animOpts = this.options.animationOptions;
 
-
       // process styleQueue
-      $.each( this.styleQueue, function( i, obj ){
-                                       // have to extend animation to play nice with jQuery
-        obj.$el[ styleFn ]( obj.style, $.extend( {}, animOpts ) );
+      $.each( this.styleQueue, function( i, obj ) {
+        obj.$el[ styleFn ]( obj.style, animOpts );
       });
-      
-      
 
       // clear out queue for next time
       this.styleQueue = [];
