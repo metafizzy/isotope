@@ -184,15 +184,16 @@
     ,
     
     set : function( elem, name, value ) {
-
-      // unpack current transform data
-      var data =  $( elem ).data('transform') || {},
-      // extend new value over current data
+      var $elem = $(elem),
+          // unpack current transform data
+          data =  $elem.data('isoTransform') || {},
           newData = {},
           fnName,
           transformObj = {};
-      // overwrite new data
+
+      // i.e. newData.scale = 0.5
       newData[ name ] = value;
+      // extend new value over current data
       $.extend( data, newData );
 
       for ( fnName in data ) {
@@ -210,7 +211,7 @@
           valueFns = translateFn + scaleFn;
 
       // set data back in elem
-      $( elem ).data( 'transform', data );
+      $elem.data( 'isoTransform', data );
 
       // set name to vendor specific property
       elem.style[ isoTransform.transformProp ] = valueFns;
