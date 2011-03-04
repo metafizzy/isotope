@@ -564,7 +564,13 @@
           sortFn = function( alpha, beta ) {
             var a = getSorter( alpha ),
                 b = getSorter( beta );
-            return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
+	        if(a==b && instance.options.sortBy != 'original-order') {
+	          a = $(alpha).data('isotope-sort-data')['original-order'];
+	          b = $(beta).data('isotope-sort-data')['original-order'];
+	          return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
+	        } else {
+	          return ( (a>b)?1:-1 ) * sortDir;
+	        }
           };
       
       this.$filteredAtoms.sort( sortFn );
