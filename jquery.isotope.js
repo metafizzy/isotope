@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110225
+ * Isotope v1.0.110316
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -380,6 +380,7 @@
 
       // get applyStyleFnName
       switch ( this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
+        case 'css' :
         case 'none' :
           this.applyStyleFnName = 'css';
           break;
