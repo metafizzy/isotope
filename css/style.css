@@ -607,6 +607,66 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   width: 436px;
 }
 
+/**** Sites using Isotope ****/
+
+#sites h2 {
+  padding: 0.4em;
+  line-height: 32px;
+  margin-bottom: 0.4em;
+  -webkit-transition: background-color 0.8s;
+     -moz-transition: background-color 0.8s;
+       -o-transition: background-color 0.8s;
+          transition: background-color 0.8s;
+}
+
+#sites h2 img {
+  display: inline-block;
+  margin-right: 0.4em;
+  vertical-align: bottom;
+}
+
+#sites h2.loading {
+  background: white;
+  color: #222;
+}
+#sites h2.error {
+  background: red;
+  color: #222;
+}
+
+
+#sites ul {
+  margin: 0;
+}
+
+#sites li {
+  list-style: none;
+  float: left;
+  width: 290px;
+}
+
+#sites li a,
+#sites li b,
+#sites li img {
+  display: block;
+}
+
+#sites li a {
+  width: 270px;
+  padding: 10px;
+}
+
+#sites li a:hover {
+  background: #333;
+}
+
+#sites li b { 
+  font-weight: bold;
+  line-height: 1.3em;
+  margin-bottom: 0.6em;
+}
+
+
 /**************************
 **  Infinite Scroll
 **************************/
