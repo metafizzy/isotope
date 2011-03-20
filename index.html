@@ -159,13 +159,20 @@ layout: nil
         }
       });
       
+      var ajaxError = function(){
+        $sitesTitle.removeClass('loading').addClass('error')
+          .text('Could not load sites using Isotope :(');
+      };
+      
       // dynamically load sites using Isotope from Ember app
       $.getJSON('http://api.emberapp.com/users/view/' + 
-                  'desandro/collections/view/isotope.json?callback=?',
-        function( data ){
+                  'desandro/collections/view/isotope.json?callback=?')
+        .error( ajaxError )
+        .success(function( data ){
           
           // proceed only if we have images
           if ( !data.response || !data.response.images ) {
+            ajaxError();
             return;
           }
           var images = data.response.images,

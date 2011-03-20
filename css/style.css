@@ -625,6 +625,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   background: white;
   color: #222;
 }
+#sites h2.error { color: red; }
+
 
 #sites ul {
   margin: 0;
