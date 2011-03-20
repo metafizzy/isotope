@@ -613,6 +613,10 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   padding: 0.4em;
   line-height: 32px;
   margin-bottom: 0.4em;
+  -webkit-transition: background-color 0.8s;
+     -moz-transition: background-color 0.8s;
+       -o-transition: background-color 0.8s;
+          transition: background-color 0.8s;
 }
 
 #sites h2 img {
@@ -625,7 +629,10 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   background: white;
   color: #222;
 }
-#sites h2.error { color: red; }
+#sites h2.error {
+  background: red;
+  color: #222;
+}
 
 
 #sites ul {
