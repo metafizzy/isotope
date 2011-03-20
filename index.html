@@ -91,6 +91,8 @@ layout: nil
     <li class="link" data-related="z-etc"><a href="http://github.com/desandro/isotope">Isotope on GitHub</a></li>
   </ul>
   
+  <div id="sites"></div>
+  
   {% include footer.html %}
   
   
@@ -141,6 +143,53 @@ layout: nil
           }
         }
       });
+      
+      // Sites using Isotope markup
+      var $sites = $('#sites'),
+          $sitesTitle = $('<h2 class="loading"><img src="http://i.imgur.com/qkKy8.gif" />Loading sites using Isotope</h2>'),
+          $sitesList = $('<ul class="clearfix"></ul>');
+          
+      $sites.append( $sitesTitle ).append( $sitesList );
+
+      $sitesList.isotope({
+        layoutMode: 'cellsByRow',
+        cellsByRow: {
+          columnWidth: 290,
+          rowHeight: 400
+        }
+      });
+      
+      // dynamically load sites using Isotope from Ember app
+      $.getJSON('http://api.emberapp.com/users/view/' + 
+                  'desandro/collections/view/isotope.json?callback=?',
+        function( data ){
+          
+          // proceed only if we have images
+          if ( !data.response || !data.response.images ) {
+            return;
+          }
+          var images = data.response.images,
+              items = [],
+              item, image;
+          
+          for ( var i=0, len = images.length; i < len; i++ ) {
+            image = images[i];
+            item = '<li><a href="' + image.url + '">'
+              + '<b>' + image.name + '</b>'
+              + '<img src="' + image.file.src.replace('/m.', '/s.') + '" />'
+              + '</a></li>';
+            items.push( item );
+          }
+          
+          var $items = $( items.join('') );
+          
+          $items.imagesLoaded(function(){
+            $sitesTitle.removeClass('loading').text('Sites using Isotope');
+            $sitesList.isotope( 'insert', $items );
+          });
+          
+        });
+      
       
     });
   </script>
