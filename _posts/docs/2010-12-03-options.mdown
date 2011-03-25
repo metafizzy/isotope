@@ -198,7 +198,7 @@ Triggers layout logic when browser window is resized.
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
-Isotope will set the height (for vertical layout modes) or width (for horizontal layout modes) of the container after layout. If `resizesContainer` is set to `false`, be sure to set a size for the container in your CSS, so it doesn't collapse when Isotope is triggered.
+Isotope will set the height (for vertical layout modes) or width (for horizontal layout modes) of the container after layout. If `resizesContainer` is set to <code><span class="kc">false</span></code>, be sure to set a size for the container in your CSS, so it doesn't collapse when Isotope is triggered.
 
 ## sortAscending
 
