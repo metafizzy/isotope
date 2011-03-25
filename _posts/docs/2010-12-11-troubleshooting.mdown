@@ -7,12 +7,14 @@ related: z-etc
 toc:
   - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }
   - { title: Support license, anchor: support_license }
+  - { title: Additional resources, anchor: additional_resources }
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
   - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
   - { title: Prepending items, anchor: prepending_items }
+  - { title: Flash, anchor: flash }
 
 ---
 
@@ -33,6 +35,13 @@ The issues tracker is for bugs and issues &mdash; when Isotope doesn't work as e
 If you've tried everything and would really like to get my eyes looking at your code, you can purchase a [Support License from Metafizzy](http://metafizzy.co/#support-license).
 
 Support License is included with Isotope Commercial License.
+
+## Additional resources
+
++ The [Metafizzy blog](http://metafizzy.co/blog/) has posts that cover specialized use cases
++ [Sites using Isotope](http://www.delicious.com/desandro/using:isotope)
++ [Miscelleanous Isotope content](http://www.delicious.com/desandro/re:isotope)
++ [Stack Overflow questions on Isotope](http://www.delicious.com/desandro/re:isotope+stackoverflow)
 
 ## Unloaded media
  
@@ -117,3 +126,9 @@ If you do plan on implementing Infinite Scroll with filtering or sorting (which 
 ## Prepending items
 
 While there is no prepend method built into Isotope, you can add items to the beginning of a Isotope layout by using sorting and [`updateSortData`](methods.html#getsortdata).  See [Isotope - prepending items on jsFiddle](http://jsfiddle.net/desandro/zXWkw/4/).
+
+## Flash
+
+[Using CSS transforms with Flash content is a bit buggy in Safari and Firefox](http://dropshado.ws/post/4085720152/css-transforms-breaking-flash). This is problematic when using Isotope on item elements that contain Flash content like YouTube or Vimeo videos, Flash ads, or Flash audio players.
+
+The best way to resolve this issue is to disable CSS transforms by setting the [`transformsEnabled` option](options.html#transformsenabled) to <code><span class="kc">false</span></code>.
