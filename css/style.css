@@ -341,10 +341,6 @@ body.doc {
   max-width: 640px;
 }
 
-.doc #content {
-  margin-bottom: 20px;
-}
-
 .doc a:hover {
   border-bottom: 1px dotted;
 }
@@ -388,9 +384,12 @@ body.doc {
 
 /**** Doc page nav ****/
 
-#docs-nav h1 {
+#docs-nav h1,
+#demo-nav {
   font-size: 19px;
   margin-bottom: 0.5em;
+  font-weight: bold;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 #docs-nav h1 a,
@@ -399,10 +398,7 @@ body.doc {
 #demo-nav a:hover { color: #4BF; }
 
 #demo-nav {
-  font-size: 16px;
-  font-weight: bold;
   padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
   border-bottom: 1px solid #333;
 }
 
@@ -433,8 +429,7 @@ body.doc {
 
 /**** Doc content ****/
 
-.doc h2,
-.doc footer {
+.doc h2 {
   border-top: 1px solid #333;
   padding-top: 0.8em;
 }
@@ -461,8 +456,9 @@ body.doc {
 
 footer {
   font-size: 12px;
+  font-style: italic;
   border-top: 1px solid #333;
-  padding-top: 0.8em;
+  padding: 0.8em 0;
 }
 
 pre {

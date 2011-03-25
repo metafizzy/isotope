@@ -20,6 +20,7 @@ toc:
   - { title: resizesContainer, anchor: resizescontainer }
   - { title: sortAscending, anchor: sortascending }
   - { title: sortBy, anchor: sortby }
+  - { title: transformsEnabled, anchor: transformsenabled }
   - { title: visibleStyle, anchor: visiblestyle }
   - { title: Layout-specific options, anchor: layoutspecific_options }
 
@@ -197,7 +198,7 @@ Triggers layout logic when browser window is resized.
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
-Isotope will set the height (for vertical layout modes) or width (for horizontal layout modes) of the container after layout. If `resizesContainer` is set to `false`, be sure to set a size for the container in your CSS, so it doesn't collapse when Isotope is triggered.
+Isotope will set the height (for vertical layout modes) or width (for horizontal layout modes) of the container after layout. If `resizesContainer` is set to <code><span class="kc">false</span></code>, be sure to set a size for the container in your CSS, so it doesn't collapse when Isotope is triggered.
 
 ## sortAscending
 
@@ -225,6 +226,30 @@ The property name of the method within the `getSortData` option to sort item ele
 ### Values {#sortBy-values}
 
 + `'original-order'` Sorts item elements by their original order.
+
+## transformsEnabled
+
+<dl class="clearfix">
+  <dt><code>transformsEnabled</code></dt>
+  <dd class="option-type">Boolean</dd>
+  <dd class="default"><code><span class="kc">true</span></code></dd>
+</dl>
+
+Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning.
+
+### Additional CSS {#transformsEnabled-css}
+
+If you do disable transforms, but still want to use [CSS transitions](animating.html#css_transitions), you'll need add the following CSS:
+
+{% highlight css %}
+
+.isotope .isotope-item {
+  -webkit-transition-property: top, left, opacity;
+     -moz-transition-property: top, left, opacity;
+          transition-property: top, left, opacity;
+}
+
+{% endhighlight %}
 
 ## visibleStyle
 

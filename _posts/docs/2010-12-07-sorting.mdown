@@ -126,7 +126,7 @@ There is an additional sorting data built in to Isotope `'original-order'`. Sort
 
 ## sortAscending option
 
-By default, Isotope sorts data in ascension. If our data for name is "Gold, Antimony, Lead, Iron, Silver", when sorted by name, the elements will be ordered ABC.. : "Antimony, Gold, Iron, Lead, Silver."  To reverse the order and sort data in descension, set [`sortAscending`](options.html#sortascending) to `false`.
+By default, Isotope sorts data in ascension. If our data for name is "Gold, Antimony, Lead, Iron, Silver", when sorted by name, the elements will be ordered ABC.. : "Antimony, Gold, Iron, Lead, Silver."  To reverse the order and sort data in descension, set [`sortAscending`](options.html#sortascending) to <code><span class="kc">false</span></code>.
 
 {% highlight javascript %}
 
