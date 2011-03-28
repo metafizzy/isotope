@@ -235,7 +235,7 @@ The property name of the method within the `getSortData` option to sort item ele
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
-Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning.
+Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with Flash content](troubleshooting.html#flash).
 
 ### Additional CSS {#transformsEnabled-css}
 
@@ -248,6 +248,22 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
      -moz-transition-property: top, left, opacity;
           transition-property: top, left, opacity;
 }
+
+{% endhighlight %}
+
+### Disabling hiddenStyle scale
+
+If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle)
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  transformsEnabled: false,
+  hiddenStyle : {
+    opacity: 0,
+    scale : 1
+  }
+});
 
 {% endhighlight %}
 
