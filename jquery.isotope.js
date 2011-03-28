@@ -652,8 +652,16 @@
     
     
     reLayout : function( callback ) {
-      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
-        .layout( this.$filteredAtoms, callback );
+      
+      // proceed if there are atoms
+      if ( this.$allAtoms.length && this.$filteredAtoms.length ) {
+        return this[ '_' +  this.options.layoutMode + 'Reset' ]()
+          .layout( this.$filteredAtoms, callback );
+      } else {
+        // TO DO: add callback.call here?
+        return this;
+      }
+      
     },
     
     // ====================== Convenience methods ======================
