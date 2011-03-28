@@ -951,10 +951,10 @@
       this.cellsByRow.atomsLen = $elems.length;
       $elems.each( function( i ){
         var $this = $(this),
-            x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth
-                - $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight 
-                - $this.outerHeight(true) / 2 + instance.posTop;
+            x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth -
+                  $this.outerWidth(true) / 2 + instance.posLeft,
+            y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight -
+                  $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
       });
       return this;
@@ -1162,10 +1162,10 @@
       this.cellsByColumn.atomsLen = $elems.length;
       $elems.each( function( i ){
         var $this = $(this),
-            x = ( ~~( i / rows ) + 0.5 )  * instance.cellsByColumn.columnWidth
-                - $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( i % rows + 0.5 ) * instance.cellsByColumn.rowHeight 
-                - $this.outerHeight(true) / 2 + instance.posTop;
+            x = ( ~~( i / rows ) + 0.5 )  * instance.cellsByColumn.columnWidth -
+                  $this.outerWidth(true) / 2 + instance.posLeft,
+            y = ( i % rows + 0.5 ) * instance.cellsByColumn.rowHeight -
+                  $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
       });
       return this;
