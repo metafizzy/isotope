@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110325
+ * Isotope v1.0.110328
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -331,6 +331,9 @@
     this._create( options );
     this._init();
   };
+  
+  // styles of container element we want to keep track of
+  var isoContainerStyles = [ 'overflow', 'position', 'width', 'height' ];
 
   $.Isotope.prototype = {
 
@@ -371,6 +374,14 @@
       this.elemCount = 0;
       // need to get atoms
       this.$allAtoms = this._filterFind( this.element.children(), this.options.itemSelector );
+
+      // get original styles in case we re-apply them in .destroy()
+      var elemStyle = this.element[0].style;
+      this.originalStyle = {};
+      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
+        var prop = isoContainerStyles[i];
+        this.originalStyle[ prop ] = elemStyle[ prop ] || null;
+      }
       
       this.element.css({
         overflow : 'hidden',
@@ -719,25 +730,29 @@
     
     // destroys widget, returns elements and container back (close) to original style
     destroy : function() {
-      var atomUnstyle = $.extend( this.options.visibleStyle, {
-        position: 'relative',
-        top: 'auto',
-        left: 'auto'
-      });
+
+      var usingTransforms = this.usingTransforms;
+
+      this.$allAtoms
+        .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass )
+        .each(function(){
+          this.style.position = null;
+          this.style.top = null;
+          this.style.left = null;
+          this.style.opacity = null;
+          if ( usingTransforms ) {
+            this.style[ isoTransform.transformProp ] = null;
+          }
+        });
       
-      if ( this.usingTransforms ) {
-        atomUnstyle[ isoTransform.transformProp ] = 'none';
+      // re-apply saved container styles
+      var elemStyle = this.element[0].style;
+      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
+        var prop = isoContainerStyles[i];
+        elemStyle[ prop ] = this.originalStyle[ prop ];
       }
       
-      this.$allAtoms
-        .css( atomUnstyle )
-        .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass );
-      
       this.element
-        .css({
-          width: 'auto',
-          height: 'auto'
-        })
         .unbind('.isotope')
         .removeClass( this.options.containerClass )
         .removeData('isotope');
