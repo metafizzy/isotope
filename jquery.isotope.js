@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110328
+ * Isotope v1.0.110401
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -653,14 +653,8 @@
     
     reLayout : function( callback ) {
       
-      // proceed if there are atoms
-      if ( this.$allAtoms.length && this.$filteredAtoms.length ) {
-        return this[ '_' +  this.options.layoutMode + 'Reset' ]()
-          .layout( this.$filteredAtoms, callback );
-      } else {
-        // TO DO: add callback.call here?
-        return this;
-      }
+      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
+        .layout( this.$filteredAtoms, callback );
       
     },
     
@@ -776,22 +770,26 @@
       var measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
-          segments = isRows ? 'rows' : 'cols',
-          segmentsValue;
+          segmentsName = isRows ? 'rows' : 'cols',
+          segments,
+          segmentSize;
       
-      // i.e. this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
-      //    this.$allAtoms.outerWidth(true)
-      this[ namespace ][ measure ] = ( this.options[ namespace ] && this.options[ namespace ][ measure ] ) || this.$allAtoms[ 'outer' + UCSize ](true);
-      
-      // if colW == 0, back out before divide by zero
-      if ( !this[ namespace ][ measure ] ) {
-        $.error( measure + ' calculated to be zero. Stopping Isotope plugin before divide by zero. Check that the width of first child inside the isotope container is not zero.');
-        return this;
-      }
       this[ size ] = this.element[ size ]();
-      segmentsValue = Math.floor( this[ size ] / this[ namespace ][ measure ] );
+      
+                    // i.e. options.masonry && options.masonry.columnWidth
+      segmentSize = this.options[ namespace ] && this.options[ namespace ][ measure ] ||
+                    // or use the size of the first item
+                    this.$filteredAtoms[ 'outer' + UCSize ](true) ||
+                    // if there's no items, use size of container
+                    this[ size ];
+      
+      segments = Math.floor( this[ size ] / segmentSize );
+      segments = Math.max( segments, 1 );
+
       // i.e. this.masonry.cols = ....
-      this[ namespace ][ segments ] = Math.max( segmentsValue, 1 );
+      this[ namespace ][ segmentsName ] = segments;
+      // i.e. this.masonry.columnWidth = ...
+      this[ namespace ][ measure ] = segmentSize;
       
       return this;
       
