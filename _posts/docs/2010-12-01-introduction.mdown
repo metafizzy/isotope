@@ -79,7 +79,7 @@ Isotope enables a wealth of functionality. But just because you can take advanta
 ## Acknowledgments
 
 + [**Faruk Ateş**](http://farukat.es) for [Modernizr](http://www.modernizr.com/) (partially used within Isotope)
-+ [**Louis-Rémi Babé**](http://twitter.com/#!/Louis_Remi) for [jQuery smartresize](https://github.com/lrbabe/jquery-smartresize) (used within Isotope) and for [jQuery transform](https://github.com/lrbabe/jquery.transform.js) which clued me in to using jQuery 1.4.3's CSS   hooks
++ [**Louis-Rémi Babé**](http://twitter.com/Louis_Remi) for [jQuery smartresize](https://github.com/louisremi/jquery-smartresize) (used within Isotope) and for [jQuery transform](https://github.com/louisremi/jquery.transform.js) which clued me in to using jQuery 1.4.3's CSS   hooks
 + [**Jacek Galanciak**](http://razorjack.net/) for [jQuery Quicksand](http://razorjack.net/quicksand/), an early kernel of inspiration
 + [**Ralph Holzmann**](http://twitter.com/#!/ralphholzmann) for re-writing the [jQuery Plugins/Authoring tutorial](http://docs.jquery.com/Plugins/Authoring) and opened my eyes to [Plugin Methods](http://docs.jquery.com/Plugins/Authoring#Plugin_Methods) pattern
 + [**Eric Hynds**](http://www.erichynds.com/) for his article [Using $.widget.bridge Outside of the Widget Factory](http://www.erichynds.com/jquery/using-jquery-ui-widget-factory-bridge/) which provided the architecture for Isotope
