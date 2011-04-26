@@ -1,0 +1,99 @@
+---
+title: item position data01
+layout: demo
+category: tests
+---
+
+  <section id="copy">
+    <p></p>
+  </section>
+  
+  <section id="options" class="clearfix">
+
+    <h3>Filters</h3>
+
+    <ul id="filters" class="option-set floated clearfix">
+      <li><a href="#show-all" class="selected">show all</a></li>
+      <li><a href="#metalloid">metalloid</a></li>
+      <li><a href="#metal">metal</a></li>
+      <li><a href="#alkali">alkali</a></li>
+      <li><a href="#alkaline-earth">alkaline-earth</a></li>
+      <li><a href="#inner-transition">inner-transition</a></li>
+      <li><a href="#lanthanoid">lanthanoid</a></li>
+      <li><a href="#actinoid">actinoid</a></li>
+      <li><a href="#transition">transition</a></li>
+      <li><a href="#post-transition">post-transition</a></li>
+      <li><a href="#nonmetal">nonmetal</a></li>
+      <li><a href="#other">other</a></li>
+      <li><a href="#halogen">halogen</a></li>
+      <li><a href="#noble-gas">noble-gas</a></li>
+    </ul>
+
+    {% include sort-buttons.html %}
+
+    <h3>Etc</h3>
+
+    <ul id="etc" class="floated clearfix">
+
+      <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
+    </ul>
+  </section> <!-- #options -->
+
+  <div id="container">
+    {% for element in site.elements limit:40 %}
+      {% include element-partial.html %}
+    {% endfor %}
+  </div> <!-- #container -->
+
+  <script src="../{{ site.jquery_js }}"></script>
+  <script src="../{{ site.isotope_js }}"></script>
+  <script>
+    $(function(){
+    
+      var $container = $('#container');
+      
+      // hacky way of adding random size classes
+      $container.find('.element').each(function(){
+        if ( Math.random() > 0.6 ) {
+          $(this).addClass('width2');
+        }
+        if ( Math.random() > 0.6 ) {
+          $(this).addClass('height2');
+        }
+      });
+      
+      {% include sort-buttons.js %}
+
+      // change size of clicked element
+      $container.find('.element').live('click', function(){
+        $(this).toggleClass('large');
+        $container.isotope('reLayout');
+      });
+    
+      $container.isotope({
+        itemSelector: '.element',
+        itemPositionDataEnabled: true,
+        masonry: {
+          columnWidth : 120
+        },
+        getSortData : {
+          symbol : function( $elem ) {
+            return $elem.attr('data-symbol');
+          },
+          category : function( $elem ) {
+            return $elem.attr('data-category');
+          },
+          number : function( $elem ) {
+            return parseInt( $elem.find('.number').text(), 10 );
+          },
+          weight : function( $elem ) {
+            return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
+          },
+          name : function ( $elem ) {
+            return $elem.find('.name').text();
+          }
+        }
+      });
+    
+    });
+  </script>
