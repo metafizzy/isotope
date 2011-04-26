@@ -1,5 +1,5 @@
 /**
- * Isotope v1.0.110401
+ * Isotope v1.1.110426
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -357,7 +357,8 @@
       sortBy : 'original-order',
       sortAscending : true,
       resizesContainer : true,
-      transformsEnabled : true
+      transformsEnabled : true,
+      itemPositionDataEnabled: false
     },
     
     _filterFind: function( $elems, selector ) {
@@ -600,6 +601,9 @@
     _pushPosition : function( $elem, x, y ) {
       var position = this.getPositionStyles( x, y );
       this.styleQueue.push({ $el: $elem, style: position });
+      if ( this.options.itemPositionDataEnabled ) {
+        $elem.data('isotope-item-position', {x: x, y: y} );
+      }
     },
 
 

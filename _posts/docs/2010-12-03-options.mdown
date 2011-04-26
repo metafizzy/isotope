@@ -14,6 +14,7 @@ toc:
   - { title: hiddenClass, anchor: hiddenclass }
   - { title: hiddenStyle, anchor: hiddenstyle }
   - { title: itemClass, anchor: itemclass }
+  - { title: itemPositionDataEnabled, anchor: itempositiondataenabled }
   - { title: itemSelector, anchor: itemselector }
   - { title: layoutMode, anchor: layoutmode }
   - { title: resizable, anchor: resizable }
@@ -158,6 +159,32 @@ The style applied to item elements hidden by Filtering.
 </dl>
 
 The class applied to item elements.
+
+## itemPositionDataEnabled
+
+<dl class="clearfix">
+  <dt><code>itemPositionDataEnabled</code></dt>
+  <dd class="option-type">Boolean</dd>
+  <dd class="default"><code><span class="kc">false</span></code></dd>
+</dl>
+
+When enabled, the position of item elements will exposed as data, which you can retrieve with jQuery's data method with <code><span class="s1">'isotope-item-position'</span></code> name space. Position is return as an object with `x` and `y`;
+
+### Example
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  itemSelector: '.element',
+  itemPositionDataEnabled: true
+})
+// log position of each item
+.find('.element').each(function(){
+  var position = $(this).data('isotope-item-position');
+  console.log('item position is x: ' + position.x + ', y: ' + position.y  );
+});
+
+{% endhighlight %}
 
 ## itemSelector
 
