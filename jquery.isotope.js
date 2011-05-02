@@ -1,5 +1,5 @@
 /**
- * Isotope v1.1.110426
+ * Isotope v1.1.110502
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -334,33 +334,33 @@
   
   // styles of container element we want to keep track of
   var isoContainerStyles = [ 'overflow', 'position', 'width', 'height' ];
+  
+  $.Isotope.settings = {
+    resizable: true,
+    layoutMode : 'masonry',
+    containerClass : 'isotope',
+    itemClass : 'isotope-item',
+    hiddenClass : 'isotope-hidden',
+    hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
+      { opacity : 0, scale : 0.001 } : // browsers support CSS transforms, not Opera
+      { opacity : 0 }, // other browsers, including Opera
+    visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
+      { opacity : 1, scale : 1 } : // browsers support CSS transforms, not Opera
+      { opacity : 1 },  // other browsers, including Opera
+    animationEngine : $.browser.opera ? 'jquery' : 'best-available',
+    animationOptions: {
+      queue: false,
+      duration: 800
+    },
+    sortBy : 'original-order',
+    sortAscending : true,
+    resizesContainer : true,
+    transformsEnabled : true,
+    itemPositionDataEnabled: false
+  };
 
   $.Isotope.prototype = {
 
-    options : {
-      resizable: true,
-      layoutMode : 'masonry',
-      containerClass : 'isotope',
-      itemClass : 'isotope-item',
-      hiddenClass : 'isotope-hidden',
-      hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
-        { opacity : 0, scale : 0.001 } : // browsers support CSS transforms, not Opera
-        { opacity : 0 }, // other browsers, including Opera
-      visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
-        { opacity : 1, scale : 1 } : // browsers support CSS transforms, not Opera
-        { opacity : 1 },  // other browsers, including Opera
-      animationEngine : $.browser.opera ? 'jquery' : 'best-available',
-      animationOptions: {
-        queue: false,
-        duration: 800
-      },
-      sortBy : 'original-order',
-      sortAscending : true,
-      resizesContainer : true,
-      transformsEnabled : true,
-      itemPositionDataEnabled: false
-    },
-    
     _filterFind: function( $elems, selector ) {
       return selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems;
     },
@@ -368,9 +368,8 @@
     // sets up widget
     _create : function( options ) {
       
-      this.options = $.extend( true, {}, this.options, options );
+      this.options = $.extend( true, {}, $.Isotope.settings, options );
       
-      this.isNew = {};
       this.styleQueue = [];
       this.elemCount = 0;
       // need to get atoms
@@ -443,32 +442,14 @@
       
     },
   
-    
-    _isNewProp : function( prop ) {
-      return this.prevOpts ? ( this.options[ prop ] !== this.prevOpts[ prop ] ) : true;
-    },
-  
     // _init fires when your instance is first created
     // (from the constructor above), and when you
     // attempt to initialize the widget again (by the bridge)
     // after it has already been initialized.
     _init : function( callback ) {
       
-      // check if watched properties are new
-      var instance = this;
-      $.each( [ 'filter', 'sortBy', 'sortAscending' ], function( i, propName ){
-        instance.isNew[ propName ] = instance._isNewProp( propName );
-      });
-
-      if ( this.isNew.filter ) {
-        this.$filteredAtoms = this._filter( this.$allAtoms );
-      } else {
-        this.$filteredAtoms = this.$allAtoms;
-      }
-
-      if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortAscending ) {
-        this._sort();
-      }
+      this.$filteredAtoms = this._filter( this.$allAtoms );
+      this._sort();
       
       this.reLayout( callback );
 
