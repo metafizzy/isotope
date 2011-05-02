@@ -370,7 +370,6 @@
       
       this.options = $.extend( true, {}, $.Isotope.settings, options );
       
-      this.isNew = {};
       this.styleQueue = [];
       this.elemCount = 0;
       // need to get atoms
@@ -443,32 +442,14 @@
       
     },
   
-    
-    _isNewProp : function( prop ) {
-      return this.prevOpts ? ( this.options[ prop ] !== this.prevOpts[ prop ] ) : true;
-    },
-  
     // _init fires when your instance is first created
     // (from the constructor above), and when you
     // attempt to initialize the widget again (by the bridge)
     // after it has already been initialized.
     _init : function( callback ) {
       
-      // check if watched properties are new
-      var instance = this;
-      $.each( [ 'filter', 'sortBy', 'sortAscending' ], function( i, propName ){
-        instance.isNew[ propName ] = instance._isNewProp( propName );
-      });
-
-      if ( this.isNew.filter ) {
-        this.$filteredAtoms = this._filter( this.$allAtoms );
-      } else {
-        this.$filteredAtoms = this.$allAtoms;
-      }
-
-      if ( this.isNew.filter || this.isNew.sortBy || this.isNew.sortAscending ) {
-        this._sort();
-      }
+      this.$filteredAtoms = this._filter( this.$allAtoms );
+      this._sort();
       
       this.reLayout( callback );
 
