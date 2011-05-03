@@ -17,38 +17,27 @@
   var getStyleProperty = (function(){
 
     var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
-    var _cache = { };
 
     function getStyleProperty(propName, element) {
       element = element || document.documentElement;
       var style = element.style,
-          prefixed,
-          uPropName,
-          i, l;
+          prefixed;
 
-      // check cache only when no element is given
-      if (arguments.length === 1 && typeof _cache[propName] === 'string') {
-        return _cache[propName];
-      }
       // test standard property first
-      if (typeof style[propName] === 'string') {
-        return (_cache[propName] = propName);
-      }
-    
+      if (typeof style[propName] == 'string') return propName;
+
       // capitalize
-      uPropName = propName.charAt(0).toUpperCase() + propName.slice(1);
+      propName = propName.charAt(0).toUpperCase() + propName.slice(1);
 
       // test vendor specific properties
-      for (i=0, l=prefixes.length; i<l; i++) {
-        prefixed = prefixes[i] + uPropName;
-        if (typeof style[prefixed] === 'string') {
-          return (_cache[propName] = prefixed);
-        }
+      for (var i=0, l=prefixes.length; i<l; i++) {
+        prefixed = prefixes[i] + propName;
+        if (typeof style[prefixed] == 'string') return prefixed;
       }
     }
 
     return getStyleProperty;
-  }());
+  })();
 
   var transformProp = getStyleProperty('transform');
 
@@ -185,7 +174,7 @@
       }
     ;
 
-    function setIsoTransform ( elem, name, value ) {
+    var setIsoTransform = function ( elem, name, value ) {
       var $elem = $(elem),
           // unpack current transform data
           data =  $elem.data('isoTransform') || {},
@@ -217,7 +206,7 @@
 
       // set name to vendor specific property
       elem.style[ transformProp ] = valueFns;
-    }
+    };
    
     // ==================== scale ===================
   
