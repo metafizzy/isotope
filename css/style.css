@@ -720,10 +720,18 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 }
 
 
-/**************************
-**  Infinite Scroll
-**************************/
+/**** Index pages ****/
 
+#index-list {
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.4em;
+  list-style: none;
+  margin-left: 0;
+}
+
+
+/**** Infinite Scroll ****/
 
 #infscr-loading {
   position: fixed;
