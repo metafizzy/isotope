@@ -14,7 +14,9 @@
           </ul>
         </li>
         {% else %}
-        <li><a href="..{{ doc.url }}">{{ doc.title }}</a>
+          {% if doc.layout != 'index-page' %}
+            <li><a href="..{{ doc.url }}">{{ doc.title }}</a>
+          {% endif %}
         {% endif %}
       {% endfor %}
     </ul>
