@@ -225,13 +225,11 @@
   
     $.cssHooks.scale = {
       set: function( elem, value ) {
-
+        // properly parse strings
         if ( typeof value === 'string' ) {
           value = parseFloat( value );
         }
-
         setIsoTransform( elem, 'scale', value );
-
       },
       get: function( elem, computed ) {
         var transform = $.data( elem, 'isoTransform' );
@@ -251,14 +249,12 @@
     $.cssHooks.translate = {
       set: function( elem, value ) {
 
-        // all this would be for public ease-of-use,
-        // but we're leaving it out since this add-on is
-        // only for internal-plugin use
+        // all this would be for public use
+        // properly parsing strings and whatnot
         // if ( typeof value === 'string' ) {
         //   value = value.split(' ');
         // }
         // 
-        //  
         // var i, val;
         // for ( i = 0; i < 2; i++ ) {
         //   val = value[i];
@@ -268,7 +264,6 @@
         // }
 
         setIsoTransform( elem, 'translate', value );
-
       },
     
       get: function( elem, computed ) {
