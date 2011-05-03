@@ -88,7 +88,7 @@ h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
 }
 
-h1, h2, #super-list, .element, .tagline {
+h1, h2, #super-list, .element, .tagline, #index-list {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
