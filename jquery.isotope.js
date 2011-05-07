@@ -1,5 +1,5 @@
 /**
- * Isotope v1.1.110503
+ * Isotope v1.1.110507
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -537,27 +537,26 @@
     _sort : function() {
       
       var instance = this,
-          getSorter = function( elem ) {
-            return $(elem).data('isotope-sort-data')[ instance.options.sortBy ];
-          },
           sortDir = this.options.sortAscending ? 1 : -1,
           sortFn = function( alpha, beta ) {
-            var a = getSorter( alpha ),
-                b = getSorter( beta );
-	        if(a==b && instance.options.sortBy != 'original-order') {
-	          a = $(alpha).data('isotope-sort-data')['original-order'];
-	          b = $(beta).data('isotope-sort-data')['original-order'];
-	          return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
-	        } else {
-	          return ( (a>b)?1:-1 ) * sortDir;
-	        }
+            var a = instance._getSorter( alpha, instance.options.sortBy ),
+                b = instance._getSorter( beta, instance.options.sortBy ),
+                sorted;
+            if ( a === b && instance.options.sortBy !== 'original-order') {
+              a = instance._getSorter( alpha, 'original-order' );
+              b = instance._getSorter( beta, 'original-order' );
+            }
+            return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
           };
       
       this.$filteredAtoms.sort( sortFn );
       
       return this;
     },
-    
+
+    _getSorter : function( elem, sortBy ) {
+      return $(elem).data('isotope-sort-data')[ sortBy ];
+    },
 
     // ====================== Layout ======================
 
