@@ -536,15 +536,16 @@
     // used on all the filtered atoms
     _sort : function() {
       
-      var instance = this,
+      var sortBy = this.options.sortBy,
+          getSorter = this._getSorter,
           sortDir = this.options.sortAscending ? 1 : -1,
           sortFn = function( alpha, beta ) {
-            var a = instance._getSorter( alpha, instance.options.sortBy ),
-                b = instance._getSorter( beta, instance.options.sortBy ),
-                sorted;
+            var a = getSorter( alpha, sortBy ),
+                b = getSorter( beta, sortBy );
+            // fall back to original order if data matches
             if ( a === b && instance.options.sortBy !== 'original-order') {
-              a = instance._getSorter( alpha, 'original-order' );
-              b = instance._getSorter( beta, 'original-order' );
+              a = getSorter( alpha, 'original-order' );
+              b = getSorter( beta, 'original-order' );
             }
             return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
           };
