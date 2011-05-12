@@ -536,7 +536,8 @@
     // used on all the filtered atoms
     _sort : function() {
       
-      var sortBy = this.options.sortBy,
+      var instance = this,
+	      sortBy = this.options.sortBy,
           getSorter = this._getSorter,
           sortDir = this.options.sortAscending ? 1 : -1,
           sortFn = function( alpha, beta ) {
