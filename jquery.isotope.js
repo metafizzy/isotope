@@ -543,7 +543,7 @@
             var a = getSorter( alpha, sortBy ),
                 b = getSorter( beta, sortBy );
             // fall back to original order if data matches
-            if ( a === b && instance.options.sortBy !== 'original-order') {
+            if ( a === b && sortBy !== 'original-order') {
               a = getSorter( alpha, 'original-order' );
               b = getSorter( beta, 'original-order' );
             }

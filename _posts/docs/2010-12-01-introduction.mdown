@@ -8,7 +8,7 @@ toc:
   - { title: Features, anchor: features }
   - { title: Licensing, anchor: licensing }
   - { title: Getting started, anchor: getting_started }
-  - { title: Code repsository, anchor: code_repository }
+  - { title: Code repository, anchor: code_repository }
   - { title: A word about moderation, anchor: moderation }
   - { title: Acknowledgments, anchor: acknowledgments }
   
