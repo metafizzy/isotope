@@ -1,5 +1,5 @@
 /**
- * Isotope v1.1.110512
+ * Isotope v1.2.110513
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -372,26 +372,9 @@
         overflow : 'hidden',
         position : 'relative'
       });
-
-      var jQueryAnimation = false;
-
-      // get applyStyleFnName
-      switch ( this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '') ) {
-        case 'css' :
-        case 'none' :
-          this.applyStyleFnName = 'css';
-          break;
-        case 'jquery' :
-          this.applyStyleFnName = 'animate';
-          jQueryAnimation = true;
-          break;
-        default : // best available
-          this.applyStyleFnName = Modernizr.csstransitions ? 'css' : 'animate';
-      }
       
-      this.usingTransforms = this.options.transformsEnabled && Modernizr.csstransforms && Modernizr.csstransitions && !jQueryAnimation;
-
-      this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
+      this._updateAnimationEngine();
+      this._updateUsingTransforms();
       
       // sorting
       var originalOrderSorter = {
@@ -449,6 +432,9 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
         this.options = $.extend(true, this.options, key);
+        for ( optionName in key ) {
+          this._updateOption( optionName );
+        }
     
       // signature: $('#foo').option('cool');  - getter
       } else if ( key && typeof value === "undefined" ){
@@ -457,9 +443,49 @@
       // signature: $('#foo').bar('option', 'baz', false);
       } else {
         this.options[ key ] = value;
+        this._updateOption( key );
       }
     
       return this; // make sure to return the instance!
+    },
+    
+    // ====================== updaters ====================== //
+    // kind of like setters
+    
+    // trigger _updateOptionName if it exists
+    _updateOption : function( optionName ) {
+      var updateOptionFn = '_update' + optionName.charAt(0).toUpperCase() + optionName.slice(1);
+      if ( this[ updateOptionFn ] ) {
+        this[ updateOptionFn ]();
+      }
+    },
+    
+    _updateAnimationEngine : function() {
+      var animationEngine = this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '');
+      // set applyStyleFnName
+      switch ( animationEngine ) {
+        case 'css' :
+        case 'none' :
+          this.isUsingJQueryAnimation = false;
+          break;
+        case 'jquery' :
+          this.isUsingJQueryAnimation = true;
+          break;
+        default : // best available
+          this.isUsingJQueryAnimation = !Modernizr.csstransitions;
+      }
+      
+      this._updateUsingTransforms();
+    },
+    
+    _updateTransformsEnabled : function() {
+      this._updateUsingTransforms();
+    },
+    
+    _updateUsingTransforms : function() {
+      this.usingTransforms = this.options.transformsEnabled && Modernizr.csstransforms && Modernizr.csstransitions && !this.isUsingJQueryAnimation;
+
+      this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
     },
 
     
@@ -598,9 +624,9 @@
 
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
-      
-      var styleFn = ( this.applyStyleFnName === 'animate' && !this.isLaidOut ) ? 
-                    'css' : this.applyStyleFnName,
+      var styleFn = !this.isLaidOut ? 'css' : (
+            this.isUsingJQueryAnimation ? 'animate' : 'css'
+          ),
           animOpts = this.options.animationOptions;
 
       // process styleQueue
