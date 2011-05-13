@@ -78,6 +78,6 @@ Never set `animationEngine : 'jquery'` AND add CSS transition declarations. This
 
 Animation is not enabled in any browser
 
-+ `animationEngine : 'css'`
++ `animationEngine : 'none'`
 + **No** CSS transition declarations
 
