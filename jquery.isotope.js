@@ -353,10 +353,6 @@
 
   $.Isotope.prototype = {
 
-    _filterFind: function( $elems, selector ) {
-      return selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems;
-    },
-    
     // sets up widget
     _create : function( options ) {
       
@@ -364,8 +360,6 @@
       
       this.styleQueue = [];
       this.elemCount = 0;
-      // need to get atoms
-      this.$allAtoms = this._filterFind( this.element.children(), this.options.itemSelector );
 
       // get original styles in case we re-apply them in .destroy()
       var elemStyle = this.element[0].style;
@@ -392,8 +386,9 @@
 
       this.options.getSortData = $.extend( this.options.getSortData, originalOrderSorter );
 
-      this._setupAtoms( this.$allAtoms );
       
+      // need to get atoms
+      this.$allAtoms = this._getAtoms( this.element.children() );
       
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
@@ -415,6 +410,25 @@
         });
       }
       
+    },
+    
+    _getAtoms : function( $elems ) {
+      var selector = this.options.itemSelector,
+          // filter & find 
+          $atoms = selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems,
+          // base style for atoms
+          atomStyle = { position: 'absolute' };
+          
+      if ( this.usingTransforms ) {
+        atomStyle.left = 0;
+        atomStyle.top = 0;
+      }
+
+      $atoms.css( atomStyle ).addClass( this.options.itemClass );
+
+      this.updateSortData( $atoms, true );
+      
+      return $atoms;
     },
   
     // _init fires when your instance is first created
@@ -496,23 +510,6 @@
       this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
     },
 
-    
-    // ====================== Adding ======================
-    
-    _setupAtoms : function( $atoms ) {
-      
-      // base style for atoms
-      var atomStyle = { position: 'absolute' };
-      if ( this.usingTransforms ) {
-        atomStyle.left = 0;
-        atomStyle.top = 0;
-      }
-
-      $atoms.css( atomStyle ).addClass( this.options.itemClass );
-      
-      this.updateSortData( $atoms, true );
-
-    },
     
     // ====================== Filtering ======================
 
@@ -672,8 +669,7 @@
     
     // adds a jQuery object of items to a isotope container
     addItems : function( $content, callback ) {
-      var $newAtoms = this._filterFind( $content, this.options.itemSelector );
-      this._setupAtoms( $newAtoms );
+      var $newAtoms = this._getAtoms( $content );
       // add new atoms to atoms pools
       // FIXME : this breaks shuffle order and returns to original order
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
