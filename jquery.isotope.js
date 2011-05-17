@@ -9,6 +9,9 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
+/*jshint forin: false */
+/*global jQuery: true, Modernizr: true */
+
 (function( window, $, undefined ){
 
   // ========================= getStyleProperty by kangax ===============================
@@ -24,7 +27,9 @@
           prefixed;
 
       // test standard property first
-      if (typeof style[propName] == 'string') return propName;
+      if (typeof style[propName] === 'string') {
+        return propName;
+      }
 
       // capitalize
       propName = propName.charAt(0).toUpperCase() + propName.slice(1);
@@ -32,7 +37,9 @@
       // test vendor specific properties
       for (var i=0, l=prefixes.length; i<l; i++) {
         prefixed = prefixes[i] + propName;
-        if (typeof style[prefixed] == 'string') return prefixed;
+        if (typeof style[prefixed] === 'string') {
+          return prefixed;
+        }
       }
     }
 
@@ -432,6 +439,7 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
         this.options = $.extend(true, this.options, key);
+        var optionName;
         for ( optionName in key ) {
           this._updateOption( optionName );
         }
