@@ -1,5 +1,5 @@
 /**
- * Isotope v1.2.110513
+ * Isotope v1.2.110516
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -8,6 +8,9 @@
  *
  * Copyright 2011 David DeSandro / Metafizzy
  */
+
+/*jshint forin: false */
+/*global jQuery: true, Modernizr: true */
 
 (function( window, $, undefined ){
 
@@ -24,7 +27,9 @@
           prefixed;
 
       // test standard property first
-      if (typeof style[propName] == 'string') return propName;
+      if (typeof style[propName] === 'string') {
+        return propName;
+      }
 
       // capitalize
       propName = propName.charAt(0).toUpperCase() + propName.slice(1);
@@ -32,7 +37,9 @@
       // test vendor specific properties
       for (var i=0, l=prefixes.length; i<l; i++) {
         prefixed = prefixes[i] + propName;
-        if (typeof style[prefixed] == 'string') return prefixed;
+        if (typeof style[prefixed] === 'string') {
+          return prefixed;
+        }
       }
     }
 
@@ -346,10 +353,6 @@
 
   $.Isotope.prototype = {
 
-    _filterFind: function( $elems, selector ) {
-      return selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems;
-    },
-    
     // sets up widget
     _create : function( options ) {
       
@@ -357,8 +360,6 @@
       
       this.styleQueue = [];
       this.elemCount = 0;
-      // need to get atoms
-      this.$allAtoms = this._filterFind( this.element.children(), this.options.itemSelector );
 
       // get original styles in case we re-apply them in .destroy()
       var elemStyle = this.element[0].style;
@@ -385,8 +386,8 @@
 
       this.options.getSortData = $.extend( this.options.getSortData, originalOrderSorter );
 
-      this._setupAtoms( this.$allAtoms );
-      
+      // need to get atoms
+      this.reloadItems();
       
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
@@ -408,6 +409,25 @@
         });
       }
       
+    },
+    
+    _getAtoms : function( $elems ) {
+      var selector = this.options.itemSelector,
+          // filter & find 
+          $atoms = selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems,
+          // base style for atoms
+          atomStyle = { position: 'absolute' };
+          
+      if ( this.usingTransforms ) {
+        atomStyle.left = 0;
+        atomStyle.top = 0;
+      }
+
+      $atoms.css( atomStyle ).addClass( this.options.itemClass );
+
+      this.updateSortData( $atoms, true );
+      
+      return $atoms;
     },
   
     // _init fires when your instance is first created
@@ -432,6 +452,7 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
         this.options = $.extend(true, this.options, key);
+        var optionName;
         for ( optionName in key ) {
           this._updateOption( optionName );
         }
@@ -488,23 +509,6 @@
       this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
     },
 
-    
-    // ====================== Adding ======================
-    
-    _setupAtoms : function( $atoms ) {
-      
-      // base style for atoms
-      var atomStyle = { position: 'absolute' };
-      if ( this.usingTransforms ) {
-        atomStyle.left = 0;
-        atomStyle.top = 0;
-      }
-
-      $atoms.css( atomStyle ).addClass( this.options.itemClass );
-      
-      this.updateSortData( $atoms, true );
-
-    },
     
     // ====================== Filtering ======================
 
@@ -664,8 +668,7 @@
     
     // adds a jQuery object of items to a isotope container
     addItems : function( $content, callback ) {
-      var $newAtoms = this._filterFind( $content, this.options.itemSelector );
-      this._setupAtoms( $newAtoms );
+      var $newAtoms = this._getAtoms( $content );
       // add new atoms to atoms pools
       // FIXME : this breaks shuffle order and returns to original order
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
@@ -696,6 +699,11 @@
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
         instance.layout( $newAtoms, callback );
       });
+    },
+    
+    // gathers all atoms
+    reloadItems : function() {
+      this.$allAtoms = this._getAtoms( this.element.children() );
     },
     
     // removes elements from Isotope widget
@@ -1232,69 +1240,42 @@
 
   
 
-// ======================= jQuery Widget bridge  ===============================
+  // =======================  Plugin bridge  ===============================
+  // leverages data method to either create or return $.Isotope constructor
+  // A bit from jQuery UI
+  //   https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js
+  // A bit from jcarousel 
+  //   https://github.com/jsor/jcarousel/blob/master/lib/jquery.jcarousel.js
 
+  $.fn.isotope = function( options ) {
+    if ( typeof options === 'string' ) {
+      // call method
+      var args = Array.prototype.slice.call( arguments, 1 );
 
-/*!
- * jQuery UI Widget 1.8.5
- *
- * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Widget
- */
-
-  $.widget = $.widget || {};
-
-  $.widget.bridge = $.widget.bridge || function( name, object ) {
-    $.fn[ name ] = function( options ) {
-      var isMethodCall = typeof options === "string",
-        args = Array.prototype.slice.call( arguments, 1 ),
-        returnValue = this;
-
-      // allow multiple hashes to be passed on init
-      options = !isMethodCall && args.length ?
-        $.extend.apply( null, [ true, options ].concat(args) ) :
-        options;
-
-      // prevent calls to internal methods
-      if ( isMethodCall && options.charAt( 0 ) === "_" ) {
-        return returnValue;
-      }
-
-      if ( isMethodCall ) {
-        this.each(function() {
-          var instance = $.data( this, name );
-          if ( !instance ) {
-            return $.error( "cannot call methods on " + name + " prior to initialization; " +
-              "attempted to call method '" + options + "'" );
-          }
-          if ( !$.isFunction( instance[options] ) ) {
-            return $.error( "no such method '" + options + "' for " + name + " widget instance" );
-          }
-          var methodValue = instance[ options ].apply( instance, args );
-          if ( methodValue !== instance && methodValue !== undefined ) {
-            returnValue = methodValue;
-            return false;
-          }
-        });
-      } else {
-        this.each(function() {
-          var instance = $.data( this, name );
-          if ( instance ) {
-            instance.option( options || {} )._init();
-          } else {
-            $.data( this, name, new object( options, this ) );
-          }
-        });
-      }
-
-      return returnValue;
-    };
+      return this.each(function(){
+        var instance = $.data( this, 'isotope' );
+        if ( !instance ) {
+          return $.error( "cannot call methods on isotope prior to initialization; " +
+            "attempted to call method '" + options + "'" );
+        }
+        if ( !$.isFunction( instance[options] ) || options.charAt(0) === "_" ) {
+          return $.error( "no such method '" + options + "' for isotope instance" );
+        }
+        // apply method
+        instance[ options ].apply( instance, args );
+      });
+    } else {
+      return this.each(function() {
+        var instance = $.data( this, 'isotope' );
+        if ( instance ) {
+          // apply options & init
+          instance.option( options || {} )._init();
+        } else {
+          // initialize new instance
+          $.data( this, 'isotope', new $.Isotope( options, this ) );
+        }
+      });
+    }
   };
-  
-  
-  $.widget.bridge( 'isotope', $.Isotope );
 
 })( window, jQuery );

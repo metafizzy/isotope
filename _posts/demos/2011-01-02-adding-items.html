@@ -8,6 +8,7 @@ related: methods
   <section id="copy">
     <p>The <code>insert</code> method will append, add items to the widget, filter, sort, and then layout all items</p>
     <p>The <code>appended</code> method adds items to the widget, and then lays out only the new items.</p>
+    <p>The <code>reloadItems</code> method re-collects all items in their current order in the DOM, which can be useful for prepending items.</p>
     <p>See docs on <a href="../docs/adding-items.html">adding items</a>.</p>
   </section>
 
@@ -15,6 +16,7 @@ related: methods
     <ul class="floated clearfix">
       <li id="insert"><a href="#insert">Insert new elements</a></li>
       <li id="append"><a href='#append'>Append new elements</a></li>
+      <li id="prepend"><a href='#prepend'>Prepend</a></li>
     </ul>
   </section>
 
@@ -33,6 +35,16 @@ related: methods
     var $container = $('#container');
 
     {% include add-buttons.js %}
+
+    $('#prepend a').click(function(){
+      var $newEls = $( fakeElement.getGroup() );
+      $container
+        .prepend( $newEls ).isotope('reloadItems').isotope({ sortBy: 'original-order' })
+        // set sort back to symbol for inserting
+        .isotope('option', { sortBy: 'symbol' });
+      
+      return false;
+    });
 
     $(function(){
 
