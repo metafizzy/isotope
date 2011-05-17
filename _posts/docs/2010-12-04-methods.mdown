@@ -12,6 +12,7 @@ toc:
   - { title: layout, anchor: layout }
   - { title: option, anchor: option }
   - { title: reLayout, anchor: relayout }
+  - { title: reloadItems, anchor: reloaditems }
   - { title: remove, anchor: remove }
   - { title: updateSortData, anchor: updatesortdata }
 
@@ -119,6 +120,18 @@ Modifies options for plugin instance. Can be used to get and set options. Unlike
 Resets layout properties and lays-out every item element.
 
 [**See Demo: reLayout**](../demos/relayout.html)
+
+## reloadItems
+
+{% highlight javascript %}
+
+.isotope( 'reloadItems' )
+
+{% endhighlight %}
+
+Re-collects all item elements in their current order in the DOM.  Useful for prepending.
+
+[**See Demo: Adding items**](../demos/adding-items.html).
 
 ## remove
 

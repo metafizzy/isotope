@@ -386,9 +386,8 @@
 
       this.options.getSortData = $.extend( this.options.getSortData, originalOrderSorter );
 
-      
       // need to get atoms
-      this.$allAtoms = this._getAtoms( this.element.children() );
+      this.reloadItems();
       
       // get top left position of where the bricks should be
       var $cursor   = $( document.createElement('div') );
@@ -700,6 +699,11 @@
         instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
         instance.layout( $newAtoms, callback );
       });
+    },
+    
+    // gathers all atoms
+    reloadItems : function() {
+      this.$allAtoms = this._getAtoms( this.element.children() );
     },
     
     // removes elements from Isotope widget

@@ -27,3 +27,12 @@ fakeElement.create = function() {
     '</p><h3 class="symbol">' + symbol + '</h3><h2 class="name">' + name + 
     '</h2><p class="weight">' + weight + '</p></div>';
 };
+
+fakeElement.getGroup = function() {
+  var i = Math.ceil( Math.random()*3 + 1 ),
+      newEls = '';
+  while ( i-- ) {
+    newEls += fakeElement.create();
+  }
+  return newEls;
+};

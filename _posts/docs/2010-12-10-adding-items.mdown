@@ -8,6 +8,7 @@ toc:
   - { title: addItems method, anchor: additems_method }
   - { title: insert method, anchor: insert_method }
   - { title: appended method, anchor: appended_method }
+  - { title: Prepending method, anchor: prepending }
 
 ---
 
@@ -44,3 +45,15 @@ The [`appended` method](methods.html#appended) is a convenience method triggers 
 [**See Demo: Infinite Scroll**](../demos/infinite-scroll.html).
 
 See also [Infinite Scroll with filtering or sorting](troubleshooting.html#infinite_scroll_with_filtering_or_sorting)
+
+## Prepending
+
+Because of Isotope's sorting functionality, prepending isn't as straight forward as might expect. However, it can be replicated fairly easy.  After prepending new content to the container, you can re-collect all the item elements and update their sorting order with the [`reloadItems` method](methods.html#reloaditems). Then trigger a re-layout, with the original DOM order.
+
+{% highlight javascript %}
+
+var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
+$('#container').prepend( $newItems)
+  .isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' });
+
+{% endhighlight %}
