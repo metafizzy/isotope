@@ -12,6 +12,8 @@ toc:
   - { title: fitRows, anchor: fitrows }
   - { title: masonry, anchor: masonry }
   - { title: masonryHorizontal, anchor: masonryhorizontal }
+  - { title: straightAcross, anchor: straightacross }
+  - { title: straightDown, anchor: straightdown }
   - { title: Horizontal layouts, anchor: horizontal_layouts }
 
 ---
@@ -152,13 +154,17 @@ $('#container').isotope({
 
 {% endhighlight %}
 
+## straightAcross
+
+Item elements are arranged horizontally left to right. Useful for simple lists.
+
 ## straightDown
 
 Item elements are arranged vertically top to bottom. Useful for simple lists.
 
 ## Horizontal layouts
 
-Horizontal layout modes (masonryHorizontal, fitColumns, and cellsByColumn) need a container that has a height value. Be sure that your CSS has height set.
+Horizontal layout modes (masonryHorizontal, fitColumns, cellsByColumn, and straightAcross) need a container that has a height value. Be sure that your CSS has height set.
 
 {% highlight css %}
 
