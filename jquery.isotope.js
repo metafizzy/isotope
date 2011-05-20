@@ -1,5 +1,5 @@
 /**
- * Isotope v1.2.110516
+ * Isotope v1.2.110520
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -8,9 +8,6 @@
  *
  * Copyright 2011 David DeSandro / Metafizzy
  */
-
-/*jshint forin: false */
-/*global jQuery: true, Modernizr: true */
 
 (function( window, $, undefined ){
 
@@ -1200,7 +1197,36 @@
         this.reLayout();
       }
       return this;
-    }
+    },
+    
+    // ====================== straightAcross ======================
+
+      _straightAcrossReset : function() {
+        this.straightAcross = {
+          x : 0
+        };
+        return this;
+      },
+
+      _straightAcrossLayout : function( $elems ) {
+        var instance = this;
+        $elems.each( function( i ){
+          var $this = $(this),
+              x = instance.straightAcross.x + instance.posLeft;
+          instance._pushPosition( $this, x, instance.posTop );
+          instance.straightAcross.x += $this.outerWidth(true);
+        });
+        return this;
+      },
+
+      _straightAcrossGetContainerSize : function() {
+        return { width : this.straightAcross.x + this.posLeft };
+      },
+
+      _straightAcrossResize : function() {
+        this.reLayout();
+        return this;
+      }
 
   };
   
