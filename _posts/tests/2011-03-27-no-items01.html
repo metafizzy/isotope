@@ -5,7 +5,7 @@ category: tests
 ---
 
   <section id="copy">
-    <p>What happens when there are no items for Isotope/</p>
+    <p>What happens when there are no items for Isotope? If no items match `itemSelector`, container collapses.  Plugin still <code>return this</code>.</p>
   </section>
 
   <div id="container">
@@ -23,7 +23,7 @@ category: tests
     
       $container.isotope({
         itemSelector: '.foo'
-      });
+      }).css('border', '10px solid');
     
     });
   </script>
