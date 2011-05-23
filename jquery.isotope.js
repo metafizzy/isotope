@@ -1,5 +1,5 @@
 /**
- * Isotope v1.2.110520
+ * Isotope v1.2.110523
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -441,10 +441,7 @@
     },
 
     option: function( key, value ){
-      
       // get/change options AFTER initialization:
-      // you don't have to support all these cases,
-      // but here's how:
     
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
@@ -454,17 +451,11 @@
           this._updateOption( optionName );
         }
     
-      // signature: $('#foo').option('cool');  - getter
-      } else if ( key && typeof value === "undefined" ){
-        return this.options[ key ];
-        
       // signature: $('#foo').bar('option', 'baz', false);
       } else {
         this.options[ key ] = value;
         this._updateOption( key );
       }
-    
-      return this; // make sure to return the instance!
     },
     
     // ====================== updaters ====================== //
@@ -578,8 +569,6 @@
           };
       
       this.$filteredAtoms.sort( sortFn );
-      
-      return this;
     },
 
     _getSorter : function( elem, sortBy ) {
@@ -644,20 +633,18 @@
       }
       
       this.isLaidOut = true;
-
-      return this;
     },
     
     
     resize : function() {
-      return this[ '_' + this.options.layoutMode + 'Resize' ]();
+      this[ '_' + this.options.layoutMode + 'Resize' ]();
     },
     
     
     reLayout : function( callback ) {
       
-      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
-        .layout( this.$filteredAtoms, callback );
+      this[ '_' +  this.options.layoutMode + 'Reset' ]();
+      this.layout( this.$filteredAtoms, callback );
       
     },
     
@@ -685,7 +672,8 @@
         instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
       });
       
-      this._sort().reLayout( callback );
+      this._sort();
+      this.reLayout( callback );
       
     },
     
@@ -734,7 +722,7 @@
       this.$allAtoms = this._shuffleArray( this.$allAtoms );
       this.$filteredAtoms = this._filter( this.$allAtoms );
       
-      return this.reLayout( callback );
+      this.reLayout( callback );
     },
     
     // destroys widget, returns elements and container back (close) to original style
@@ -797,8 +785,6 @@
       this[ namespace ][ segmentsName ] = segments;
       // i.e. this.masonry.columnWidth = ...
       this[ namespace ][ measure ] = segmentSize;
-      
-      return this;
       
     },
 
@@ -866,7 +852,6 @@
           instance._masonryPlaceBrick( $this, groupCount, groupY );
         }
       });
-      return this;
     },
   
     // reset
@@ -880,7 +865,6 @@
       while (i--) {
         this.masonry.colYs.push( this.posTop );
       }
-      return this;
     },
   
     _masonryResize : function() {
@@ -891,8 +875,6 @@
         // if column count has changed, do a new column cound
         this.reLayout();
       }
-
-      return this;
     },
   
     _masonryGetContainerSize : function() {
@@ -928,7 +910,6 @@
         instance.fitRows.x += atomW;
   
       });
-      return this;
     },
   
     _fitRowsReset : function() {
@@ -937,7 +918,6 @@
         y : 0,
         height : 0
       };
-      return this;
     },
   
     _fitRowsGetContainerSize : function () {
@@ -945,7 +925,7 @@
     },
   
     _fitRowsResize : function() {
-      return this.reLayout();
+      this.reLayout();
     },
   
 
@@ -955,7 +935,6 @@
       this.cellsByRow = {};
       this._getSegments('cellsByRow');
       this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
-      return this;
     },
 
     _cellsByRowLayout : function( $elems ) {
@@ -970,7 +949,6 @@
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
       });
-      return this;
     },
 
     _cellsByRowGetContainerSize : function() {
@@ -985,7 +963,6 @@
       if ( this.cellsByRow.cols !== prevCols ) {
         this.reLayout();
       }
-      return this;
     },
   
   
@@ -995,7 +972,6 @@
       this.straightDown = {
         y : 0
       };
-      return this;
     },
 
     _straightDownLayout : function( $elems ) {
@@ -1006,7 +982,6 @@
         instance._pushPosition( $this, instance.posLeft, y );
         instance.straightDown.y += $this.outerHeight(true);
       });
-      return this;
     },
 
     _straightDownGetContainerSize : function() {
@@ -1015,7 +990,6 @@
 
     _straightDownResize : function() {
       this.reLayout();
-      return this;
     },
 
 
@@ -1078,7 +1052,6 @@
           instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
         }
       });
-      return this;
     },
     
     _masonryHorizontalReset : function() {
@@ -1091,7 +1064,6 @@
       while (i--) {
         this.masonryHorizontal.rowXs.push( this.posLeft );
       }
-      return this;
     },
     
     _masonryHorizontalResize : function() {
@@ -1102,8 +1074,6 @@
         // if column count has changed, do a new column cound
         this.reLayout();
       }
-
-      return this;
     },
     
     _masonryHorizontalGetContainerSize : function() {
@@ -1120,7 +1090,6 @@
         y : 0,
         width : 0
       };
-      return this;
     },
     
     _fitColumnsLayout : function( $elems ) {
@@ -1147,7 +1116,6 @@
         instance.fitColumns.y += atomH;
 
       });
-      return this;
     },
     
     _fitColumnsGetContainerSize : function () {
@@ -1155,7 +1123,7 @@
     },
     
     _fitColumnsResize : function() {
-      return this.reLayout();
+      this.reLayout();
     },
     
 
@@ -1166,7 +1134,6 @@
       this.cellsByColumn = {};
       this._getSegments( 'cellsByColumn', true );
       this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
-      return this;
     },
 
     _cellsByColumnLayout : function( $elems ) {
@@ -1181,7 +1148,6 @@
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
       });
-      return this;
     },
 
     _cellsByColumnGetContainerSize : function() {
@@ -1196,7 +1162,6 @@
       if ( this.cellsByColumn.rows !== prevRows ) {
         this.reLayout();
       }
-      return this;
     },
     
     // ====================== straightAcross ======================
@@ -1205,7 +1170,6 @@
         this.straightAcross = {
           x : 0
         };
-        return this;
       },
 
       _straightAcrossLayout : function( $elems ) {
@@ -1216,7 +1180,6 @@
           instance._pushPosition( $this, x, instance.posTop );
           instance.straightAcross.x += $this.outerWidth(true);
         });
-        return this;
       },
 
       _straightAcrossGetContainerSize : function() {
@@ -1225,7 +1188,6 @@
 
       _straightAcrossResize : function() {
         this.reLayout();
-        return this;
       }
 
   };
@@ -1278,7 +1240,7 @@
       // call method
       var args = Array.prototype.slice.call( arguments, 1 );
 
-      return this.each(function(){
+      this.each(function(){
         var instance = $.data( this, 'isotope' );
         if ( !instance ) {
           return $.error( "cannot call methods on isotope prior to initialization; " +
@@ -1291,17 +1253,21 @@
         instance[ options ].apply( instance, args );
       });
     } else {
-      return this.each(function() {
+      this.each(function() {
         var instance = $.data( this, 'isotope' );
         if ( instance ) {
           // apply options & init
-          instance.option( options || {} )._init();
+          instance.option( options || {} );
+          instance._init();
         } else {
           // initialize new instance
           $.data( this, 'isotope', new $.Isotope( options, this ) );
         }
       });
     }
+    // return jQuery object
+    // so plugin methods do not have to
+    return this;
   };
 
 })( window, jQuery );
