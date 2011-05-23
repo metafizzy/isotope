@@ -805,34 +805,17 @@
 
     // ====================== Masonry ======================
   
-    _masonryPlaceBrick : function( $brick, setCount, setY ) {
-      // here, `this` refers to a child element or "brick"
-          // get the minimum Y value from the columns
-      var minimumY  = Math.min.apply( Math, setY ),
-          setHeight = minimumY + $brick.outerHeight(true),
-          i         = setY.length,
-          shortCol  = i,
-          setSpan   = this.masonry.cols + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
+    _masonryReset : function() {
+      // layout-specific props
+      this.masonry = {};
+      // FIXME shouldn't have to call this again
+      this._getSegments();
+      var i = this.masonry.cols;
+      this.masonry.colYs = [];
       while (i--) {
-        if ( setY[i] === minimumY ) {
-          shortCol = i;
-        }
+        this.masonry.colYs.push( this.posTop );
       }
-    
-      // position the brick
-      x = this.masonry.columnWidth * shortCol + this.posLeft;
-      y = minimumY;
-      this._pushPosition( $brick, x, y );
-
-      // apply setHeight to necessary columns
-      for ( i=0; i < setSpan; i++ ) {
-        this.masonry.colYs[ shortCol + i ] = setHeight;
-      }
-
     },
-  
   
     _masonryLayout : function( $elems ) {
       var instance = this;
@@ -865,31 +848,54 @@
         }
       });
     },
-  
-    // reset
-    _masonryReset : function() {
-      // layout-specific props
-      this.masonry = {};
-      // FIXME shouldn't have to call this again
-      this._getSegments();
-      var i = this.masonry.cols;
-      this.masonry.colYs = [];
+    
+    // worker method that places brick in the columnSet
+    //   with the the minY
+    _masonryPlaceBrick : function( $brick, setCount, setY ) {
+          // get the minimum Y value from the columns
+      var minimumY  = Math.min.apply( Math, setY ),
+          setHeight = minimumY + $brick.outerHeight(true),
+          i         = setY.length,
+          shortCol  = i,
+          setSpan   = this.masonry.cols + 1 - i,
+          x, y ;
+      // Which column has the minY value, closest to the left
       while (i--) {
-        this.masonry.colYs.push( this.posTop );
+        if ( setY[i] === minimumY ) {
+          shortCol = i;
+        }
       }
+    
+      // position the brick
+      x = this.masonry.columnWidth * shortCol + this.posLeft;
+      y = minimumY;
+      this._pushPosition( $brick, x, y );
+
+      // apply setHeight to necessary columns
+      for ( i=0; i < setSpan; i++ ) {
+        this.masonry.colYs[ shortCol + i ] = setHeight;
+      }
+
+    },
+    
+    _masonryGetContainerSize : function() {
+      var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
+      return { height: containerHeight };
     },
   
     _masonryResizeChanged : function() {
       return this._checkIfSegmentsChanged();
     },
   
-    _masonryGetContainerSize : function() {
-      var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
-      return { height: containerHeight };
-    },
-
-  
     // ====================== fitRows ======================
+    
+    _fitRowsReset : function() {
+      this.fitRows = {
+        x : 0,
+        y : 0,
+        height : 0
+      };
+    },
   
     _fitRowsLayout : function( $elems ) {
       this.width = this.element.width();
@@ -916,14 +922,6 @@
         instance.fitRows.x += atomW;
   
       });
-    },
-  
-    _fitRowsReset : function() {
-      this.fitRows = {
-        x : 0,
-        y : 0,
-        height : 0
-      };
     },
   
     _fitRowsGetContainerSize : function () {
@@ -1000,35 +998,19 @@
 
 
     // ====================== masonryHorizontal ======================
-  
-    _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
-      // here, `this` refers to a child element or "brick"
-          // get the minimum Y value from the columns
-      var minimumX  = Math.min.apply( Math, setX ),
-          setWidth  = minimumX + $brick.outerWidth(true),
-          i         = setX.length,
-          smallRow  = i,
-          setSpan   = this.masonryHorizontal.rows + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
-        if ( setX[i] === minimumX ) {
-          smallRow = i;
-        }
-      }
-
-      // position the brick
-      x = minimumX;
-      y = this.masonryHorizontal.rowHeight * smallRow + this.posTop;
-      this._pushPosition( $brick, x, y );
-
-      // apply setHeight to necessary columns
-      for ( i=0; i < setSpan; i++ ) {
-        this.masonryHorizontal.rowXs[ smallRow + i ] = setWidth;
-      }
-
-    },
     
+    _masonryHorizontalReset : function() {
+      // layout-specific props
+      this.masonryHorizontal = {};
+      // FIXME shouldn't have to call this again
+      this._getSegments( true );
+      var i = this.masonryHorizontal.rows;
+      this.masonryHorizontal.rowXs = [];
+      while (i--) {
+        this.masonryHorizontal.rowXs.push( this.posLeft );
+      }
+    },
+  
     _masonryHorizontalLayout : function( $elems ) {
       var instance = this;
       $elems.each(function(){
@@ -1060,25 +1042,41 @@
       });
     },
     
-    _masonryHorizontalReset : function() {
-      // layout-specific props
-      this.masonryHorizontal = {};
-      // FIXME shouldn't have to call this again
-      this._getSegments( true );
-      var i = this.masonryHorizontal.rows;
-      this.masonryHorizontal.rowXs = [];
+    _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
+      // here, `this` refers to a child element or "brick"
+          // get the minimum Y value from the columns
+      var minimumX  = Math.min.apply( Math, setX ),
+          setWidth  = minimumX + $brick.outerWidth(true),
+          i         = setX.length,
+          smallRow  = i,
+          setSpan   = this.masonryHorizontal.rows + 1 - i,
+          x, y ;
+      // Which column has the minY value, closest to the left
       while (i--) {
-        this.masonryHorizontal.rowXs.push( this.posLeft );
+        if ( setX[i] === minimumX ) {
+          smallRow = i;
+        }
       }
+
+      // position the brick
+      x = minimumX;
+      y = this.masonryHorizontal.rowHeight * smallRow + this.posTop;
+      this._pushPosition( $brick, x, y );
+
+      // apply setHeight to necessary columns
+      for ( i=0; i < setSpan; i++ ) {
+        this.masonryHorizontal.rowXs[ smallRow + i ] = setWidth;
+      }
+
+    },
+
+    _masonryHorizontalGetContainerSize : function() {
+      var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
+      return { width: containerWidth };
     },
     
     _masonryHorizontalResizeChanged : function() {
       return this._checkIfSegmentsChanged(true);
-    },
-    
-    _masonryHorizontalGetContainerSize : function() {
-      var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
-      return { width: containerWidth };
     },
 
 
