@@ -575,9 +575,8 @@
       return $(elem).data('isotope-sort-data')[ sortBy ];
     },
 
-    // ====================== Layout ======================
+    // ====================== Layout Helpers ======================
 
-    
     _translate : function( x, y ) {
       return { translate : [ x, y ] };
     },
@@ -788,10 +787,10 @@
       
     },
 
-  // ====================== LAYOUTS ======================
+    // ====================== LAYOUTS ======================
   
   
-  // ====================== Masonry ======================
+    // ====================== Masonry ======================
   
     _masonryPlaceBrick : function( $brick, setCount, setY ) {
       // here, `this` refers to a child element or "brick"
@@ -883,7 +882,7 @@
     },
 
   
-  // ====================== fitRows ======================
+    // ====================== fitRows ======================
   
     _fitRowsLayout : function( $elems ) {
       this.width = this.element.width();
@@ -929,7 +928,7 @@
     },
   
 
-  // ====================== cellsByRow ======================
+    // ====================== cellsByRow ======================
   
     _cellsByRowReset : function() {
       this.cellsByRow = {};
@@ -966,7 +965,7 @@
     },
   
   
-  // ====================== straightDown ======================
+    // ====================== straightDown ======================
   
     _straightDownReset : function() {
       this.straightDown = {
@@ -993,7 +992,7 @@
     },
 
 
-  // ====================== masonryHorizontal ======================
+    // ====================== masonryHorizontal ======================
   
     _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
       // here, `this` refers to a child element or "brick"
@@ -1082,7 +1081,7 @@
     },
 
 
-  // ====================== fitColumns ======================
+    // ====================== fitColumns ======================
   
     _fitColumnsReset : function() {
       this.fitColumns = {
@@ -1128,7 +1127,7 @@
     
 
   
-  // ====================== cellsByColumn ======================
+    // ====================== cellsByColumn ======================
   
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};
@@ -1166,29 +1165,29 @@
     
     // ====================== straightAcross ======================
 
-      _straightAcrossReset : function() {
-        this.straightAcross = {
-          x : 0
-        };
-      },
+    _straightAcrossReset : function() {
+      this.straightAcross = {
+        x : 0
+      };
+    },
 
-      _straightAcrossLayout : function( $elems ) {
-        var instance = this;
-        $elems.each( function( i ){
-          var $this = $(this),
-              x = instance.straightAcross.x + instance.posLeft;
-          instance._pushPosition( $this, x, instance.posTop );
-          instance.straightAcross.x += $this.outerWidth(true);
-        });
-      },
+    _straightAcrossLayout : function( $elems ) {
+      var instance = this;
+      $elems.each( function( i ){
+        var $this = $(this),
+            x = instance.straightAcross.x + instance.posLeft;
+        instance._pushPosition( $this, x, instance.posTop );
+        instance.straightAcross.x += $this.outerWidth(true);
+      });
+    },
 
-      _straightAcrossGetContainerSize : function() {
-        return { width : this.straightAcross.x + this.posLeft };
-      },
+    _straightAcrossGetContainerSize : function() {
+      return { width : this.straightAcross.x + this.posLeft };
+    },
 
-      _straightAcrossResize : function() {
-        this.reLayout();
-      }
+    _straightAcrossResize : function() {
+      this.reLayout();
+    }
 
   };
   
