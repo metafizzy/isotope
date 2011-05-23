@@ -766,7 +766,7 @@
     // requires columnWidth or rowHeight to be set on namespaced object
     // i.e. this.masonry.columnWidth = 200
     _getSegments : function( isRows ) {
-      var namespace = this.layoutMode,
+      var namespace = this.options.layoutMode,
           measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
@@ -794,14 +794,13 @@
     },
     
     _checkIfSegmentsChanged : function( isRows ) {
-      var segmentsName = isRows ? 'rows' : 'cols',
-          prevSegments = this[ this.layoutMode ][ segmentsName ];
+      var namespace = this.options.layoutMode,
+          segmentsName = isRows ? 'rows' : 'cols',
+          prevSegments = this[ namespace ][ segmentsName ];
       // update cols/rows
       this._getSegments( isRows );
       // return if updated cols/rows is not equal to previous
-      var changed = ( this[ this.layoutMode ][ segmentsName ] !== prevSegments );
-      console.log( changed );
-      return changed;
+      return ( this[ namespace ][ segmentsName ] !== prevSegments );
     },
 
     // ====================== Masonry ======================
