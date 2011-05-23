@@ -402,7 +402,7 @@
       // bind resize method
       if ( this.options.resizable ) {
         $(window).bind( 'smartresize.isotope', function() { 
-          instance.element.isotope('resize');
+          instance.resize();
         });
       }
       
