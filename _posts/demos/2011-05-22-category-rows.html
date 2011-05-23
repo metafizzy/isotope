@@ -1,5 +1,5 @@
 ---
-title: Category columns
+title: Category rows
 layout: demo
 category: demos
 related: layouts
@@ -34,7 +34,6 @@ related: layouts
 
   <ul id="etc" class="floated clearfix">
     <li id="insert"><a href="#insert">Insert new elements</a></li>
-    <li id="append"><a href='#append'>Append new elements</a></li>
   </ul>
 </section> <!-- #options -->
 
@@ -44,8 +43,6 @@ related: layouts
     {% include element-partial.html %}
   {% endfor %}
 </div>
-
-{% include footer.html %}
 
 <script src="../{{ site.jquery_js }}"></script>
 <script src="../{{ site.isotope_js }}"></script>
@@ -58,59 +55,67 @@ related: layouts
     _categoryRowsReset : function() {
       // reset namespace properties
       this.categoryRows = {
-        // the number of rows
-        rows : 0,
+        rowIndex : 0,
         // the x & y position in each row
-        positions : {}
+        position : {
+          x : this.posLeft,
+          y : this.posTop
+        }
       };
+      this._getSegments('categoryRows', true);
     
       return this;
     },
   
     _categoryRowsLayout : function( $elems ) {
-      var instance = this;
-          options = this.options.categoryRows,
+      var instance = this,
           // namespaced properties
-          props = this.categoryRows;
+          position = this.categoryRows.position,
+          sortBy = this.options.sortBy,
+          containerWidth = this.element.width(),
+          currentRowName, nextX;
       $elems.each(function(){
         var $this = $(this),
             // get row based on function passed in options
-            rowName = options.getRow( $this );
-      
-        if ( !props.positions[ rowName ] ) {
-          // if row does not exists, create it
-          props.positions[ rowName ] = {
-            x : instance.posLeft,
-            y : instance.posTop + options.rowHeight * props.rows
-          };
-          // increment rows
-          props.rows ++;
+            rowName = $this.data('isotope-sort-data')[ sortBy ],
+            atomWidth = $this.outerWidth(true);
+        
+        // for new row
+        if ( !currentRowName ) {
+          currentRowName = rowName;
+        } else if ( currentRowName !== rowName ) {
+          instance._categoryRowsNewRow();
+          currentRowName = rowName;
         }
       
-        instance._pushPosition( $this, props.positions[ rowName ].x, props.positions[ rowName ].y );
+        // if item doesn't fit on row
+        nextX = position.x + atomWidth;
+        if ( nextX >= containerWidth ) {
+          instance._categoryRowsNewRow();
+        }
+        
+        instance._pushPosition( $this, position.x, position.y );
       
-        props.positions[ rowName ].x += $this.outerWidth(true);
+        position.x += atomWidth;
       
       });
     
       return this;
     },
+    
+    // convience method
+    _categoryRowsNewRow : function() {
+      var props = this.categoryRows;
+      props.position.x = this.posLeft;
+      props.position.y += props.rowHeight;
+    },
   
     _categoryRowsGetContainerSize : function() {
-      var y = this.categoryRows.rows * this.options.categoryRows.rowHeight + this.posTop,
-          maxX = 0,
-          rowName, position;
-    
-      // get max X position from the positions object
-      for ( rowName in this.categoryRows.positions ) {
-        position = this.categoryRows.positions[ rowName ]
-        maxX = position.x > maxX ? position.x : maxX;
-      }
-      return { width: maxX, height: y };
+      return { height: this.categoryRows.position.y + this.categoryRows.rowHeight };
     },
   
     _categoryRowsResize : function() {
-      return this;
+      this.reLayout();
     }
   
   });
@@ -136,11 +141,14 @@ related: layouts
       itemSelector : '.element',
       layoutMode : 'categoryRows',
       categoryRows : {
-        rowHeight : 120,
-        getRow : function( $elem ) {
+        rowHeight : 120
+      },
+      getSortData : {
+        category : function( $elem ) {
           return $elem.attr('data-category');
         }
       },
+      sortBy: 'category',
       animationEngine : $.browser.opera ? 'jquery' : 'best-available'
     });
 
