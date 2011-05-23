@@ -827,7 +827,7 @@
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryPlaceBrick( $this, instance.masonry.cols, instance.masonry.colYs );
+          instance._masonryPlaceBrick( $this, instance.masonry.colYs );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
@@ -844,14 +844,14 @@
             groupY[i] = Math.max.apply( Math, groupColY );
           }
         
-          instance._masonryPlaceBrick( $this, groupCount, groupY );
+          instance._masonryPlaceBrick( $this, groupY );
         }
       });
     },
     
     // worker method that places brick in the columnSet
     //   with the the minY
-    _masonryPlaceBrick : function( $brick, setCount, setY ) {
+    _masonryPlaceBrick : function( $brick, setY ) {
           // get the minimum Y value from the columns
       var minimumY  = Math.min.apply( Math, setY ),
           setHeight = minimumY + $brick.outerHeight(true),
@@ -1021,7 +1021,7 @@
 
         if ( rowSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rows, instance.masonryHorizontal.rowXs );
+          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rowXs );
         } else {
           // brick spans more than one row
           // how many different places could this brick fit horizontally
@@ -1037,12 +1037,12 @@
             groupX[i] = Math.max.apply( Math, groupRowX );
           }
 
-          instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
+          instance._masonryHorizontalPlaceBrick( $this, groupX );
         }
       });
     },
     
-    _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
+    _masonryHorizontalPlaceBrick : function( $brick, setX ) {
       // here, `this` refers to a child element or "brick"
           // get the minimum Y value from the columns
       var minimumX  = Math.min.apply( Math, setX ),
