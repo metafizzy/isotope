@@ -12,7 +12,12 @@ category: tests
   </style>
 
   <section id="copy">
-    <p>After <code>destroy</code>-ing Isotope, original CSS gets re-applied</p>
+    <p>Click <em>init</em> button the <em>destroy</em>. Original CSS, pre-init, should be re-applied, all items back to visibility.</p>
+  </section>
+
+  <section id="options">
+    <button id="init">Init Isotope instance</button>
+    <button id="destroy">Destroy Isotope instance</button>
   </section>
 
   <div id="container" style="height: 600px">
@@ -28,9 +33,15 @@ category: tests
     
       var $container = $('#container');
     
-      $container.isotope({
-        itemSelector: '.element',
-        filter: '.metal'
+      $('#init').click(function(){
+        $container.isotope({
+          itemSelector: '.element',
+          filter: '.metal'
+        });
+      });
+      
+      $('#destroy').click(function(){
+        $container.isotope('destroy');
       });
     
     });

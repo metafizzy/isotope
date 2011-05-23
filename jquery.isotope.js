@@ -1,5 +1,5 @@
 /**
- * Isotope v1.2.110520
+ * Isotope v1.3.110523
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -402,7 +402,7 @@
       // bind resize method
       if ( this.options.resizable ) {
         $(window).bind( 'smartresize.isotope', function() { 
-          instance.element.isotope('resize');
+          instance.resize();
         });
       }
       
@@ -441,10 +441,7 @@
     },
 
     option: function( key, value ){
-      
       // get/change options AFTER initialization:
-      // you don't have to support all these cases,
-      // but here's how:
     
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
@@ -454,17 +451,11 @@
           this._updateOption( optionName );
         }
     
-      // signature: $('#foo').option('cool');  - getter
-      } else if ( key && typeof value === "undefined" ){
-        return this.options[ key ];
-        
       // signature: $('#foo').bar('option', 'baz', false);
       } else {
         this.options[ key ] = value;
         this._updateOption( key );
       }
-    
-      return this; // make sure to return the instance!
     },
     
     // ====================== updaters ====================== //
@@ -578,17 +569,14 @@
           };
       
       this.$filteredAtoms.sort( sortFn );
-      
-      return this;
     },
 
     _getSorter : function( elem, sortBy ) {
       return $(elem).data('isotope-sort-data')[ sortBy ];
     },
 
-    // ====================== Layout ======================
+    // ====================== Layout Helpers ======================
 
-    
     _translate : function( x, y ) {
       return { translate : [ x, y ] };
     },
@@ -644,20 +632,20 @@
       }
       
       this.isLaidOut = true;
-
-      return this;
     },
     
     
     resize : function() {
-      return this[ '_' + this.options.layoutMode + 'Resize' ]();
+      if ( this[ '_' + this.options.layoutMode + 'ResizeChanged' ]() ) {
+        this.reLayout();
+      }
     },
     
     
     reLayout : function( callback ) {
       
-      return this[ '_' +  this.options.layoutMode + 'Reset' ]()
-        .layout( this.$filteredAtoms, callback );
+      this[ '_' +  this.options.layoutMode + 'Reset' ]();
+      this.layout( this.$filteredAtoms, callback );
       
     },
     
@@ -685,7 +673,8 @@
         instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
       });
       
-      this._sort().reLayout( callback );
+      this._sort();
+      this.reLayout( callback );
       
     },
     
@@ -734,7 +723,7 @@
       this.$allAtoms = this._shuffleArray( this.$allAtoms );
       this.$filteredAtoms = this._filter( this.$allAtoms );
       
-      return this.reLayout( callback );
+      this.reLayout( callback );
     },
     
     // destroys widget, returns elements and container back (close) to original style
@@ -770,11 +759,15 @@
 
     },
     
+    
+    // ====================== LAYOUTS ======================
+    
     // calculates number of rows or columns
     // requires columnWidth or rowHeight to be set on namespaced object
     // i.e. this.masonry.columnWidth = 200
-    _getSegments : function( namespace, isRows ) {
-      var measure  = isRows ? 'rowHeight' : 'columnWidth',
+    _getSegments : function( isRows ) {
+      var namespace = this.options.layoutMode,
+          measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
           segmentsName = isRows ? 'rows' : 'cols',
@@ -798,17 +791,67 @@
       // i.e. this.masonry.columnWidth = ...
       this[ namespace ][ measure ] = segmentSize;
       
-      return this;
-      
+    },
+    
+    _checkIfSegmentsChanged : function( isRows ) {
+      var namespace = this.options.layoutMode,
+          segmentsName = isRows ? 'rows' : 'cols',
+          prevSegments = this[ namespace ][ segmentsName ];
+      // update cols/rows
+      this._getSegments( isRows );
+      // return if updated cols/rows is not equal to previous
+      return ( this[ namespace ][ segmentsName ] !== prevSegments );
     },
 
-  // ====================== LAYOUTS ======================
+    // ====================== Masonry ======================
   
+    _masonryReset : function() {
+      // layout-specific props
+      this.masonry = {};
+      // FIXME shouldn't have to call this again
+      this._getSegments();
+      var i = this.masonry.cols;
+      this.masonry.colYs = [];
+      while (i--) {
+        this.masonry.colYs.push( this.posTop );
+      }
+    },
   
-  // ====================== Masonry ======================
-  
-    _masonryPlaceBrick : function( $brick, setCount, setY ) {
-      // here, `this` refers to a child element or "brick"
+    _masonryLayout : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
+        var $this  = $(this),
+            //how many columns does this brick span
+            colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
+        colSpan = Math.min( colSpan, instance.masonry.cols );
+
+        if ( colSpan === 1 ) {
+          // if brick spans only one column, just like singleMode
+          instance._masonryPlaceBrick( $this, instance.masonry.colYs );
+        } else {
+          // brick spans more than one column
+          // how many different places could this brick fit horizontally
+          var groupCount = instance.masonry.cols + 1 - colSpan,
+              groupY = [],
+              groupColY,
+              i;
+
+          // for each group potential horizontal position
+          for ( i=0; i < groupCount; i++ ) {
+            // make an array of colY values for that one group
+            groupColY = instance.masonry.colYs.slice( i, i+colSpan );
+            // and get the max value of the array
+            groupY[i] = Math.max.apply( Math, groupColY );
+          }
+        
+          instance._masonryPlaceBrick( $this, groupY );
+        }
+      });
+    },
+    
+    // worker method that places brick in the columnSet
+    //   with the the minY
+    _masonryPlaceBrick : function( $brick, setY ) {
           // get the minimum Y value from the columns
       var minimumY  = Math.min.apply( Math, setY ),
           setHeight = minimumY + $brick.outerHeight(true),
@@ -834,74 +877,25 @@
       }
 
     },
-  
-  
-    _masonryLayout : function( $elems ) {
-      var instance = this;
-      $elems.each(function(){
-        var $this  = $(this),
-            //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
-        colSpan = Math.min( colSpan, instance.masonry.cols );
-
-        if ( colSpan === 1 ) {
-          // if brick spans only one column, just like singleMode
-          instance._masonryPlaceBrick( $this, instance.masonry.cols, instance.masonry.colYs );
-        } else {
-          // brick spans more than one column
-          // how many different places could this brick fit horizontally
-          var groupCount = instance.masonry.cols + 1 - colSpan,
-              groupY = [],
-              groupColY,
-              i;
-
-          // for each group potential horizontal position
-          for ( i=0; i < groupCount; i++ ) {
-            // make an array of colY values for that one group
-            groupColY = instance.masonry.colYs.slice( i, i+colSpan );
-            // and get the max value of the array
-            groupY[i] = Math.max.apply( Math, groupColY );
-          }
-        
-          instance._masonryPlaceBrick( $this, groupCount, groupY );
-        }
-      });
-      return this;
-    },
-  
-    // reset
-    _masonryReset : function() {
-      // layout-specific props
-      this.masonry = {};
-      // FIXME shouldn't have to call this again
-      this._getSegments('masonry');
-      var i = this.masonry.cols;
-      this.masonry.colYs = [];
-      while (i--) {
-        this.masonry.colYs.push( this.posTop );
-      }
-      return this;
-    },
-  
-    _masonryResize : function() {
-      var prevColCount = this.masonry.cols;
-      // get updated colCount
-      this._getSegments('masonry');
-      if ( this.masonry.cols !== prevColCount ) {
-        // if column count has changed, do a new column cound
-        this.reLayout();
-      }
-
-      return this;
-    },
-  
+    
     _masonryGetContainerSize : function() {
       var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
       return { height: containerHeight };
     },
-
   
-  // ====================== fitRows ======================
+    _masonryResizeChanged : function() {
+      return this._checkIfSegmentsChanged();
+    },
+  
+    // ====================== fitRows ======================
+    
+    _fitRowsReset : function() {
+      this.fitRows = {
+        x : 0,
+        y : 0,
+        height : 0
+      };
+    },
   
     _fitRowsLayout : function( $elems ) {
       this.width = this.element.width();
@@ -928,74 +922,60 @@
         instance.fitRows.x += atomW;
   
       });
-      return this;
-    },
-  
-    _fitRowsReset : function() {
-      this.fitRows = {
-        x : 0,
-        y : 0,
-        height : 0
-      };
-      return this;
     },
   
     _fitRowsGetContainerSize : function () {
       return { height : this.fitRows.height };
     },
   
-    _fitRowsResize : function() {
-      return this.reLayout();
+    _fitRowsResizeChanged : function() {
+      return true;
     },
   
 
-  // ====================== cellsByRow ======================
+    // ====================== cellsByRow ======================
   
     _cellsByRowReset : function() {
-      this.cellsByRow = {};
-      this._getSegments('cellsByRow');
-      this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
-      return this;
+      this.cellsByRow = {
+        index : 0
+      };
+      // get this.cellsByRow.columnWidth
+      this._getSegments();
+      // get this.cellsByRow.rowHeight
+      this._getSegments(true);
     },
 
     _cellsByRowLayout : function( $elems ) {
       var instance = this,
-          cols = this.cellsByRow.cols;
-      this.cellsByRow.atomsLen = $elems.length;
-      $elems.each( function( i ){
+          props = this.cellsByRow;
+      $elems.each( function(){
         var $this = $(this),
-            x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth -
+            col = props.index % props.cols,
+            row = ~~( props.index / props.cols ),
+            x = ( col + 0.5 ) * props.columnWidth -
                   $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight -
+            y = ( row + 0.5 ) * props.rowHeight -
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
+        props.index ++;
       });
-      return this;
     },
 
     _cellsByRowGetContainerSize : function() {
-      return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+      return { height : Math.ceil( this.$filteredAtoms.length / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
     },
 
-    _cellsByRowResize : function() {
-      var prevCols = this.cellsByRow.cols;
-      this._getSegments('cellsByRow');
-
-      // if column count has changed, do a new column cound
-      if ( this.cellsByRow.cols !== prevCols ) {
-        this.reLayout();
-      }
-      return this;
+    _cellsByRowResizeChanged : function() {
+      return this._checkIfSegmentsChanged();
     },
   
   
-  // ====================== straightDown ======================
+    // ====================== straightDown ======================
   
     _straightDownReset : function() {
       this.straightDown = {
         y : 0
       };
-      return this;
     },
 
     _straightDownLayout : function( $elems ) {
@@ -1006,22 +986,63 @@
         instance._pushPosition( $this, instance.posLeft, y );
         instance.straightDown.y += $this.outerHeight(true);
       });
-      return this;
     },
 
     _straightDownGetContainerSize : function() {
       return { height : this.straightDown.y + this.posTop };
     },
 
-    _straightDownResize : function() {
-      this.reLayout();
-      return this;
+    _straightDownResizeChanged : function() {
+      return true;
     },
 
 
-  // ====================== masonryHorizontal ======================
+    // ====================== masonryHorizontal ======================
+    
+    _masonryHorizontalReset : function() {
+      // layout-specific props
+      this.masonryHorizontal = {};
+      // FIXME shouldn't have to call this again
+      this._getSegments( true );
+      var i = this.masonryHorizontal.rows;
+      this.masonryHorizontal.rowXs = [];
+      while (i--) {
+        this.masonryHorizontal.rowXs.push( this.posLeft );
+      }
+    },
   
-    _masonryHorizontalPlaceBrick : function( $brick, setCount, setX ) {
+    _masonryHorizontalLayout : function( $elems ) {
+      var instance = this;
+      $elems.each(function(){
+        var $this  = $(this),
+            //how many rows does this brick span
+            rowSpan = Math.ceil( $this.outerHeight(true) / instance.masonryHorizontal.rowHeight );
+        rowSpan = Math.min( rowSpan, instance.masonryHorizontal.rows );
+
+        if ( rowSpan === 1 ) {
+          // if brick spans only one column, just like singleMode
+          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rowXs );
+        } else {
+          // brick spans more than one row
+          // how many different places could this brick fit horizontally
+          var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
+              groupX = [],
+              groupRowX, i;
+
+          // for each group potential horizontal position
+          for ( i=0; i < groupCount; i++ ) {
+            // make an array of colY values for that one group
+            groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
+            // and get the max value of the array
+            groupX[i] = Math.max.apply( Math, groupRowX );
+          }
+
+          instance._masonryHorizontalPlaceBrick( $this, groupX );
+        }
+      });
+    },
+    
+    _masonryHorizontalPlaceBrick : function( $brick, setX ) {
       // here, `this` refers to a child element or "brick"
           // get the minimum Y value from the columns
       var minimumX  = Math.min.apply( Math, setX ),
@@ -1048,71 +1069,18 @@
       }
 
     },
-    
-    _masonryHorizontalLayout : function( $elems ) {
-      var instance = this;
-      $elems.each(function(){
-        var $this  = $(this),
-            //how many rows does this brick span
-            rowSpan = Math.ceil( $this.outerHeight(true) / instance.masonryHorizontal.rowHeight );
-        rowSpan = Math.min( rowSpan, instance.masonryHorizontal.rows );
 
-        if ( rowSpan === 1 ) {
-          // if brick spans only one column, just like singleMode
-          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rows, instance.masonryHorizontal.rowXs );
-        } else {
-          // brick spans more than one row
-          // how many different places could this brick fit horizontally
-          var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
-              groupX = [],
-              groupRowX, i;
-
-          // for each group potential horizontal position
-          for ( i=0; i < groupCount; i++ ) {
-            // make an array of colY values for that one group
-            groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
-            // and get the max value of the array
-            groupX[i] = Math.max.apply( Math, groupRowX );
-          }
-
-          instance._masonryHorizontalPlaceBrick( $this, groupCount, groupX );
-        }
-      });
-      return this;
-    },
-    
-    _masonryHorizontalReset : function() {
-      // layout-specific props
-      this.masonryHorizontal = {};
-      // FIXME shouldn't have to call this again
-      this._getSegments( 'masonryHorizontal', true );
-      var i = this.masonryHorizontal.rows;
-      this.masonryHorizontal.rowXs = [];
-      while (i--) {
-        this.masonryHorizontal.rowXs.push( this.posLeft );
-      }
-      return this;
-    },
-    
-    _masonryHorizontalResize : function() {
-      var prevRows = this.masonryHorizontal.rows;
-      // get updated colCount
-      this._getSegments( 'masonryHorizontal', true );
-      if ( this.masonryHorizontal.rows !== prevRows ) {
-        // if column count has changed, do a new column cound
-        this.reLayout();
-      }
-
-      return this;
-    },
-    
     _masonryHorizontalGetContainerSize : function() {
       var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
       return { width: containerWidth };
     },
+    
+    _masonryHorizontalResizeChanged : function() {
+      return this._checkIfSegmentsChanged(true);
+    },
 
 
-  // ====================== fitColumns ======================
+    // ====================== fitColumns ======================
   
     _fitColumnsReset : function() {
       this.fitColumns = {
@@ -1120,7 +1088,6 @@
         y : 0,
         width : 0
       };
-      return this;
     },
     
     _fitColumnsLayout : function( $elems ) {
@@ -1147,86 +1114,79 @@
         instance.fitColumns.y += atomH;
 
       });
-      return this;
     },
     
     _fitColumnsGetContainerSize : function () {
       return { width : this.fitColumns.width };
     },
     
-    _fitColumnsResize : function() {
-      return this.reLayout();
+    _fitColumnsResizeChanged : function() {
+      return true;
     },
     
 
   
-  // ====================== cellsByColumn ======================
+    // ====================== cellsByColumn ======================
   
     _cellsByColumnReset : function() {
-      this.cellsByColumn = {};
-      this._getSegments( 'cellsByColumn', true );
-      this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
-      return this;
+      this.cellsByColumn = {
+        index : 0
+      };
+      // get this.cellsByColumn.columnWidth
+      this._getSegments();
+      // get this.cellsByColumn.rowHeight
+      this._getSegments(true);
     },
 
     _cellsByColumnLayout : function( $elems ) {
       var instance = this,
-          rows = this.cellsByColumn.rows;
-      this.cellsByColumn.atomsLen = $elems.length;
-      $elems.each( function( i ){
+          props = this.cellsByColumn;
+      $elems.each( function(){
         var $this = $(this),
-            x = ( ~~( i / rows ) + 0.5 )  * instance.cellsByColumn.columnWidth -
+            col = ~~( props.index / props.rows ),
+            row = props.index % props.rows,
+            x = ( col + 0.5 )  * props.columnWidth -
                   $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( i % rows + 0.5 ) * instance.cellsByColumn.rowHeight -
+            y = ( row + 0.5 ) * props.rowHeight -
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
+        props.index ++;
       });
-      return this;
     },
 
     _cellsByColumnGetContainerSize : function() {
-      return { width : Math.ceil( this.cellsByColumn.atomsLen / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
+      return { width : Math.ceil( this.$filteredAtoms.length / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
     },
 
-    _cellsByColumnResize : function() {
-      var prevRows = this.cellsByColumn.rows;
-      this._getSegments( 'cellsByColumn', true );
-
-      // if column count has changed, do a new column cound
-      if ( this.cellsByColumn.rows !== prevRows ) {
-        this.reLayout();
-      }
-      return this;
+    _cellsByColumnResizeChanged : function() {
+      return this._checkIfSegmentsChanged(true);
     },
     
     // ====================== straightAcross ======================
 
-      _straightAcrossReset : function() {
-        this.straightAcross = {
-          x : 0
-        };
-        return this;
-      },
+    _straightAcrossReset : function() {
+      this.straightAcross = {
+        x : 0
+      };
+    },
 
-      _straightAcrossLayout : function( $elems ) {
-        var instance = this;
-        $elems.each( function( i ){
-          var $this = $(this),
-              x = instance.straightAcross.x + instance.posLeft;
-          instance._pushPosition( $this, x, instance.posTop );
-          instance.straightAcross.x += $this.outerWidth(true);
-        });
-        return this;
-      },
+    _straightAcrossLayout : function( $elems ) {
+      var instance = this;
+      $elems.each( function( i ){
+        var $this = $(this),
+            x = instance.straightAcross.x + instance.posLeft;
+        instance._pushPosition( $this, x, instance.posTop );
+        instance.straightAcross.x += $this.outerWidth(true);
+      });
+    },
 
-      _straightAcrossGetContainerSize : function() {
-        return { width : this.straightAcross.x + this.posLeft };
-      },
+    _straightAcrossGetContainerSize : function() {
+      return { width : this.straightAcross.x + this.posLeft };
+    },
 
-      _straightAcrossResize : function() {
-        this.reLayout();
-        return this;
-      }
+    _straightAcrossResizeChanged : function() {
+      return true;
+    }
 
   };
   
@@ -1278,7 +1238,7 @@
       // call method
       var args = Array.prototype.slice.call( arguments, 1 );
 
-      return this.each(function(){
+      this.each(function(){
         var instance = $.data( this, 'isotope' );
         if ( !instance ) {
           return $.error( "cannot call methods on isotope prior to initialization; " +
@@ -1291,17 +1251,21 @@
         instance[ options ].apply( instance, args );
       });
     } else {
-      return this.each(function() {
+      this.each(function() {
         var instance = $.data( this, 'isotope' );
         if ( instance ) {
           // apply options & init
-          instance.option( options || {} )._init();
+          instance.option( options || {} );
+          instance._init();
         } else {
           // initialize new instance
           $.data( this, 'isotope', new $.Isotope( options, this ) );
         }
       });
     }
+    // return jQuery object
+    // so plugin methods do not have to
+    return this;
   };
 
 })( window, jQuery );
