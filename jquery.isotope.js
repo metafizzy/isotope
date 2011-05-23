@@ -938,27 +938,33 @@
     // ====================== cellsByRow ======================
   
     _cellsByRowReset : function() {
-      this.cellsByRow = {};
+      this.cellsByRow = {
+        index : 0
+      };
+      // get this.cellsByRow.columnWidth
       this._getSegments();
-      this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
+      // get this.cellsByRow.rowHeight
+      this._getSegments(true);
     },
 
     _cellsByRowLayout : function( $elems ) {
       var instance = this,
-          cols = this.cellsByRow.cols;
-      this.cellsByRow.atomsLen = $elems.length;
-      $elems.each( function( i ){
+          props = this.cellsByRow;
+      $elems.each( function(){
         var $this = $(this),
-            x = ( i % cols + 0.5 ) * instance.cellsByRow.columnWidth -
+            col = props.index % props.cols,
+            row = ~~( props.index / props.cols ),
+            x = ( col + 0.5 ) * props.columnWidth -
                   $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( ~~( i / cols ) + 0.5 ) * instance.cellsByRow.rowHeight -
+            y = ( row + 0.5 ) * props.rowHeight -
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
+        props.index ++;
       });
     },
 
     _cellsByRowGetContainerSize : function() {
-      return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+      return { height : Math.ceil( this.$filteredAtoms.length / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
     },
 
     _cellsByRowResizeChanged : function() {
@@ -1125,27 +1131,33 @@
     // ====================== cellsByColumn ======================
   
     _cellsByColumnReset : function() {
-      this.cellsByColumn = {};
-      this._getSegments( true );
-      this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
+      this.cellsByColumn = {
+        index : 0
+      };
+      // get this.cellsByColumn.columnWidth
+      this._getSegments();
+      // get this.cellsByColumn.rowHeight
+      this._getSegments(true);
     },
 
     _cellsByColumnLayout : function( $elems ) {
       var instance = this,
-          rows = this.cellsByColumn.rows;
-      this.cellsByColumn.atomsLen = $elems.length;
-      $elems.each( function( i ){
+          props = this.cellsByColumn;
+      $elems.each( function(){
         var $this = $(this),
-            x = ( ~~( i / rows ) + 0.5 )  * instance.cellsByColumn.columnWidth -
+            col = ~~( props.index / props.rows ),
+            row = props.index % props.rows,
+            x = ( col + 0.5 )  * props.columnWidth -
                   $this.outerWidth(true) / 2 + instance.posLeft,
-            y = ( i % rows + 0.5 ) * instance.cellsByColumn.rowHeight -
+            y = ( row + 0.5 ) * props.rowHeight -
                   $this.outerHeight(true) / 2 + instance.posTop;
         instance._pushPosition( $this, x, y );
+        props.index ++;
       });
     },
 
     _cellsByColumnGetContainerSize : function() {
-      return { width : Math.ceil( this.cellsByColumn.atomsLen / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
+      return { width : Math.ceil( this.$filteredAtoms.length / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
     },
 
     _cellsByColumnResizeChanged : function() {
