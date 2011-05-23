@@ -1,5 +1,5 @@
 /**
- * Isotope v1.2.110523
+ * Isotope v1.3.110523
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -636,7 +636,9 @@
     
     
     resize : function() {
-      this[ '_' + this.options.layoutMode + 'Resize' ]();
+      if ( this[ '_' + this.options.layoutMode + 'ResizeChanged' ]() ) {
+        this.reLayout();
+      }
     },
     
     
@@ -757,11 +759,15 @@
 
     },
     
+    
+    // ====================== LAYOUTS ======================
+    
     // calculates number of rows or columns
     // requires columnWidth or rowHeight to be set on namespaced object
     // i.e. this.masonry.columnWidth = 200
-    _getSegments : function( namespace, isRows ) {
-      var measure  = isRows ? 'rowHeight' : 'columnWidth',
+    _getSegments : function( isRows ) {
+      var namespace = this.layoutMode,
+          measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
           segmentsName = isRows ? 'rows' : 'cols',
@@ -786,10 +792,18 @@
       this[ namespace ][ measure ] = segmentSize;
       
     },
+    
+    _checkIfSegmentsChanged : function( isRows ) {
+      var segmentsName = isRows ? 'rows' : 'cols',
+          prevSegments = this[ this.layoutMode ][ segmentsName ];
+      // update cols/rows
+      this._getSegments( isRows );
+      // return if updated cols/rows is not equal to previous
+      var changed = ( this[ this.layoutMode ][ segmentsName ] !== prevSegments );
+      console.log( changed );
+      return changed;
+    },
 
-    // ====================== LAYOUTS ======================
-  
-  
     // ====================== Masonry ======================
   
     _masonryPlaceBrick : function( $brick, setCount, setY ) {
@@ -858,7 +872,7 @@
       // layout-specific props
       this.masonry = {};
       // FIXME shouldn't have to call this again
-      this._getSegments('masonry');
+      this._getSegments();
       var i = this.masonry.cols;
       this.masonry.colYs = [];
       while (i--) {
@@ -866,14 +880,8 @@
       }
     },
   
-    _masonryResize : function() {
-      var prevColCount = this.masonry.cols;
-      // get updated colCount
-      this._getSegments('masonry');
-      if ( this.masonry.cols !== prevColCount ) {
-        // if column count has changed, do a new column cound
-        this.reLayout();
-      }
+    _masonryResizeChanged : function() {
+      return this._checkIfSegmentsChanged();
     },
   
     _masonryGetContainerSize : function() {
@@ -923,8 +931,8 @@
       return { height : this.fitRows.height };
     },
   
-    _fitRowsResize : function() {
-      this.reLayout();
+    _fitRowsResizeChanged : function() {
+      return true;
     },
   
 
@@ -932,7 +940,7 @@
   
     _cellsByRowReset : function() {
       this.cellsByRow = {};
-      this._getSegments('cellsByRow');
+      this._getSegments();
       this.cellsByRow.rowHeight = this.options.cellsByRow.rowHeight || this.$allAtoms.outerHeight(true);
     },
 
@@ -954,14 +962,8 @@
       return { height : Math.ceil( this.cellsByRow.atomsLen / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
     },
 
-    _cellsByRowResize : function() {
-      var prevCols = this.cellsByRow.cols;
-      this._getSegments('cellsByRow');
-
-      // if column count has changed, do a new column cound
-      if ( this.cellsByRow.cols !== prevCols ) {
-        this.reLayout();
-      }
+    _cellsByRowResizeChanged : function() {
+      return this._getIfSegmentsChanged();
     },
   
   
@@ -987,8 +989,8 @@
       return { height : this.straightDown.y + this.posTop };
     },
 
-    _straightDownResize : function() {
-      this.reLayout();
+    _straightDownResizeChanged : function() {
+      return true;
     },
 
 
@@ -1057,7 +1059,7 @@
       // layout-specific props
       this.masonryHorizontal = {};
       // FIXME shouldn't have to call this again
-      this._getSegments( 'masonryHorizontal', true );
+      this._getSegments( true );
       var i = this.masonryHorizontal.rows;
       this.masonryHorizontal.rowXs = [];
       while (i--) {
@@ -1065,14 +1067,8 @@
       }
     },
     
-    _masonryHorizontalResize : function() {
-      var prevRows = this.masonryHorizontal.rows;
-      // get updated colCount
-      this._getSegments( 'masonryHorizontal', true );
-      if ( this.masonryHorizontal.rows !== prevRows ) {
-        // if column count has changed, do a new column cound
-        this.reLayout();
-      }
+    _masonryHorizontalResizeChanged : function() {
+      return this._getIfSegmentsChanged();
     },
     
     _masonryHorizontalGetContainerSize : function() {
@@ -1121,8 +1117,8 @@
       return { width : this.fitColumns.width };
     },
     
-    _fitColumnsResize : function() {
-      this.reLayout();
+    _fitColumnsResizeChanged : function() {
+      return true;
     },
     
 
@@ -1131,7 +1127,7 @@
   
     _cellsByColumnReset : function() {
       this.cellsByColumn = {};
-      this._getSegments( 'cellsByColumn', true );
+      this._getSegments( true );
       this.cellsByColumn.columnWidth = this.options.cellsByColumn.columnWidth || this.$allAtoms.outerHeight(true);
     },
 
@@ -1153,14 +1149,8 @@
       return { width : Math.ceil( this.cellsByColumn.atomsLen / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
     },
 
-    _cellsByColumnResize : function() {
-      var prevRows = this.cellsByColumn.rows;
-      this._getSegments( 'cellsByColumn', true );
-
-      // if column count has changed, do a new column cound
-      if ( this.cellsByColumn.rows !== prevRows ) {
-        this.reLayout();
-      }
+    _cellsByColumnResizeChanged : function() {
+      return this._getIfSegmentsChanged();
     },
     
     // ====================== straightAcross ======================
@@ -1185,8 +1175,8 @@
       return { width : this.straightAcross.x + this.posLeft };
     },
 
-    _straightAcrossResize : function() {
-      this.reLayout();
+    _straightAcrossResizeChanged : function() {
+      return true;
     }
 
   };
