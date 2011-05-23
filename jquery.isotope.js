@@ -962,7 +962,7 @@
     },
 
     _cellsByRowResizeChanged : function() {
-      return this._getIfSegmentsChanged();
+      return this._checkIfSegmentsChanged();
     },
   
   
@@ -1067,7 +1067,7 @@
     },
     
     _masonryHorizontalResizeChanged : function() {
-      return this._getIfSegmentsChanged();
+      return this._checkIfSegmentsChanged(true);
     },
     
     _masonryHorizontalGetContainerSize : function() {
@@ -1149,7 +1149,7 @@
     },
 
     _cellsByColumnResizeChanged : function() {
-      return this._getIfSegmentsChanged();
+      return this._checkIfSegmentsChanged(true);
     },
     
     // ====================== straightAcross ======================
