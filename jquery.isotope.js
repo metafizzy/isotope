@@ -443,8 +443,7 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
         this.options = $.extend(true, this.options, key);
-        var optionName;
-        for ( optionName in key ) {
+        for ( var optionName in key ) {
           this._updateOption( optionName );
         }
       }
