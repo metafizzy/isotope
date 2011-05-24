@@ -764,19 +764,18 @@
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
           segmentsName = isRows ? 'rows' : 'cols',
+          containerSize = this.element[ size ](),
           segments,
           segmentSize;
-      
-      this[ size ] = this.element[ size ]();
       
                     // i.e. options.masonry && options.masonry.columnWidth
       segmentSize = this.options[ namespace ] && this.options[ namespace ][ measure ] ||
                     // or use the size of the first item
                     this.$filteredAtoms[ 'outer' + UCSize ](true) ||
                     // if there's no items, use size of container
-                    this[ size ];
+                    containerSize;
       
-      segments = Math.floor( this[ size ] / segmentSize );
+      segments = Math.floor( containerSize / segmentSize );
       segments = Math.max( segments, 1 );
 
       // i.e. this.masonry.cols = ....
@@ -892,8 +891,8 @@
     },
   
     _fitRowsLayout : function( $elems ) {
-      this.width = this.element.width();
-      var instance = this;
+      var instance = this,
+          containerWidth = this.element.width();
       
       $elems.each( function() {
         var $this = $(this),
@@ -901,7 +900,7 @@
             atomH = $this.outerHeight(true),
             x, y;
       
-        if ( instance.fitRows.x !== 0  &&  atomW + instance.fitRows.x > instance.width ) {
+        if ( instance.fitRows.x !== 0 && atomW + instance.fitRows.x > containerWidth ) {
           // if this element cannot fit in the current row
           instance.fitRows.x = 0;
           instance.fitRows.y = instance.fitRows.height;
@@ -1085,15 +1084,15 @@
     },
     
     _fitColumnsLayout : function( $elems ) {
-      var instance = this;
-      this.height = this.element.height();
+      var instance = this,
+          containerHeight = this.element.height();
       $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
             x, y;
 
-        if ( instance.fitColumns.y !== 0  &&  atomH + instance.fitColumns.y > instance.height ) {
+        if ( instance.fitColumns.y !== 0 && atomH + instance.fitColumns.y > containerHeight ) {
           // if this element cannot fit in the current column
           instance.fitColumns.x = instance.fitColumns.width;
           instance.fitColumns.y = 0;
