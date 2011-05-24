@@ -438,12 +438,12 @@
 
     },
 
-    option: function( key, value ){
+    option : function( opts ){
       // change options AFTER initialization:
       // signature: $('#foo').bar({ cool:false });
-      if ( $.isPlainObject( key ) ){
-        this.options = $.extend(true, this.options, key);
-        for ( var optionName in key ) {
+      if ( $.isPlainObject( opts ) ){
+        this.options = $.extend( true, this.options, opts );
+        for ( var optionName in opts ) {
           this._updateOption( optionName );
         }
       }
@@ -1244,7 +1244,7 @@
         var instance = $.data( this, 'isotope' );
         if ( instance ) {
           // apply options & init
-          instance.option( options || {} );
+          instance.option( options );
           instance._init();
         } else {
           // initialize new instance
