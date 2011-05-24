@@ -179,9 +179,8 @@
     ;
 
     var setIsoTransform = function ( elem, name, value ) {
-      var $elem = $(elem),
           // unpack current transform data
-          data =  $elem.data('isoTransform') || {},
+      var data =  $.data( elem, 'isoTransform' ) || {},
           newData = {},
           fnName,
           transformObj = {},
@@ -206,7 +205,7 @@
           valueFns = translateFn + scaleFn;
 
       // set data back in elem
-      $elem.data( 'isoTransform', data );
+      $.data( elem, 'isoTransform', data );
 
       // set name to vendor specific property
       elem.style[ transformProp ] = valueFns;
