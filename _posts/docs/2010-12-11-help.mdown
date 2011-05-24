@@ -1,6 +1,6 @@
 ---
 
-title: Troubleshooting
+title: Help
 category: docs
 layout: doc
 related: z-etc
