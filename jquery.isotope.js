@@ -535,8 +535,8 @@
         for ( var key in getSortData ) {
           sortData[ key ] = getSortData[ key ]( $this, instance );
         }
-        // apply sort data to $element
-        $this.data( 'isotope-sort-data', sortData );
+        // apply sort data to element
+        $.data( this, 'isotope-sort-data', sortData );
         if ( isIncrementingElemCount ) {
           instance.elemCount ++;
         }
@@ -564,7 +564,7 @@
     },
 
     _getSorter : function( elem, sortBy ) {
-      return $(elem).data('isotope-sort-data')[ sortBy ];
+      return $.data( elem, 'isotope-sort-data' )[ sortBy ];
     },
 
     // ====================== Layout Helpers ======================
