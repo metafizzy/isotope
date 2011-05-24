@@ -892,7 +892,8 @@
   
     _fitRowsLayout : function( $elems ) {
       var instance = this,
-          containerWidth = this.element.width();
+          containerWidth = this.element.width(),
+          props = this.fitRows;
       
       $elems.each( function() {
         var $this = $(this),
@@ -900,19 +901,17 @@
             atomH = $this.outerHeight(true),
             x, y;
       
-        if ( instance.fitRows.x !== 0 && atomW + instance.fitRows.x > containerWidth ) {
+        if ( props.x !== 0 && atomW + props.x > containerWidth ) {
           // if this element cannot fit in the current row
-          instance.fitRows.x = 0;
-          instance.fitRows.y = instance.fitRows.height;
+          props.x = 0;
+          props.y = props.height;
         } 
       
         // position the atom
-        x = instance.fitRows.x;
-        y = instance.fitRows.y;
-        instance._pushPosition( $this, x, y );
+        instance._pushPosition( $this, props.x, props.y );
   
-        instance.fitRows.height = Math.max( instance.fitRows.y + atomH, instance.fitRows.height );
-        instance.fitRows.x += atomW;
+        props.height = Math.max( props.y + atomH, props.height );
+        props.x += atomW;
   
       });
     },
@@ -945,10 +944,8 @@
         var $this = $(this),
             col = props.index % props.cols,
             row = ~~( props.index / props.cols ),
-            x = ( col + 0.5 ) * props.columnWidth -
-                  $this.outerWidth(true) / 2,
-            y = ( row + 0.5 ) * props.rowHeight -
-                  $this.outerHeight(true) / 2;
+            x = ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2,
+            y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1085,26 +1082,25 @@
     
     _fitColumnsLayout : function( $elems ) {
       var instance = this,
-          containerHeight = this.element.height();
+          containerHeight = this.element.height(),
+          props = this.fitColumns;
       $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
             x, y;
 
-        if ( instance.fitColumns.y !== 0 && atomH + instance.fitColumns.y > containerHeight ) {
+        if ( props.y !== 0 && atomH + props.y > containerHeight ) {
           // if this element cannot fit in the current column
-          instance.fitColumns.x = instance.fitColumns.width;
-          instance.fitColumns.y = 0;
+          props.x = props.width;
+          props.y = 0;
         } 
 
         // position the atom
-        x = instance.fitColumns.x;
-        y = instance.fitColumns.y;
-        instance._pushPosition( $this, x, y );
+        instance._pushPosition( $this, props.x, props.y );
 
-        instance.fitColumns.width = Math.max( instance.fitColumns.x + atomW, instance.fitColumns.width );
-        instance.fitColumns.y += atomH;
+        props.width = Math.max( props.x + atomW, props.width );
+        props.y += atomH;
 
       });
     },
