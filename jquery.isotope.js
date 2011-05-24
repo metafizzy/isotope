@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110523
+ * Isotope v1.3.110524
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -981,9 +981,8 @@
     _straightDownLayout : function( $elems ) {
       var instance = this;
       $elems.each( function( i ){
-        var $this = $(this),
-            y = instance.straightDown.y;
-        instance._pushPosition( $this, 0, y );
+        var $this = $(this);
+        instance._pushPosition( $this, 0, instance.straightDown.y );
         instance.straightDown.y += $this.outerHeight(true);
       });
     },
@@ -1145,10 +1144,8 @@
         var $this = $(this),
             col = ~~( props.index / props.rows ),
             row = props.index % props.rows,
-            x = ( col + 0.5 )  * props.columnWidth -
-                  $this.outerWidth(true) / 2,
-            y = ( row + 0.5 ) * props.rowHeight -
-                  $this.outerHeight(true) / 2;
+            x = ( col + 0.5 )  * props.columnWidth - $this.outerWidth(true) / 2,
+            y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1173,15 +1170,14 @@
     _straightAcrossLayout : function( $elems ) {
       var instance = this;
       $elems.each( function( i ){
-        var $this = $(this),
-            x = instance.straightAcross.x;
-        instance._pushPosition( $this, x, 0 );
+        var $this = $(this);
+        instance._pushPosition( $this, instance.straightAcross.x, 0 );
         instance.straightAcross.x += $this.outerWidth(true);
       });
     },
 
     _straightAcrossGetContainerSize : function() {
-      return { width : this.straightAcross.x + this.offset.left };
+      return { width : this.straightAcross.x };
     },
 
     _straightAcrossResizeChanged : function() {
