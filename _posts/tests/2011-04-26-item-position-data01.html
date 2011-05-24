@@ -5,29 +5,10 @@ category: tests
 ---
 
   <section id="copy">
-    <p></p>
+    <p><code>itemPositionDataEnabled</code> option is enabled.  </p>
   </section>
   
   <section id="options" class="clearfix">
-
-    <h3>Filters</h3>
-
-    <ul id="filters" class="option-set floated clearfix">
-      <li><a href="#show-all" class="selected">show all</a></li>
-      <li><a href="#metalloid">metalloid</a></li>
-      <li><a href="#metal">metal</a></li>
-      <li><a href="#alkali">alkali</a></li>
-      <li><a href="#alkaline-earth">alkaline-earth</a></li>
-      <li><a href="#inner-transition">inner-transition</a></li>
-      <li><a href="#lanthanoid">lanthanoid</a></li>
-      <li><a href="#actinoid">actinoid</a></li>
-      <li><a href="#transition">transition</a></li>
-      <li><a href="#post-transition">post-transition</a></li>
-      <li><a href="#nonmetal">nonmetal</a></li>
-      <li><a href="#other">other</a></li>
-      <li><a href="#halogen">halogen</a></li>
-      <li><a href="#noble-gas">noble-gas</a></li>
-    </ul>
 
     {% include sort-buttons.html %}
 
@@ -39,7 +20,7 @@ category: tests
     </ul>
   </section> <!-- #options -->
 
-  <div id="container">
+  <div id="container" class="clickable clearfix">
     {% for element in site.elements limit:40 %}
       {% include element-partial.html %}
     {% endfor %}
@@ -48,26 +29,25 @@ category: tests
   <script src="../{{ site.jquery_js }}"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
+  
     $(function(){
     
       var $container = $('#container');
       
-      // hacky way of adding random size classes
-      $container.find('.element').each(function(){
-        if ( Math.random() > 0.6 ) {
-          $(this).addClass('width2');
-        }
-        if ( Math.random() > 0.6 ) {
-          $(this).addClass('height2');
-        }
-      });
-      
       {% include sort-buttons.js %}
 
-      // change size of clicked element
-      $container.find('.element').live('click', function(){
-        $(this).toggleClass('large');
-        $container.isotope('reLayout');
+      // toggle variable sizes of all elements
+      $('#toggle-sizes').find('a').click(function(){
+        $container
+          .toggleClass('variable-sizes')
+          .isotope('reLayout');
+        return false;
+      });
+
+      // log item position
+      $container.find('.element').click(function(){
+        var position = $(this).data('isotope-item-position');
+        console.log( position.x + ', ' + position.y );
       });
     
       $container.isotope({
