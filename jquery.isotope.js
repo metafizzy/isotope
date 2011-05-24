@@ -439,8 +439,7 @@
     },
 
     option: function( key, value ){
-      // get/change options AFTER initialization:
-    
+      // change options AFTER initialization:
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( key ) ){
         this.options = $.extend(true, this.options, key);
@@ -448,11 +447,6 @@
         for ( optionName in key ) {
           this._updateOption( optionName );
         }
-    
-      // signature: $('#foo').bar('option', 'baz', false);
-      } else {
-        this.options[ key ] = value;
-        this._updateOption( key );
       }
     },
     
