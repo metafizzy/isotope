@@ -387,10 +387,8 @@
       this.reloadItems();
       
       // get top left position of where the bricks should be
-      var $cursor   = $( document.createElement('div') );
-      this.element.prepend( $cursor );
-      this.posTop  = Math.round( $cursor.position().top );
-      this.posLeft = Math.round( $cursor.position().left );
+      var $cursor = $( document.createElement('div') ).prependTo( this.element );
+      this.offset = $cursor.position();
       $cursor.remove();
 
       // add isotope class first time around
@@ -586,6 +584,8 @@
     },
 
     _pushPosition : function( $elem, x, y ) {
+      x += this.offset.left;
+      y += this.offset.top;
       var position = this.getPositionStyles( x, y );
       this.styleQueue.push({ $el: $elem, style: position });
       if ( this.options.itemPositionDataEnabled ) {
@@ -813,7 +813,7 @@
       var i = this.masonry.cols;
       this.masonry.colYs = [];
       while (i--) {
-        this.masonry.colYs.push( this.posTop );
+        this.masonry.colYs.push( 0 );
       }
     },
   
@@ -867,7 +867,7 @@
       }
     
       // position the brick
-      x = this.masonry.columnWidth * shortCol + this.posLeft;
+      x = this.masonry.columnWidth * shortCol;
       y = minimumY;
       this._pushPosition( $brick, x, y );
 
@@ -879,7 +879,7 @@
     },
     
     _masonryGetContainerSize : function() {
-      var containerHeight = Math.max.apply( Math, this.masonry.colYs ) - this.posTop;
+      var containerHeight = Math.max.apply( Math, this.masonry.colYs );
       return { height: containerHeight };
     },
   
@@ -914,8 +914,8 @@
         } 
       
         // position the atom
-        x = instance.fitRows.x + instance.posLeft;
-        y = instance.fitRows.y + instance.posTop;
+        x = instance.fitRows.x;
+        y = instance.fitRows.y;
         instance._pushPosition( $this, x, y );
   
         instance.fitRows.height = Math.max( instance.fitRows.y + atomH, instance.fitRows.height );
@@ -953,16 +953,16 @@
             col = props.index % props.cols,
             row = ~~( props.index / props.cols ),
             x = ( col + 0.5 ) * props.columnWidth -
-                  $this.outerWidth(true) / 2 + instance.posLeft,
+                  $this.outerWidth(true) / 2,
             y = ( row + 0.5 ) * props.rowHeight -
-                  $this.outerHeight(true) / 2 + instance.posTop;
+                  $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
     },
 
     _cellsByRowGetContainerSize : function() {
-      return { height : Math.ceil( this.$filteredAtoms.length / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.posTop };
+      return { height : Math.ceil( this.$filteredAtoms.length / this.cellsByRow.cols ) * this.cellsByRow.rowHeight + this.offset.top };
     },
 
     _cellsByRowResizeChanged : function() {
@@ -982,14 +982,14 @@
       var instance = this;
       $elems.each( function( i ){
         var $this = $(this),
-            y = instance.straightDown.y + instance.posTop;
-        instance._pushPosition( $this, instance.posLeft, y );
+            y = instance.straightDown.y;
+        instance._pushPosition( $this, 0, y );
         instance.straightDown.y += $this.outerHeight(true);
       });
     },
 
     _straightDownGetContainerSize : function() {
-      return { height : this.straightDown.y + this.posTop };
+      return { height : this.straightDown.y };
     },
 
     _straightDownResizeChanged : function() {
@@ -1007,7 +1007,7 @@
       var i = this.masonryHorizontal.rows;
       this.masonryHorizontal.rowXs = [];
       while (i--) {
-        this.masonryHorizontal.rowXs.push( this.posLeft );
+        this.masonryHorizontal.rowXs.push( 0 );
       }
     },
   
@@ -1060,7 +1060,7 @@
 
       // position the brick
       x = minimumX;
-      y = this.masonryHorizontal.rowHeight * smallRow + this.posTop;
+      y = this.masonryHorizontal.rowHeight * smallRow;
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
@@ -1071,7 +1071,7 @@
     },
 
     _masonryHorizontalGetContainerSize : function() {
-      var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs ) - this.posLeft;
+      var containerWidth = Math.max.apply( Math, this.masonryHorizontal.rowXs );
       return { width: containerWidth };
     },
     
@@ -1106,8 +1106,8 @@
         } 
 
         // position the atom
-        x = instance.fitColumns.x + instance.posLeft;
-        y = instance.fitColumns.y + instance.posTop;
+        x = instance.fitColumns.x;
+        y = instance.fitColumns.y;
         instance._pushPosition( $this, x, y );
 
         instance.fitColumns.width = Math.max( instance.fitColumns.x + atomW, instance.fitColumns.width );
@@ -1146,16 +1146,16 @@
             col = ~~( props.index / props.rows ),
             row = props.index % props.rows,
             x = ( col + 0.5 )  * props.columnWidth -
-                  $this.outerWidth(true) / 2 + instance.posLeft,
+                  $this.outerWidth(true) / 2,
             y = ( row + 0.5 ) * props.rowHeight -
-                  $this.outerHeight(true) / 2 + instance.posTop;
+                  $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
     },
 
     _cellsByColumnGetContainerSize : function() {
-      return { width : Math.ceil( this.$filteredAtoms.length / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth + this.posLeft };
+      return { width : Math.ceil( this.$filteredAtoms.length / this.cellsByColumn.rows ) * this.cellsByColumn.columnWidth };
     },
 
     _cellsByColumnResizeChanged : function() {
@@ -1174,14 +1174,14 @@
       var instance = this;
       $elems.each( function( i ){
         var $this = $(this),
-            x = instance.straightAcross.x + instance.posLeft;
-        instance._pushPosition( $this, x, instance.posTop );
+            x = instance.straightAcross.x;
+        instance._pushPosition( $this, x, 0 );
         instance.straightAcross.x += $this.outerWidth(true);
       });
     },
 
     _straightAcrossGetContainerSize : function() {
-      return { width : this.straightAcross.x + this.posLeft };
+      return { width : this.straightAcross.x + this.offset.left };
     },
 
     _straightAcrossResizeChanged : function() {
