@@ -811,20 +811,21 @@
     },
   
     _masonryLayout : function( $elems ) {
-      var instance = this;
+      var instance = this,
+          props = instance.masonry;
       $elems.each(function(){
         var $this  = $(this),
             //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
-        colSpan = Math.min( colSpan, instance.masonry.cols );
+            colSpan = Math.ceil( $this.outerWidth(true) / props.columnWidth );
+        colSpan = Math.min( colSpan, props.cols );
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryPlaceBrick( $this, instance.masonry.colYs );
+          instance._masonryPlaceBrick( $this, props.colYs );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
-          var groupCount = instance.masonry.cols + 1 - colSpan,
+          var groupCount = props.cols + 1 - colSpan,
               groupY = [],
               groupColY,
               i;
@@ -832,7 +833,7 @@
           // for each group potential horizontal position
           for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            groupColY = instance.masonry.colYs.slice( i, i+colSpan );
+            groupColY = props.colYs.slice( i, i+colSpan );
             // and get the max value of the array
             groupY[i] = Math.max.apply( Math, groupColY );
           }
@@ -1004,27 +1005,28 @@
     },
   
     _masonryHorizontalLayout : function( $elems ) {
-      var instance = this;
+      var instance = this,
+          props = instance.masonryHorizontal;
       $elems.each(function(){
         var $this  = $(this),
             //how many rows does this brick span
-            rowSpan = Math.ceil( $this.outerHeight(true) / instance.masonryHorizontal.rowHeight );
-        rowSpan = Math.min( rowSpan, instance.masonryHorizontal.rows );
+            rowSpan = Math.ceil( $this.outerHeight(true) / props.rowHeight );
+        rowSpan = Math.min( rowSpan, props.rows );
 
         if ( rowSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rowXs );
+          instance._masonryHorizontalPlaceBrick( $this, props.rowXs );
         } else {
           // brick spans more than one row
           // how many different places could this brick fit horizontally
-          var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
+          var groupCount = props.rows + 1 - rowSpan,
               groupX = [],
               groupRowX, i;
 
           // for each group potential horizontal position
           for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
+            groupRowX = props.rowXs.slice( i, i+rowSpan );
             // and get the max value of the array
             groupX[i] = Math.max.apply( Math, groupRowX );
           }
