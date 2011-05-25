@@ -127,6 +127,9 @@ a:active code {
 
 a img { border: none; }
 
+em { font-style: italic; }
+strong { font-weight: bold; }
+
 /**** Isotope styles ****/
 
 /* required for containers to inherit vertical size from window */
