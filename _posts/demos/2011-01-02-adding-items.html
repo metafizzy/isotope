@@ -31,22 +31,21 @@ related: methods
   <script src="../{{ site.isotope_js }}"></script>
   <script src="../js/fake-element.js"></script>
   <script>
-
-    var $container = $('#container');
-
-    {% include add-buttons.js %}
-
-    $('#prepend a').click(function(){
-      var $newEls = $( fakeElement.getGroup() );
-      $container
-        .prepend( $newEls ).isotope('reloadItems').isotope({ sortBy: 'original-order' })
-        // set sort back to symbol for inserting
-        .isotope('option', { sortBy: 'symbol' });
-      
-      return false;
-    });
-
     $(function(){
+      
+      var $container = $('#container');
+
+      {% include add-buttons.js %}
+
+      $('#prepend a').click(function(){
+        var $newEls = $( fakeElement.getGroup() );
+        $container
+          .prepend( $newEls ).isotope('reloadItems').isotope({ sortBy: 'original-order' })
+          // set sort back to symbol for inserting
+          .isotope('option', { sortBy: 'symbol' });
+
+        return false;
+      });
 
       $container.isotope({
         itemSelector : '.element',

@@ -25,14 +25,13 @@ related: layouts
   <script src="../{{ site.jquery_js }}"></script>
   <script src="../{{ site.isotope_js }}"></script>
   <script>
-  
-    var $container = $('#container');
-
-    {% include layout-change.js %}
-    
-    {% include option-buttons.js %}
-
     $(function(){
+      
+      var $container = $('#container');
+
+      {% include layout-change.js %}
+
+      {% include option-buttons.js %}
 
       $container.isotope({
         itemSelector : '.element',

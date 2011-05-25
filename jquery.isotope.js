@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110524
+ * Isotope v1.3.110525
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -179,9 +179,8 @@
     ;
 
     var setIsoTransform = function ( elem, name, value ) {
-      var $elem = $(elem),
           // unpack current transform data
-          data =  $elem.data('isoTransform') || {},
+      var data =  $.data( elem, 'isoTransform' ) || {},
           newData = {},
           fnName,
           transformObj = {},
@@ -206,7 +205,7 @@
           valueFns = translateFn + scaleFn;
 
       // set data back in elem
-      $elem.data( 'isoTransform', data );
+      $.data( elem, 'isoTransform', data );
 
       // set name to vendor specific property
       elem.style[ transformProp ] = valueFns;
@@ -438,13 +437,12 @@
 
     },
 
-    option: function( key, value ){
+    option : function( opts ){
       // change options AFTER initialization:
       // signature: $('#foo').bar({ cool:false });
-      if ( $.isPlainObject( key ) ){
-        this.options = $.extend(true, this.options, key);
-        var optionName;
-        for ( optionName in key ) {
+      if ( $.isPlainObject( opts ) ){
+        this.options = $.extend( true, this.options, opts );
+        for ( var optionName in opts ) {
           this._updateOption( optionName );
         }
       }
@@ -535,8 +533,8 @@
         for ( var key in getSortData ) {
           sortData[ key ] = getSortData[ key ]( $this, instance );
         }
-        // apply sort data to $element
-        $this.data( 'isotope-sort-data', sortData );
+        // apply sort data to element
+        $.data( this, 'isotope-sort-data', sortData );
         if ( isIncrementingElemCount ) {
           instance.elemCount ++;
         }
@@ -564,7 +562,7 @@
     },
 
     _getSorter : function( elem, sortBy ) {
-      return $(elem).data('isotope-sort-data')[ sortBy ];
+      return $.data( elem, 'isotope-sort-data' )[ sortBy ];
     },
 
     // ====================== Layout Helpers ======================
@@ -765,19 +763,18 @@
           size     = isRows ? 'height' : 'width',
           UCSize   = isRows ? 'Height' : 'Width',
           segmentsName = isRows ? 'rows' : 'cols',
+          containerSize = this.element[ size ](),
           segments,
           segmentSize;
-      
-      this[ size ] = this.element[ size ]();
       
                     // i.e. options.masonry && options.masonry.columnWidth
       segmentSize = this.options[ namespace ] && this.options[ namespace ][ measure ] ||
                     // or use the size of the first item
                     this.$filteredAtoms[ 'outer' + UCSize ](true) ||
                     // if there's no items, use size of container
-                    this[ size ];
+                    containerSize;
       
-      segments = Math.floor( this[ size ] / segmentSize );
+      segments = Math.floor( containerSize / segmentSize );
       segments = Math.max( segments, 1 );
 
       // i.e. this.masonry.cols = ....
@@ -812,20 +809,21 @@
     },
   
     _masonryLayout : function( $elems ) {
-      var instance = this;
+      var instance = this,
+          props = instance.masonry;
       $elems.each(function(){
         var $this  = $(this),
             //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / instance.masonry.columnWidth );
-        colSpan = Math.min( colSpan, instance.masonry.cols );
+            colSpan = Math.ceil( $this.outerWidth(true) / props.columnWidth );
+        colSpan = Math.min( colSpan, props.cols );
 
         if ( colSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryPlaceBrick( $this, instance.masonry.colYs );
+          instance._masonryPlaceBrick( $this, props.colYs );
         } else {
           // brick spans more than one column
           // how many different places could this brick fit horizontally
-          var groupCount = instance.masonry.cols + 1 - colSpan,
+          var groupCount = props.cols + 1 - colSpan,
               groupY = [],
               groupColY,
               i;
@@ -833,7 +831,7 @@
           // for each group potential horizontal position
           for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            groupColY = instance.masonry.colYs.slice( i, i+colSpan );
+            groupColY = props.colYs.slice( i, i+colSpan );
             // and get the max value of the array
             groupY[i] = Math.max.apply( Math, groupColY );
           }
@@ -846,17 +844,15 @@
     // worker method that places brick in the columnSet
     //   with the the minY
     _masonryPlaceBrick : function( $brick, setY ) {
-          // get the minimum Y value from the columns
-      var minimumY  = Math.min.apply( Math, setY ),
-          setHeight = minimumY + $brick.outerHeight(true),
-          i         = setY.length,
-          shortCol  = i,
-          setSpan   = this.masonry.cols + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
+      // get the minimum Y value from the columns
+      var minimumY = Math.min.apply( Math, setY ),
+          shortCol = 0;
+
+      // Find index of short column, the first from the left
+      for (var i=0, len = setY.length; i < len; i++) {
         if ( setY[i] === minimumY ) {
           shortCol = i;
+          break;
         }
       }
     
@@ -866,6 +862,8 @@
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
+      var setHeight = minimumY + $brick.outerHeight(true),
+          setSpan = this.masonry.cols + 1 - len;
       for ( i=0; i < setSpan; i++ ) {
         this.masonry.colYs[ shortCol + i ] = setHeight;
       }
@@ -892,8 +890,9 @@
     },
   
     _fitRowsLayout : function( $elems ) {
-      this.width = this.element.width();
-      var instance = this;
+      var instance = this,
+          containerWidth = this.element.width(),
+          props = this.fitRows;
       
       $elems.each( function() {
         var $this = $(this),
@@ -901,19 +900,17 @@
             atomH = $this.outerHeight(true),
             x, y;
       
-        if ( instance.fitRows.x !== 0  &&  atomW + instance.fitRows.x > instance.width ) {
+        if ( props.x !== 0 && atomW + props.x > containerWidth ) {
           // if this element cannot fit in the current row
-          instance.fitRows.x = 0;
-          instance.fitRows.y = instance.fitRows.height;
+          props.x = 0;
+          props.y = props.height;
         } 
       
         // position the atom
-        x = instance.fitRows.x;
-        y = instance.fitRows.y;
-        instance._pushPosition( $this, x, y );
+        instance._pushPosition( $this, props.x, props.y );
   
-        instance.fitRows.height = Math.max( instance.fitRows.y + atomH, instance.fitRows.height );
-        instance.fitRows.x += atomW;
+        props.height = Math.max( props.y + atomH, props.height );
+        props.x += atomW;
   
       });
     },
@@ -946,10 +943,8 @@
         var $this = $(this),
             col = props.index % props.cols,
             row = ~~( props.index / props.cols ),
-            x = ( col + 0.5 ) * props.columnWidth -
-                  $this.outerWidth(true) / 2,
-            y = ( row + 0.5 ) * props.rowHeight -
-                  $this.outerHeight(true) / 2;
+            x = ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2,
+            y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1005,27 +1000,28 @@
     },
   
     _masonryHorizontalLayout : function( $elems ) {
-      var instance = this;
+      var instance = this,
+          props = instance.masonryHorizontal;
       $elems.each(function(){
         var $this  = $(this),
             //how many rows does this brick span
-            rowSpan = Math.ceil( $this.outerHeight(true) / instance.masonryHorizontal.rowHeight );
-        rowSpan = Math.min( rowSpan, instance.masonryHorizontal.rows );
+            rowSpan = Math.ceil( $this.outerHeight(true) / props.rowHeight );
+        rowSpan = Math.min( rowSpan, props.rows );
 
         if ( rowSpan === 1 ) {
           // if brick spans only one column, just like singleMode
-          instance._masonryHorizontalPlaceBrick( $this, instance.masonryHorizontal.rowXs );
+          instance._masonryHorizontalPlaceBrick( $this, props.rowXs );
         } else {
           // brick spans more than one row
           // how many different places could this brick fit horizontally
-          var groupCount = instance.masonryHorizontal.rows + 1 - rowSpan,
+          var groupCount = props.rows + 1 - rowSpan,
               groupX = [],
               groupRowX, i;
 
           // for each group potential horizontal position
           for ( i=0; i < groupCount; i++ ) {
             // make an array of colY values for that one group
-            groupRowX = instance.masonryHorizontal.rowXs.slice( i, i+rowSpan );
+            groupRowX = props.rowXs.slice( i, i+rowSpan );
             // and get the max value of the array
             groupX[i] = Math.max.apply( Math, groupRowX );
           }
@@ -1036,18 +1032,14 @@
     },
     
     _masonryHorizontalPlaceBrick : function( $brick, setX ) {
-      // here, `this` refers to a child element or "brick"
-          // get the minimum Y value from the columns
+      // get the minimum Y value from the columns
       var minimumX  = Math.min.apply( Math, setX ),
-          setWidth  = minimumX + $brick.outerWidth(true),
-          i         = setX.length,
-          smallRow  = i,
-          setSpan   = this.masonryHorizontal.rows + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
+          smallRow  = 0;
+      // Find index of smallest row, the first from the top
+      for (var i=0, len = setX.length; i < len; i++) {
         if ( setX[i] === minimumX ) {
           smallRow = i;
+          break;
         }
       }
 
@@ -1057,10 +1049,11 @@
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
+      var setWidth = minimumX + $brick.outerWidth(true),
+          setSpan = this.masonryHorizontal.rows + 1 - len;
       for ( i=0; i < setSpan; i++ ) {
         this.masonryHorizontal.rowXs[ smallRow + i ] = setWidth;
       }
-
     },
 
     _masonryHorizontalGetContainerSize : function() {
@@ -1084,27 +1077,26 @@
     },
     
     _fitColumnsLayout : function( $elems ) {
-      var instance = this;
-      this.height = this.element.height();
+      var instance = this,
+          containerHeight = this.element.height(),
+          props = this.fitColumns;
       $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
             atomH = $this.outerHeight(true),
             x, y;
 
-        if ( instance.fitColumns.y !== 0  &&  atomH + instance.fitColumns.y > instance.height ) {
+        if ( props.y !== 0 && atomH + props.y > containerHeight ) {
           // if this element cannot fit in the current column
-          instance.fitColumns.x = instance.fitColumns.width;
-          instance.fitColumns.y = 0;
+          props.x = props.width;
+          props.y = 0;
         } 
 
         // position the atom
-        x = instance.fitColumns.x;
-        y = instance.fitColumns.y;
-        instance._pushPosition( $this, x, y );
+        instance._pushPosition( $this, props.x, props.y );
 
-        instance.fitColumns.width = Math.max( instance.fitColumns.x + atomW, instance.fitColumns.width );
-        instance.fitColumns.y += atomH;
+        props.width = Math.max( props.x + atomW, props.width );
+        props.y += atomH;
 
       });
     },
@@ -1245,7 +1237,7 @@
         var instance = $.data( this, 'isotope' );
         if ( instance ) {
           // apply options & init
-          instance.option( options || {} );
+          instance.option( options );
           instance._init();
         } else {
           // initialize new instance
