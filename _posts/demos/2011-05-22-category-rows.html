@@ -6,7 +6,7 @@ related: layouts
 ---
 
 <section id="copy">
-  <p>This demo uses a custom layout mode that arranges elements into columns based on an attribute.</p>
+  <p>This demo uses a custom layout mode, <code>categoryRows</code> that arranges elements into rows based on their category. The layout mode logic relies on sorting to define rows.</p>
 </section>
 
 <section id="options" class="clearfix">
@@ -33,6 +33,7 @@ related: layouts
   <h3>Etc</h3>
 
   <ul id="etc" class="floated clearfix">
+    <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
     <li id="insert"><a href="#insert">Insert new elements</a></li>
   </ul>
 </section> <!-- #options -->
@@ -53,95 +54,87 @@ related: layouts
   $.extend( $.Isotope.prototype, {
   
     _categoryRowsReset : function() {
-      // reset namespace properties
       this.categoryRows = {
-        rowIndex : 0,
-        // the x & y position in each row
-        position : {
-          x : this.posLeft,
-          y : this.posTop
-        }
+        x : 0,
+        y : 0,
+        height : 0,
+        currentCategory : null
       };
-      this._getSegments('categoryRows', true);
-    
-      return this;
     },
   
     _categoryRowsLayout : function( $elems ) {
       var instance = this,
-          // namespaced properties
-          position = this.categoryRows.position,
-          sortBy = this.options.sortBy,
           containerWidth = this.element.width(),
-          currentRowName, nextX;
-      $elems.each(function(){
+          sortBy = this.options.sortBy,
+          props = this.categoryRows;
+      
+      $elems.each( function() {
         var $this = $(this),
-            // get row based on function passed in options
-            rowName = $this.data('isotope-sort-data')[ sortBy ],
-            atomWidth = $this.outerWidth(true);
-        
-        // for new row
-        if ( !currentRowName ) {
-          currentRowName = rowName;
-        } else if ( currentRowName !== rowName ) {
-          instance._categoryRowsNewRow();
-          currentRowName = rowName;
-        }
+            atomW = $this.outerWidth(true),
+            atomH = $this.outerHeight(true),
+            category = $.data( this, 'isotope-sort-data' )[ sortBy ],
+            x, y;
       
-        // if item doesn't fit on row
-        nextX = position.x + atomWidth;
-        if ( nextX >= containerWidth ) {
-          instance._categoryRowsNewRow();
-        }
-        
-        instance._pushPosition( $this, position.x, position.y );
+        if ( category !== props.currentCategory ) {
+          // new category, new row
+          props.x = 0;
+          props.height += props.currentCategory ? instance.options.categoryRows.gutter : 0;
+          props.y = props.height;
+          props.currentCategory = category;
+        } else if ( props.x !== 0 && atomW + props.x > containerWidth ) {
+          // if this element cannot fit in the current row
+          props.x = 0;
+          props.y = props.height;
+        } 
       
-        position.x += atomWidth;
-      
+        // position the atom
+        instance._pushPosition( $this, props.x, props.y );
+  
+        props.height = Math.max( props.y + atomH, props.height );
+        props.x += atomW;
+  
       });
-    
-      return this;
-    },
-    
-    // convience method
-    _categoryRowsNewRow : function() {
-      var props = this.categoryRows;
-      props.position.x = this.posLeft;
-      props.position.y += props.rowHeight;
     },
   
-    _categoryRowsGetContainerSize : function() {
-      return { height: this.categoryRows.position.y + this.categoryRows.rowHeight };
+    _categoryRowsGetContainerSize : function () {
+      return { height : this.categoryRows.height };
     },
   
-    _categoryRowsResize : function() {
-      this.reLayout();
+    _categoryRowsResizeChanged : function() {
+      return true;
     }
   
   });
   
-  var $container = $('#container');
-
-  $('#filters').find('a').click(function(){
-    // get href attribute, minus the #, plus a . to make it a class
-    var filterName = '.' + $(this).attr('href').slice(1);
-    filterName = filterName === '.show-all' ? '*' : filterName;
-    $container.isotope({ filter: filterName })
-    return false;
-  });
-
-  {% include add-buttons.js %}
-
-  {% include option-buttons.js %}
-  
-
   $(function(){
+    
+    var $container = $('#container');
+
+    $('#filters').find('a').click(function(){
+      // get href attribute, minus the #, plus a . to make it a class
+      var filterName = '.' + $(this).attr('href').slice(1);
+      filterName = filterName === '.show-all' ? '*' : filterName;
+      $container.isotope({ filter: filterName })
+      return false;
+    });
+
+    {% include add-buttons.js %}
+
+    // toggle variable sizes of all elements
+    $('#toggle-sizes').find('a').click(function(){
+      $container
+        .toggleClass('variable-sizes')
+        .isotope('reLayout');
+      return false;
+    });
+
+    {% include option-buttons.js %}
 
     $container.isotope({
       itemSelector : '.element',
       layoutMode : 'categoryRows',
       categoryRows : {
-        rowHeight : 120
+        gutter : 20
       },
       getSortData : {
         category : function( $elem ) {
