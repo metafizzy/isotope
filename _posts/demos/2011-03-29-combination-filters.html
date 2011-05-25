@@ -57,31 +57,30 @@ schema:
 <script src="../{{ site.jquery_js }}"></script>
 <script src="../{{ site.isotope_js }}"></script>
 <script>
-
-  var $container = $('#container'),
-      filters = {};
-
-  // filter buttons
-  $('.filter a').click(function(){
-    var $this = $(this),
-        isoFilters = [],
-        prop, selector;
-    // store filter value in object
-    // i.e. filters.color = 'red'
-    filters[ $this.data('group') ] = $this.data('filter');
-    
-    for ( prop in filters ) {
-      isoFilters.push( filters[ prop ] )
-    }
-    selector = isoFilters.join('');
-    $container.isotope({ filter: selector });
-
-    return false;
-  });
-  
-  {% include option-buttons.js %}
-
   $(function(){
+    
+    var $container = $('#container'),
+        filters = {};
+
+    // filter buttons
+    $('.filter a').click(function(){
+      var $this = $(this),
+          isoFilters = [],
+          prop, selector;
+      // store filter value in object
+      // i.e. filters.color = 'red'
+      filters[ $this.data('group') ] = $this.data('filter');
+
+      for ( prop in filters ) {
+        isoFilters.push( filters[ prop ] )
+      }
+      selector = isoFilters.join('');
+      $container.isotope({ filter: selector });
+
+      return false;
+    });
+
+    {% include option-buttons.js %}
 
     $container.isotope({
       itemSelector : '.color-shape',
