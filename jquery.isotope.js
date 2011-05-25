@@ -897,8 +897,7 @@
       $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
-            atomH = $this.outerHeight(true),
-            x, y;
+            atomH = $this.outerHeight(true);
       
         if ( props.x !== 0 && atomW + props.x > containerWidth ) {
           // if this element cannot fit in the current row
@@ -1083,8 +1082,7 @@
       $elems.each( function() {
         var $this = $(this),
             atomW = $this.outerWidth(true),
-            atomH = $this.outerHeight(true),
-            x, y;
+            atomH = $this.outerHeight(true);
 
         if ( props.y !== 0 && atomH + props.y > containerHeight ) {
           // if this element cannot fit in the current column
