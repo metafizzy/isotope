@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110524
+ * Isotope v1.3.110525
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -844,17 +844,15 @@
     // worker method that places brick in the columnSet
     //   with the the minY
     _masonryPlaceBrick : function( $brick, setY ) {
-          // get the minimum Y value from the columns
-      var minimumY  = Math.min.apply( Math, setY ),
-          setHeight = minimumY + $brick.outerHeight(true),
-          i         = setY.length,
-          shortCol  = i,
-          setSpan   = this.masonry.cols + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
+      // get the minimum Y value from the columns
+      var minimumY = Math.min.apply( Math, setY ),
+          shortCol = 0;
+
+      // Find index of short column, the first from the left
+      for (var i=0, len = setY.length; i < len; i++) {
         if ( setY[i] === minimumY ) {
           shortCol = i;
+          break;
         }
       }
     
@@ -864,6 +862,8 @@
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
+      var setHeight = minimumY + $brick.outerHeight(true),
+          setSpan = this.masonry.cols + 1 - len;
       for ( i=0; i < setSpan; i++ ) {
         this.masonry.colYs[ shortCol + i ] = setHeight;
       }
@@ -1032,18 +1032,14 @@
     },
     
     _masonryHorizontalPlaceBrick : function( $brick, setX ) {
-      // here, `this` refers to a child element or "brick"
-          // get the minimum Y value from the columns
+      // get the minimum Y value from the columns
       var minimumX  = Math.min.apply( Math, setX ),
-          setWidth  = minimumX + $brick.outerWidth(true),
-          i         = setX.length,
-          smallRow  = i,
-          setSpan   = this.masonryHorizontal.rows + 1 - i,
-          x, y ;
-      // Which column has the minY value, closest to the left
-      while (i--) {
+          smallRow  = 0;
+      // Find index of smallest row, the first from the top
+      for (var i=0, len = setX.length; i < len; i++) {
         if ( setX[i] === minimumX ) {
           smallRow = i;
+          break;
         }
       }
 
@@ -1053,10 +1049,11 @@
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
+      var setWidth = minimumX + $brick.outerWidth(true),
+          setSpan = this.masonryHorizontal.rows + 1 - len;
       for ( i=0; i < setSpan; i++ ) {
         this.masonryHorizontal.rowXs[ smallRow + i ] = setWidth;
       }
-
     },
 
     _masonryHorizontalGetContainerSize : function() {
