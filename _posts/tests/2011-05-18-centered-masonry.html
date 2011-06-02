@@ -92,21 +92,16 @@ category: tests
     var i = this.masonry.cols;
     this.masonry.colYs = [];
     while (i--) {
-      this.masonry.colYs.push( this.posTop );
+      this.masonry.colYs.push( 0 );
     }
     return this;
   };
 
-  $.Isotope.prototype._masonryResize = function() {
+  $.Isotope.prototype._masonryResizeChanged = function() {
     var prevColCount = this.masonry.cols;
     // get updated colCount
     this._getCenteredMasonryColumns();
-    if ( this.masonry.cols !== prevColCount ) {
-      // if column count has changed, do a new column cound
-      this.reLayout();
-    }
-
-    return this;
+    return ( this.masonry.cols !== prevColCount )
   };
   
   $.Isotope.prototype._masonryGetContainerSize = function() {
@@ -117,7 +112,7 @@ category: tests
     
     var layoutWidth = this.masonry.cols * this.masonry.columnWidth,
         size = {
-          height : Math.max.apply( Math, this.masonry.colYs ) - this.posTop,
+          height : Math.max.apply( Math, this.masonry.colYs ),
           width : Math.min(layoutWidth, itemsTotalWidth )
         };
     return size;
