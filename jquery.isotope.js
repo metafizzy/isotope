@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110525
+ * Isotope v1.3.110601
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -217,10 +217,10 @@
   
     $.cssHooks.scale = {
       set: function( elem, value ) {
-        // properly parse strings
-        if ( typeof value === 'string' ) {
-          value = parseFloat( value );
-        }
+        // uncomment this bit if you want to properly parse strings
+        // if ( typeof value === 'string' ) {
+        //   value = parseFloat( value );
+        // }
         setIsoTransform( elem, 'scale', value );
       },
       get: function( elem, computed ) {
@@ -241,8 +241,7 @@
     $.cssHooks.translate = {
       set: function( elem, value ) {
 
-        // all this would be for public use
-        // properly parsing strings and whatnot
+        // uncomment this bit if you want to properly parse strings
         // if ( typeof value === 'string' ) {
         //   value = value.split(' ');
         // }
