@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110601
+ * Isotope v1.3.110604
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -1203,7 +1203,13 @@
     return this;
   };
 
-  
+  // helper function for logging errors
+  // $.error breaks jQuery chaining
+  var logError = function( message ) {
+    if ( this.console ) {
+      console.error( message );
+    }
+  };
 
   // =======================  Plugin bridge  ===============================
   // leverages data method to either create or return $.Isotope constructor
@@ -1220,11 +1226,13 @@
       this.each(function(){
         var instance = $.data( this, 'isotope' );
         if ( !instance ) {
-          return $.error( "cannot call methods on isotope prior to initialization; " +
-            "attempted to call method '" + options + "'" );
+          logError( "cannot call methods on isotope prior to initialization; " +
+              "attempted to call method '" + options + "'" );
+          return;
         }
         if ( !$.isFunction( instance[options] ) || options.charAt(0) === "_" ) {
-          return $.error( "no such method '" + options + "' for isotope instance" );
+          logError( "no such method '" + options + "' for isotope instance" );
+          return;
         }
         // apply method
         instance[ options ].apply( instance, args );
