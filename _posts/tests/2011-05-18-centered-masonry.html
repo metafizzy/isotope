@@ -67,13 +67,13 @@ category: tests
     var parentWidth = this.element.parent().width();
     
                   // i.e. options.masonry && options.masonry.columnWidth
-    colW = this.options.masonry && this.options.masonry.columnWidth ||
+    var colW = this.options.masonry && this.options.masonry.columnWidth ||
                   // or use the size of the first item
                   this.$filteredAtoms.outerWidth(true) ||
                   // if there's no items, use size of container
                   parentWidth;
     
-    cols = Math.floor( parentWidth / colW );
+    var cols = Math.floor( parentWidth / colW );
     cols = Math.max( cols, 1 );
 
     // i.e. this.masonry.cols = ....
@@ -101,7 +101,7 @@ category: tests
     var prevColCount = this.masonry.cols;
     // get updated colCount
     this._getCenteredMasonryColumns();
-    return ( this.masonry.cols !== prevColCount )
+    return ( this.masonry.cols !== prevColCount );
   };
   
   $.Isotope.prototype._masonryGetContainerSize = function() {
