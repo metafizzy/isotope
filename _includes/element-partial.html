@@ -1,6 +1,4 @@
-    {% capture a %}{{ element.number | modulus:7 | modulus:2 }}{% endcapture %}
-    {% capture b %}{{ element.number | modulus:3 }}{% endcapture %}
-    {% capture classnames %}{% for cat in element.categories %}{{ cat }} {% endfor %} {% if page.infinite_scroll %} width2 height2 {% else %} {% if a == '1' %} width2 {% endif %} {% if b == '0' %} height2 {% endif %} {% endif %} {% endcapture %}
+    {% capture classnames %}{% for cat in element.categories %}{{ cat }} {% endfor %} {% if page.infinite_scroll %} width2 height2 {% endif %} {% endcapture %}
     <div class="element {{ classnames }}" data-symbol="{{ element.symbol }}" data-category="{{ element.categories[0] }}">
       <p class="number">{{ element.number }}</p>
       <h3 class="symbol">{{ element.symbol }}</h3>
