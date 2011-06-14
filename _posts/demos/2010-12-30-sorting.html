@@ -29,10 +29,6 @@ related: sorting
     $(function(){
       
       var $container = $('#container');
-
-      {% include sort-buttons.js %}
-
-      {% include option-buttons.js %}
       
       $container.isotope({
         itemSelector : '.element',
@@ -54,6 +50,8 @@ related: sorting
           }
         }
       });
+      
+      {% include option-set-buttons.js %}
       
     });
   </script>
