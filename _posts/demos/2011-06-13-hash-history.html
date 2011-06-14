@@ -1,0 +1,195 @@
+---
+title: Hash history
+layout: demo
+category: demos
+related: z-etc
+---
+
+<section id="copy">
+  <p>Isotope&rsquo;s capabilities are designed to be used together cohesively. You can do it all &mdash; filter, sort, change layout modes, add items &mdash; and Isotope will handle it with ease.</p>
+</section>
+
+<section id="options" class="clearfix">
+
+  <h3>Filters</h3>
+
+  <ul id="filters" class="option-set floated clearfix">
+    <li><a href="#filter=*" class="selected">show all</a></li>
+    <li><a href="#filter=.metalloid">metalloid</a></li>
+    <li><a href="#filter=.metal">metal</a></li>
+    <li><a href="#filter=.alkali">alkali</a></li>
+    <li><a href="#filter=.alkaline-earth">alkaline-earth</a></li>
+    <li><a href="#filter=.inner-transition">inner-transition</a></li>
+    <li><a href="#filter=.lanthanoid">lanthanoid</a></li>
+    <li><a href="#filter=.actinoid">actinoid</a></li>
+    <li><a href="#filter=.transition">transition</a></li>
+    <li><a href="#filter=.post-transition">post-transition</a></li>
+    <li><a href="#filter=.nonmetal">nonmetal</a></li>
+    <li><a href="#filter=.other">other</a></li>
+    <li><a href="#filter=.halogen">halogen</a></li>
+    <li><a href="#filter=.noble-gas">noble-gas</a></li>
+  </ul>
+
+
+  <h3>Sort</h3>
+
+  <ul id="sort" class="sort option-set floated clearfix">
+    <li><a href="#sortBy=original-order" class="selected">original-order</a></li>
+    <li><a href="#sortBy=name">name</a></li>
+    <li><a href="#sortBy=symbol">symbol</a></li>
+    <li><a href="#sortBy=number">number</a></li>
+    <li><a href="#sortBy=weight">weight</a></li>
+    <li><a href="#sortBy=category">category</a></li>
+  </ul>
+  
+  <h3>Sort direction</h3>
+  
+  <ul id="sort-direction" class="option-set floated clearfix">
+    <li><a href="#sortAscending=true" class="selected">sort ascending</a></li>
+    <li><a href="#sortAscending=false">sort descending</a></li>
+  </ul>
+
+  <h3>Layout modes</h3>
+
+  <ul id="layouts" class="option-set floated clearfix">
+    <li><a href="#layoutMode=masonry" class="selected">masonry</a></li>
+    <li><a href="#layoutMode=fitRows">fitRows</a></li>
+    <li><a href="#layoutMode=cellsByRow">cellsByRow</a></li>
+    <li><a href="#layoutMode=straightDown">straightDown</a></li>
+  </ul>
+
+</section> <!-- #options -->
+
+<div id="container" class="variable-sizes clearfix">
+  {% for elem_number in site.random_order | limit:60 %}
+    {% assign element = site.elements[elem_number] %}
+    {% include element-partial.html %}
+  {% endfor %}
+</div> <!-- #container -->
+
+<script src="../{{ site.jquery_js }}"></script>
+<script src="../{{ site.isotope_js }}"></script>
+<script src="../js/jquery.ba-bbq.min.js"></script>
+<script src="../js/fake-element.js"></script>
+<script>
+$(function(){
+  
+  var $container = $('#container'),
+      // object that will keep track of options
+      isotopeOptions = {};
+  
+  
+  // hacky way of adding random size classes
+  $container.find('.element').each(function(){
+    if ( Math.random() > 0.6 ) {
+      $(this).addClass('width2');
+    }
+    if ( Math.random() > 0.6 ) {
+      $(this).addClass('height2');
+    }
+  });
+
+  // set up Isotope
+  $container.isotope({
+    itemSelector : '.element',
+    masonry : {
+      columnWidth : 120
+    },
+    cellsByRow : {
+      columnWidth : 240,
+      rowHeight : 240
+    },
+    getSortData : {
+      symbol : function( $elem ) {
+        return $elem.attr('data-symbol');
+      },
+      category : function( $elem ) {
+        return $elem.attr('data-category');
+      },
+      number : function( $elem ) {
+        return parseInt( $elem.find('.number').text(), 10 );
+      },
+      weight : function( $elem ) {
+        return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
+      },
+      name : function ( $elem ) {
+        return $elem.find('.name').text();
+      }
+    }
+  });
+  
+  var $optionSets = $('#options').find('.option-set'),
+      $optionLinks = $optionSets.find('a');
+  
+  function changeSelectedLink( $elem ) {
+    // remove selected class on previous item
+    $elem.parents('.option-set').find('.selected').removeClass('selected');
+    // set selected class on new item
+    $elem.addClass('selected');
+  }
+  
+  // switches selected class on buttons
+  var isOptionLinkClicked = false;
+  $optionLinks.click(function(){
+    var $this = $(this);
+    // don't proceed if already selected
+    if ( $this.hasClass('selected') ) {
+      return;
+    }
+
+    changeSelectedLink( $this );
+    
+    var href = $this.attr('href').replace( /^#/, '' ),
+        // convert href into object
+        // i.e. 'filter=inner-transition' -> { filter: 'inner-transition' }
+        option = $.deparam( href, true );
+    
+    $.extend( isotopeOptions, option );
+    
+    $.bbq.pushState( isotopeOptions );
+    isOptionLinkClicked = true;
+    
+    return false;
+  });
+
+
+  $(window).bind( 'hashchange', function( event ){
+    // get
+    var hashOptions = $.deparam.fragment( window.location.href, true );
+    
+    // do not proceed if hash options aren't new
+    if ( hashOptions === isotopeOptions ) {
+      return;
+    }
+    
+    isotopeOptions = hashOptions;
+    
+    $container.isotope( isotopeOptions );
+    
+    // if option link was not clicked
+    // then we'll need to update selected links with 
+    if ( !isOptionLinkClicked ) {
+      // iterate over options
+      for ( var key in isotopeOptions ) {
+        var hrefObj = {},
+            hrefValue;
+        
+        hrefObj[ key ] = isotopeOptions[ key ];
+        // convert object into parameter string
+        // i.e. { filter: 'inner-transition' } -> 'filter=inner-transition'
+        hrefValue = $.param( hrefObj );
+        var $selectedLink = $optionSets.find('a[href="#' + hrefValue + '"]');
+        changeSelectedLink( $selectedLink );
+        
+      }
+      
+    }
+    
+    isOptionLinkClicked = false;
+  })
+    .trigger('hashchange');
+
+
+});
+</script>
+  
