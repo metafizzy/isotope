@@ -2,9 +2,10 @@
       // change layout
       var isHorizontal = false;
       $('#layouts a').click(function(){
-        var mode = $(this).attr('href').slice(1);
+        var $this = $(this),
+            mode = $this.attr('href').slice(1),
             wasHorizontal = isHorizontal;
-        isHorizontal = $(this).hasClass('horizontal');
+        isHorizontal = $this.hasClass('horizontal');
   
         if ( wasHorizontal !== isHorizontal ) {
           // need to do some clean up for transitions and sizes
@@ -21,7 +22,6 @@
         } else {
           // go ahead and apply new layout
           $container.isotope({ layoutMode : mode });
-    
         }
   
         return false;
