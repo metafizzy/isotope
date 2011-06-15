@@ -4,14 +4,11 @@
 
       $optionLinks.click(function(){
         var $this = $(this);
-
         // don't proceed if already selected
         if ( $this.hasClass('selected') ) {
-          return;
+          return false;
         }
-  
         var $optionSet = $this.parents('.option-set');
-  
         $optionSet.find('.selected').removeClass('selected');
         $this.addClass('selected');
   
@@ -22,8 +19,13 @@
         // parse 'false' as false boolean
         value = value === 'false' ? false : value;
         options[ key ] = value;
-  
-        $container.isotope( options );
+        if ( key === 'layoutMode' && changeLayoutMode ) {
+          // changes in layout modes need extra logic
+          changeLayoutMode( $this, options )
+        } else {
+          // otherwise, apply new options
+          $container.isotope( options );
+        }
         
         return false;
       });

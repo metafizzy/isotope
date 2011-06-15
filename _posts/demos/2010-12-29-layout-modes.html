@@ -30,11 +30,7 @@ related: layouts
       var $container = $('#container');
       
       {% include random-sizes.js %}
-
-      {% include layout-change.js %}
-
-      {% include option-buttons.js %}
-
+      
       $container.isotope({
         itemSelector : '.element',
         masonry : {
@@ -52,6 +48,12 @@ related: layouts
           rowHeight : 240
         }
       });
+      
+      {% include layout-change.js %}
+
+      {% include option-set-buttons.js %}
+
+
       
     });
   </script>
