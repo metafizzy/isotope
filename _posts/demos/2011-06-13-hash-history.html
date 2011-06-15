@@ -6,30 +6,24 @@ related: z-etc
 ---
 
 <section id="copy">
-  <p>Isotope&rsquo;s capabilities are designed to be used together cohesively. You can do it all &mdash; filter, sort, change layout modes, add items &mdash; and Isotope will handle it with ease.</p>
+  <p><a href="http://benalman.com/projects/jquery-bbq-plugin/">jQuery BBQ</a> by Ben Alman allows you to use hash history to save Isotope options. Try clicking a couple options then hitting the back button.</p>
 </section>
 
 <section id="options" class="clearfix">
 
   <h3>Filters</h3>
 
-  <ul id="filters" class="option-set floated clearfix">
+  <ul id="filters" class="option-set floated clearfix" data-option-key="filter">
     <li><a href="#filter=*" class="selected">show all</a></li>
-    <li><a href="#filter=.metalloid">metalloid</a></li>
     <li><a href="#filter=.metal">metal</a></li>
-    <li><a href="#filter=.alkali">alkali</a></li>
-    <li><a href="#filter=.alkaline-earth">alkaline-earth</a></li>
-    <li><a href="#filter=.inner-transition">inner-transition</a></li>
-    <li><a href="#filter=.lanthanoid">lanthanoid</a></li>
-    <li><a href="#filter=.actinoid">actinoid</a></li>
     <li><a href="#filter=.transition">transition</a></li>
     <li><a href="#filter=.post-transition">post-transition</a></li>
     <li><a href="#filter=.nonmetal">nonmetal</a></li>
-    <li><a href="#filter=.other">other</a></li>
-    <li><a href="#filter=.halogen">halogen</a></li>
-    <li><a href="#filter=.noble-gas">noble-gas</a></li>
+    <li><a href="#filter=.inner-transition">inner-transition</a></li>
+    <li><a href="#filter=.alkali%2C+.alkaline-earth">alkali and alkaline-earth</a></li>
+    <li><a href="#filter=%3Anot(.transition)" data-option-value=":not(.transition)">not transition</a></li>
+    <li><a href="#filter=.metal%3Anot(.transition)" data-option-value=".metal:not(.transition)">metal but not transition</a></li>
   </ul>
-
 
   <h3>Sort</h3>
 
@@ -70,7 +64,6 @@ related: z-etc
 <script src="../{{ site.jquery_js }}"></script>
 <script src="../{{ site.isotope_js }}"></script>
 <script src="../js/jquery.ba-bbq.min.js"></script>
-<script src="../js/fake-element.js"></script>
 <script>
 $(function(){
   
@@ -119,8 +112,10 @@ $(function(){
   });
   
   var $optionSets = $('#options').find('.option-set'),
-      $optionLinks = $optionSets.find('a');
+      $optionLinks = $optionSets.find('a'),
+      isOptionLinkClicked = false;
   
+  // switches selected class on buttons
   function changeSelectedLink( $elem ) {
     // remove selected class on previous item
     $elem.parents('.option-set').find('.selected').removeClass('selected');
@@ -128,8 +123,7 @@ $(function(){
     $elem.addClass('selected');
   }
   
-  // switches selected class on buttons
-  var isOptionLinkClicked = false;
+  
   $optionLinks.click(function(){
     var $this = $(this);
     // don't proceed if already selected
@@ -139,6 +133,7 @@ $(function(){
 
     changeSelectedLink( $this );
     
+        // get href attr, remove leading #
     var href = $this.attr('href').replace( /^#/, '' ),
         // convert href into object
         // i.e. 'filter=inner-transition' -> { filter: 'inner-transition' }
@@ -146,6 +141,7 @@ $(function(){
     
     $.extend( isotopeOptions, option );
     
+    // set hash, triggers hashchange on window
     $.bbq.pushState( isotopeOptions );
     isOptionLinkClicked = true;
     
@@ -154,7 +150,7 @@ $(function(){
 
 
   $(window).bind( 'hashchange', function( event ){
-    // get
+    // get options object from hash
     var hashOptions = $.deparam.fragment( window.location.href, true );
     
     // do not proceed if hash options aren't new
@@ -163,7 +159,7 @@ $(function(){
     }
     
     isotopeOptions = hashOptions;
-    
+    // apply options from hash
     $container.isotope( isotopeOptions );
     
     // if option link was not clicked
@@ -171,22 +167,20 @@ $(function(){
     if ( !isOptionLinkClicked ) {
       // iterate over options
       for ( var key in isotopeOptions ) {
-        var hrefObj = {},
-            hrefValue;
-        
+        var hrefObj = {};
         hrefObj[ key ] = isotopeOptions[ key ];
         // convert object into parameter string
         // i.e. { filter: 'inner-transition' } -> 'filter=inner-transition'
-        hrefValue = $.param( hrefObj );
-        var $selectedLink = $optionSets.find('a[href="#' + hrefValue + '"]');
+        var hrefValue = $.param( hrefObj ),
+            // get matching link
+            $selectedLink = $optionSets.find('a[href="#' + hrefValue + '"]');
         changeSelectedLink( $selectedLink );
-        
       }
-      
     }
     
     isOptionLinkClicked = false;
   })
+    // trigger hashchange to capture any hash data on init
     .trigger('hashchange');
 
 
