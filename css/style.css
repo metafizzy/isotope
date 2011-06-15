@@ -435,6 +435,7 @@ body {
 
 #site-nav h2 {
   font-size: 18px;
+  font-weight: normal;
   margin: 0 0 0.3em;
   border-top: none;
 }
@@ -520,11 +521,11 @@ pre, code {
   font-family: 'Monaco', monospace, sans-serif;
 }
 
-.doc #content code {
+#content code {
   font-size: 12px;
 }
 
-.doc #content pre {
+#content pre {
   line-height: 1.6em;
 }
 
@@ -732,10 +733,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 
 
-/* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
+/* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
-/* fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
 .clearfix { zoom: 1; }
-
 
