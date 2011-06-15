@@ -2,7 +2,7 @@
 
 title: Extending Isotope
 category: docs
-layout: doc
+layout: default
 related: z-etc
 toc:
   - { title: Custom layout modes, anchor: custom_layout_modes }

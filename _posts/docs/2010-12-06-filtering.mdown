@@ -2,7 +2,7 @@
 
 title: Filtering
 category: docs
-layout: doc
+layout: default
 related: filtering
 toc:
   - { title: Markup, anchor: markup }

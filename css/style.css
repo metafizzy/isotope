@@ -397,7 +397,7 @@ body {
 
 /**** Docs ****/
 
-body.doc {
+.doc #content {
   max-width: 640px;
 }
 
@@ -406,55 +406,42 @@ body.doc {
 }
 
 
-body.doc {
+#content {
   margin-left: 220px;
-}
-
-.doc nav {
-  width: 210px;
-  position: fixed;
-  left: 10px;
-  top: 0px;
-  padding-top: 20px;
-  height: 100%;
-  overflow: auto;
-}
-
-.doc nav h1 {
-  margin-top: 0;
-}
-
-@media screen and (max-width: 768px) {
-
-  body.doc {
-    margin-left: 0px;
-  }
-  
-  .doc nav {
-    width: auto;
-    position: relative;
-    left: auto;
-    top: auto;
-    padding-top: 0px;
-    height: auto;
-    margin-bottom: 20px;
-  }
-
 }
 
 /**** Doc page nav ****/
 
-#docs-nav h1,
+#site-nav h1,
 #demo-nav {
-  font-size: 19px;
+  font-size: 24px;
   margin-bottom: 0.5em;
   font-weight: bold;
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-#docs-nav h1 a,
+#site-nav {
+  width: 200px;
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  padding-top: 20px;
+  font-size: 12px;
+}
+
+#site-nav h1 {
+  margin-top: 0;
+}
+
+#site-nav h2 {
+  font-size: 18px;
+  margin: 0 0 0.3em;
+  border-top: none;
+}
+
+#site-nav h1 a,
 #demo-nav a { color: #4FB; }
-#docs-nav h1 a:hover,
+#site-nav h1 a:hover,
 #demo-nav a:hover { color: #4BF; }
 
 #demo-nav {
@@ -462,26 +449,28 @@ body.doc {
   border-bottom: 1px solid #333;
 }
 
-#docs-nav ul {
+#site-nav ul {
   list-style: none;
-  margin: 0;
+  margin: 0 0 1.0em;
   font-weight: bold;
 }
 
-#docs-nav ul a {
+#site-nav ul ul { margin-bottom: 0; }
+
+#site-nav ul a {
   display: block;
   border: none;
   padding: 1px 5px;
 }
 
-#docs-nav ul .current a {
+#site-nav ul .current a {
   background: hsla( 0, 0%, 0%, 0.3 );
   color: #1BF;
 }
-#docs-nav ul a:hover,
-#docs-nav ul .current a:hover { color: white; }
+#site-nav ul a:hover,
+#site-nav ul .current a:hover { color: white; }
   
-#docs-nav ul .current .toc a {
+#site-nav ul .current .toc a {
   font-size: 12px;
   padding-left: 1.2em;
   font-weight: normal;
@@ -720,17 +709,6 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   font-weight: bold;
   line-height: 1.3em;
   margin-bottom: 0.6em;
-}
-
-
-/**** Index pages ****/
-
-#index-list {
-  font-weight: 300;
-  font-size: 28px;
-  line-height: 1.4em;
-  list-style: none;
-  margin-left: 0;
 }
 
 

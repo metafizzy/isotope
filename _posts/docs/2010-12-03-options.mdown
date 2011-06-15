@@ -2,7 +2,7 @@
 
 title: Options
 category: docs
-layout: doc
+layout: default
 body_class: option-def
 related: a-intro
 toc:

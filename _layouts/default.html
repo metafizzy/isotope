@@ -1,0 +1,48 @@
+{% include html-head.html %}
+  
+  <nav id="site-nav">
+    <h1><a href="../index.html">{{ site.name }}</a></h1>
+    
+    <h2>Docs</h2>
+    
+    <ul>
+      {% for doc in site.categories.docs reversed %}
+        {% if page.title == doc.title and page.category == 'docs' %}
+        <li class="current"><a href="#content">{{ doc.title }}</a>
+          <ul class="toc">
+            {% for item in page.toc %}
+              <li><a href="#{{ item.anchor }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+          <li><a href="..{{ doc.url }}">{{ doc.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    
+    <h2>Demos</h2>
+    
+    <ul>
+      {% for demo in site.categories.demos reversed %}
+        {% if page.title == demo.title and page.category == 'demos' %}
+          <li class="current"><a href="#content">{{ demo.title }}</a></li>
+        {% else %}
+          <li><a href="..{{ demo.url }}">{{ demo.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    
+  </nav> <!-- #site-nav -->
+  
+  <section id="content">
+    
+    <h1>{{ page.title }}</h1>
+
+    {{ content }}
+    
+    {% include footer.html %}
+    
+  </section> <!-- #content -->
+  
+{% include html-foot.html %}

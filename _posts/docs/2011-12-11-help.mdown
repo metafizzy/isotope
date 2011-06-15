@@ -2,7 +2,7 @@
 
 title: Help
 category: docs
-layout: doc
+layout: default
 related: z-etc
 toc:
   - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }

@@ -2,7 +2,7 @@
 
 title: Animating
 category: docs
-layout: doc
+layout: default
 related: animating
 toc:
   - { title: animationEngine option, anchor: animationengine_option }

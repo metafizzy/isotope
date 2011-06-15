@@ -2,7 +2,7 @@
 
 title: Sorting
 category: docs
-layout: doc
+layout: default
 related: sorting
 toc:
   - { title: Markup, anchor: markup }

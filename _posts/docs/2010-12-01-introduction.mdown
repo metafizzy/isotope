@@ -2,7 +2,7 @@
 
 title: Introduction
 category: docs
-layout: doc
+layout: default
 related: a-intro
 toc:
   - { title: Features, anchor: features }
