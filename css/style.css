@@ -684,19 +684,34 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 .super-list .link a {
   display: block;
   padding: 10px;
+  padding-left: 65px;
   height: 90px;
-  background: #E58;
-  color: white;
-  text-shadow: 0 -1px hsla( 0, 0%, 0%, 0.3 );
-  -webkit-border-radius: 10px;
-     -moz-border-radius: 10px;
-          border-radius: 10px;
+  background: #1F1E1D;
+  color: #FE5;
+  -webkit-border-radius: 14px;
+     -moz-border-radius: 14px;
+          border-radius: 14px;
+}
+
+.super-list .link a:before {
+  content: '➔';
+  font-size: 70px;
+  position: absolute;
+  top: 30px;
+  left: 5px;
+  -webkit-transform: rotate(90deg);
+}
+
+.super-list .link.away a:before {
+  top: 25px;
+  left: 0px;
+  -webkit-transform: rotate(-45deg);
+  
 }
 
 .super-list .link a:hover {
-  text-shadow: none;
-  background: white;
-  color: #111;
+  background: #E58;
+  color: white;
 }
 
 .super-list .feature .name {
@@ -730,4 +745,3 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
-
