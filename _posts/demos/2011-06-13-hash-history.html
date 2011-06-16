@@ -21,8 +21,8 @@ related: z-etc
     <li><a href="#filter=.nonmetal">nonmetal</a></li>
     <li><a href="#filter=.inner-transition">inner-transition</a></li>
     <li><a href="#filter=.alkali%2C+.alkaline-earth">alkali and alkaline-earth</a></li>
-    <li><a href="#filter=%3Anot(.transition)" data-option-value=":not(.transition)">not transition</a></li>
-    <li><a href="#filter=.metal%3Anot(.transition)" data-option-value=".metal:not(.transition)">metal but not transition</a></li>
+    <li><a href="#filter=%3Anot(.transition)">not transition</a></li>
+    <li><a href="#filter=.metal%3Anot(.transition)">metal but not transition</a></li>
   </ul>
 
   <h3>Sort</h3>
@@ -142,7 +142,7 @@ $(function(){
         // get href attr, remove leading #
     var href = $this.attr('href').replace( /^#/, '' ),
         // convert href into object
-        // i.e. 'filter=inner-transition' -> { filter: 'inner-transition' }
+        // i.e. 'filter=.inner-transition' -> { filter: '.inner-transition' }
         option = $.deparam( href, true );
     // apply new option to previous
     $.extend( isotopeOptions, option );
@@ -172,7 +172,7 @@ $(function(){
         hrefObj = {};
         hrefObj[ key ] = options[ key ];
         // convert object into parameter string
-        // i.e. { filter: 'inner-transition' } -> 'filter=inner-transition'
+        // i.e. { filter: '.inner-transition' } -> 'filter=.inner-transition'
         hrefValue = $.param( hrefObj );
         // get matching link
         $selectedLink = $optionSets.find('a[href="#' + hrefValue + '"]');
