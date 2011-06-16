@@ -395,30 +395,23 @@ body {
   width: 100%;
 }
 
+#content {
+  margin-left: 210px;
+}
+
 /**** Docs ****/
 
-.doc #content {
+.docs #content {
   max-width: 640px;
 }
 
-.doc a:hover {
+.docs #content a:hover {
   border-bottom: 1px dotted;
-}
-
-
-#content {
-  margin-left: 220px;
 }
 
 /**** Doc page nav ****/
 
-#site-nav h1,
-#demo-nav {
-  font-size: 24px;
-  margin-bottom: 0.5em;
-  font-weight: bold;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
+
 
 #site-nav {
   width: 200px;
@@ -430,7 +423,11 @@ body {
 }
 
 #site-nav h1 {
+  font-size: 24px;
+  margin-bottom: 0.5em;
   margin-top: 0;
+  font-weight: bold;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 #site-nav h2 {
@@ -440,15 +437,8 @@ body {
   border-top: none;
 }
 
-#site-nav h1 a,
-#demo-nav a { color: #4FB; }
-#site-nav h1 a:hover,
-#demo-nav a:hover { color: #4BF; }
-
-#demo-nav {
-  padding-bottom: 0.5em;
-  border-bottom: 1px solid #333;
-}
+#site-nav h1 a { color: #4FB; }
+#site-nav h1 a:hover { color: #4BF; }
 
 #site-nav ul {
   list-style: none;
@@ -479,18 +469,18 @@ body {
 
 /**** Doc content ****/
 
-.doc h2 {
+.docs h2 {
   border-top: 1px solid #333;
   padding-top: 0.8em;
 }
 
-.doc h2:target { 
+.docs h2:target { 
   padding: 10px;
   background: white;
   color: #222;
 }
 
-.doc h3 {
+.docs h3 {
   color: #FEC;
   background: hsla( 0, 0%, 75%, 0.05 );
   padding: 2px 0.5em;
@@ -498,7 +488,7 @@ body {
   font-size: 1.15em;
 }
 
-.doc h4 {
+.docs h4 {
   margin-bottom: 0.5em;
   font-size: 14px;
 }
@@ -559,27 +549,27 @@ h3#options {
 
 /* Tagline */
 
-.doc .tagline {
+.docs .tagline {
   font-size: 22px;
   font-weight: 300;
 }
 
 /* as-is from MIT */
 
-.doc .as-is {
+.docs .as-is {
   font-size: 95%;
 }
 
 /* Commercial license blurb */
 
-.doc #commercial {
+.docs #commercial {
   background: white;
   padding: 10px;
   font-size: 14px;
   color: #1F1F1D;
 }
 
-.doc #commercial a { font-weight: bold;}
+.docs #commercial a { font-weight: bold;}
 
 /**** Pygments ****/
 

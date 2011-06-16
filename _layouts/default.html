@@ -1,8 +1,22 @@
-{% include html-head.html %}
+<!doctype html>
+<html lang="en">
+<head>
+  {% if page.category != 'homepage' %}{% assign root_path = '../' %}{% assign link_path = '..' %}{% else %}{% assign link_path = '.' %}{% endif %}
+  <meta charset="utf-8" />
+  <title>{{ page.title }}{% if page.category != 'homepage' %} &middot; {{ site.name }} {% if page.category == 'docs' %}Docs{% elsif page.category == 'demos' %}Demo{% endif %}{% endif %}</title>
+  
+  <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+  <link rel="stylesheet" href="{{ root_path }}css/style.css" />
+  
+  <!-- scripts at bottom of page -->
+
+</head>
+<body class="{{ page.category }} {{ page.body_class }}">
   
   <nav id="site-nav">
-    <h1><a href="../index.html">{{ site.name }}</a></h1>
-    
+    <h1><a href="{{ root_path }}index.html">{{ site.name }}</a></h1>
+
     <h2>Docs</h2>
     
     <ul>
@@ -16,7 +30,7 @@
           </ul>
         </li>
         {% else %}
-          <li><a href="..{{ doc.url }}">{{ doc.title }}</a>
+          <li><a href="{{ link_path }}{{ doc.url }}">{{ doc.title }}</a>
         {% endif %}
       {% endfor %}
     </ul>
@@ -28,7 +42,7 @@
         {% if page.title == demo.title and page.category == 'demos' %}
           <li class="current"><a href="#content">{{ demo.title }}</a></li>
         {% else %}
-          <li><a href="..{{ demo.url }}">{{ demo.title }}</a>
+          <li><a href="{{ link_path }}{{ demo.url }}">{{ demo.title }}</a>
         {% endif %}
       {% endfor %}
     </ul>
@@ -36,13 +50,18 @@
   </nav> <!-- #site-nav -->
   
   <section id="content">
-    
-    <h1>{{ page.title }}</h1>
+    {% if page.category != 'homepage' %}
+      <h1>{{ page.title }}</h1>
+    {% endif %}
 
     {{ content }}
     
-    {% include footer.html %}
+    <footer>
+      {{ site.name }} by <a href="http://desandro.com">David DeSandro</a> / <a href="http://metafizzy.co">Metafizzy</a>
+    </footer>
     
   </section> <!-- #content -->
   
-{% include html-foot.html %}
+
+</body>
+</html>
