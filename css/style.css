@@ -605,48 +605,6 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 /**** Super list ****/
 
-#super-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 40px;
-}
-
-#super-list li {
-  display: inline-block;
-  float: left;
-  font-size: 28px;
-  line-height: 1.2em;
-  margin: 2px;
-  font-weight: 300;
-}
-
-#super-list li.feature { background: #111; }
-#super-list li span,
-#super-list li a {
-  display: block;
-  padding: 0.2em 0.5em;
-}
-#super-list li a {
-  color: #222;
-}
-#super-list li.docs  a { background: #3CF; }
-#super-list li.demos a { background: #FC3; }
-#super-list li.link a { background: #E58; color: white; }
-
-#super-list li a:hover {
-  background: white;
-}
-
-#super-list li.link a:hover { color: #222; }
-
-#super-list.masonry li {
-  width: 216px;
-}
-#super-list.masonry li.feature,
-#super-list.masonry li.link {
-  width: 436px;
-}
 
 /**** Sites using Isotope ****/
 
@@ -711,19 +669,11 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   padding-top: 8px;
 }
 
-.super-list .link,
-.super-list .feature {
-  font-size: 26px;
+.super-list .link {
+  font-size: 24px;
   line-height: 1.2em;
   font-weight: 300;
   margin: 5px;
-  height: 90px;
-}
-
-.super-list .feature {
-  width: 330px;
-  padding: 10px;
-  background: #111;
 }
 
 .super-list .link {
@@ -747,6 +697,13 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   text-shadow: none;
   background: white;
   color: #111;
+}
+
+.super-list .feature .name {
+  bottom: auto;
+  top: 140px;
+  left: 18px;
+  font-size: 20px;
 }
 
 /**** Infinite Scroll ****/

@@ -2,6 +2,39 @@
 title: Isotope
 layout: default
 category: homepage
+features:
+  - name: An exquisite jQuery plugin for magical&nbsp;layouts
+    symbol: Iso
+    number: 1
+    category: alkali
+  - name: Reveal &amp; hide items with&nbsp;filtering
+    symbol: Filt
+    number: 11
+    category: alkaline-earth
+  - name: Re&ndash;order items with&nbsp;sorting
+    symbol: Srt
+    number: 27
+    category: lanthanoid
+  - name: Dynamic, intelligent layouts
+    symbol: Lao
+    number: 31
+    category: actinoid
+  - name: Captivating animations
+    symbol: Ani
+    number: 41
+    category: transition
+  - name: Sort items by just about&nbsp;anything
+    symbol: Any
+    number: 51
+    category: post-transition
+  - name: Powerful methods, simple&nbsp;syntax
+    symbol: Pow
+    number: 61
+    category: metalloid
+  - name: Progressively enhanced for CSS3 transforms &amp;&nbsp;transitions
+    symbol: CS3
+    number: 71
+    category: halogen
 ---
   
   <section id="options" class="clearfix">
@@ -9,7 +42,7 @@ category: homepage
       <h2>Filter:</h2>
       <ul id="filter" class="option-set floated clearfix" data-option-key="filter">
         <li><a href="#show-all" data-option-value="*" class="selected">show all</a></li>
-        <li><a href="#elements" data-option-value=".element">elements</a></li>
+        <li><a href="#elements" data-option-value=".element:not(.feature)">elements</a></li>
         <li><a href="#features" data-option-value=".feature">features</a></li>
         <li><a href="#examples" data-option-value=".example">examples</a></li>
       </ul>
@@ -32,19 +65,18 @@ category: homepage
     </div>
   </section>
   
-  <div id="container" class="super-list clearfix">
+  <div id="container" class="super-list variable-sizes clearfix">
     {% for elem_number in site.random_order limit:30 %}
       {% assign element = site.elements[elem_number] %}
       {% include element-partial.html %}
     {% endfor %}
-    <div class="feature" data-number="1">An exquisite jQuery plugin for magical&nbsp;layouts</div>
-    <div class="feature" data-number="11">Reveal &amp; hide items with&nbsp;filtering</div>
-    <div class="feature" data-number="21">Re&ndash;order items with&nbsp;sorting</div>
-    <div class="feature" data-number="31">Dynamic, intelligent layouts</div>
-    <div class="feature" data-number="41">Captivating animations</div>
-    <div class="feature" data-number="51">Sort items by just about&nbsp;anything</div>
-    <div class="feature" data-number="61">Powerful methods, simple&nbsp;syntax</div>
-    <div class="feature" data-number="71">Progressively enhanced for CSS3 transforms &amp;&nbsp;transitions</div>
+    {% for feature in page.features %}
+      <div class="element feature {{ feature.category }} width2 height2">
+        <p class="number">{{ feature.number }}</p>
+        <h3 class="symbol">{{ feature.symbol }}</h3>
+        <h2 class="name">{{ feature.name }}</h2>
+      </div>
+    {% endfor %}
     <div class="link" data-number="5"><a href="jquery.isotope.min.js">Down&#8203;load jquery&#8203;.isotope&#8203;.min.js</a></div>
     <div class="link" data-number="13"><a href="http://meta.metafizzy.co/files/isotope-site.zip">Down&#8203;load this project</a></div> 
     <div class="link" data-number="35"><a href="http://github.com/desandro/isotope">Isotope on GitHub</a></div>
