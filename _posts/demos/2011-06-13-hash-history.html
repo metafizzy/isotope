@@ -69,13 +69,14 @@ $(function(){
   
   var $container = $('#container'),
       // object that will keep track of options
+      isotopeOptions = {},
+      // defaults, used if not explicitly set in hash
       defaultOptions = {
         filter: '*',
         sortBy: 'original-order',
         sortAscending: true,
         layoutMode: 'masonry'
-      },
-      isotopeOptions = {};
+      };
       
   
   // hacky way of adding random size classes
@@ -88,8 +89,7 @@ $(function(){
     }
   });
   
-  // set up Isotope
-  $container.isotope({
+  var setupOptions = $.extend( defaultOptions, {
     itemSelector : '.element',
     masonry : {
       columnWidth : 120
@@ -117,8 +117,10 @@ $(function(){
     }
   });
   
+  // set up Isotope
+  $container.isotope( setupOptions );
+  
   var $optionSets = $('#options').find('.option-set'),
-      $optionLinks = $optionSets.find('a'),
       isOptionLinkClicked = false;
   
   // switches selected class on buttons
@@ -130,27 +132,23 @@ $(function(){
   }
   
   
-  $optionLinks.click(function(){
+  $optionSets.find('a').click(function(){
     var $this = $(this);
     // don't proceed if already selected
     if ( $this.hasClass('selected') ) {
       return;
     }
-
     changeSelectedLink( $this );
-    
         // get href attr, remove leading #
     var href = $this.attr('href').replace( /^#/, '' ),
         // convert href into object
         // i.e. 'filter=inner-transition' -> { filter: 'inner-transition' }
         option = $.deparam( href, true );
-    
+    // apply new option to previous
     $.extend( isotopeOptions, option );
-    
     // set hash, triggers hashchange on window
     $.bbq.pushState( isotopeOptions );
     isOptionLinkClicked = true;
-    
     return false;
   });
 
@@ -158,13 +156,12 @@ $(function(){
   $(window).bind( 'hashchange', function( event ){
     // get options object from hash
     var hashOptions = window.location.hash ? $.deparam.fragment( window.location.hash, true ) : {},
-        options = {};
-
-    $.extend( options, defaultOptions, hashOptions );
-    isotopeOptions = hashOptions;
-    
+        // apply defaults where no option was specified
+        options = $.extend( {}, defaultOptions, hashOptions );
     // apply options from hash
     $container.isotope( options );
+    // save options
+    isotopeOptions = hashOptions;
     
     // if option link was not clicked
     // then we'll need to update selected links
@@ -176,7 +173,7 @@ $(function(){
         hrefObj[ key ] = options[ key ];
         // convert object into parameter string
         // i.e. { filter: 'inner-transition' } -> 'filter=inner-transition'
-        hrefValue = $.param( hrefObj ),
+        hrefValue = $.param( hrefObj );
         // get matching link
         $selectedLink = $optionSets.find('a[href="#' + hrefValue + '"]');
         changeSelectedLink( $selectedLink );
