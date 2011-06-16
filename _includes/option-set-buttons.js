@@ -19,7 +19,7 @@
         // parse 'false' as false boolean
         value = value === 'false' ? false : value;
         options[ key ] = value;
-        if ( key === 'layoutMode' && changeLayoutMode ) {
+        if ( key === 'layoutMode' && typeof changeLayoutMode === 'function' ) {
           // changes in layout modes need extra logic
           changeLayoutMode( $this, options )
         } else {
