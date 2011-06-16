@@ -89,7 +89,7 @@ h1, h2, h3, p, ul, ol, pre, dl {
 }
 
 h1, h2, #super-list, .element, .tagline, #index-list, 
-.super-list .feature, .super-list .link {
+.super-list .link {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -613,6 +613,7 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 /**** Sites using Isotope ****/
 
 #sites h2 {
+  display: none;
   padding: 0.4em;
   line-height: 32px;
   margin-bottom: 0.4em;
@@ -674,6 +675,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 }
 
 .super-list .link {
+  float: left;
+  position: relative;
   font-size: 24px;
   line-height: 1.2em;
   font-weight: 300;
