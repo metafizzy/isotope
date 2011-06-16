@@ -400,6 +400,10 @@ body {
   margin-left: 210px;
 }
 
+.demos #content {
+  height: 100%;
+}
+
 /**** Docs ****/
 
 .docs #content {
