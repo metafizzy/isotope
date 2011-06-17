@@ -36,22 +36,6 @@ category: tests
       
       {% include random-sizes.js %}
       
-      {% include option-set-buttons.js %}
-
-      // toggle variable sizes of all elements
-      $('#toggle-sizes').find('a').click(function(){
-        $container
-          .toggleClass('variable-sizes')
-          .isotope('reLayout');
-        return false;
-      });
-
-      // log item position
-      $container.find('.element').click(function(){
-        var position = $(this).data('isotope-item-position');
-        console.log( position.x + ', ' + position.y );
-      });
-    
       $container.isotope({
         itemSelector: '.element',
         itemPositionDataEnabled: true,
@@ -76,6 +60,10 @@ category: tests
           }
         }
       });
+      
+      {% include option-set-buttons.js %}
+
+      {% include change-sizes.js %}
     
     });
   </script>
