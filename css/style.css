@@ -131,6 +131,13 @@ a img { border: none; }
 em { font-style: italic; }
 strong { font-weight: bold; }
 
+blockquote {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  border-left: 1px solid #333;
+  font-style: italic;
+}
+
 /**** Isotope styles ****/
 
 /* required for containers to inherit vertical size from window */
@@ -440,7 +447,7 @@ body {
 }
 
 #site-nav h2 {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: normal;
   margin: 0 0 0.3em;
   border-top: none;
@@ -478,18 +485,19 @@ body {
 
 /**** Doc content ****/
 
-.docs h2 {
+.docs #content h2 {
   border-top: 1px solid #333;
   padding-top: 0.8em;
+  margin-bottom: 0.8em;
 }
 
-.docs h2:target { 
+.docs #content h2:target { 
   padding: 10px;
   background: white;
   color: #222;
 }
 
-.docs h3 {
+.docs #content h3 {
   color: #FEC;
   background: hsla( 0, 0%, 75%, 0.05 );
   padding: 2px 0.5em;
@@ -497,7 +505,7 @@ body {
   font-size: 1.15em;
 }
 
-.docs h4 {
+.docs #content h4 {
   margin-bottom: 0.5em;
   font-size: 14px;
 }
