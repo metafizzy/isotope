@@ -132,33 +132,18 @@ category: tests
           return $elem.find('.name').text();
         }
       }
+      
+      {% include option-set-buttons.js %}
+
+      {% include add-buttons.js %}
+
+      {% include change-sizes.js %}
+
+      $('#shuffle a').click(function(){
+        $container.isotope('shuffle');
+        return false;
+      });
     });
     
-    {% include option-set-buttons.js %}
-    
-    // change size of clicked element
-    $container.find('.element').live('click', function(){
-      $(this).toggleClass('large');
-      $container.isotope('reLayout');
-    });
-
-    // toggle variable sizes of all elements
-    $('#toggle-sizes').find('a').click(function(){
-      $container
-        .toggleClass('variable-sizes')
-        .isotope('reLayout');
-      return false;
-    });
-
-    {% include add-buttons.js %}
-
-    $('#shuffle a').click(function(){
-      $container.isotope('shuffle');
-      return false;
-    });
-
-
-    
-
   });
 </script>

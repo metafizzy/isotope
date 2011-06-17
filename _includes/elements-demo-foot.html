@@ -45,15 +45,9 @@
     
     {% include option-set-buttons.js %}
 
-    // toggle variable sizes of all elements
-    $('#toggle-sizes').find('a').click(function(){
-      $container
-        .toggleClass('variable-sizes')
-        .isotope('reLayout');
-      return false;
-    });
-
     {% include layout-change.js %}
+
+    {% include change-sizes.js %}
 
     {% include add-buttons.js %}
 
@@ -62,11 +56,7 @@
       return false;
     });
     
-    // change size of clicked element
-    $container.find('.element').live('click', function(){
-      $(this).toggleClass('large');
-      $container.isotope('reLayout');
-    });
+
 
 
   });
