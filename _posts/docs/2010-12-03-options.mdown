@@ -265,7 +265,7 @@ The property name of the method within the `getSortData` option to sort item ele
   <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
-Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with Flash content](troubleshooting.html#flash).
+Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with Flash content](help.html#flash).
 
 ### Additional CSS {#transformsEnabled-css}
 

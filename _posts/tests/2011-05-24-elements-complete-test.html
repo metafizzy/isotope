@@ -121,23 +121,9 @@ category: tests
       return false;
     });
 
-
     {% include layout-change.js %}
-
-    // change size of clicked element
-    $container.find('.element').live('click', function(){
-      $(this).toggleClass('large');
-      $container.isotope('reLayout');
-    });
-
-    // toggle variable sizes of all elements
-    $('#toggle-sizes').find('a').click(function(){
-      $container
-        .toggleClass('variable-sizes')
-        .isotope('reLayout');
-      return false;
-    });
-
+    
+    {% include change-sizes.js %}
 
     {% include add-buttons.js %}
 
@@ -145,9 +131,6 @@ category: tests
       $container.isotope('shuffle');
       return false;
     });
-
-    {% include option-buttons.js %}
-
 
   });
 </script>

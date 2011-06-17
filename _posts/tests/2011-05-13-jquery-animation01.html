@@ -75,19 +75,7 @@ category: tests
     
     {% include option-set-buttons.js %}
 
-    // change size of clicked element
-    $container.find('.element').live('click', function(){
-      $(this).toggleClass('large');
-      $container.isotope('reLayout');
-    });
-    
-    // toggle variable sizes of all elements
-    $('#toggle-sizes').find('a').click(function(){
-      $container
-        .toggleClass('variable-sizes')
-        .isotope('reLayout');
-      return false;
-    });
-  
+    {% include change-sizes.js %}
+
   });
 </script>

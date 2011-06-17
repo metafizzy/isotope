@@ -22,10 +22,10 @@ schema:
   {% for group in page.schema %}
     <div class="option-combo {{ group.name }}">
       <h4>{{ group.name }}</h4>
-      <ul class="filter option-set clearfix "> 
-        <li><a href="#filter-{{ group.name }}-any" data-filter="" data-group="{{ group.name }}" class="selected">any</a>
+      <ul class="filter option-set clearfix " data-filter-group="{{ group.name }}"> 
+        <li><a href="#filter-{{ group.name }}-any" data-filter-value="" class="selected">any</a>
         {% for filter in group.filters %}
-          <li><a href="#filter-{{ group.name }}-{{ filter }}" data-group="{{ group.name }}" data-filter=".{{ filter }}">{{ filter }}</a>
+          <li><a href="#filter-{{ group.name }}-{{ filter }}" data-filter-value=".{{ filter }}">{{ filter }}</a>
         {% endfor %}
       </ul>
     </div>
@@ -61,32 +61,40 @@ schema:
     var $container = $('#container'),
         filters = {};
 
-    // filter buttons
-    $('.filter a').click(function(){
-      var $this = $(this),
-          isoFilters = [],
-          prop, selector;
-      // store filter value in object
-      // i.e. filters.color = 'red'
-      filters[ $this.data('group') ] = $this.data('filter');
-
-      for ( prop in filters ) {
-        isoFilters.push( filters[ prop ] )
-      }
-      selector = isoFilters.join('');
-      $container.isotope({ filter: selector });
-
-      return false;
-    });
-
-    {% include option-buttons.js %}
-
     $container.isotope({
       itemSelector : '.color-shape',
       masonry: {
         columnWidth: 80
       }
     });
-    
+
+    // filter buttons
+    $('.filter a').click(function(){
+      var $this = $(this);
+      // don't proceed if already selected
+      if ( $this.hasClass('selected') ) {
+        return;
+      }
+      
+      var $optionSet = $this.parents('.option-set');
+      // change selected class
+      $optionSet.find('.selected').removeClass('selected');
+      $this.addClass('selected');
+      
+      // store filter value in object
+      // i.e. filters.color = 'red'
+      var group = $optionSet.attr('data-filter-group');
+      filters[ group ] = $this.attr('data-filter-value');
+      // convert object into array
+      var isoFilters = [];
+      for ( var prop in filters ) {
+        isoFilters.push( filters[ prop ] )
+      }
+      var selector = isoFilters.join('');
+      $container.isotope({ filter: selector });
+
+      return false;
+    });
+
   });
 </script>
