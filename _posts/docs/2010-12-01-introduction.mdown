@@ -27,7 +27,7 @@ toc:
 ## Licensing
 
 <p id="commercial">
-  <strong>Commercial use of Isotope requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
+  <strong>Commercial use of Isotope requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co/#isotope-license">metafizzy.co</a>.
 </p>
 
 Use in non-commercial and personal applications is free.
@@ -69,7 +69,7 @@ There are a number of [options](options.html) you can specify.  Within the optio
 
 ## Code repository
 
-This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and download this entire project.
+This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and follow development.
 
 ## A word about moderation {: #moderation}
 

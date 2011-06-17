@@ -57,7 +57,7 @@ Determines the jQuery method to apply styles, `.css()` or `.animate()`. Useful f
   <dd class="default"><code>{ queue: <span class="kc">false</span>, duration: <span class="mi">800</span> }</code></dd>
 </dl>
 
-When jQuery is the animation engine, these options will be used in <code>.animate()</code>. See the [jQuery API for animate options](http://api.jquery.com/animate/#animate-properties-options) for details.
+When jQuery is the animation engine (see above), these options will be used in <code>.animate()</code>. See the [jQuery API for animate options](http://api.jquery.com/animate/#animate-properties-options) for details.
 
 ### Example
 
@@ -96,7 +96,11 @@ Setting a filter with show item elements that match the selector, and hide eleme
 
 ### Values {#filter-values}
 
-+ `'*'` Shows all item elements
+
+<ul>
+  <li><code><span class="s1">'*'</span></code> or <code><span class="s1">''</span></code> (an empty string): Shows all item elements</li>
+</ul>
+
 
 ## getSortData
 
@@ -279,7 +283,7 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
 
 ### Disabling hiddenStyle scale
 
-If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle)
+If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle).
 
 {% highlight javascript %}
 
