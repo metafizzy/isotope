@@ -3,7 +3,6 @@
 title: Animating
 category: docs
 layout: default
-related: animating
 toc:
   - { title: animationEngine option, anchor: animationengine_option }
   - { title: CSS transitions, anchor: css_transitions }

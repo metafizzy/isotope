@@ -3,7 +3,6 @@
 title: Adding items
 category: docs
 layout: default
-related: methods
 toc:
   - { title: addItems method, anchor: additems_method }
   - { title: insert method, anchor: insert_method }

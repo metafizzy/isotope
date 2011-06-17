@@ -3,7 +3,6 @@
 title: License
 category: docs
 layout: default
-related: z-etc
 toc:
   - { title: Isotope Commercial License Agreement, anchor: isotope_commercial_license_agreement }
 

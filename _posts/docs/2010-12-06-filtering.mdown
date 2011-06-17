@@ -3,7 +3,6 @@
 title: Filtering
 category: docs
 layout: default
-related: filtering
 toc:
   - { title: Markup, anchor: markup }
   - { title: jQuery script, anchor: jquery_script }

@@ -3,7 +3,6 @@
 title: Sorting
 category: docs
 layout: default
-related: sorting
 toc:
   - { title: Markup, anchor: markup }
   - { title: getSortData option, anchor: getsortdata_option }

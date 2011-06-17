@@ -4,7 +4,6 @@ title: Layout modes
 category: docs
 layout: default
 body_class: option-def
-related: layout
 toc:
   - { title: cellsByColumn, anchor: cellsbycolumn }
   - { title: cellsByRow, anchor: cellsbyrow }

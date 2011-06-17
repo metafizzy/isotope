@@ -4,7 +4,6 @@ title: Options
 category: docs
 layout: default
 body_class: option-def
-related: a-intro
 toc:
   - { title: animationEngine, anchor: animationengine }
   - { title: animationOptions, anchor: animationoptions }

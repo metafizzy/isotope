@@ -3,7 +3,6 @@
 title: Introduction
 category: docs
 layout: default
-related: a-intro
 toc:
   - { title: Features, anchor: features }
   - { title: Licensing, anchor: licensing }

@@ -3,7 +3,6 @@
 title: Help
 category: docs
 layout: default
-related: z-etc
 toc:
   - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }
   - { title: Support license, anchor: support_license }
