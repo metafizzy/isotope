@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{ root_path }}css/style.css" />
   
   <!-- scripts at bottom of page -->
+  
+  <script src="http://desandro.com/haveamint/?js"></script> <!-- analytics -->
 
 </head>
 <body class="{{ page.category }} {{ page.body_class }}">
@@ -61,7 +63,14 @@
     </footer>
     
   </section> <!-- #content -->
-  
+
+  <!-- analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-592624-5'],['_trackPageview'],['_setDomainName', '.metafizzy.co']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
 
 </body>
 </html>
