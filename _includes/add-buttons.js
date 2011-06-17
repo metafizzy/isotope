@@ -1,3 +1,4 @@
+
       $('#insert a').click(function(){
         var $newEls = $( fakeElement.getGroup() );
         $container.isotope( 'insert', $newEls );
@@ -11,4 +12,3 @@
 
         return false;
       });
-      

@@ -1,133 +1,125 @@
 ---
-title: Index
-layout: nil
+title: Isotope
+layout: default
+category: homepage
+features:
+  - name: An exquisite jQuery plugin for magical&nbsp;layouts
+    symbol: Iso
+    number: 1
+    category: alkali
+  - name: Dynamic, intelligent layouts
+    symbol: Dyn
+    number: 31
+    category: actinoid
+  - name: Re&ndash;order items with&nbsp;sorting
+    symbol: Srt
+    number: 27
+    category: lanthanoid
+  - name: Powerful methods, simple&nbsp;syntax
+    symbol: Pow
+    number: 61
+    category: metalloid
+  - name: Reveal &amp; hide items with&nbsp;filtering
+    symbol: Flt
+    number: 11
+    category: alkaline-earth
+  - name: Captivating animations
+    symbol: Ani
+    number: 41
+    category: transition
+  - name: Progressively enhanced for CSS3 transforms &amp;&nbsp;transitions
+    symbol: Pro
+    number: 71
+    category: halogen
+  - name: Sort items by just about&nbsp;anything
+    symbol: Any
+    number: 51
+    category: post-transition
 ---
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>{{ site.name }}</title>
-  
-  <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-  
-</head>
-<body>
-  
-  <h1>{{ site.name }}</h1>
   
   <section id="options" class="clearfix">
     <div class="option-combo">
       <h2>Filter:</h2>
-      <ul id="filter" class="option-set floated clearfix">
-        <li><a href="#show-all" data-filter="*" class="selected">show all</a></li>
-        <li><a href="#features" data-filter=".feature">features</a></li>
-        <li><a href="#docs" data-filter=".doc">docs</a></li>
-        <li><a href="#demos" data-filter=".demo">demos</a></li>
+      <ul id="filter" class="option-set clearfix" data-option-key="filter">
+        <li><a href="#show-all" data-option-value="*" class="selected">show all</a></li>
+        <li><a href="#elements" data-option-value=".element:not(.feature)">elements</a></li>
+        <li><a href="#features" data-option-value=".feature">features</a></li>
+        <li><a href="#examples" data-option-value=".example">examples</a></li>
       </ul>
     </div>
     <div class="option-combo">
       <h2>Sort:</h2>
-      <ul id="sort" class="option-set floated clearfix">
-        <li><a href="#type" data-sort="original-order" class="selected">original order</a></li>
-        <li><a href="#related" data-sort="related">related</a></li>
-        <li><a href="#width" data-sort="width">width</a></li>
+      <ul id="sort" class="option-set clearfix" data-option-key="sortBy">
+        <li><a href="#mixed" data-option-value="number" class="selected">mixed</a></li>
+        <li><a href="#original" data-option-value="original-order">original</a></li>
+        <li><a href="#alphabetical" data-option-value="alphabetical">alphabetical</a></li>
       </ul>
     </div>
     <div class="option-combo">
       <h2>Layout: </h2>
-      <ul id="layouts" class="option-set floated clearfix">
-        <li><a href="#fitRows" class="selected">fitRows</a></li>
-        <li><a href="#straightDown">straightDown</a></li>
-        <li><a href="#masonry">masonry</a></li>
+      <ul id="layouts" class="option-set clearfix" data-option-key="layoutMode">
+        <li><a href="#masonry" data-option-value="masonry" class="selected">masonry</a></li>
+        <li><a href="#fitRows" data-option-value="fitRows">fitRows</a></li>
+        <li><a href="#straightDown" data-option-value="straightDown">straightDown</a></li>
       </ul>
     </div>
   </section>
   
-  <ul id="super-list" class="fitRows clearfix">
-    
-    <li class="feature" data-category="feature" data-related="etc"><span>An exquisite jQuery plugin for magical layouts</span></li>
-    <li class="feature" data-category="feature" data-related="filtering"><span>Reveal &amp; hide items with filtering</span></li>
-    <li class="feature" data-category="feature" data-related="sorting"><span>Re&ndash;order items with sorting</span></li>
-    <li class="feature" data-category="feature" data-related="layout"><span>Dynamic, intelligent layouts</span></li>
-    <li class="feature" data-category="feature" data-related="animating"><span>Captivating animations</span></li>
-    <li class="feature" data-category="feature" data-related="sorting"><span>Sort items by just about anything</span></li>
-    <li class="feature" data-category="feature" data-related="methods"><span>Powerful methods, simple syntax</span></li>
-    <li class="feature" data-category="feature" data-related="animating"><span>Progressively enhanced for CSS3 transforms &amp; transitions</span></li>
-    {% for doc in site.categories.docs reversed %}
-      {% if doc.layout != 'index-page' %}
-        <li class="doc" data-category="doc" data-related="{{ doc.related }}"><a href=".{{ doc.url }}">Docs: {{ doc.title }}</a></li>
-      {% endif %}
+  <div id="container" class="super-list variable-sizes clearfix">
+    {% for elem_number in site.random_order limit:30 %}
+      {% assign element = site.elements[elem_number] %}
+      {% include element-partial.html %}
     {% endfor %}
-    {% for demo in site.categories.demos reversed %}
-      {% if demo.layout != 'index-page' %}
-        <li class="demo" data-category="demo" data-related="{{ demo.related }}"><a href=".{{ demo.url }}">Demo: {{ demo.title }}</a></li>
-      {% endif %}
+    {% for feature in page.features %}
+      <div class="element feature {{ feature.category }} width2 height2">
+        <p class="number">{{ feature.number }}</p>
+        <h3 class="symbol">{{ feature.symbol }}</h3>
+        <h2 class="name">{{ feature.name }}</h2>
+      </div>
     {% endfor %}
-    <li class="link" data-related="z-etc"><a href="jquery.isotope.min.js">Download jquery.isotope.min.js</a></li>
-    <li class="link" data-related="z-etc"><a href="http://meta.metafizzy.co/files/isotope-site.zip">Download this project</a></li>
-    <li class="link" data-related="z-etc"><a href="http://github.com/desandro/isotope">Isotope on GitHub</a></li>
-  </ul>
-  
+    <div class="link" data-number="5"><a href="jquery.isotope.min.js">Down&#8203;load jquery&#8203;.isotope&#8203;.min.js</a></div>
+    <div class="link" data-number="13"><a href="http://meta.metafizzy.co/files/isotope-site.zip">Down&#8203;load this project</a></div> 
+    <div class="link away" data-number="35"><a href="http://github.com/desandro/isotope">Isotope on GitHub</a></div>
+  </div>
+
   <div id="sites"></div>
-  
-  {% include footer.html %}
   
   
   <script src="{{ site.jquery_js }}"></script>
   <script src="{{ site.isotope_js }}"></script>
   <script>
-  
-    $list = $('#super-list');
-  
-    $('#filter a').click(function(){
-      var filterName = $(this).attr('data-filter');
-      $list.isotope({ filter : filterName });
-      return false;
-    });
-  
-    $('#sort a').click(function(){
-      var sortName = $(this).attr('data-sort');
-      $list.isotope({ sortBy : sortName });
-      return false;
-    });
-  
-    var currentLayout = 'fitRows';
-  
-    $('#layouts a').click(function(){
-      var layoutName = $(this).attr('href').slice(1);
-      $list.removeClass( currentLayout ).addClass( layoutName );
-      currentLayout = layoutName;
-      $list.isotope({ layoutMode : layoutName });
-      return false;
-    });
-  
-    {% include option-buttons.js %}
-
-
     $(function(){
-      
-      $list.isotope({
-        layoutMode : 'fitRows',
-        masonry : {
-          columnWidth: 220
+    
+      var $container = $('#container');
+    
+      $container.isotope({
+        masonry: {
+          columnWidth: 120
         },
-        getSortData : {
-          related : function( $elem ) {
-            return $elem.attr('data-related');
+        sortBy: 'number',
+        getSortData: {
+          number: function( $elem ) {
+            var number = $elem.hasClass('element') ? 
+              $elem.find('.number').text() :
+              $elem.attr('data-number');
+            return parseInt( number, 10 );
           },
-          width : function( $elem ) {
-            return $elem.width();
+          alphabetical: function( $elem ) {
+            var name = $elem.find('.name'),
+                itemText = name.length ? name : $elem;
+            return itemText.text();
           }
         }
       });
-      
+    
+      {% include option-set-buttons.js %}
+
+    
       // Sites using Isotope markup
       var $sites = $('#sites'),
           $sitesTitle = $('<h2 class="loading"><img src="http://i.imgur.com/qkKy8.gif" />Loading sites using Isotope</h2>'),
           $sitesList = $('<ul class="clearfix"></ul>');
-          
+        
       $sites.append( $sitesTitle ).append( $sitesList );
 
       $sitesList.isotope({
@@ -137,18 +129,18 @@ layout: nil
           rowHeight: 400
         }
       });
-      
+    
       var ajaxError = function(){
         $sitesTitle.removeClass('loading').addClass('error')
           .text('Could not load sites using Isotope :(');
       };
-      
+    
       // dynamically load sites using Isotope from Ember app
       $.getJSON('http://api.emberapp.com/users/view/' + 
                   'desandro/collections/view/isotope.json?callback=?')
         .error( ajaxError )
         .success(function( data ){
-          
+        
           // proceed only if we have images
           if ( !data.response || !data.response.images ) {
             ajaxError();
@@ -157,27 +149,37 @@ layout: nil
           var images = data.response.images,
               items = [],
               item, image;
-          
+        
           for ( var i=0, len = images.length; i < len; i++ ) {
             image = images[i];
             item = '<li><a href="' + image.url + '">'
-              + '<b>' + image.name + '</b>'
               + '<img src="' + image.file.src.replace('/m.', '/s.') + '" />'
+              + '<b>' + image.name + '</b>'
               + '</a></li>';
             items.push( item );
           }
-          
-          var $items = $( items.join('') );
-          
+        
+          var $items = $( items.join('') )
+            .addClass('example');
+            
+          // set random number for each item
+          $items.each(function(){
+            $(this).attr('data-number', ~~( Math.random() * 100 + 15 ));
+          });
+        
           $items.imagesLoaded(function(){
             $sitesTitle.removeClass('loading').text('Sites using Isotope');
-            $sitesList.isotope( 'insert', $items );
+            $container.append( $items );
+            $items.each(function(){
+              var $this = $(this),
+                  itemHeight = Math.ceil( $this.height() / 120 ) * 120 - 10;
+              $this.height( itemHeight );
+            });
+            $container.isotope( 'insert', $items );
           });
-          
+        
         });
-      
-      
+    
+    
     });
   </script>
-
-{% include html-foot.html %}

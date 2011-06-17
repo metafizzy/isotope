@@ -1,6 +1,6 @@
 ---
 title: flash01
-layout: demo
+layout: default
 category: tests
 ---
 
@@ -29,13 +29,12 @@ category: tests
     
     <h3>Filters</h3>
 
-    <ul id="filters" class="option-set floated clearfix">
-      <li><a href="#filter" data-filter="*" class="selected">show all</a></li>
-      
-      <li><a href="#filter-link" data-filter=".link">link</a></li>
-      <li><a href="#filter-audio" data-filter=".audio">audio</a></li>
-      <li><a href="#filter-video" data-filter=".video">video</a></li>
-      <li><a href="#filter-photo" data-filter=".photo">photo</a></li>
+    <ul id="filters" class="option-set clearfix" data-option-key="filter">
+      <li><a href="#filter-show-all" data-option-value="*" class="selected">show all</a></li>
+      <li><a href="#filter-link" data-option-value=".link">link</a></li>
+      <li><a href="#filter-audio" data-option-value=".audio">audio</a></li>
+      <li><a href="#filter-video" data-option-value=".video">video</a></li>
+      <li><a href="#filter-photo" data-option-value=".photo">photo</a></li>
     </ul>
 
   </section> <!-- #options -->
@@ -113,24 +112,6 @@ category: tests
       
       var $container = $('#container');
       
-      $('#filters a').click(function(){
-        var filterName = $(this).attr('data-filter');
-        $container.isotope({ filter : filterName });
-        return false;
-      });
-
-      // switches selected class on buttons
-      $('#options').find('.option-set a').click(function(){
-        var $this = $(this);
-
-        // don't proceed if already selected
-        if ( !$this.hasClass('selected') ) {
-          $this.parents('.option-set').find('.selected').removeClass('selected');
-          $this.addClass('selected');
-        }
-
-      });
-      
       $container.imagesLoaded(function(){
         $container.isotope({
           transformsEnabled: false,
@@ -140,6 +121,8 @@ category: tests
           }
         });
       });
+      
+      {% include option-set-buttons.js %}
       
     });
   </script>

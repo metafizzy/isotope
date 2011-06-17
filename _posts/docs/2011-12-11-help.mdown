@@ -2,8 +2,7 @@
 
 title: Help
 category: docs
-layout: doc
-related: z-etc
+layout: default
 toc:
   - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }
   - { title: Support license, anchor: support_license }

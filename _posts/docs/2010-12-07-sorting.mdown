@@ -2,8 +2,7 @@
 
 title: Sorting
 category: docs
-layout: doc
-related: sorting
+layout: default
 toc:
   - { title: Markup, anchor: markup }
   - { title: getSortData option, anchor: getsortdata_option }

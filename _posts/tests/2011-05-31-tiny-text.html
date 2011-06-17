@@ -1,6 +1,6 @@
 ---
 title: Tiny text
-layout: demo
+layout: default
 category: tests
 lorem: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 ---
@@ -28,10 +28,10 @@ lorem: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
 
   <h3>Filters</h3>
 
-  <ul id="filters" class="option-set floated clearfix">
-    <li><a href="#show-all" class="selected">show all</a></li>
-    <li><a href="#red">red</a></li>
-    <li><a href="#blue">blue</a></li>
+  <ul id="filters" class="option-set clearfix" data-option-key="filter">
+    <li><a href="#show-all" data-option-value="*" class="selected">show all</a></li>
+    <li><a href="#red" data-option-value=".red">red</a></li>
+    <li><a href="#blue" data-option-value=".blue">blue</a></li>
   </ul>
 
 </section> <!-- #options -->
@@ -56,30 +56,15 @@ lorem: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
 
 <script src="../{{ site.jquery_js }}"></script>
 <script src="../{{ site.isotope_js }}"></script>
-<script src="../js/fake-element.js"></script>
 <script>
-
-
   $(function(){
 
     var $container = $('#container');
 
-    
-
     $container.isotope({
     });
     
-    $('#filters').find('a').click(function(){
-      // get href attribute, minus the #, plus a . to make it a class
-      var filterName = '.' + $(this).attr('href').slice(1);
-      filterName = filterName === '.show-all' ? '*' : filterName;
-      $container.isotope({ filter: filterName })
-      return false;
-    });
-    
-    {% include option-buttons.js %}
-    
-
+    {% include option-set-buttons.js %}
 
   });
 </script>

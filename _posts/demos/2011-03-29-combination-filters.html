@@ -1,8 +1,7 @@
 ---
 title: Combination filters
-layout: demo
+layout: default
 category: demos
-related: filtering
 schema:
   - name: color
     filters: [ red, blue, yellow ]
@@ -23,7 +22,7 @@ schema:
   {% for group in page.schema %}
     <div class="option-combo {{ group.name }}">
       <h4>{{ group.name }}</h4>
-      <ul class="filter option-set floated clearfix "> 
+      <ul class="filter option-set clearfix "> 
         <li><a href="#filter-{{ group.name }}-any" data-filter="" data-group="{{ group.name }}" class="selected">any</a>
         {% for filter in group.filters %}
           <li><a href="#filter-{{ group.name }}-{{ filter }}" data-group="{{ group.name }}" data-filter=".{{ filter }}">{{ filter }}</a>

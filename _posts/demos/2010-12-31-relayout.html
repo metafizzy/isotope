@@ -1,8 +1,7 @@
 ---
 title: reLayout
-layout: demo
+layout: default
 category: demos
-related: methods
 ---
   
   <section id="copy">
@@ -11,7 +10,7 @@ related: methods
   </section>
   
   <section id="options">
-    <ul>
+    <ul class="clearfix">
       <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
     </ul>
   </section>
@@ -40,7 +39,7 @@ related: methods
       });
 
       // change size of clicked element
-      $container.find('.element').live('click', function(){
+      $container.find('.element').click(function(){
         $(this).toggleClass('large');
         $container.isotope('reLayout');
       });

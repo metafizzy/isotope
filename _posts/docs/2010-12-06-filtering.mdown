@@ -2,8 +2,7 @@
 
 title: Filtering
 category: docs
-layout: doc
-related: filtering
+layout: default
 toc:
   - { title: Markup, anchor: markup }
   - { title: jQuery script, anchor: jquery_script }

@@ -2,8 +2,7 @@
 
 title: Introduction
 category: docs
-layout: doc
-related: a-intro
+layout: default
 toc:
   - { title: Features, anchor: features }
   - { title: Licensing, anchor: licensing }
@@ -28,7 +27,7 @@ toc:
 ## Licensing
 
 <p id="commercial">
-  <strong>Commercial use of Isotope requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co">metafizzy.co</a>.
+  <strong>Commercial use of Isotope requires purchase of one-time license fee per developer seat.</strong> Commercial use includes any application that makes you money &mdash; portfolio sites, premium templates, etc. Commercial licenses may be purchased at <a href="http://metafizzy.co/#isotope-license">metafizzy.co</a>.
 </p>
 
 Use in non-commercial and personal applications is free.
@@ -70,7 +69,7 @@ There are a number of [options](options.html) you can specify.  Within the optio
 
 ## Code repository
 
-This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and download this entire project.
+This project lives on GitHub at [github.com/desandro/isotope](http://github.com/desandro/isotope). There you can grab the latest code and follow development.
 
 ## A word about moderation {: #moderation}
 
@@ -78,12 +77,13 @@ Isotope enables a wealth of functionality. But just because you can take advanta
 
 ## Acknowledgments
 
-+ [**Faruk Ateş**](http://farukat.es) for [Modernizr](http://www.modernizr.com/) (partially used within Isotope)
-+ [**Louis-Rémi Babé**](http://twitter.com/Louis_Remi) for [jQuery smartresize](https://github.com/louisremi/jquery-smartresize) (used within Isotope) and for [jQuery transform](https://github.com/louisremi/jquery.transform.js) which clued me in to using jQuery 1.4.3's CSS   hooks
++ [**"Cowboy" Ben Alman**](http://benalman.com/) for [jQuery BBQ](http://benalman.com/projects/jquery-bbq-plugin/) (included with docs)
++ [**Louis-Rémi Babé**](http://twitter.com/Louis_Remi) for [jQuery smartresize](https://github.com/louisremi/jquery-smartresize) (used within Isotope) and for [jQuery transform](https://github.com/louisremi/jquery.transform.js) which clued me in to using jQuery 1.4.3's CSS hooks
 + [**Jacek Galanciak**](http://razorjack.net/) for [jQuery Quicksand](http://razorjack.net/quicksand/), an early kernel of inspiration
 + [**Ralph Holzmann**](http://twitter.com/#!/ralphholzmann) for re-writing the [jQuery Plugins/Authoring tutorial](http://docs.jquery.com/Plugins/Authoring) and opened my eyes to [Plugin Methods](http://docs.jquery.com/Plugins/Authoring#Plugin_Methods) pattern
 + [**Eric Hynds**](http://www.erichynds.com/) for his article [Using $.widget.bridge Outside of the Widget Factory](http://www.erichynds.com/jquery/using-jquery-ui-widget-factory-bridge/) which provided the architecture for Isotope
-+ [**Paul Irish**](http://paul-irish.com) for [Infinite Scroll](http://infinite-scroll.com) (included with docs), the [imagesLoaded plugin](http://gist.github.com/268257) (included with Isotope), [Debounced resize() plugin](http://paulirish.com/demo/resize) (provided base for smartresize), and of course [Modernizr](http://www.modernizr.com/) 
-+ The [**jQuery UI Team**](http://jqueryui.com/about) for [$.widget.bridge](https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js#L62-107) (used within Isotope)
++ [**Paul Irish**](http://paul-irish.com) for [Infinite Scroll](http://infinite-scroll.com) (included with docs), the [imagesLoaded plugin](http://gist.github.com/268257) (included with Isotope), and  [Debounced resize() plugin](http://paulirish.com/demo/resize) (provided base for smartresize)
++ The [**jQuery UI Team**](http://jqueryui.com/about) for [$.widget.bridge](https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js#L113-155) (partially used within Isotope)
++ The Modernizr team for [Modernizr](http://www.modernizr.com/) (partially used within Isotope)
 + [**Juriy Zaytsev aka "kangax"**](http://perfectionkills.com) for [getStyleProperty](http://perfectionkills.com/feature-testing-css-properties/) (used within Isotope)
 

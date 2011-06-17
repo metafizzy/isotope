@@ -1,9 +1,10 @@
 ---
 title: Elements Complete
-layout: elements
+layout: default
 category: demos
-related: a-intro
 ---
+
+{% include elements-demo-head.html %}
 
 <div id="container" class="clickable clearfix">
   {% for elem_number in site.random_order %}
@@ -12,3 +13,4 @@ related: a-intro
   {% endfor %}
 </div>
 
+{% include elements-demo-foot.html %}

@@ -1,6 +1,6 @@
 ---
 title: elements complete test
-layout: demo
+layout: default
 category: tests
 ---
 
@@ -10,24 +10,7 @@ category: tests
 
 <section id="options" class="clearfix">
 
-  <h3>Filters</h3>
-
-  <ul id="filters" class="option-set floated clearfix">
-    <li><a href="#show-all" class="selected">show all</a></li>
-    <li><a href="#metalloid">metalloid</a></li>
-    <li><a href="#metal">metal</a></li>
-    <li><a href="#alkali">alkali</a></li>
-    <li><a href="#alkaline-earth">alkaline-earth</a></li>
-    <li><a href="#inner-transition">inner-transition</a></li>
-    <li><a href="#lanthanoid">lanthanoid</a></li>
-    <li><a href="#actinoid">actinoid</a></li>
-    <li><a href="#transition">transition</a></li>
-    <li><a href="#post-transition">post-transition</a></li>
-    <li><a href="#nonmetal">nonmetal</a></li>
-    <li><a href="#other">other</a></li>
-    <li><a href="#halogen">halogen</a></li>
-    <li><a href="#noble-gas">noble-gas</a></li>
-  </ul>
+  {% include filter-buttons.html %}
 
   {% include sort-buttons.html %}
 
@@ -35,7 +18,7 @@ category: tests
 
   <h3>Etc</h3>
 
-  <ul id="etc" class="floated clearfix">
+  <ul id="etc" class="clearfix">
 
     <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
     <li id="insert"><a href="#insert">Insert new elements</a></li>
@@ -57,62 +40,11 @@ category: tests
 <script src="../{{ site.isotope_js }}"></script>
 <script src="../js/fake-element.js"></script>
 <script>
-
-  var $container = $('#container');
-
-  $('#filters').find('a').click(function(){
-    console.time('filter');
-    // get href attribute, minus the #, plus a . to make it a class
-    var filterName = '.' + $(this).attr('href').slice(1);
-    filterName = filterName === '.show-all' ? '*' : filterName;
-    $container.isotope({ filter: filterName })
-    
-    console.timeEnd('filter');
-    return false;
-  });
-
-  // sorting
-  $('#sort a').click(function(){
-    console.time('sort');
-    // get href attribute, minus the #
-    var $this = $(this),
-        sortName = $this.attr('href').slice(1),
-        asc = $this.parents('.sort').hasClass('asc');
-    $container.isotope({ 
-      sortBy : sortName,
-      sortAscending : asc
-    });
-    console.timeEnd('sort');
-    return false;
-  });
-
-  // change size of clicked element
-  $container.find('.element').live('click', function(){
-    $(this).toggleClass('large');
-    $container.isotope('reLayout');
-  });
-
-  // toggle variable sizes of all elements
-  $('#toggle-sizes').find('a').click(function(){
-    $container
-      .toggleClass('variable-sizes')
-      .isotope('reLayout');
-    return false;
-  });
-
-  {% include layout-change.js %}
-
-  {% include add-buttons.js %}
-
-  $('#shuffle a').click(function(){
-    $container.isotope('shuffle');
-    return false;
-  });
-
-  {% include option-buttons.js %}
-  
-
   $(function(){
+    
+    var $container = $('#container');
+
+    {% include random-sizes.js %}
 
     console.time('init');
     $container.isotope({
@@ -154,6 +86,67 @@ category: tests
     });
     
     console.timeEnd('init');
+
+    var $optionSets = $('#options .option-set'),
+        $optionLinks = $optionSets.find('a');
+
+    $optionLinks.click(function(){
+      var $this = $(this);
+      // don't proceed if already selected
+      if ( $this.hasClass('selected') ) {
+        return false;
+      }
+      var $optionSet = $this.parents('.option-set');
+      $optionSet.find('.selected').removeClass('selected');
+      $this.addClass('selected');
+
+      // make option object dynamically, i.e. { filter: '.my-filter-class' }
+      var options = {},
+          key = $optionSet.attr('data-option-key'),
+          value = $this.attr('data-option-value');
+      // parse 'false' as false boolean
+      value = value === 'false' ? false : value;
+      options[ key ] = value;
+
+      console.time( key );
+      if ( key === 'layoutMode' && changeLayoutMode ) {
+        // changes in layout modes need extra logic
+        changeLayoutMode( $this, options )
+      } else {
+        // otherwise, apply new options
+        $container.isotope( options );
+      }
+      console.timeEnd( key );
+
+      return false;
+    });
+
+
+    {% include layout-change.js %}
+
+    // change size of clicked element
+    $container.find('.element').live('click', function(){
+      $(this).toggleClass('large');
+      $container.isotope('reLayout');
+    });
+
+    // toggle variable sizes of all elements
+    $('#toggle-sizes').find('a').click(function(){
+      $container
+        .toggleClass('variable-sizes')
+        .isotope('reLayout');
+      return false;
+    });
+
+
+    {% include add-buttons.js %}
+
+    $('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      return false;
+    });
+
+    {% include option-buttons.js %}
 
 
   });

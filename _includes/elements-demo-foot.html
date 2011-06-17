@@ -1,58 +1,28 @@
----
-title: jquery animation01
-layout: default
-category: tests
----
-
-<style>
-  .isotope,
-  .isotope .isotope-item {
-    -webkit-transition: none;
-       -moz-transition: none;
-            transition: none;
-  }
-</style>
-
-<section id="copy">
-  <p></p>
-</section>
-
-<section id="options" class="clearfix">
-
-
-  {% include filter-buttons.html %}
-
-  {% include sort-buttons.html %}
-
-  <h3>Etc</h3>
-
-  <ul id="etc" class="clearfix">
-
-    <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
-  </ul>
-</section> <!-- #options -->
-
-<div id="container">
-  {% for element in site.elements limit:40 %}
-    {% include element-partial.html %}
-  {% endfor %}
-</div> <!-- #container -->
-
 <script src="../{{ site.jquery_js }}"></script>
 <script src="../{{ site.isotope_js }}"></script>
+<script src="../js/fake-element.js"></script>
 <script>
   $(function(){
-  
+    
     var $container = $('#container');
     
     {% include random-sizes.js %}
     
     $container.isotope({
-      itemSelector: '.element',
-      transformsEnabled: false,
-      animationEngine: 'jquery',
-      masonry: {
+      itemSelector : '.element',
+      masonry : {
         columnWidth : 120
+      },
+      masonryHorizontal : {
+        rowHeight: 120
+      },
+      cellsByRow : {
+        columnWidth : 240,
+        rowHeight : 240
+      },
+      cellsByColumn : {
+        columnWidth : 240,
+        rowHeight : 240
       },
       getSortData : {
         symbol : function( $elem ) {
@@ -75,12 +45,6 @@ category: tests
     
     {% include option-set-buttons.js %}
 
-    // change size of clicked element
-    $container.find('.element').live('click', function(){
-      $(this).toggleClass('large');
-      $container.isotope('reLayout');
-    });
-    
     // toggle variable sizes of all elements
     $('#toggle-sizes').find('a').click(function(){
       $container
@@ -88,6 +52,22 @@ category: tests
         .isotope('reLayout');
       return false;
     });
-  
+
+    {% include layout-change.js %}
+
+    {% include add-buttons.js %}
+
+    $('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      return false;
+    });
+    
+    // change size of clicked element
+    $container.find('.element').live('click', function(){
+      $(this).toggleClass('large');
+      $container.isotope('reLayout');
+    });
+
+
   });
 </script>
