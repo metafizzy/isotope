@@ -43,7 +43,7 @@ The [`appended` method](methods.html#appended) is a convenience method triggers 
 
 [**See Demo: Infinite Scroll**](../demos/infinite-scroll.html).
 
-See also [Infinite Scroll with filtering or sorting](troubleshooting.html#infinite_scroll_with_filtering_or_sorting)
+See also [Infinite Scroll with filtering or sorting](help.html#infinite_scroll_with_filtering_or_sorting)
 
 ## Prepending
 
