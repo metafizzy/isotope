@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110604
+ * Isotope v1.3.110620
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -9,39 +9,41 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
+/*global Modernizr: true */
+
 (function( window, $, undefined ){
+
+  // helper function
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   // ========================= getStyleProperty by kangax ===============================
   // http://perfectionkills.com/feature-testing-css-properties/
 
-  var getStyleProperty = (function(){
+  var prefixes = 'Moz Webkit Khtml O Ms'.split(' ');
 
-    var prefixes = ['Moz', 'Webkit', 'Khtml', 'O', 'Ms'];
+  function getStyleProperty( propName, element ) {
+    element = element || document.documentElement;
+    var style = element.style,
+        prefixed;
 
-    function getStyleProperty(propName, element) {
-      element = element || document.documentElement;
-      var style = element.style,
-          prefixed;
-
-      // test standard property first
-      if (typeof style[propName] === 'string') {
-        return propName;
-      }
-
-      // capitalize
-      propName = propName.charAt(0).toUpperCase() + propName.slice(1);
-
-      // test vendor specific properties
-      for (var i=0, l=prefixes.length; i<l; i++) {
-        prefixed = prefixes[i] + propName;
-        if (typeof style[prefixed] === 'string') {
-          return prefixed;
-        }
-      }
+    // test standard property first
+    if ( typeof style[propName] === 'string' ) {
+      return propName;
     }
 
-    return getStyleProperty;
-  })();
+    // capitalize
+    propName = capitalize( propName );
+
+    // test vendor specific properties
+    for ( var i=0, len = prefixes.length; i < len; i++ ) {
+      prefixed = prefixes[i] + propName;
+      if ( typeof style[ prefixed ] === 'string' ) {
+        return prefixed;
+      }
+    }
+  }
 
   var transformProp = getStyleProperty('transform');
 
@@ -68,7 +70,6 @@
   */
   
   var docElement = document.documentElement,
-      vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
       tests = [
         {
           name : 'csstransforms',
@@ -84,6 +85,7 @@
             if ( test ){
               var st = document.createElement('style'),
                   div = document.createElement('div'),
+                  vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
                   mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
 
               st.textContent = mq + '{#modernizr{height:3px}}';
@@ -452,7 +454,7 @@
     
     // trigger _updateOptionName if it exists
     _updateOption : function( optionName ) {
-      var updateOptionFn = '_update' + optionName.charAt(0).toUpperCase() + optionName.slice(1);
+      var updateOptionFn = '_update' + capitalize( optionName );
       if ( this[ updateOptionFn ] ) {
         this[ updateOptionFn ]();
       }
@@ -856,8 +858,8 @@
       }
     
       // position the brick
-      x = this.masonry.columnWidth * shortCol;
-      y = minimumY;
+      var x = this.masonry.columnWidth * shortCol,
+          y = minimumY;
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
@@ -1042,8 +1044,8 @@
       }
 
       // position the brick
-      x = minimumX;
-      y = this.masonryHorizontal.rowHeight * smallRow;
+      var x = minimumX,
+          y = this.masonryHorizontal.rowHeight * smallRow;
       this._pushPosition( $brick, x, y );
 
       // apply setHeight to necessary columns
