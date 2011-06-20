@@ -14,7 +14,7 @@ category: tests
 </style>
 
 <section id="copy">
-  <p></p>
+  <p>Check that the option setter for animationEngine is properly triggered.</p>
 </section>
 
 <section id="options" class="clearfix">
@@ -28,11 +28,12 @@ category: tests
 
   <ul id="etc" class="clearfix">
 
+    <li id="toggle-animation"><a href="#toggle-animation">Toggle jQuery animation</a></li>
     <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
   </ul>
 </section> <!-- #options -->
 
-<div id="container">
+<div id="container" class="clickable clearfix">
   {% for element in site.elements limit:40 %}
     {% include element-partial.html %}
   {% endfor %}
@@ -76,6 +77,14 @@ category: tests
     {% include option-set-buttons.js %}
 
     {% include change-sizes.js %}
+    
+    var isAnimated = true;
+    $('#toggle-animation').click(function(){
+      isAnimated = !isAnimated;
+      var aniEngine = isAnimated ? 'jquery' : 'css';
+      $container.isotope( 'option', { animationEngine: aniEngine } );
+      return false;
+    });
 
   });
 </script>
