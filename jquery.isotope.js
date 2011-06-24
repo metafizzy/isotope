@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110620
+ * Isotope v1.3.110623
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -762,16 +762,13 @@
       var namespace = this.options.layoutMode,
           measure  = isRows ? 'rowHeight' : 'columnWidth',
           size     = isRows ? 'height' : 'width',
-          UCSize   = isRows ? 'Height' : 'Width',
           segmentsName = isRows ? 'rows' : 'cols',
           containerSize = this.element[ size ](),
           segments,
-          segmentSize;
-      
                     // i.e. options.masonry && options.masonry.columnWidth
-      segmentSize = this.options[ namespace ] && this.options[ namespace ][ measure ] ||
-                    // or use the size of the first item
-                    this.$filteredAtoms[ 'outer' + UCSize ](true) ||
+          segmentSize = this.options[ namespace ] && this.options[ namespace ][ measure ] ||
+                    // or use the size of the first item, i.e. outerWidth
+                    this.$filteredAtoms[ 'outer' + capitalize(size) ](true) ||
                     // if there's no items, use size of container
                     containerSize;
       
