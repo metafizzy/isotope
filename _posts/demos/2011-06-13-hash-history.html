@@ -79,7 +79,7 @@ category: demos
       
       {% include random-sizes.js %}
   
-      var setupOptions = $.extend( defaultOptions, {
+      var setupOptions = $.extend( {}, defaultOptions, {
         itemSelector : '.element',
         masonry : {
           columnWidth : 120
