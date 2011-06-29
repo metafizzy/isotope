@@ -51,12 +51,13 @@
 
     {% include add-buttons.js %}
 
+    var $sortBy = $('#sort-by');
     $('#shuffle a').click(function(){
       $container.isotope('shuffle');
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
       return false;
     });
-    
-
 
 
   });

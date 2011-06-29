@@ -13,6 +13,7 @@ toc:
   - { title: reLayout, anchor: relayout }
   - { title: reloadItems, anchor: reloaditems }
   - { title: remove, anchor: remove }
+  - { title: shuffle, anchor: shuffle }
   - { title: updateSortData, anchor: updatesortdata }
 
 ---
@@ -134,6 +135,16 @@ Re-collects all item elements in their current order in the DOM.  Useful for pre
 {% endhighlight %}
 
 Removes specified item elements from Isotope widget and the DOM.
+
+## shuffle
+
+{% highlight javascript %}
+
+.isotope( 'shuffle' )
+
+{% endhighlight %}
+
+Shuffles order of items. Sets [`sortBy` option](options.html#sortby) to [`'random'`](sorting.html#sortby_option).
 
 ## updateSortData
 

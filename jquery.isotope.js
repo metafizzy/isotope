@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110623
+ * Isotope v1.4.110629
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -378,6 +378,9 @@
       var originalOrderSorter = {
         'original-order' : function( $elem, instance ) {
           return instance.elemCount;
+        },
+        random : function() {
+          return Math.random();
         }
       };
 
@@ -695,28 +698,11 @@
       
     },
     
-    _shuffleArray : function ( array ) {
-      var tmp, current, i = array.length;
-      
-      if ( i ){ 
-        while(--i) {
-          current = ~~( Math.random() * (i + 1) );
-          tmp = array[current];
-          array[current] = array[i];
-          array[i] = tmp;
-        }
-      }
-      return array;
-    },
-    
-    // HACKy should probably remove
-    shuffle : function( callback ) {
-      this.options.sortBy = 'shuffle';
-      
-      this.$allAtoms = this._shuffleArray( this.$allAtoms );
-      this.$filteredAtoms = this._filter( this.$allAtoms );
-      
-      this.reLayout( callback );
+    shuffle : function() {
+      this.updateSortData( this.$allAtoms );
+      this.options.sortBy = 'random';
+      this._sort();
+      this.reLayout();
     },
     
     // destroys widget, returns elements and container back (close) to original style

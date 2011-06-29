@@ -121,7 +121,10 @@ $('#container').isotope({ sortBy : 'symbol' });
 
 {% endhighlight %}
 
-There is an additional sorting data built in to Isotope `'original-order'`. Sorting with `'original-order'` will use the original order of the item elements to arrange them in the layout.
+There are two additional sorting data methods built in to Isotope. 
+
++ `'original-order'` will use the original order of the item elements to arrange them in the layout.
++ `'random'` is a random order.
 
 ## sortAscending option
 
