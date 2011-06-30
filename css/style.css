@@ -32,16 +32,19 @@
           transition-property:         transform, opacity;
 }
 
-/* End: Recommended Isotope styles */
-
 /**** disabling Isotope CSS3 transitions ****/
 
 .isotope.no-transition,
-.isotope.no-transition .isotope-item {
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
           transition-duration: 0s;
 }
+
+/* End: Recommended Isotope styles */
+
+
 
 /* disable CSS transitions for containers with infinite scrolling*/
 .isotope.infinite-scrolling {
