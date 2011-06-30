@@ -23,9 +23,8 @@
 
   var prefixes = 'Moz Webkit Khtml O Ms'.split(' ');
 
-  function getStyleProperty( propName, element ) {
-    element = element || document.documentElement;
-    var style = element.style,
+  function getStyleProperty( propName ) {
+    var style = document.documentElement.style,
         prefixed;
 
     // test standard property first
@@ -69,8 +68,7 @@
    * CSS transitions, transforms, and 3D transforms.
   */
   
-  var docElement = document.documentElement,
-      tests = [
+  var tests = [
         {
           name : 'csstransforms',
           getResult : function() {
