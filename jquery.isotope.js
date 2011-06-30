@@ -607,20 +607,7 @@
         this.styleQueue.push({ $el: this.element, style: containerStyle });
       }
 
-      // are we animating the layout arrangement?
-      // use plugin-ish syntax for css or animate
-      var styleFn = !this.isLaidOut ? 'css' : (
-            this.isUsingJQueryAnimation ? 'animate' : 'css'
-          ),
-          animOpts = this.options.animationOptions;
-
-      // process styleQueue
-      $.each( this.styleQueue, function( i, obj ) {
-        obj.$el[ styleFn ]( obj.style, animOpts );
-      });
-
-      // clear out queue for next time
-      this.styleQueue = [];
+      this._processStyleQueue();
 
       // provide $elems as context for the callback
       if ( callback ) {
@@ -628,6 +615,26 @@
       }
       
       this.isLaidOut = true;
+    },
+    
+    _processStyleQueue : function() {
+      // are we animating the layout arrangement?
+      // use plugin-ish syntax for css or animate
+      var styleFn = !this.isLaidOut ? 'css' : (
+            this.isUsingJQueryAnimation ? 'animate' : 'css'
+          ),
+          animOpts = this.options.animationOptions,
+          _isInsertingAnimated = this._isInserting && this.isUsingJQueryAnimation,
+          objStyleFn;
+      
+      // process styleQueue
+      $.each( this.styleQueue, function( i, obj ) {
+        objStyleFn = _isInsertingAnimated && obj.$el.hasClass('no-transition') ? 'css' : styleFn;
+        obj.$el[ objStyleFn ]( obj.style, animOpts );
+      });
+
+      // clear out queue for next time
+      this.styleQueue = [];
     },
     
     
@@ -647,6 +654,8 @@
     
     // ====================== Convenience methods ======================
     
+    // ====================== Adding items ======================
+    
     // adds a jQuery object of items to a isotope container
     addItems : function( $content, callback ) {
       var $newAtoms = this._getAtoms( $content );
@@ -660,27 +669,58 @@
     },
     
     // convienence method for adding elements properly to any layout
+    // positions items, hides them, then animates them back in <--- very sezzy
     insert : function( $content, callback ) {
+      // position items
       this.element.append( $content );
       
       var instance = this;
       this.addItems( $content, function( $newAtoms ) {
-        var $filteredAtoms = instance._filter( $newAtoms );
-        instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
+        var $newFilteredAtoms = instance._filter( $newAtoms, true );
+        instance._addHideAppended( $newFilteredAtoms );
+        instance._sort();
+        instance.reLayout();
+        instance._revealAppended( $newFilteredAtoms, callback );
       });
-      
-      this._sort();
-      this.reLayout( callback );
       
     },
     
     // convienence method for working with Infinite Scroll
     appended : function( $content, callback ) {
       var instance = this;
-      this.addItems( $content, function( $newAtoms ){
-        instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
-        instance.layout( $newAtoms, callback );
+      this.addItems( $content, function( $newAtoms ) {
+        instance._addHideAppended( $newAtoms );
+        instance.layout( $newAtoms );
+        instance._revealAppended( $newAtoms, callback );
       });
+    },
+    
+    // adds new atoms, then hides them before positioning
+    _addHideAppended : function( $newAtoms ) {
+      this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
+      $newAtoms.addClass('no-transition');
+      
+      this._isInserting = true;
+      
+      // apply hidden styles
+      this.styleQueue.push({ $el: $newAtoms, style: this.options.hiddenStyle });
+    },
+    
+    // sets visible style on new atoms
+    _revealAppended : function( $newAtoms, callback ) {
+      var instance = this;
+      // apply visible style after a sec
+      setTimeout( function() {
+        // enable animation
+        $newAtoms.removeClass('no-transition');
+        // reveal newly inserted filtered elements
+        instance.styleQueue.push({ $el: $newAtoms, style: instance.options.visibleStyle });
+        instance._processStyleQueue();
+        delete instance._isInserting;
+        if ( callback ) {
+          callback( $newAtoms );
+        }
+      }, 10 );
     },
     
     // gathers all atoms
