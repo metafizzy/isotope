@@ -446,22 +446,20 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( opts ) ){
         this.options = $.extend( true, this.options, opts );
+
+        // trigger _updateOptionName if it exists
+        var updateOptionFn;
         for ( var optionName in opts ) {
-          this._updateOption( optionName );
+          updateOptionFn = '_update' + capitalize( optionName );
+          if ( this[ updateOptionFn ] ) {
+            this[ updateOptionFn ]();
+          }
         }
       }
     },
     
     // ====================== updaters ====================== //
     // kind of like setters
-    
-    // trigger _updateOptionName if it exists
-    _updateOption : function( optionName ) {
-      var updateOptionFn = '_update' + capitalize( optionName );
-      if ( this[ updateOptionFn ] ) {
-        this[ updateOptionFn ]();
-      }
-    },
     
     _updateAnimationEngine : function() {
       var animationEngine = this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '');
