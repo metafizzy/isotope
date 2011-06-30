@@ -493,33 +493,27 @@
     // ====================== Filtering ======================
 
     _filter : function( $atoms ) {
-      var $filteredAtoms,
-          filter = this.options.filter === '' ? '*' : this.options.filter;
+      var filter = this.options.filter === '' ? '*' : this.options.filter;
 
       if ( !filter ) {
-        $filteredAtoms = $atoms;
-      } else {
-        var hiddenClass    = this.options.hiddenClass,
-            hiddenSelector = '.' + hiddenClass,
-            $visibleAtoms  = $atoms.not( hiddenSelector ),
-            $hiddenAtoms   = $atoms.filter( hiddenSelector ),
-            $atomsToShow   = $hiddenAtoms;
-
-        $filteredAtoms = $atoms.filter( filter );
-
-        if ( filter !== '*' ) {
-          $atomsToShow = $hiddenAtoms.filter( filter );
-
-          var $atomsToHide = $visibleAtoms.not( filter ).toggleClass( hiddenClass );
-          $atomsToHide.addClass( hiddenClass );
-          this.styleQueue.push({ $el: $atomsToHide, style: this.options.hiddenStyle });
-        }
-        
-        this.styleQueue.push({ $el: $atomsToShow, style: this.options.visibleStyle });
-        $atomsToShow.removeClass( hiddenClass );
+        return $atoms;
       }
-      
-      return $filteredAtoms;
+
+      var hiddenClass    = this.options.hiddenClass,
+          hiddenSelector = '.' + hiddenClass,
+          $hiddenAtoms   = $atoms.filter( hiddenSelector ),
+          $atomsToShow   = $hiddenAtoms;
+
+      if ( filter !== '*' ) {
+        $atomsToShow = $hiddenAtoms.filter( filter );
+        var $atomsToHide = $atoms.not( hiddenSelector ).not( filter ).addClass( hiddenClass );
+        this.styleQueue.push({ $el: $atomsToHide, style: this.options.hiddenStyle });
+      }
+
+      this.styleQueue.push({ $el: $atomsToShow, style: this.options.visibleStyle });
+      $atomsToShow.removeClass( hiddenClass );
+
+      return $atoms.filter( filter );
     },
     
     // ====================== Sorting ======================
