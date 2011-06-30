@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110629
+ * Isotope v1.4.110630
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -9,6 +9,7 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
+/*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
 /*global Modernizr: true */
 
 (function( window, $, undefined ){
@@ -62,57 +63,45 @@
    * http://www.modernizr.com/license/
    */
 
- 
   /*
    * This version whittles down the script just to check support for
    * CSS transitions, transforms, and 3D transforms.
   */
   
-  var tests = [
-        {
-          name : 'csstransforms',
-          getResult : function() {
-            return !!transformProp;
-          }
-        },
-        {
-          name : 'csstransforms3d',
-          getResult : function() {
-            var test = !!getStyleProperty('perspective');
-            // double check for Chrome's false positive
-            if ( test ) {
-              var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-                  mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
-                  $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
-                              .appendTo('head'),
-                  $div = $('<div id="modernizr" />').appendTo('html');
+  var tests = {
+    csstransforms: function() {
+      return !!transformProp;
+    },
 
-              test = $div.height() === 3;
+    csstransforms3d: function() {
+      var test = !!getStyleProperty('perspective');
+      // double check for Chrome's false positive
+      if ( test ) {
+        var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+            mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
+            $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
+                        .appendTo('head'),
+            $div = $('<div id="modernizr" />').appendTo('html');
 
-              $div.remove();
-              $style.remove();
-            }
-            return test;
-          }
-        },
-        {
-          name : 'csstransitions',
-          getResult : function() {
-            return !!getStyleProperty('transitionProperty');
-          }
-        }
-      ],
+        test = $div.height() === 3;
 
-      i, len = tests.length
-  ;
+        $div.remove();
+        $style.remove();
+      }
+      return test;
+    },
+
+    csstransitions: function() {
+      return !!getStyleProperty('transitionProperty');
+    }
+  };
 
   if ( window.Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
-    for ( i=0; i < len; i++ ) {
-      var test = tests[i];
-      if ( !Modernizr.hasOwnProperty( test.name ) ) {
+    for ( var testName in tests) {
+      if ( !Modernizr.hasOwnProperty( testName ) ) {
         // if test hasn't been run, use addTest to run it
-        Modernizr.addTest( test.name, test.getResult );
+        Modernizr.addTest( testName, tests[ testName ] );
       }
     }
   } else {
@@ -123,15 +112,13 @@
             _version : '1.6ish: miniModernizr for Isotope'
           },
           classes = ' ',
-          test, result, 
-          className;
+          result, testName;
 
       // Run through tests
-      for ( i=0; i < len; i++ ) {
-        test = tests[i];
-        result = test.getResult();
-        miniModernizr[ test.name ] = result;
-        classes += ' ' + ( result ?  '' : 'no-' ) + test.name;
+      for ( testName in tests) {
+        result = tests[ testName ]();
+        miniModernizr[ testName ] = result;
+        classes += ' ' + ( result ?  '' : 'no-' ) + testName;
       }
 
       // Add the new classes to the <html> element.
