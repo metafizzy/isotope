@@ -31,6 +31,24 @@ The documentation and demo pages are generated using [Jekyll](http://github.com/
 
 Then view the live site at [http://localhost:4000](http://localhost:4000).
 
+Changelog
+---------
+
+View the [commit history](https://github.com/desandro/isotope/commits/master/jquery.isotope.js) for a complete robust list of changes to the script.
+
++ **v1.4** [2011-06-29](https://github.com/desandro/isotope/commit/8e2f51612eaf20e3031b81b8c5ff5e322cbb7b4f#jquery.isotope.js)
+  - shuffle method added
+  - inserting and appending positions items then reveals them
++ **v1.3** [2011-05-23](https://github.com/desandro/isotope/commit/a7cc0be2a0038c13a2955a889a873f63a39eb6c2#jquery.isotope.js)
+  - refactor layout mode API
+  - layoutModeResize -> layoutModeResizeChanged, which returns boolean
++ **v1.2** [2011-05-13](https://github.com/desandro/isotope/commit/b3cf6139d7641f282724a7a541b3bfb10d1bbf54#jquery.isotope.js)
+  - add updateOption method, for changing options after initialization
++ **v1.1** [2011-04-26](https://github.com/desandro/isotope/commit/3c551406ee1e4cd8345cdbe589c2d8d1e164b259#jquery.isotope.js)
+  - incremental additions, bug fixes, and refactorings
++ **v1.0** [2011-02-07](https://github.com/desandro/isotope/commit/78253dfb34808d9a677ae721e97c5afc08aa19b8#jquery.isotope.js)
+  - public release
+
 * * *
 
 Copyright (c) 2011 David DeSandro / Metafizzy LLC

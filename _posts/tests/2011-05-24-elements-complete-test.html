@@ -2,6 +2,7 @@
 title: elements complete test
 layout: default
 category: tests
+body_class: demos
 ---
 
 <section id="copy">
@@ -19,12 +20,12 @@ category: tests
   <h3>Etc</h3>
 
   <ul id="etc" class="clearfix">
-
     <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
     <li id="insert"><a href="#insert">Insert new elements</a></li>
     <li id="append"><a href='#append'>Append new elements</a></li>
-    <!-- <li id="shuffle"><a href='#shuffle'>Shuffle</a></li> -->
+    <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
   </ul>
+
 </section> <!-- #options -->
 
 
@@ -127,8 +128,13 @@ category: tests
 
     {% include add-buttons.js %}
 
+    var $sortBy = $('#sort-by');
     $('#shuffle a').click(function(){
+      console.time('shuffle');
       $container.isotope('shuffle');
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
+      console.timeEnd('shuffle');
       return false;
     });
 

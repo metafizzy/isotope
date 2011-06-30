@@ -1,5 +1,5 @@
 /**
- * Isotope v1.3.110623
+ * Isotope v1.4.110630
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -9,6 +9,7 @@
  * Copyright 2011 David DeSandro / Metafizzy
  */
 
+/*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
 /*global Modernizr: true */
 
 (function( window, $, undefined ){
@@ -23,9 +24,8 @@
 
   var prefixes = 'Moz Webkit Khtml O Ms'.split(' ');
 
-  function getStyleProperty( propName, element ) {
-    element = element || document.documentElement;
-    var style = element.style,
+  function getStyleProperty( propName ) {
+    var style = document.documentElement.style,
         prefixed;
 
     // test standard property first
@@ -63,62 +63,45 @@
    * http://www.modernizr.com/license/
    */
 
- 
   /*
    * This version whittles down the script just to check support for
    * CSS transitions, transforms, and 3D transforms.
   */
   
-  var docElement = document.documentElement,
-      tests = [
-        {
-          name : 'csstransforms',
-          getResult : function() {
-            return !!transformProp;
-          }
-        },
-        {
-          name : 'csstransforms3d',
-          getResult : function() {
-            var test = !!getStyleProperty('perspective');
-            // double check for Chrome's false positive
-            if ( test ){
-              var st = document.createElement('style'),
-                  div = document.createElement('div'),
-                  vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
+  var tests = {
+    csstransforms: function() {
+      return !!transformProp;
+    },
 
-              st.textContent = mq + '{#modernizr{height:3px}}';
-              (document.head || document.getElementsByTagName('head')[0]).appendChild(st);
-              div.id = 'modernizr';
-              docElement.appendChild(div);
+    csstransforms3d: function() {
+      var test = !!getStyleProperty('perspective');
+      // double check for Chrome's false positive
+      if ( test ) {
+        var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+            mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
+            $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
+                        .appendTo('head'),
+            $div = $('<div id="modernizr" />').appendTo('html');
 
-              test = div.offsetHeight === 3;
+        test = $div.height() === 3;
 
-              st.parentNode.removeChild(st);
-              div.parentNode.removeChild(div);
-            }
-            return !!test;
-          }
-        },
-        {
-          name : 'csstransitions',
-          getResult : function() {
-            return !!getStyleProperty('transitionProperty');
-          }
-        }
-      ],
+        $div.remove();
+        $style.remove();
+      }
+      return test;
+    },
 
-      i, len = tests.length
-  ;
+    csstransitions: function() {
+      return !!getStyleProperty('transitionProperty');
+    }
+  };
 
   if ( window.Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
-    for ( i=0; i < len; i++ ) {
-      var test = tests[i];
-      if ( !Modernizr.hasOwnProperty( test.name ) ) {
+    for ( var testName in tests) {
+      if ( !Modernizr.hasOwnProperty( testName ) ) {
         // if test hasn't been run, use addTest to run it
-        Modernizr.addTest( test.name, test.getResult );
+        Modernizr.addTest( testName, tests[ testName ] );
       }
     }
   } else {
@@ -128,20 +111,18 @@
       var miniModernizr = {
             _version : '1.6ish: miniModernizr for Isotope'
           },
-          classes = [],
-          test, result, className;
+          classes = ' ',
+          result, testName;
 
       // Run through tests
-      for ( i=0; i < len; i++ ) {
-        test = tests[i];
-        result = test.getResult();
-        miniModernizr[ test.name ] = result;
-        className = ( result ?  '' : 'no-' ) + test.name;
-        classes.push( className );
+      for ( testName in tests) {
+        result = tests[ testName ]();
+        miniModernizr[ testName ] = result;
+        classes += ' ' + ( result ?  '' : 'no-' ) + testName;
       }
 
       // Add the new classes to the <html> element.
-      docElement.className += ' ' + classes.join( ' ' );
+      $('html').addClass( classes );
 
       return miniModernizr;
     })();
@@ -378,6 +359,9 @@
       var originalOrderSorter = {
         'original-order' : function( $elem, instance ) {
           return instance.elemCount;
+        },
+        random : function() {
+          return Math.random();
         }
       };
 
@@ -443,22 +427,20 @@
       // signature: $('#foo').bar({ cool:false });
       if ( $.isPlainObject( opts ) ){
         this.options = $.extend( true, this.options, opts );
+
+        // trigger _updateOptionName if it exists
+        var updateOptionFn;
         for ( var optionName in opts ) {
-          this._updateOption( optionName );
+          updateOptionFn = '_update' + capitalize( optionName );
+          if ( this[ updateOptionFn ] ) {
+            this[ updateOptionFn ]();
+          }
         }
       }
     },
     
     // ====================== updaters ====================== //
     // kind of like setters
-    
-    // trigger _updateOptionName if it exists
-    _updateOption : function( optionName ) {
-      var updateOptionFn = '_update' + capitalize( optionName );
-      if ( this[ updateOptionFn ] ) {
-        this[ updateOptionFn ]();
-      }
-    },
     
     _updateAnimationEngine : function() {
       var animationEngine = this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '');
@@ -492,33 +474,27 @@
     // ====================== Filtering ======================
 
     _filter : function( $atoms ) {
-      var $filteredAtoms,
-          filter = this.options.filter === '' ? '*' : this.options.filter;
+      var filter = this.options.filter === '' ? '*' : this.options.filter;
 
       if ( !filter ) {
-        $filteredAtoms = $atoms;
-      } else {
-        var hiddenClass    = this.options.hiddenClass,
-            hiddenSelector = '.' + hiddenClass,
-            $visibleAtoms  = $atoms.not( hiddenSelector ),
-            $hiddenAtoms   = $atoms.filter( hiddenSelector ),
-            $atomsToShow   = $hiddenAtoms;
-
-        $filteredAtoms = $atoms.filter( filter );
-
-        if ( filter !== '*' ) {
-          $atomsToShow = $hiddenAtoms.filter( filter );
-
-          var $atomsToHide = $visibleAtoms.not( filter ).toggleClass( hiddenClass );
-          $atomsToHide.addClass( hiddenClass );
-          this.styleQueue.push({ $el: $atomsToHide, style: this.options.hiddenStyle });
-        }
-        
-        this.styleQueue.push({ $el: $atomsToShow, style: this.options.visibleStyle });
-        $atomsToShow.removeClass( hiddenClass );
+        return $atoms;
       }
-      
-      return $filteredAtoms;
+
+      var hiddenClass    = this.options.hiddenClass,
+          hiddenSelector = '.' + hiddenClass,
+          $hiddenAtoms   = $atoms.filter( hiddenSelector ),
+          $atomsToShow   = $hiddenAtoms;
+
+      if ( filter !== '*' ) {
+        $atomsToShow = $hiddenAtoms.filter( filter );
+        var $atomsToHide = $atoms.not( hiddenSelector ).not( filter ).addClass( hiddenClass );
+        this.styleQueue.push({ $el: $atomsToHide, style: this.options.hiddenStyle });
+      }
+
+      this.styleQueue.push({ $el: $atomsToShow, style: this.options.visibleStyle });
+      $atomsToShow.removeClass( hiddenClass );
+
+      return $atoms.filter( filter );
     },
     
     // ====================== Sorting ======================
@@ -604,20 +580,7 @@
         this.styleQueue.push({ $el: this.element, style: containerStyle });
       }
 
-      // are we animating the layout arrangement?
-      // use plugin-ish syntax for css or animate
-      var styleFn = !this.isLaidOut ? 'css' : (
-            this.isUsingJQueryAnimation ? 'animate' : 'css'
-          ),
-          animOpts = this.options.animationOptions;
-
-      // process styleQueue
-      $.each( this.styleQueue, function( i, obj ) {
-        obj.$el[ styleFn ]( obj.style, animOpts );
-      });
-
-      // clear out queue for next time
-      this.styleQueue = [];
+      this._processStyleQueue();
 
       // provide $elems as context for the callback
       if ( callback ) {
@@ -625,6 +588,26 @@
       }
       
       this.isLaidOut = true;
+    },
+    
+    _processStyleQueue : function() {
+      // are we animating the layout arrangement?
+      // use plugin-ish syntax for css or animate
+      var styleFn = !this.isLaidOut ? 'css' : (
+            this.isUsingJQueryAnimation ? 'animate' : 'css'
+          ),
+          animOpts = this.options.animationOptions,
+          _isInsertingAnimated = this._isInserting && this.isUsingJQueryAnimation,
+          objStyleFn;
+      
+      // process styleQueue
+      $.each( this.styleQueue, function( i, obj ) {
+        objStyleFn = _isInsertingAnimated && obj.$el.hasClass('no-transition') ? 'css' : styleFn;
+        obj.$el[ objStyleFn ]( obj.style, animOpts );
+      });
+
+      // clear out queue for next time
+      this.styleQueue = [];
     },
     
     
@@ -644,6 +627,8 @@
     
     // ====================== Convenience methods ======================
     
+    // ====================== Adding items ======================
+    
     // adds a jQuery object of items to a isotope container
     addItems : function( $content, callback ) {
       var $newAtoms = this._getAtoms( $content );
@@ -657,27 +642,58 @@
     },
     
     // convienence method for adding elements properly to any layout
+    // positions items, hides them, then animates them back in <--- very sezzy
     insert : function( $content, callback ) {
+      // position items
       this.element.append( $content );
       
       var instance = this;
       this.addItems( $content, function( $newAtoms ) {
-        var $filteredAtoms = instance._filter( $newAtoms );
-        instance.$filteredAtoms = instance.$filteredAtoms.add( $filteredAtoms );
+        var $newFilteredAtoms = instance._filter( $newAtoms, true );
+        instance._addHideAppended( $newFilteredAtoms );
+        instance._sort();
+        instance.reLayout();
+        instance._revealAppended( $newFilteredAtoms, callback );
       });
-      
-      this._sort();
-      this.reLayout( callback );
       
     },
     
     // convienence method for working with Infinite Scroll
     appended : function( $content, callback ) {
       var instance = this;
-      this.addItems( $content, function( $newAtoms ){
-        instance.$filteredAtoms = instance.$filteredAtoms.add( $newAtoms );
-        instance.layout( $newAtoms, callback );
+      this.addItems( $content, function( $newAtoms ) {
+        instance._addHideAppended( $newAtoms );
+        instance.layout( $newAtoms );
+        instance._revealAppended( $newAtoms, callback );
       });
+    },
+    
+    // adds new atoms, then hides them before positioning
+    _addHideAppended : function( $newAtoms ) {
+      this.$filteredAtoms = this.$filteredAtoms.add( $newAtoms );
+      $newAtoms.addClass('no-transition');
+      
+      this._isInserting = true;
+      
+      // apply hidden styles
+      this.styleQueue.push({ $el: $newAtoms, style: this.options.hiddenStyle });
+    },
+    
+    // sets visible style on new atoms
+    _revealAppended : function( $newAtoms, callback ) {
+      var instance = this;
+      // apply visible style after a sec
+      setTimeout( function() {
+        // enable animation
+        $newAtoms.removeClass('no-transition');
+        // reveal newly inserted filtered elements
+        instance.styleQueue.push({ $el: $newAtoms, style: instance.options.visibleStyle });
+        instance._processStyleQueue();
+        delete instance._isInserting;
+        if ( callback ) {
+          callback( $newAtoms );
+        }
+      }, 10 );
     },
     
     // gathers all atoms
@@ -695,28 +711,11 @@
       
     },
     
-    _shuffleArray : function ( array ) {
-      var tmp, current, i = array.length;
-      
-      if ( i ){ 
-        while(--i) {
-          current = ~~( Math.random() * (i + 1) );
-          tmp = array[current];
-          array[current] = array[i];
-          array[i] = tmp;
-        }
-      }
-      return array;
-    },
-    
-    // HACKy should probably remove
-    shuffle : function( callback ) {
-      this.options.sortBy = 'shuffle';
-      
-      this.$allAtoms = this._shuffleArray( this.$allAtoms );
-      this.$filteredAtoms = this._filter( this.$allAtoms );
-      
-      this.reLayout( callback );
+    shuffle : function() {
+      this.updateSortData( this.$allAtoms );
+      this.options.sortBy = 'random';
+      this._sort();
+      this.reLayout();
     },
     
     // destroys widget, returns elements and container back (close) to original style

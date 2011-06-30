@@ -94,7 +94,7 @@ getSortData : {
 
 {% endhighlight %}
 
-Get creative! You can sort the list in the [index page](../index.html) by the width of each item element.
+Get creative! You could sort a list by the width of each item element.
 
 {% highlight javascript %}
 
@@ -121,7 +121,10 @@ $('#container').isotope({ sortBy : 'symbol' });
 
 {% endhighlight %}
 
-There is an additional sorting data built in to Isotope `'original-order'`. Sorting with `'original-order'` will use the original order of the item elements to arrange them in the layout.
+There are two additional sorting data methods built in to Isotope. 
+
++ `'original-order'` will use the original order of the item elements to arrange them in the layout.
++ `'random'` is a random order.
 
 ## sortAscending option
 
@@ -142,7 +145,7 @@ We can use a simple list for our buttons.
 
 {% highlight html %}
 
-<ul id="sort">
+<ul id="sort-by">
   <li><a href="#name">name</a></li>
   <li><a href="#symbol">symbol</a></li>
   <li><a href="#number">number</a></li>
@@ -156,7 +159,7 @@ When one of these links is clicked, we can use the `href` attribute as the value
 
 {% highlight javascript %}
 
-$('#sort a').click(function(){
+$('#sort-by a').click(function(){
   // get href attribute, minus the '#'
   var sortName = $(this).attr('href').slice(1);
   $('#container').isotope({ sortBy : sortName });
