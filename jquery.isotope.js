@@ -82,23 +82,19 @@
           getResult : function() {
             var test = !!getStyleProperty('perspective');
             // double check for Chrome's false positive
-            if ( test ){
-              var st = document.createElement('style'),
-                  div = document.createElement('div'),
-                  vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-                  mq = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)';
+            if ( test ) {
+              var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+                  mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
+                  $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
+                              .appendTo('head'),
+                  $div = $('<div id="modernizr" />').appendTo('html');
 
-              st.textContent = mq + '{#modernizr{height:3px}}';
-              (document.head || document.getElementsByTagName('head')[0]).appendChild(st);
-              div.id = 'modernizr';
-              docElement.appendChild(div);
+              test = $div.height() === 3;
 
-              test = div.offsetHeight === 3;
-
-              st.parentNode.removeChild(st);
-              div.parentNode.removeChild(div);
+              $div.remove();
+              $style.remove();
             }
-            return !!test;
+            return test;
           }
         },
         {
@@ -128,20 +124,20 @@
       var miniModernizr = {
             _version : '1.6ish: miniModernizr for Isotope'
           },
-          classes = [],
-          test, result, className;
+          classes = ' ',
+          test, result, 
+          className;
 
       // Run through tests
       for ( i=0; i < len; i++ ) {
         test = tests[i];
         result = test.getResult();
         miniModernizr[ test.name ] = result;
-        className = ( result ?  '' : 'no-' ) + test.name;
-        classes.push( className );
+        classes += ' ' + ( result ?  '' : 'no-' ) + test.name;
       }
 
       // Add the new classes to the <html> element.
-      docElement.className += ' ' + classes.join( ' ' );
+      $('html').addClass( classes );
 
       return miniModernizr;
     })();
