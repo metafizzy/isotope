@@ -23,12 +23,12 @@ category: tests
   <h3>Etc</h3>
 
   <ul id="etc" class="clearfix">
-
     <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
     <li id="insert"><a href="#insert">Insert new elements</a></li>
     <li id="append"><a href='#append'>Append new elements</a></li>
-    <!-- <li id="shuffle"><a href='#shuffle'>Shuffle</a></li> -->
+    <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
   </ul>
+
 </section> <!-- #options -->
 
 <div id="container" class="clickable clearfix">
@@ -36,7 +36,7 @@ category: tests
     {% assign element = site.elements[elem_number] %}
     {% include element-partial.html %}
   {% endfor %}
-</div>
+</div> <!-- #container -->
 
 
 <script src="../{{ site.jquery_js }}"></script>
@@ -132,17 +132,20 @@ category: tests
           return $elem.find('.name').text();
         }
       }
+    });
       
-      {% include option-set-buttons.js %}
+    {% include option-set-buttons.js %}
 
-      {% include add-buttons.js %}
+    {% include add-buttons.js %}
 
-      {% include change-sizes.js %}
+    {% include change-sizes.js %}
 
-      $('#shuffle a').click(function(){
-        $container.isotope('shuffle');
-        return false;
-      });
+    var $sortBy = $('#sort-by');
+    $('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
+      return false;
     });
     
   });
