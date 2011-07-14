@@ -1,17 +1,34 @@
 ---
-title: centered masonry
+title: masonry gutters
 layout: default
 category: tests
 ---
 
 <style>
-  #container {
-    margin: 0 auto 20px;
-  }
+.element {
+  margin: 5px 0;
+}
+
+#container {
+  padding: 5px 0;
+}
 </style>
 
 <section id="copy">
-  <p>Isotope&rsquo;s capabilities are designed to be used together cohesively. You can do it all &mdash; filter, sort, change layout modes, add items &mdash; and Isotope will handle it with ease.</p>
+  <p>Modified masonry layout mode methods for gutterWidth. The items line up horiziontal flush with the container.</p>
+  <p>Set <code>gutterWidth</code> within <code>masonry</code> options.</p>
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  masonry: {
+    columnWidth: 110,
+    gutterWidth: 10
+  }
+});
+
+{% endhighlight %}
+
 </section>
 
 <section id="options" class="clearfix">
@@ -44,62 +61,41 @@ category: tests
 <script src="../js/fake-element.js"></script>
 <script>
 
-  $.Isotope.prototype._getCenteredMasonryColumns = function() {
-    this.width = this.element.width();
-    
-    var parentWidth = this.element.parent().width();
-    
-                  // i.e. options.masonry && options.masonry.columnWidth
-    var colW = this.options.masonry && this.options.masonry.columnWidth ||
+  // modified Isotope methods for gutters in masonry
+  $.Isotope.prototype._getMasonryGutterColumns = function() {
+    var gutter = this.options.masonry && this.options.masonry.gutterWidth || 0;
+        containerWidth = this.element.width();
+  
+    this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
                   // or use the size of the first item
                   this.$filteredAtoms.outerWidth(true) ||
                   // if there's no items, use size of container
-                  parentWidth;
-    
-    var cols = Math.floor( parentWidth / colW );
-    cols = Math.max( cols, 1 );
+                  containerWidth;
 
-    // i.e. this.masonry.cols = ....
-    this.masonry.cols = cols;
-    // i.e. this.masonry.columnWidth = ...
-    this.masonry.columnWidth = colW;
-    
-    return this;
+    this.masonry.columnWidth += gutter;
+
+    this.masonry.cols = Math.floor( ( containerWidth + gutter ) / this.masonry.columnWidth );
+    this.masonry.cols = Math.max( this.masonry.cols, 1 );
   };
-  
+
   $.Isotope.prototype._masonryReset = function() {
     // layout-specific props
     this.masonry = {};
     // FIXME shouldn't have to call this again
-    this._getCenteredMasonryColumns();
+    this._getMasonryGutterColumns();
     var i = this.masonry.cols;
     this.masonry.colYs = [];
     while (i--) {
       this.masonry.colYs.push( 0 );
     }
-    return this;
   };
 
   $.Isotope.prototype._masonryResizeChanged = function() {
-    var prevColCount = this.masonry.cols;
-    // get updated colCount
-    this._getCenteredMasonryColumns();
-    return ( this.masonry.cols !== prevColCount );
-  };
-  
-  $.Isotope.prototype._masonryGetContainerSize = function() {
-    var itemsTotalWidth = 0;
-    this.$filteredAtoms.each(function(){
-      itemsTotalWidth += $(this).outerWidth(true);
-    });
-    
-    var layoutWidth = this.masonry.cols * this.masonry.columnWidth,
-        size = {
-          height : Math.max.apply( Math, this.masonry.colYs ),
-          width : Math.min(layoutWidth, itemsTotalWidth )
-        };
-    return size;
-    
+    var prevSegments = this.masonry.cols;
+    // update cols/rows
+    this._getMasonryGutterColumns();
+    // return if updated cols/rows is not equal to previous
+    return ( this.masonry.cols !== prevSegments );
   };
 
 
@@ -112,7 +108,8 @@ category: tests
     $container.isotope({
       itemSelector : '.element',
       masonry : {
-        columnWidth : 120
+        columnWidth : 110,
+        gutterWidth : 10
       },
       getSortData : {
         symbol : function( $elem ) {
