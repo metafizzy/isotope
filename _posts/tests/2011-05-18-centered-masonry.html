@@ -11,7 +11,7 @@ category: tests
 </style>
 
 <section id="copy">
-  <p>Isotope&rsquo;s capabilities are designed to be used together cohesively. You can do it all &mdash; filter, sort, change layout modes, add items &mdash; and Isotope will handle it with ease.</p>
+  <p>Modified masonry layout mode for centered container.</p>
 </section>
 
 <section id="options" class="clearfix">
@@ -63,8 +63,6 @@ category: tests
     this.masonry.cols = cols;
     // i.e. this.masonry.columnWidth = ...
     this.masonry.columnWidth = colW;
-    
-    return this;
   };
   
   $.Isotope.prototype._masonryReset = function() {
@@ -77,7 +75,6 @@ category: tests
     while (i--) {
       this.masonry.colYs.push( 0 );
     }
-    return this;
   };
 
   $.Isotope.prototype._masonryResizeChanged = function() {
