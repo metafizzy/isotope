@@ -115,10 +115,8 @@ category: tests
       $container.imagesLoaded(function(){
         $container.isotope({
           transformsEnabled: false,
-          hiddenStyle : {
-            opacity: 0,
-            scale : 1
-          }
+          visibleStyle: { opacity: 1 },
+          hiddenStyle: { opacity: 0 }
         });
       });
       

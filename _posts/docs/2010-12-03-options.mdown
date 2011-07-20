@@ -281,18 +281,16 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
 
 {% endhighlight %}
 
-### Disabling hiddenStyle scale
+### Disabling hidden and visible scale styles
 
-If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle).
+If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle) and [`visibleStyle` option](#visiblestyle).
 
 {% highlight javascript %}
 
 $('#container').isotope({
   transformsEnabled: false,
-  hiddenStyle : {
-    opacity: 0,
-    scale : 1
-  }
+  visibleStyle: { opacity: 1 },
+  hiddenStyle: { opacity: 0 }
 });
 
 {% endhighlight %}
