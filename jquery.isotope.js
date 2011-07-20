@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110630
+ * Isotope v1.4.110720
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -334,7 +334,7 @@
     // sets up widget
     _create : function( options ) {
       
-      this.options = $.extend( true, {}, $.Isotope.settings, options );
+      this.options = $.extend( {}, $.Isotope.settings, options );
       
       this.styleQueue = [];
       this.elemCount = 0;
