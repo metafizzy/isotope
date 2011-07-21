@@ -135,20 +135,20 @@ features:
           .text('Could not load sites using Isotope :(');
       };
     
-      // dynamically load sites using Isotope from Ember app
+      // dynamically load sites using Isotope from Zootool
       $.getJSON('http://zootool.com/api/users/items/?username=desandro' +
           '&apikey=8b604e5d4841c2cd976241dd90d319d7' +
           '&tag=bestofisotope&callback=?')
         .error( ajaxError )
         .success(function( data ){
 
-          // proceed only if we have items
+          // proceed only if we have data
           if ( !data || !data.length ) {
             ajaxError();
             return;
           }
           var items = [],
-              item, image;
+              item, datum;
 
           for ( var i=0, len = data.length; i < len; i++ ) {
             datum = data[i];
