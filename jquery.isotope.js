@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110630
+ * Isotope v1.4.110721
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -334,7 +334,7 @@
     // sets up widget
     _create : function( options ) {
       
-      this.options = $.extend( true, {}, $.Isotope.settings, options );
+      this.options = $.extend( {}, $.Isotope.settings, options );
       
       this.styleQueue = [];
       this.elemCount = 0;
@@ -1169,34 +1169,50 @@
   
   
   // ======================= imagesLoaded Plugin  ===============================
-  // A fork of http://gist.github.com/268257 by Paul Irish
+  // https://gist.github.com/964345
 
+  // $('img.photo',this).imagesLoaded(myFunction)
+  // execute a callback when all images have loaded.
+  // needed because .load() doesn't work on cached images
+
+  // modified by yiannis chatzikonstantinou.
+
+  // original:
   // mit license. paul irish. 2010.
   // webkit fix from Oren Solomianik. thx!
 
-  $.fn.imagesLoaded = function(callback){
-    var elems = this.find('img'),
-        len   = elems.length,
-        _this = this;
+  // callback function is passed the last image to load
+  //   as an argument, and the collection as `this`
+
+  $.fn.imagesLoaded = function( callback ){
+    var elems = this.find( 'img' ),
+        elems_src = [],
+        self = this,
+        len = elems.length;
 
     if ( !elems.length ) {
       callback.call( this );
+      return this;
     }
 
-    elems.bind('load',function(){
-      if (--len <= 0){ 
-        callback.call( _this ); 
+    elems.one('load error', function() {
+      if ( --len === 0 ) {
+        // Rinse and repeat.
+        len = elems.length;
+        elems.one( 'load error', function() {
+          if ( --len === 0 ) {
+            callback.call( self );
+          }
+        }).each(function() {
+          this.src = elems_src.shift();
+        });
       }
-    }).each(function(){
-      // cached images don't fire load sometimes, so we reset src.
-      if (this.complete || this.complete === undefined){
-        var src = this.src;
-        // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
-        // data uri bypasses webkit log warning (thx doug jones)
-        this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-        this.src = src;
-      }  
-    }); 
+    }).each(function() {
+      elems_src.push( this.src );
+      // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+      // data uri bypasses webkit log warning (thx doug jones)
+      this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    });
 
     return this;
   };
