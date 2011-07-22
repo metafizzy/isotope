@@ -13,6 +13,7 @@ toc:
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
   - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
   - { title: Flash, anchor: flash }
+  - { title: Poor type rendering in WebKit, anchor: poor_type_rendering_in_webkit }
 
 ---
 
@@ -37,7 +38,8 @@ Support License is included with Isotope Commercial License.
 ## Additional resources
 
 + The [Metafizzy blog](http://metafizzy.co/blog/) has posts that cover specialized use cases
-+ [Sites using Isotope](http://www.delicious.com/desandro/using:isotope)
++ [Sites using Isotope on Zootool](http://zootool.com/user/desandro/tag:isotope), has screenshots
++ [Sites using Isotope on Delicious](http://www.delicious.com/desandro/using:isotope)
 + [Miscelleanous Isotope content](http://www.delicious.com/desandro/re:isotope)
 + [Stack Overflow questions on Isotope](http://www.delicious.com/desandro/re:isotope+stackoverflow)
 
@@ -126,3 +128,7 @@ If you do plan on implementing Infinite Scroll with filtering or sorting (which 
 [Using CSS transforms with Flash content is a bit buggy in Safari and Firefox](http://dropshado.ws/post/4085720152/css-transforms-breaking-flash). This is problematic when using Isotope on item elements that contain Flash content like YouTube or Vimeo videos, Flash ads, or Flash audio players.
 
 The best way to resolve this issue is to disable CSS transforms by setting the [`transformsEnabled` option](options.html#transformsenabled) to <code><span class="kc">false</span></code>.
+
+## Poor type rendering in WebKit
+
+Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. The solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).
