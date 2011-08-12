@@ -26,7 +26,7 @@ You are granted 1 license for you as 1 designated user to use the Software for t
 
 You are granted the right to use and to modify the source code of the Software for use in Applications.    You own any original work authored by you; Metafizzy continues to retain all copyright and other intellectual property rights in the Software.  You are not permitted to move, remove, edit, or obscure any copyright, trademark, attribution, warning or disclaimer notices in the Software.
 
-You may use the Software only to create Applications that are significantly different than and do not compete with the Software. You are granted the license to distribute the Software as part of your Applications on a royalty-free basis. Users of your Applications are not permitted to use the Software or your modifications of the Software for development purposes unless they also purchase a separate commercial license from Metafizzy for each of the users.
+You may use the Software only to create Applications that are significantly different than and do not compete with the Software. You are granted the license to distribute the Software as part of your Applications on a royalty-free basis. Users of your Applications are permitted to use the Software or your modifications of the Software for development purposes.
 
 ### Warranties and Remedies
 
