@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110721
+ * Isotope v1.4.110808
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -344,7 +344,7 @@
       this.originalStyle = {};
       for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
         var prop = isoContainerStyles[i];
-        this.originalStyle[ prop ] = elemStyle[ prop ] || null;
+        this.originalStyle[ prop ] = elemStyle[ prop ] || '';
       }
       
       this.element.css({
@@ -726,12 +726,12 @@
       this.$allAtoms
         .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass )
         .each(function(){
-          this.style.position = null;
-          this.style.top = null;
-          this.style.left = null;
-          this.style.opacity = null;
+          this.style.position = '';
+          this.style.top = '';
+          this.style.left = '';
+          this.style.opacity = '';
           if ( usingTransforms ) {
-            this.style[ transformProp ] = null;
+            this.style[ transformProp ] = '';
           }
         });
       
