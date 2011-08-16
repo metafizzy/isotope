@@ -10,6 +10,7 @@ toc:
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
+  - { title: Accessing the instance, anchor: accessing_the_instance }
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
   - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
   - { title: Flash, anchor: flash }
@@ -95,6 +96,27 @@ Both Typekit and Google WebFont Loader provide font events to control scripts ba
 
 + [Typekit font events](http://blog.typekit.com/2010/10/18/more-control-with-typekits-font-events/)
 + [Google WebFont Loader: Events](http://code.google.com/apis/webfonts/docs/webfont_loader.html#Events)
+
+## Accessing the instance
+
+[Similar to jQuery UI](http://docs.jquery.com/UI_Developer_Guide#Internal_functions_.26_scopes_explained), Isotope stores a instance containing properties, settings and methods with jQuery.data. You can access the instance with the `'isotope'` namespace.
+
+{% highlight javascript %}
+
+var $container = $('#container');
+
+// initialize Isotope instance
+$container.isotope({
+  // options...
+});
+
+// get Isotope instance
+var isotopeInstance = $container.data('isotope');
+isotopeInstance.options; // options
+isotopeInstance.$filteredAtoms; // jQuery object of filtered & sorted item elements
+isotopeInstance.masonry.columnWidth; // Layout mode specific properties
+
+{% endhighlight %}
 
 ## CSS transforms in Opera
 
