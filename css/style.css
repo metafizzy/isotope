@@ -750,6 +750,7 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 #infscr-loading {
   position: fixed;
+  text-align: center;
   bottom: 30px;
   left: 42%;
   z-index: 100;

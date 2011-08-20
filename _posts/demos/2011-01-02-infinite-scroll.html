@@ -35,13 +35,10 @@ infinite_scroll: true
         navSelector  : '#page_nav',    // selector for the paged navigation 
         nextSelector : '#page_nav a',  // selector for the NEXT link (to page 2)
         itemSelector : '.element',     // selector for all items you'll retrieve
-        donetext  : 'No more pages to load.',
-        loadingImg : 'http://i.imgur.com/qkKy8.gif',
-        debug: false,
-        errorCallback: function() { 
-          // fade out the error message after 2 seconds
-          $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');   
-        }
+        loading: {
+            finishedMsg: 'No more pages to load.',
+            img: 'http://i.imgur.com/qkKy8.gif'
+          }
         },
         // call Isotope as a callback
         function( newElements ) {
