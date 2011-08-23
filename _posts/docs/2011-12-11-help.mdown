@@ -16,6 +16,7 @@ toc:
   - { title: Flash, anchor: flash }
   - { title: Poor type rendering in WebKit, anchor: poor_type_rendering_in_webkit }
   - { title: Right-to-left layouts, anchor: righttoleft_layouts }
+  - { title: Preventing clicks on filtered items, anchor: unclickable-filtered }
 
 ---
 
@@ -195,5 +196,25 @@ $('#container').isotope({
        -o-transition-property: right, top, -o-transform, opacity;
           transition-property: right, top, transform, opacity;
 }
+
+{% endhighlight %}
+
+## Preventing clicks on filtered items {: #unclickable-filtered}
+
+The [recommended CSS for filtering](filtering.html#recommended_css) includes `pointer-events: none` for `.isotope-hidden`. Unfortunately, Opera and Internet Explorer still let click events propagate with this style in place. But you can still dismiss click events in your click handler by checking to see if the element or element's parent is a filtered item.
+
+[See test: Unclickable filtered](../tests/unclickable-filtered.html)
+
+{% highlight javascript %}
+
+$('.item a').click(function(){
+  var $this = $(this);
+  // back out if hidden item
+  if ( $this.parents('.isotope-item').hasClass('isotope-hidden') ) {
+    return;
+  }
+  // otherwise, continue to do stuff...
+  console.log('item was clicked');
+});
 
 {% endhighlight %}
