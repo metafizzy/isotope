@@ -385,7 +385,15 @@ body {
 .color-shape.wide, .color-shape.big { width: 150px; }
 .color-shape.tall, .color-shape.big { height: 150px; }
 
+.color-shape a {
+  display: block;
+  height: 100%;
+}
 
+.color-shape a:hover {
+  background: white;
+  background: hsla( 0, 0%, 100%, 0.5 );
+}
 
 /**** Horizontal ****/
 
