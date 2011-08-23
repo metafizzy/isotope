@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110808
+ * Isotope v1.4.110823
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -388,6 +388,11 @@
         });
       }
       
+      // dismiss all click events from hidden events
+      this.element.delegate( '.' + this.options.hiddenClass, 'click', function(){
+        return false;
+      });
+      
     },
     
     _getAtoms : function( $elems ) {
@@ -744,6 +749,7 @@
       
       this.element
         .unbind('.isotope')
+        .undelegate( '.' + this.options.hiddenClass, 'click' )
         .removeClass( this.options.containerClass )
         .removeData('isotope');
       
