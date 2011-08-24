@@ -143,12 +143,15 @@ category: demos
         return false;
       });
 
+      var hashChanged = false;
 
       $(window).bind( 'hashchange', function( event ){
         // get options object from hash
         var hashOptions = window.location.hash ? $.deparam.fragment( window.location.hash, true ) : {},
+            // do not animate first call
+            aniEngine = hashChanged ? 'best-available' : 'none',
             // apply defaults where no option was specified
-            options = $.extend( {}, defaultOptions, hashOptions );
+            options = $.extend( {}, defaultOptions, hashOptions, { animationEngine: aniEngine } );
         // apply options from hash
         $container.isotope( options );
         // save options
@@ -172,6 +175,7 @@ category: demos
         }
     
         isOptionLinkClicked = false;
+        hashChanged = true;
       })
         // trigger hashchange to capture any hash data on init
         .trigger('hashchange');
