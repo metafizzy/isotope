@@ -66,13 +66,15 @@ If you’re using a PHP-based CMS, you can use the [getimagesize](http://php.net
 
 ### imagesLoaded plugin
 
-The next best solution is to use the imagesLoaded plugin included with Isotope. It's a fork of [Paul Irish's plugin](https://gist.github.com/268257) that finds all the images in a context, and fires  a callback function once all the images have loaded.
+The next best solution is to use the [imagesLoaded plugin](https://github.com/desandro/imagesloaded) included with Isotope. It's a small plugin that finds all the images in a context, and fires a callback function once all the images have loaded.
 
 {% highlight javascript %}
 
-$('#container').imagesLoaded( function(){
-  $(this).isotope({
-    itemSelector : '.item',
+var $container = $('#container');
+
+$container.imagesLoaded( function(){
+  $container.isotope({
+    // options...
   });
 });
 
