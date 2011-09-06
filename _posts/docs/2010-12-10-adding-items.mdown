@@ -8,6 +8,7 @@ toc:
   - { title: insert method, anchor: insert_method }
   - { title: appended method, anchor: appended_method }
   - { title: Prepending, anchor: prepending }
+  - { title: Recommended CSS, anchor: recommended_css }
 
 ---
 
@@ -54,5 +55,23 @@ Because of Isotope's sorting functionality, prepending isn't as straight forward
 var $newItems = $('<div class="item" /><div class="item" /><div class="item" />');
 $('#container').prepend( $newItems)
   .isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' });
+
+{% endhighlight %}
+
+## Recommended CSS
+
+You'll need these styles in your CSS for the reveal animation when adding items.
+
+{% highlight css %}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+          transition-duration: 0s;
+}
 
 {% endhighlight %}
