@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110901
+ * Isotope v1.4.110906
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -358,6 +358,7 @@
       // sorting
       var originalOrderSorter = {
         'original-order' : function( $elem, instance ) {
+          instance.elemCount ++;
           return instance.elemCount;
         },
         random : function() {
@@ -513,13 +514,15 @@
         sortData = {};
         // get value for sort data based on fn( $elem ) passed in
         for ( var key in getSortData ) {
-          sortData[ key ] = getSortData[ key ]( $this, instance );
+          if ( !isIncrementingElemCount && key === 'original-order' ) {
+            // keep original order original
+            sortData[ key ] = $.data( this, 'isotope-sort-data' )[ key ];
+          } else {
+            sortData[ key ] = getSortData[ key ]( $this, instance );
+          }
         }
         // apply sort data to element
         $.data( this, 'isotope-sort-data', sortData );
-        if ( isIncrementingElemCount ) {
-          instance.elemCount ++;
-        }
       });
     },
     
@@ -638,7 +641,6 @@
     addItems : function( $content, callback ) {
       var $newAtoms = this._getAtoms( $content );
       // add new atoms to atoms pools
-      // FIXME : this breaks shuffle order and returns to original order
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
 
       if ( callback ) {
