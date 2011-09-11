@@ -10,7 +10,13 @@ toc:
 
 Isotope may be used in non-commercial and personal applications for free.
 
-For commercial applications, you may license Isotope with the purchase of a one-time fee per developer seat (how many of you will be developing with Isotope) . Once purchased, you may use Isotope in all your future commercial applications. [Commercial licenses may be purchased at metafizzy.co](http://metafizzy.co/#isotope-license).
+For commercial applications, you may license Isotope with the purchase of a one-time fee per developer seat (how many of you will be developing with Isotope) .  [Commercial licenses may be purchased at metafizzy.co](http://metafizzy.co/#isotope-license).
+
+In short, with a purchase of a commercial license:
+
++ Once purchased, you may use Isotope in all your future commercial applications.
++ You may use Isotope in your own commercial applications, i.e. WordPress, Tumblr, or other CMS themes or templates.
++ Customers of your products _do not_ need to purchase their own license.
 
 Copyright &copy; 2011 David DeSandro / Metafizzy LLC
 
