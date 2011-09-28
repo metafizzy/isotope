@@ -85,18 +85,21 @@ category: tests
   };
   
   $.Isotope.prototype._masonryGetContainerSize = function() {
-    var itemsTotalWidth = 0;
-    this.$filteredAtoms.each(function(){
-      itemsTotalWidth += $(this).outerWidth(true);
-    });
+    var unusedCols = 0,
+        i = this.masonry.cols;
+    // count unused columns
+    while ( --i ) {
+      if ( this.masonry.colYs[i] !== 0 ) {
+        break;
+      }
+      unusedCols++;
+    }
     
-    var layoutWidth = this.masonry.cols * this.masonry.columnWidth,
-        size = {
+    return {
           height : Math.max.apply( Math, this.masonry.colYs ),
-          width : Math.min(layoutWidth, itemsTotalWidth )
+          // fit container to columns that have been used;
+          width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
         };
-    return size;
-    
   };
 
 
