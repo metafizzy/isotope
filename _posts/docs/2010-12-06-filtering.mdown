@@ -71,9 +71,17 @@ Here we set the filter for each link with a `data-filter` attribute. In our jQue
 
 {% highlight javascript %}
 
+// cache container
+var $container = $('#container');
+// initialize isotope
+$container.isotope({
+  // options...
+});
+
+// filter items when filter link is clicked
 $('#filters a').click(function(){
   var selector = $(this).attr('data-filter');
-  $('#container').isotope({ filter: selector });
+  $container.isotope({ filter: selector });
   return false;
 });
 
