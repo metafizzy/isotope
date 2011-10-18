@@ -47,6 +47,18 @@
       {% endfor %}
     </ul>
     
+    <h2>Custom layout modes</h2>
+    
+    <ul>
+      {% for demo in site.categories['custom-layout-modes'] reversed %}
+        {% if page.title == demo.title and page.category == 'custom-layout-modes' %}
+          <li class="current"><a href="#content">{{ demo.title }}</a></li>
+        {% else %}
+          <li><a href="{{ link_path }}{{ demo.url }}">{{ demo.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    
     <h2><a href="{{ root_path }}tests/index.html">Tests</a></h2>
     
   </nav> <!-- #site-nav -->

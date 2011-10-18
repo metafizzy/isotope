@@ -39,7 +39,7 @@ $.extend( $.Isotope.prototype, {
 
 {% endhighlight %}
 
-[**See Demo: Category Rows**](../demos/category-rows.html)
+[**See Custom layout mode: Category Rows**](../customer-layout-modes/category-rows.html)
 
 All of the [default layout modes](../docs/layout-modes.html) follow this pattern. We'll look at the code behind the _fitRows_ layout mode.
 
