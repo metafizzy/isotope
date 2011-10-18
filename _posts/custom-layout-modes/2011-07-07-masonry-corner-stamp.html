@@ -1,29 +1,35 @@
 ---
-title: masonry gutters
+title: Masonry corner stamp
 layout: default
-category: tests
+category: custom-layout-modes
 ---
 
 <style>
-.element {
-  margin: 5px 0;
-}
-
-#container {
-  padding: 5px 0;
-}
+  .corner-stamp {
+    width: 280px;
+    height: 340px;
+    padding: 10px;
+    margin: 10px;
+    float: right;
+    background: red;
+    color: white;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+  }
 </style>
 
 <section id="copy">
-  <p>Modified masonry layout mode methods for gutterWidth. The items have no padding, so they can be lined-up horizontally adjacent to the container.</p>
-  <p>Set <code>gutterWidth</code> within <code>masonry</code> options.</p>
+  <p>Modified masonry layout mode methods for corner stamp. This is a branch of Masonry. See <a href="http://jsfiddle.net/desandro/M8EYn/embedded/result/">Masonry corner stamp demo</a>.</p>
+  <p>Set <code>cornerStampSelector</code> within <code>masonry</code> options. <code>itemSelector</code> needs to be set as well.</p>
 
 {% highlight javascript %}
 
 $('#container').isotope({
+  itemSelector: '.item',
   masonry: {
-    columnWidth: 110,
-    gutterWidth: 10
+    columnWidth: 120,
+    cornerStampSelector: '.corner-stamp'
   }
 });
 
@@ -49,6 +55,9 @@ $('#container').isotope({
 </section> <!-- #options -->
 
 <div id="container" class="clickable clearfix">
+
+  <div class="corner-stamp">corner stamp here.</div>
+  
   {% for elem_number in site.best_of_order %}
     {% assign element = site.elements[elem_number] %}
     {% include element-partial.html %}
@@ -61,41 +70,29 @@ $('#container').isotope({
 <script src="../js/fake-element.js"></script>
 <script>
 
-  // modified Isotope methods for gutters in masonry
-  $.Isotope.prototype._getMasonryGutterColumns = function() {
-    var gutter = this.options.masonry && this.options.masonry.gutterWidth || 0;
-        containerWidth = this.element.width();
-  
-    this.masonry.columnWidth = this.options.masonry && this.options.masonry.columnWidth ||
-                  // or use the size of the first item
-                  this.$filteredAtoms.outerWidth(true) ||
-                  // if there's no items, use size of container
-                  containerWidth;
-
-    this.masonry.columnWidth += gutter;
-
-    this.masonry.cols = Math.floor( ( containerWidth + gutter ) / this.masonry.columnWidth );
-    this.masonry.cols = Math.max( this.masonry.cols, 1 );
+  $.Isotope.prototype._masonryResizeChanged = function() {
+    return true;
   };
 
   $.Isotope.prototype._masonryReset = function() {
     // layout-specific props
     this.masonry = {};
-    // FIXME shouldn't have to call this again
-    this._getMasonryGutterColumns();
+    this._getSegments();
     var i = this.masonry.cols;
     this.masonry.colYs = [];
     while (i--) {
       this.masonry.colYs.push( 0 );
     }
-  };
-
-  $.Isotope.prototype._masonryResizeChanged = function() {
-    var prevSegments = this.masonry.cols;
-    // update cols/rows
-    this._getMasonryGutterColumns();
-    // return if updated cols/rows is not equal to previous
-    return ( this.masonry.cols !== prevSegments );
+  
+    if ( this.options.masonry.cornerStampSelector ) {
+      var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
+          stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
+          cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
+          cornerStampHeight = $cornerStamp.outerHeight(true);
+      for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
+        this.masonry.colYs[i] = cornerStampHeight;
+      }
+    }
   };
 
 
@@ -108,8 +105,8 @@ $('#container').isotope({
     $container.isotope({
       itemSelector : '.element',
       masonry : {
-        columnWidth : 110,
-        gutterWidth : 10
+        columnWidth : 120,
+        cornerStampSelector: '.corner-stamp'
       },
       getSortData : {
         symbol : function( $elem ) {

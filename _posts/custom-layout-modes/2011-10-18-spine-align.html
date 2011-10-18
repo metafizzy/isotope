@@ -1,39 +1,25 @@
 ---
-title: masonry corner stamp
+title: Spine align
 layout: default
-category: tests
+category: custom-layout-modes
 ---
 
-<style>
-  .corner-stamp {
-    width: 280px;
-    height: 340px;
-    padding: 10px;
-    margin: 10px;
-    float: right;
-    background: red;
-    color: white;
-    -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
-  }
-</style>
-
 <section id="copy">
-  <p>Modified masonry layout mode methods for corner stamp. This is a branch of Masonry. See <a href="http://jsfiddle.net/desandro/M8EYn/embedded/result/">Masonry corner stamp demo</a>.</p>
-  <p>Set <code>cornerStampSelector</code> within <code>masonry</code> options. <code>itemSelector</code> needs to be set as well.</p>
+  <p><a href="../docs/extending-isotope.html">Custom layout mode</a> that aligns items to the center, placing them either left or right of the spine. <code>gutterWidth</code> option available.</p>
 
 {% highlight javascript %}
 
-$('#container').isotope({
-  itemSelector: '.item',
-  masonry: {
-    columnWidth: 120,
-    cornerStampSelector: '.corner-stamp'
-  }
+$container.isotope({
+  layoutMode: 'spineAlign',
+  spineAlign: {
+    gutterWidth: 20
+  },
+  // options...
 });
 
 {% endhighlight %}
+
+  <p>To use this layout mode, grab the <code>$.Isotope.prototype</code> methods from the script at the bottom of this page's source.</p>
 
 </section>
 
@@ -54,10 +40,7 @@ $('#container').isotope({
 
 </section> <!-- #options -->
 
-<div id="container" class="clickable clearfix">
-
-  <div class="corner-stamp">corner stamp here.</div>
-  
+<div id="container" class="clickable variable-sizes clearfix">
   {% for elem_number in site.best_of_order %}
     {% assign element = site.elements[elem_number] %}
     {% include element-partial.html %}
@@ -70,29 +53,40 @@ $('#container').isotope({
 <script src="../js/fake-element.js"></script>
 <script>
 
-  $.Isotope.prototype._masonryResizeChanged = function() {
-    return true;
+  // custom layout mode spineAlign
+  $.Isotope.prototype._spineAlignReset = function() {
+    this.spineAlign = {
+      colA: 0,
+      colB: 0
+    };
   };
 
-  $.Isotope.prototype._masonryReset = function() {
-    // layout-specific props
-    this.masonry = {};
-    this._getSegments();
-    var i = this.masonry.cols;
-    this.masonry.colYs = [];
-    while (i--) {
-      this.masonry.colYs.push( 0 );
-    }
-  
-    if ( this.options.masonry.cornerStampSelector ) {
-      var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
-          stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
-          cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
-          cornerStampHeight = $cornerStamp.outerHeight(true);
-      for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
-        this.masonry.colYs[i] = cornerStampHeight;
-      }
-    }
+  $.Isotope.prototype._spineAlignLayout = function( $elems ) {
+    var instance = this,
+        props = this.spineAlign,
+        gutterWidth = Math.round( this.options.spineAlign && this.options.spineAlign.gutterWidth ) || 0,
+        centerX = Math.round(this.element.width() / 2);
+
+    $elems.each(function(){
+      var $this = $(this),
+          isColA = props.colB > props.colA,
+          x = isColA ?
+            centerX - ( $this.outerWidth(true) + gutterWidth / 2 ) : // left side
+            centerX + gutterWidth / 2, // right side
+          y = isColA ? props.colA : props.colB;
+      instance._pushPosition( $this, x, y );
+      props[( isColA ? 'colA' : 'colB' )] += $this.outerHeight(true);
+    });
+  };
+
+  $.Isotope.prototype._spineAlignGetContainerSize = function() {
+    var size = {};
+    size.height = this.spineAlign[( this.spineAlign.colB > this.spineAlign.colA ? 'colB' : 'colA' )];
+    return size;
+  };
+
+  $.Isotope.prototype._spineAlignResizeChanged = function() {
+    return true;
   };
 
 
@@ -104,9 +98,9 @@ $('#container').isotope({
     
     $container.isotope({
       itemSelector : '.element',
-      masonry : {
-        columnWidth : 120,
-        cornerStampSelector: '.corner-stamp'
+      layoutMode: 'spineAlign',
+      spineAlign: {
+        gutterWidth: 20
       },
       getSortData : {
         symbol : function( $elem ) {
