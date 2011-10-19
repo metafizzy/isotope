@@ -1,5 +1,5 @@
 /**
- * Isotope v1.4.110906
+ * Isotope v1.5.0 beta
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -45,7 +45,9 @@
     }
   }
 
-  var transformProp = getStyleProperty('transform');
+  var transformProp = getStyleProperty('transform'),
+      transitionProp = getStyleProperty('transitionProperty');
+      
 
   // ========================= miniModernizr ===============================
   // <3<3<3 and thanks to Faruk and Paul for doing the heavy lifting
@@ -92,7 +94,7 @@
     },
 
     csstransitions: function() {
-      return !!getStyleProperty('transitionProperty');
+      return !!transitionProp;
     }
   };
 
@@ -247,8 +249,20 @@
     };
 
   }
+  
+  // ========================= get transition-end event ===============================
+  
+  if ( Modernizr.csstransitions ) {
+    var transitionEndEvent = {
+      WebkitTransitionProperty: 'webkitTransitionEnd',  // webkit
+      MozTransitionProperty: 'transitionend',
+      OTransitionProperty: 'oTransitionEnd',
+      transitionProperty: 'transitionEnd'
+    }[ transitionProp ];
+    var transitionDurProp = getStyleProperty('transitionDuration');
+  }
 
-
+  // ========================= smartresize ===============================
 
   /*
    * smartresize: debounced resize event for jQuery
@@ -295,11 +309,11 @@
 
 
   // our "Widget" object constructor
-  $.Isotope = function( options, element ){
+  $.Isotope = function( options, element, callback ){
     this.element = $( element );
 
     this._create( options );
-    this._init();
+    this._init( callback );
   };
   
   // styles of container element we want to keep track of
@@ -423,7 +437,6 @@
       
       this.$filteredAtoms = this._filter( this.$allAtoms );
       this._sort();
-      
       this.reLayout( callback );
 
     },
@@ -588,17 +601,12 @@
         this.styleQueue.push({ $el: this.element, style: containerStyle });
       }
 
-      this._processStyleQueue();
-
-      // provide $elems as context for the callback
-      if ( callback ) {
-        callback.call( $elems );
-      }
+      this._processStyleQueue( $elems, callback );
       
       this.isLaidOut = true;
     },
     
-    _processStyleQueue : function() {
+    _processStyleQueue : function( $elems, callback ) {
       // are we animating the layout arrangement?
       // use plugin-ish syntax for css or animate
       var styleFn = !this.isLaidOut ? 'css' : (
@@ -606,13 +614,67 @@
           ),
           animOpts = this.options.animationOptions,
           _isInsertingAnimated = this._isInserting && this.isUsingJQueryAnimation,
-          objStyleFn;
-      
+          objStyleFn, processor,
+          triggerCallbackNow, callbackFn;
+
+      // default styleQueue processor, may be overwritten down below
+      processor = function( i, obj ) {
+        obj.$el[ styleFn ]( obj.style, animOpts );
+      };
+
+      if ( this._isInserting || !callback ) {
+        // process styleQueue
+        processor = function( i, obj ) {
+          // only animate if it not being inserted
+          objStyleFn = _isInsertingAnimated && obj.$el.hasClass('no-transition') ? 'css' : styleFn;
+          obj.$el[ objStyleFn ]( obj.style, animOpts );
+        };
+        
+      } else {
+        var isCallbackTriggered = false;
+        callbackFn = function() {
+          // trigger callback only once
+          if ( isCallbackTriggered ) {
+            return;
+          }
+          callback( $elems );
+          isCallbackTriggered = true;
+        };
+        
+        if ( this.isUsingJQueryAnimation ) {
+          // add callback to animation options
+          animOpts.complete = callbackFn;
+        } else if ( Modernizr.csstransitions ) {
+          // detect if first item has transition
+          var i = 0,
+              testElem = this.styleQueue[0].$el;
+          // get first non-empty jQ object
+          // console.log( this.styleQueue )
+          if ( !testElem.length ) {
+            return;
+          }
+          // get transition duration of the first element in that object
+          // yeah, this is inexact
+          var duration = parseFloat( getComputedStyle( testElem[0] )[ transitionDurProp ] );
+          if ( duration > 0 ) {
+            processor = function( i, obj ) {
+              obj.$el[ styleFn ]( obj.style, animOpts )
+                // trigger callback at transition end
+                .one( transitionEndEvent, callbackFn );
+            }
+          } else {
+            // no transition? hit it now, son
+            triggerCallbackNow = true;
+          }
+        }
+      }
+
       // process styleQueue
-      $.each( this.styleQueue, function( i, obj ) {
-        objStyleFn = _isInsertingAnimated && obj.$el.hasClass('no-transition') ? 'css' : styleFn;
-        obj.$el[ objStyleFn ]( obj.style, animOpts );
-      });
+      $.each( this.styleQueue, processor );
+      
+      if ( triggerCallbackNow ) {
+        callbackFn()
+      }
 
       // clear out queue for next time
       this.styleQueue = [];
@@ -695,11 +757,8 @@
         $newAtoms.removeClass('no-transition');
         // reveal newly inserted filtered elements
         instance.styleQueue.push({ $el: $newAtoms, style: instance.options.visibleStyle });
-        instance._processStyleQueue();
-        delete instance._isInserting;
-        if ( callback ) {
-          callback( $newAtoms );
-        }
+        instance._isInserting = false;
+        instance._processStyleQueue( $newAtoms, callback );
       }, 10 );
     },
     
@@ -1246,7 +1305,7 @@
   // A bit from jcarousel 
   //   https://github.com/jsor/jcarousel/blob/master/lib/jquery.jcarousel.js
 
-  $.fn.isotope = function( options ) {
+  $.fn.isotope = function( options, callback ) {
     if ( typeof options === 'string' ) {
       // call method
       var args = Array.prototype.slice.call( arguments, 1 );
@@ -1271,10 +1330,10 @@
         if ( instance ) {
           // apply options & init
           instance.option( options );
-          instance._init();
+          instance._init( callback );
         } else {
           // initialize new instance
-          $.data( this, 'isotope', new $.Isotope( options, this ) );
+          $.data( this, 'isotope', new $.Isotope( options, this, callback ) );
         }
       });
     }
