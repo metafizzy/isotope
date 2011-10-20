@@ -4,6 +4,10 @@
 
 .isotope-item {
   z-index: 2;
+  /* Retain z-index of child elements - http://www.w3.org/TR/css3-3d-transforms/#transform-style */
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .isotope-hidden.isotope-item {
