@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.0
+ * Isotope v1.5.01
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -10,9 +10,11 @@
  */
 
 /*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
-/*global Modernizr: true */
+/*global Modernizr: true, jQuery: true */
 
 (function( window, $, undefined ){
+
+  'use strict';
 
   // helper function
   function capitalize(str) {
@@ -251,15 +253,17 @@
   }
   
   // ========================= get transition-end event ===============================
+  var transitionEndEvent, transitionDurProp;
   
   if ( Modernizr.csstransitions ) {
-    var transitionEndEvent = {
+    transitionEndEvent = {
       WebkitTransitionProperty: 'webkitTransitionEnd',  // webkit
       MozTransitionProperty: 'transitionend',
       OTransitionProperty: 'oTransitionEnd',
       transitionProperty: 'transitionEnd'
     }[ transitionProp ];
-    var transitionDurProp = getStyleProperty('transitionDuration');
+
+    transitionDurProp = getStyleProperty('transitionDuration');
   }
 
   // ========================= smartresize ===============================
@@ -670,7 +674,7 @@
               obj.$el[ styleFn ]( obj.style, animOpts )
                 // trigger callback at transition end
                 .one( transitionEndEvent, callbackFn );
-            }
+            };
             triggerCallbackNow = false;
           }
         }
@@ -680,7 +684,7 @@
       $.each( this.styleQueue, processor );
       
       if ( triggerCallbackNow ) {
-        callbackFn()
+        callbackFn();
       }
 
       // clear out queue for next time
@@ -1012,7 +1016,7 @@
       $elems.each( function(){
         var $this = $(this),
             col = props.index % props.cols,
-            row = ~~( props.index / props.cols ),
+            row = Math.floor( props.index / props.cols ),
             x = ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2,
             y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
@@ -1197,7 +1201,7 @@
           props = this.cellsByColumn;
       $elems.each( function(){
         var $this = $(this),
-            col = ~~( props.index / props.rows ),
+            col = Math.floor( props.index / props.rows ),
             row = props.index % props.rows,
             x = ( col + 0.5 )  * props.columnWidth - $this.outerWidth(true) / 2,
             y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
@@ -1271,8 +1275,8 @@
       callback.call( $this, $images );
     }
 
-    function imgLoaded() {
-      if ( --len <= 0 && this.src !== blank ){
+    function imgLoaded( event ) {
+      if ( --len <= 0 && event.target.src !== blank ){
         setTimeout( triggerCallback );
         $images.unbind( 'load error', imgLoaded );
       }
@@ -1300,8 +1304,8 @@
   // helper function for logging errors
   // $.error breaks jQuery chaining
   var logError = function( message ) {
-    if ( this.console ) {
-      console.error( message );
+    if ( window.console ) {
+      window.console.error( message );
     }
   };
 
