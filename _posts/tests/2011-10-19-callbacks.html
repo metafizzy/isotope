@@ -141,21 +141,21 @@ category: tests
     // change size of clicked element
     $container.delegate( '.element', 'click', function(){
       $(this).toggleClass('large');
-      $container.isotope('reLayout');
+      $container.isotope( 'reLayout', changeBGColor );
     });
 
     // toggle variable sizes of all elements
     $('#toggle-sizes').find('a').click(function(){
       $container
         .toggleClass('variable-sizes')
-        .isotope('reLayout');
+        .isotope( 'reLayout', changeBGColor );
       return false;
     });
 
 
     var $sortBy = $('#sort-by');
     $('#shuffle a').click(function(){
-      $container.isotope('shuffle');
+      $container.isotope( 'shuffle', changeBGColor );
       $sortBy.find('.selected').removeClass('selected');
       $sortBy.find('[data-option-value="random"]').addClass('selected');
       return false;

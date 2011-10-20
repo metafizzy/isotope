@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.0 beta
+ * Isotope v1.5.0
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -613,7 +613,6 @@
             this.isUsingJQueryAnimation ? 'animate' : 'css'
           ),
           animOpts = this.options.animationOptions,
-          _isInsertingAnimated = this._isInserting && this.isUsingJQueryAnimation,
           objStyleFn, processor,
           triggerCallbackNow, callbackFn;
 
@@ -622,36 +621,46 @@
         obj.$el[ styleFn ]( obj.style, animOpts );
       };
 
-      if ( this._isInserting || !callback ) {
-        // process styleQueue
+      if ( this._isInserting && this.isUsingJQueryAnimation ) {
+        // if using styleQueue to insert items
         processor = function( i, obj ) {
           // only animate if it not being inserted
-          objStyleFn = _isInsertingAnimated && obj.$el.hasClass('no-transition') ? 'css' : styleFn;
+          objStyleFn = obj.$el.hasClass('no-transition') ? 'css' : styleFn;
           obj.$el[ objStyleFn ]( obj.style, animOpts );
         };
         
-      } else {
-        var isCallbackTriggered = false;
+      } else if ( callback ) {
+        // has callback
+        var isCallbackTriggered = false,
+            instance = this;
+        triggerCallbackNow = true;
+        // trigger callback only once
         callbackFn = function() {
-          // trigger callback only once
           if ( isCallbackTriggered ) {
             return;
           }
-          callback( $elems );
+          callback.call( instance.element, $elems );
           isCallbackTriggered = true;
         };
         
-        if ( this.isUsingJQueryAnimation ) {
+        if ( this.isUsingJQueryAnimation && styleFn === 'animate' ) {
           // add callback to animation options
           animOpts.complete = callbackFn;
+          triggerCallbackNow = false;
+
         } else if ( Modernizr.csstransitions ) {
           // detect if first item has transition
           var i = 0,
-              testElem = this.styleQueue[0].$el;
+              testElem = this.styleQueue[0].$el,
+              styleObj;
           // get first non-empty jQ object
-          // console.log( this.styleQueue )
-          if ( !testElem.length ) {
-            return;
+          while ( !testElem.length ) {
+            styleObj = this.styleQueue[ i++ ];
+            // HACK: sometimes styleQueue[i] is undefined
+            if ( !styleObj ) {
+              return;
+            }
+            testElem = styleObj.$el;
           }
           // get transition duration of the first element in that object
           // yeah, this is inexact
@@ -662,9 +671,7 @@
                 // trigger callback at transition end
                 .one( transitionEndEvent, callbackFn );
             }
-          } else {
-            // no transition? hit it now, son
-            triggerCallbackNow = true;
+            triggerCallbackNow = false;
           }
         }
       }
@@ -777,11 +784,11 @@
       
     },
     
-    shuffle : function() {
+    shuffle : function( callback ) {
       this.updateSortData( this.$allAtoms );
       this.options.sortBy = 'random';
       this._sort();
-      this.reLayout();
+      this.reLayout( callback );
     },
     
     // destroys widget, returns elements and container back (close) to original style
