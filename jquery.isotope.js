@@ -17,7 +17,7 @@
   'use strict';
 
   // helper function
-  function capitalize(str) {
+  var capitalize = function( str ) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
@@ -26,7 +26,7 @@
 
   var prefixes = 'Moz Webkit Khtml O Ms'.split(' ');
 
-  function getStyleProperty( propName ) {
+  var getStyleProperty = function( propName ) {
     var style = document.documentElement.style,
         prefixed;
 
