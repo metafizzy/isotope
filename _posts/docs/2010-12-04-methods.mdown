@@ -140,7 +140,7 @@ Removes specified item elements from Isotope widget and the DOM.
 
 {% highlight javascript %}
 
-.isotope( 'shuffle' )
+.isotope( 'shuffle', callback )
 
 {% endhighlight %}
 

@@ -67,6 +67,20 @@ $('#container').isotope({
 
 There are a number of [options](options.html) you can specify.  Within the options is where you can [set the layout mode](layout-modes.html), [filter items](filtering.html),  and [sort items](sorting.html).
 
+Additionally you can specify a callback after the options object. This function will be triggered after the animation has completed.
+
+{% highlight javascript %}
+
+$('#container').isotope({ filter: '.my-selector' }, function( $items ) {
+  var id = this.attr('id'),
+      len = $items.length;
+  console.log( 'Isotope has filtered for ' + len + ' items in #' + id );
+});
+
+{% endhighlight %}
+
+Within this callback <code><span class="k">this</span></code> refers to the container, and `$items` refers to the item elements. Both of these are jQuery objects and do _not_ need to be put in jQuery wrappers.
+
 ### CSS
 
 Add these styles to your CSS for [filtering](filtering.html), [animation](animating.html) with CSS transitions, and [adding items](adding-items.html).

@@ -1,0 +1,165 @@
+---
+title: Callbacks
+layout: default
+category: tests
+---
+
+<section id="copy">
+  <p>Tests that callbacks are triggering properly, after animation/transition has completed.</p>
+
+</section>
+
+<section id="options" class="clearfix">
+
+  {% include filter-buttons.html %}
+
+  {% include sort-buttons.html %}
+
+  <h3>Etc</h3>
+
+  <ul id="etc" class="clearfix">
+    <li id="toggle-sizes"><a href="#toggle-sizes">Toggle variable sizes</a></li>
+    <li id="insert"><a href="#insert">Insert new elements</a></li>
+    <li id="append"><a href='#append'>Append new elements</a></li>
+    <li id="shuffle"><a href='#shuffle'>Shuffle</a></li>
+  </ul>
+
+</section> <!-- #options -->
+
+<div id="container" class="clickable variable-sizes clearfix">
+  {% for elem_number in site.best_of_order %}
+    {% assign element = site.elements[elem_number] %}
+    {% include element-partial.html %}
+  {% endfor %}
+</div> <!-- #container -->
+
+
+<script src="../{{ site.jquery_js }}"></script>
+<script src="../{{ site.isotope_js }}"></script>
+<script src="../js/fake-element.js"></script>
+<script>
+
+  $(function(){
+    
+    var $container = $('#container');
+    
+    {% include random-sizes.js %}
+    
+    var colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'white'],
+        colorI = 0;
+
+    function changeBGColor() {
+      var color = colors[ colorI % colors.length ];
+      $container.css({ background: color })
+      colorI++;
+    }
+    
+    $container.isotope({
+      itemSelector : '.element',
+      masonry : {
+        columnWidth : 120
+      },
+      masonryHorizontal : {
+        rowHeight: 120
+      },
+      cellsByRow : {
+        columnWidth : 240,
+        rowHeight : 240
+      },
+      cellsByColumn : {
+        columnWidth : 240,
+        rowHeight : 240
+      },
+      getSortData : {
+        symbol : function( $elem ) {
+          return $elem.attr('data-symbol');
+        },
+        category : function( $elem ) {
+          return $elem.attr('data-category');
+        },
+        number : function( $elem ) {
+          return parseInt( $elem.find('.number').text(), 10 );
+        },
+        weight : function( $elem ) {
+          return parseFloat( $elem.find('.weight').text().replace( /[\(\)]/g, '') );
+        },
+        name : function ( $elem ) {
+          return $elem.find('.name').text();
+        }
+      }
+    }, changeBGColor );
+      
+
+    var $optionSets = $('#options .option-set'),
+        $optionLinks = $optionSets.find('a');
+    
+    $optionLinks.click(function(){
+      var $this = $(this);
+      // don't proceed if already selected
+      if ( $this.hasClass('selected') ) {
+        return false;
+      }
+      var $optionSet = $this.parents('.option-set');
+      $optionSet.find('.selected').removeClass('selected');
+      $this.addClass('selected');
+
+      // make option object dynamically, i.e. { filter: '.my-filter-class' }
+      var options = {},
+          key = $optionSet.attr('data-option-key'),
+          value = $this.attr('data-option-value');
+      // parse 'false' as false boolean
+      value = value === 'false' ? false : value;
+      options[ key ] = value;
+      if ( key === 'layoutMode' && typeof changeLayoutMode === 'function' ) {
+        // changes in layout modes need extra logic
+        changeLayoutMode( $this, options )
+      } else {
+        // otherwise, apply new options
+        $container.isotope( options, changeBGColor );
+      }
+      
+      return false;
+    });
+
+
+
+    $('#insert a').click(function(){
+      var $newEls = $( fakeElement.getGroup() );
+      $container.isotope( 'insert', $newEls, changeBGColor );
+
+      return false;
+    });
+
+    $('#append a').click(function(){
+      var $newEls = $( fakeElement.getGroup() );
+      $container.append( $newEls ).isotope( 'appended', $newEls, changeBGColor );
+
+      return false;
+    });
+
+
+    // change size of clicked element
+    $container.delegate( '.element', 'click', function(){
+      $(this).toggleClass('large');
+      $container.isotope( 'reLayout', changeBGColor );
+    });
+
+    // toggle variable sizes of all elements
+    $('#toggle-sizes').find('a').click(function(){
+      $container
+        .toggleClass('variable-sizes')
+        .isotope( 'reLayout', changeBGColor );
+      return false;
+    });
+
+
+    var $sortBy = $('#sort-by');
+    $('#shuffle a').click(function(){
+      $container.isotope( 'shuffle', changeBGColor );
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
+      return false;
+    });
+    
+  });
+</script>

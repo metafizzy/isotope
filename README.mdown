@@ -36,6 +36,9 @@ Changelog
 
 View the [commit history](https://github.com/desandro/isotope/commits/master/jquery.isotope.js) for a complete robust list of changes to the script.
 
++ **v1.5**
+  [2011-10-19](https://github.com/desandro/isotope/commit/2c789ecb5ec#jquery.isotope.js)
+  - add proper callback support that trigger after animation/transition
 + **v1.4** [2011-06-29](https://github.com/desandro/isotope/commit/8e2f51612eaf20e3031b81b8c5ff5e322cbb7b4f#jquery.isotope.js)
   - shuffle method added
   - inserting and appending positions items then reveals them
