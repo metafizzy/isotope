@@ -77,6 +77,11 @@ category: demos
             sortAscending: true,
             layoutMode: 'masonry'
           };
+
+      // ensure no transforms used in Opera
+      if ( $.browser.opera ) {
+        defaultOptions.transformsEnabled = false;
+      }
       
       {% include random-sizes.js %}
   
@@ -149,7 +154,7 @@ category: demos
         // get options object from hash
         var hashOptions = window.location.hash ? $.deparam.fragment( window.location.hash, true ) : {},
             // do not animate first call
-            aniEngine = hashChanged ? 'best-available' : 'none',
+            aniEngine = hashChanged ? ( $.browser.opera ? 'jquery' : 'best-available' ) : 'none',
             // apply defaults where no option was specified
             options = $.extend( {}, defaultOptions, hashOptions, { animationEngine: aniEngine } );
         // apply options from hash
