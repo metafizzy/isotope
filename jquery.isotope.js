@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.02
+ * Isotope v1.5.03
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -1017,8 +1017,8 @@
         var $this = $(this),
             col = props.index % props.cols,
             row = Math.floor( props.index / props.cols ),
-            x = ( col + 0.5 ) * props.columnWidth - Math.round( $this.outerWidth(true) / 2 ),
-            y = ( row + 0.5 ) * props.rowHeight - Math.round( $this.outerHeight(true) / 2 );
+            x = Math.round( ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2 ),
+            y = Math.round( ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2 );
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1203,8 +1203,8 @@
         var $this = $(this),
             col = Math.floor( props.index / props.rows ),
             row = props.index % props.rows,
-            x = ( col + 0.5 ) * props.columnWidth - Math.round( $this.outerWidth(true) / 2 ),
-            y = ( row + 0.5 ) * props.rowHeight - Math.round( $this.outerHeight(true) / 2 );
+            x = Math.round( ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2 ),
+            y = Math.round( ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2 );
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
