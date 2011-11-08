@@ -14,6 +14,7 @@ toc:
   - { title: straightAcross, anchor: straightacross }
   - { title: straightDown, anchor: straightdown }
   - { title: Horizontal layouts, anchor: horizontal_layouts }
+  - { title: Modified layout modes, anchor: modified_layout_modes }
 
 ---
 
@@ -172,5 +173,23 @@ Horizontal layout modes (masonryHorizontal, fitColumns, cellsByColumn, and strai
   height: 80%;
   height: 480px;
 }
+
+{% endhighlight %}
+
+## Modified layout modes
+
+[Isotope's methods can be extended and overwritten](extending-isotope.html) to shim-in additional functionality. See these modified layout modes:
+
++ [**Centered masonry**](../custom-layout-modes/centered-masonry.html)
++ [**Masonry corner stamp**](../custom-layout-modes/masonry-corner-stamp.html)
++ [**Masonry gutters**](../custom-layout-modes/masonry-gutters.html)
+
+To use these mods, copy the revised methods found in the demos' page source. They look like:
+
+{% highlight javascript %}
+
+$.Isotope.prototype._masonryReset = function() {
+  // modified code..
+};
 
 {% endhighlight %}
