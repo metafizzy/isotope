@@ -39,7 +39,8 @@ $.extend( $.Isotope.prototype, {
 
 {% endhighlight %}
 
-[**See Custom layout mode: Category Rows**](../customer-layout-modes/category-rows.html)
+[**See Custom layout mode: Category Rows**](../custom-layout-modes/category-rows.html)
+[**See Custom layout mode: Spine align**](../custom-layout-modes/spine-align.html)
 
 All of the [default layout modes](../docs/layout-modes.html) follow this pattern. We'll look at the code behind the _fitRows_ layout mode.
 
@@ -170,3 +171,4 @@ _masonryResizeChanged : function() {
 },
 
 {% endhighlight %}
+
