@@ -5,6 +5,7 @@ category: docs
 layout: default
 body_class: option-def
 toc:
+  - { title: Horizontal layouts, anchor: horizontal_layouts }
   - { title: cellsByColumn, anchor: cellsbycolumn }
   - { title: cellsByRow, anchor: cellsbyrow }
   - { title: fitColumns, anchor: fitcolumns }
@@ -13,7 +14,6 @@ toc:
   - { title: masonryHorizontal, anchor: masonryhorizontal }
   - { title: straightAcross, anchor: straightacross }
   - { title: straightDown, anchor: straightdown }
-  - { title: Horizontal layouts, anchor: horizontal_layouts }
   - { title: Modified layout modes, anchor: modified_layout_modes }
 
 ---
@@ -32,9 +32,23 @@ $('#container').isotope({ layoutMode : 'fitRows' });
 
 Several layout modes are built into Isotope.
 
+### Horizontal layouts
+
+Horizontal layout modes (masonryHorizontal, fitColumns, cellsByColumn, and straightAcross) need a container that has a height value. Be sure that your CSS has height set.
+
+{% highlight css %}
+
+#container {
+  /* either of these will work for horizontal Isotope layouts */
+  height: 80%;
+  height: 480px;
+}
+
+{% endhighlight %}
+
 ## cellsByColumn
 
-A grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
+A **horizontal** grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`. The horizontal equivalent of cellsByRow.
 
 ### Options {#cellsByColumn-options}
 
@@ -52,10 +66,10 @@ A grid layout where items are centered inside each cell. The grid is defined by 
 {% highlight javascript %}
 
 $('#container').isotope({
-  layoutMode : 'cellsByColumn',
-  cellsByRow : {
-    columnWidth : 240,
-    rowHeight : 360
+  layoutMode: 'cellsByColumn',
+  cellsByRow: {
+    columnWidth: 240,
+    rowHeight: 360
   }
 });
 
@@ -64,7 +78,7 @@ $('#container').isotope({
 
 ## cellsByRow
 
-A grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`.
+A **vertical** grid layout where items are centered inside each cell. The grid is defined by two options, `columnWidth` and `rowHeight`.
 
 ### Options {#cellsByRow-options}
 
@@ -82,10 +96,10 @@ A grid layout where items are centered inside each cell. The grid is defined by 
 {% highlight javascript %}
 
 $('#container').isotope({
-  layoutMode : 'cellsByRow',
-  cellsByRow : {
-    columnWidth : 240,
-    rowHeight : 360
+  layoutMode: 'cellsByRow',
+  cellsByRow: {
+    columnWidth: 240,
+    rowHeight: 360
   }
 });
 
@@ -93,15 +107,15 @@ $('#container').isotope({
 
 ## fitColumns
 
-Item elements are arranged into columns. The horizontal equivalent of fitRows. Columns progress from left to right. Items within those columns are arranged top-to-bottom.
+Item elements are arranged into columns. Columns progress **horizontally** from left to right. Items within those columns are arranged top-to-bottom. The horizontal equivalent of fitRows. 
 
 ## fitRows
 
-Item elements are arranged into rows, left to right. Rows progress top to bottom. Similar to what you would expect from a layout that uses `float: left`.
+Item elements are arranged into rows. Rows progress **vertically** top to bottom. Similar to what you would expect from a layout that uses `float: left`.
 
 ## masonry
 
-masonry is the default layout mode for Isotope. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
+Masonry is the default layout mode for Isotope. Item elements are arranged intelligently within a **vertical** grid. For each item element, the script calculates the next best fit for the item within the grid.
 
 ### Options {#masonry-options}
 
@@ -117,21 +131,17 @@ The width of one column in the grid. If no value is set for `columnWidth`, defau
 {% highlight javascript %}
 
 $('#container').isotope({
-  masonry : {
-    columnWidth : 240
+  masonry: {
+    columnWidth: 240
   }
 });
 
 {% endhighlight %}
 
 
-
-
-
-
 ## masonryHorizontal
 
-The horizontal equivalent of masonry layout. Instead of progressing top-to-bottom, masonryHorizontal layout will progress left-to-right. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
+The **horizontal** equivalent of masonry layout. Instead of progressing top-to-bottom, masonryHorizontal layout will progress left-to-right. Item elements are arranged intelligently within a grid. For each item element, the script calculates the next best fit for the item within the grid.
 
 ### Options {#masonryHorizontal-options}
 
@@ -147,8 +157,8 @@ The width of one column in the grid. If no value is set for `rowHeight`, default
 {% highlight javascript %}
 
 $('#container').isotope({
-  masonryHorizontal : {
-    rowHeight : 360
+  masonryHorizontal: {
+    rowHeight: 360
   }
 });
 
@@ -156,25 +166,11 @@ $('#container').isotope({
 
 ## straightAcross
 
-Item elements are arranged horizontally left to right. Useful for simple lists.
+Item elements are arranged **horizontally** left to right. Useful for simple lists.
 
 ## straightDown
 
-Item elements are arranged vertically top to bottom. Useful for simple lists.
-
-## Horizontal layouts
-
-Horizontal layout modes (masonryHorizontal, fitColumns, cellsByColumn, and straightAcross) need a container that has a height value. Be sure that your CSS has height set.
-
-{% highlight css %}
-
-#container {
-  /* either of these will work for horizontal Isotope layouts */
-  height: 80%;
-  height: 480px;
-}
-
-{% endhighlight %}
+Item elements are arranged **vertically** top to bottom. Useful for simple lists.
 
 ## Modified layout modes
 
