@@ -15,6 +15,7 @@ toc:
   - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
   - { title: Flash, anchor: flash }
   - { title: Poor type rendering in WebKit, anchor: poor_type_rendering_in_webkit }
+  - { title: First item breaks Masonry layout, anchor: first_item_breaks_masonry_layout }
   - { title: Right-to-left layouts, anchor: righttoleft_layouts }
   - { title: Preventing clicks on filtered items, anchor: unclickable-filtered }
 
@@ -168,6 +169,20 @@ $('#container').isotope({
 ## Poor type rendering in WebKit
 
 Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. The solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).
+
+## First item breaks Masonry layout
+
+With [Masonry layout mode](layout-modes.html#masonry) If you run into an issue where you re-size the first item, and all the rest of the items no longer fit together in the grid, you most likely need to set [`columnWidth` option](layout-modes.html#masonry-options). Without `columnWidth` set, the Masonry layout mode will use the width of the first item for the size of its columns.
+
+{% highlight javascript %}
+
+$('#container').isotope(
+  masonry: {
+    columnWidth: 220
+  }
+});
+
+{% endhighlight %}
 
 ## Right-to-left layouts
 
