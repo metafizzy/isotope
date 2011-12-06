@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.03
+ * Isotope v1.5.04
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -329,13 +329,9 @@
     containerClass : 'isotope',
     itemClass : 'isotope-item',
     hiddenClass : 'isotope-hidden',
-    hiddenStyle : Modernizr.csstransforms && !$.browser.opera ? 
-      { opacity : 0, scale : 0.001 } : // browsers support CSS transforms, not Opera
-      { opacity : 0 }, // other browsers, including Opera
-    visibleStyle : Modernizr.csstransforms && !$.browser.opera ? 
-      { opacity : 1, scale : 1 } : // browsers support CSS transforms, not Opera
-      { opacity : 1 },  // other browsers, including Opera
-    animationEngine : $.browser.opera ? 'jquery' : 'best-available',
+    hiddenStyle: { opacity: 0, scale: 0.001 },
+    visibleStyle: { opacity: 1, scale: 1 },
+    animationEngine: 'best-available',
     animationOptions: {
       queue: false,
       duration: 800
@@ -343,7 +339,7 @@
     sortBy : 'original-order',
     sortAscending : true,
     resizesContainer : true,
-    transformsEnabled : true,
+    transformsEnabled: !$.browser.opera, // disable transforms in Opera
     itemPositionDataEnabled: false
   };
 
@@ -488,9 +484,16 @@
     },
     
     _updateUsingTransforms : function() {
-      this.usingTransforms = this.options.transformsEnabled && Modernizr.csstransforms && Modernizr.csstransitions && !this.isUsingJQueryAnimation;
+      var usingTransforms = this.usingTransforms = this.options.transformsEnabled && 
+        Modernizr.csstransforms && Modernizr.csstransitions && !this.isUsingJQueryAnimation;
 
-      this.getPositionStyles = this.usingTransforms ? this._translate : this._positionAbs;
+      // prevent scales when transforms are disabled
+      if ( !usingTransforms ) {
+        delete this.options.hiddenStyle.scale;
+        delete this.options.visibleStyle.scale;
+      }
+
+      this.getPositionStyles = usingTransforms ? this._translate : this._positionAbs;
     },
 
     

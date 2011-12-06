@@ -262,10 +262,12 @@ The property name of the method within the `getSortData` option to sort item ele
 <dl class="clearfix">
   <dt><code>transformsEnabled</code></dt>
   <dd class="option-type">Boolean</dd>
-  <dd class="default"><code><span class="kc">true</span></code></dd>
+  <dd class="default"><code>!$.browser.opera</code></dd>
 </dl>
 
 Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with Flash content](help.html#flash).
+
+Default value is set to <code><span class="kc">false</span></code> for Opera. See [Help: CSS transforms in Opera](help.html#css_transforms_in_opera).
 
 ### Additional CSS {#transformsEnabled-css}
 
@@ -276,22 +278,9 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
 .isotope .isotope-item {
   -webkit-transition-property: top, left, opacity;
      -moz-transition-property: top, left, opacity;
+       -o-transition-property: top, left, opacity;
           transition-property: top, left, opacity;
 }
-
-{% endhighlight %}
-
-### Disabling hidden and visible scale styles
-
-If you are using filtering, it's also a good idea to disable the scale transform with the [`hiddenStyle` option](#hiddenstyle) and [`visibleStyle` option](#visiblestyle).
-
-{% highlight javascript %}
-
-$('#container').isotope({
-  transformsEnabled: false,
-  visibleStyle: { opacity: 1 },
-  hiddenStyle: { opacity: 0 }
-});
 
 {% endhighlight %}
 
