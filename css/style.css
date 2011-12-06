@@ -754,6 +754,64 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   font-size: 20px;
 }
 
+/**** BIG Graph ****/
+
+.big-graph {
+  background: white;
+  height: 600px;
+  margin: 20px auto;
+}
+
+.big-graph .project {
+  width: 45px;
+  height: 45px;
+  float: left;
+}
+
+.big-graph .project .icon {
+  pointer-events: none;
+  width: 31px;
+  height: 31px;
+  background: white;
+  margin-left: 7px;
+  -webkit-transition: -webkit-transform 0.25s;
+     -moz-transition: -moz-transform    0.25s;
+      -ms-transition: -ms-transform     0.25s;
+       -o-transition: -o-transform      0.25s;
+          transition: transform         0.25s;
+}
+
+.big-graph .project:hover {
+  z-index: 5;
+  
+}
+
+.big-graph .project:hover .icon {
+  -webkit-transform: scale(3);
+     -moz-transform: scale(3);
+      -ms-transform: scale(3);
+       -o-transform: scale(3);
+          transform: scale(3);
+}
+
+.big-graph .project.commercial .icon { background: #6B6B6B; }
+.big-graph .project.urbanism .icon { background: #00CF00; }
+.big-graph .project.public-space .icon { background: #FF8D00; }
+.big-graph .project.culture .icon { background: #D61919; }
+.big-graph .project.body-culture .icon { background: #00ECFF; }
+.big-graph .project.health .icon { background: #FF2251; }
+.big-graph .project.education .icon { background: #00A700; }
+.big-graph .project.housing .icon { background: #FF02FF; }
+.big-graph .project.hotel .icon { background: #0000C3; }
+.big-graph .project.media .icon { background: #292929; }
+
+.big-graph .project p {
+  line-height: 14px;
+  font-size: 10.5px;
+  color: black;
+  margin-left: 7px;
+}
+
 /**** Infinite Scroll ****/
 
 #infscr-loading {

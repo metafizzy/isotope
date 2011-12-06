@@ -1,0 +1,196 @@
+---
+title: BIG Graph
+layout: default
+category: custom-layout-modes
+---
+
+<section id="copy">
+  <p><a href="../docs/extending-isotope.html">Custom layout mode</a> to replicate the Flash interface of <a href="http://big.dk">big.dk</a>. Similiar to <a href="category-rows.html">Category rows</a>, item elements are grouped by their sorting data into columns.</p>
+
+{% highlight javascript %}
+
+$container.isotope({
+  layoutMode: 'bigGraph',
+  bigGraph: {
+    columnWidth: 45, // size of item
+    rowHeight: 45, // size of item
+    maxRows: 11, // max number of items vertically
+    gutterWidth: { // width of gutter, needs to match getSortData names
+      year: 0,
+      scale: 60,
+      program: 40,
+      status: 60,
+      title: 0
+    }
+  },
+  // options...
+});
+
+{% endhighlight %}
+
+  <p>To use this layout mode, grab the <code>$.Isotope.prototype</code> methods from the script at the bottom of this page's source.</p>
+
+</section>
+
+<section id="options" class="clearfix">
+
+    <h3>Sort</h3>
+
+    <ul id="sort-by" class="option-set clearfix" data-option-key="sortBy">
+      <li><a href="#sortBy=year" data-option-value="year" class="selected" data>Chronological</a></li>
+      <li><a href="#sortBy=title" data-option-value="title">Alphabetical</a></li>
+      <li><a href="#sortBy=program" data-option-value="program">Programmatic</a></li>
+      <li><a href="#sortBy=scale" data-option-value="scale">Scale</a></li>
+      <li><a href="#sortBy=status"  data-option-value="status">Status</a></li>
+    </ul>
+
+</section> <!-- #options -->
+
+<div id="container" class="big-graph clearfix">
+  
+</div> <!-- #container -->
+
+
+<script src="../{{ site.jquery_js }}"></script>
+<script src="../{{ site.isotope_js }}"></script>
+<script src="../js/make-big-graph-projects.js"></script> 
+<script>
+
+  // categoryRows custom layout mode
+  $.extend( $.Isotope.prototype, {
+
+    _bigGraphReset : function() {
+      this.bigGraph = {
+        x : 0,
+        y : 0,
+        height : 0,
+        column: 0,
+        row: 0,
+        gutter: 0,
+        currentCategory : null
+      };
+    },
+
+    _bigGraphLayout : function( $elems ) {
+      var instance = this,
+          containerWidth = this.element.width(),
+          bigGraphOpts = this.options.bigGraph,
+          sortBy = this.options.sortBy,
+          elemsGroup = {},
+          props = this.bigGraph;
+
+      // group item elements into categories based on their sorting data
+      $elems.each( function() {
+        var category = $.data( this, 'isotope-sort-data' )[ sortBy ];
+        elemsGroup[ category ] = elemsGroup[ category ] || [];
+        elemsGroup[ category ].push( this );
+      });
+  
+      var group, groupName, groupMaxRows, groupLen,
+          gutterWidth = bigGraphOpts.gutterWidth[ sortBy ],
+          x, y;
+      // for each group...
+      for ( groupName in elemsGroup ) {
+        group = elemsGroup[ groupName ];
+        groupLen = group.length;
+        // make groups look nice, by limiting rows, makes for blockier blocks
+        groupMaxRows = groupLen / Math.ceil( groupLen / bigGraphOpts.maxRows );
+
+        $.each( group, function( i, elem ) {
+          x = props.column * bigGraphOpts.columnWidth + props.gutter * gutterWidth;
+          y = (bigGraphOpts.maxRows - props.row - 1) * bigGraphOpts.rowHeight;
+          instance._pushPosition( $(elem), x, y );
+          
+          if ( props.row >= groupMaxRows - 1 ) {
+            // start a new column
+            props.row = 0;
+            props.column++;
+          } else {
+            props.row++;
+          }
+        });
+        // start a new group
+        if ( props.row > 0 ) {
+          props.row = 0;
+          props.column++;
+        }
+        props.gutter++;
+      }
+      props.gutter--;
+      props.width = props.column * bigGraphOpts.columnWidth + props.gutter * gutterWidth;
+    },
+
+    _bigGraphGetContainerSize : function () {
+      bigGraphOpts = this.options.bigGraph;
+      this.bigGraph.column++;
+      return {
+        width: this.bigGraph.width,
+        height: bigGraphOpts.maxRows * bigGraphOpts.rowHeight
+      };
+    },
+
+    _bigGraphResizeChanged : function() {
+      return false;
+    }
+
+  });
+
+
+  $(function(){
+    
+    // -------- dynamically create items ---------------- //
+    
+    var i = 120,
+        projects = [];
+    
+    while (i--) {
+      projects.push( makeBigGraphProject() );
+    }
+
+    var $container = $('#container');
+    
+    $container.append( $( projects.join('') ) );
+    
+    // -------- isotope ---------------- //
+    
+    $container.isotope({
+      itemSelector: '.project',
+      layoutMode: 'bigGraph',
+      bigGraph: {
+        columnWidth: 45, // size of item
+        rowHeight: 45, // size of item
+        maxRows: 11, // max number of items vertically
+        gutterWidth: { // width of gutter, needs to match getSortData names
+          year: 0,
+          scale: 0,
+          program: 35,
+          status: 80,
+          title: 0
+        }
+      },
+      sortBy: 'year',
+      getSortData: {
+        year: function( $elem ) {
+          return $elem.attr('data-year');
+        },
+        scale: function( $elem ) {
+          return $elem.attr('data-scale');
+        },
+        program: function( $elem ) {
+          return $elem.attr('data-program');
+        },
+        status: function( $elem ) {
+          return $elem.attr('data-status');
+        },
+        title: function( $elem ) {
+          var chara = $elem.find('p').text()[0];
+          return isNaN( parseInt( chara ) ) ? chara : '0';
+        }
+      }
+    });
+      
+    {% include option-set-buttons.js %}
+
+    
+  });
+</script>
