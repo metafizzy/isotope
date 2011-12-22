@@ -48,6 +48,7 @@ category: demos
 
       $container.isotope({
         itemSelector : '.element',
+        filter: '*',
         getSortData : {
           symbol : function( $elem ) {
             return $elem.attr('data-symbol');
