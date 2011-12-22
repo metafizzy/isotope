@@ -136,6 +136,8 @@ Re-collects all item elements in their current order in the DOM.  Useful for pre
 
 Removes specified item elements from Isotope widget and the DOM.
 
+[**See Demo: Removing**](../demos/removing.html).
+
 ## shuffle
 
 {% highlight javascript %}
