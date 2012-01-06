@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.05
+ * Isotope v1.5.06
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -322,7 +322,9 @@
   
   // styles of container element we want to keep track of
   var isoContainerStyles = [ 'overflow', 'position', 'width', 'height' ];
-  
+
+  var $window = $(window);
+
   $.Isotope.settings = {
     resizable: true,
     layoutMode : 'masonry',
@@ -398,7 +400,7 @@
       
       // bind resize method
       if ( this.options.resizable ) {
-        $(window).bind( 'smartresize.isotope', function() { 
+        $window.bind( 'smartresize.isotope', function() {
           instance.resize();
         });
       }
@@ -463,19 +465,20 @@
     
     _updateAnimationEngine : function() {
       var animationEngine = this.options.animationEngine.toLowerCase().replace( /[ _\-]/g, '');
+      var isUsingJQueryAnimation;
       // set applyStyleFnName
       switch ( animationEngine ) {
         case 'css' :
         case 'none' :
-          this.isUsingJQueryAnimation = false;
+          isUsingJQueryAnimation = false;
           break;
         case 'jquery' :
-          this.isUsingJQueryAnimation = true;
+          isUsingJQueryAnimation = true;
           break;
         default : // best available
-          this.isUsingJQueryAnimation = !Modernizr.csstransitions;
+          isUsingJQueryAnimation = !Modernizr.csstransitions;
       }
-      
+      this.isUsingJQueryAnimation = isUsingJQueryAnimation;
       this._updateUsingTransforms();
     },
     
@@ -814,16 +817,18 @@
     destroy : function() {
 
       var usingTransforms = this.usingTransforms;
+      var options = this.options;
 
       this.$allAtoms
-        .removeClass( this.options.hiddenClass + ' ' + this.options.itemClass )
+        .removeClass( options.hiddenClass + ' ' + options.itemClass )
         .each(function(){
-          this.style.position = '';
-          this.style.top = '';
-          this.style.left = '';
-          this.style.opacity = '';
+          var style = this.style;
+          style.position = '';
+          style.top = '';
+          style.left = '';
+          style.opacity = '';
           if ( usingTransforms ) {
-            this.style[ transformProp ] = '';
+            style[ transformProp ] = '';
           }
         });
       
@@ -836,11 +841,11 @@
       
       this.element
         .unbind('.isotope')
-        .undelegate( '.' + this.options.hiddenClass, 'click' )
-        .removeClass( this.options.containerClass )
+        .undelegate( '.' + options.hiddenClass, 'click' )
+        .removeClass( options.containerClass )
         .removeData('isotope');
       
-      $(window).unbind('.isotope');
+      $window.unbind('.isotope');
 
     },
     
