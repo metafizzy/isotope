@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.07
+ * Isotope v1.5.08
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -24,7 +24,7 @@
   // ========================= getStyleProperty by kangax ===============================
   // http://perfectionkills.com/feature-testing-css-properties/
 
-  var prefixes = 'Moz Webkit Khtml O Ms'.split(' ');
+  var prefixes = 'Moz Webkit O Ms'.split(' ');
 
   var getStyleProperty = function( propName ) {
     var style = document.documentElement.style,
