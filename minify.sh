@@ -5,10 +5,11 @@
 
 JS=jquery.isotope.js
 JS_MIN=jquery.isotope.min.js
-TMP=$JS_MIN.tmp
 
-uglifyjs $JS > $TMP
-echo ';' >> $TMP
-sed 's/\*\//&§/g; y/§/\n/;' $TMP > $JS_MIN
-rm $TMP
+# minify with UglifyJS
+# then, add newline characters after `*/`, but not last newline character
+uglifyjs $JS \
+  | awk '{ORS=""; gsub(/\*\//,"*/\n"); if (NR!=1) print "\n"; print;}' > $JS_MIN
+# add trailing semicolon
+echo ';' >> $JS_MIN
 echo "Minified" $JS "as" $JS_MIN
