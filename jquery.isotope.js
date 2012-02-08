@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.09
+ * Isotope v1.5.10
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -624,6 +624,7 @@
             this.isUsingJQueryAnimation ? 'animate' : 'css'
           ),
           animOpts = this.options.animationOptions,
+          onLayout = this.options.onLayout,
           objStyleFn, processor,
           triggerCallbackNow, callbackFn;
 
@@ -640,9 +641,11 @@
           obj.$el[ objStyleFn ]( obj.style, animOpts );
         };
         
-      } else if ( callback ) {
+      } else if ( callback || onLayout || animOpts.complete ) {
         // has callback
         var isCallbackTriggered = false,
+            // array of possible callbacks to trigger
+            callbacks = [ callback, onLayout, animOpts.complete ],
             instance = this;
         triggerCallbackNow = true;
         // trigger callback only once
@@ -650,7 +653,13 @@
           if ( isCallbackTriggered ) {
             return;
           }
-          callback.call( instance.element, $elems );
+          var hollaback;
+          for (var i=0, len = callbacks.length; i < len; i++) {
+            hollaback = callbacks[i];
+            if ( typeof hollaback === 'function' ) {
+              hollaback.call( instance.element, $elems );
+            }
+          }
           isCallbackTriggered = true;
         };
         

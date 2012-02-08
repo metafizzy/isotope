@@ -16,6 +16,7 @@ toc:
   - { title: itemPositionDataEnabled, anchor: itempositiondataenabled }
   - { title: itemSelector, anchor: itemselector }
   - { title: layoutMode, anchor: layoutmode }
+  - { title: onLayout, anchor: onlayout }
   - { title: resizable, anchor: resizable }
   - { title: resizesContainer, anchor: resizescontainer }
   - { title: sortAscending, anchor: sortascending }
@@ -209,6 +210,15 @@ Restricts Isotope item elements to selector.
 See also docs on [Layout modes](layout-modes.html).
 
 [**See Demo: Layout modes**](../demos/layout-modes.html)
+
+## onLayout
+
+<dl class="clearfix">
+  <dt><code>onLayout</code></dt>
+  <dd class="option-type">Function</dd>
+</dl>
+
+Similiar to a callback, `onLayout` is a function that will be triggered after every time an Isotope instance runs through its layout logic.
 
 ## resizable
 
