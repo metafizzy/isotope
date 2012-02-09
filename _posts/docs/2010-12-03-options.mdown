@@ -220,6 +220,19 @@ See also docs on [Layout modes](layout-modes.html).
 
 Similiar to a callback, `onLayout` is a function that will be triggered after every time an Isotope instance runs through its layout logic.
 
+{% highlight javascript %}
+
+$('#container').isotope({
+  onLayout: function( $elems ) {
+    // `this` refers to jQuery object of the container element
+    console.log( this.height() );
+    // callback provides jQuery object of laid-out item elements
+    $elems.css({ background: 'blue' });
+  }
+});
+
+{% endhighlight %}
+
 ## resizable
 
 <dl class="clearfix">
