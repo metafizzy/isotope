@@ -130,7 +130,7 @@ Re-collects all item elements in their current order in the DOM.  Useful for pre
 
 {% highlight javascript %}
 
-.isotope( 'remove', $items )
+.isotope( 'remove', $items, callback )
 
 {% endhighlight %}
 
