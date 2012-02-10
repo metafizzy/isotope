@@ -10,11 +10,13 @@
  */
 
 /*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
-/*global Modernizr: true, jQuery: true */
+/*global window: true, jQuery: true */
 
 (function( window, $, undefined ){
 
-  'use strict';
+  // get global vars
+  var document = window.document;
+  var Modernizr = window.Modernizr;
 
   // helper function
   var capitalize = function( str ) {
@@ -100,7 +102,7 @@
     }
   };
 
-  if ( window.Modernizr ) {
+  if ( Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
     for ( var testName in tests) {
       if ( !Modernizr.hasOwnProperty( testName ) ) {
