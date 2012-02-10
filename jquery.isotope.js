@@ -1,20 +1,22 @@
 /**
- * Isotope v1.5.10
+ * Isotope v1.5.11
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
  * Commercial use requires one-time license fee
  * http://metafizzy.co/#licenses
  *
- * Copyright 2011 David DeSandro / Metafizzy
+ * Copyright 2012 David DeSandro / Metafizzy
  */
 
 /*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
-/*global Modernizr: true, jQuery: true */
+/*global window: true, jQuery: true */
 
 (function( window, $, undefined ){
 
-  'use strict';
+  // get global vars
+  var document = window.document;
+  var Modernizr = window.Modernizr;
 
   // helper function
   var capitalize = function( str ) {
@@ -100,9 +102,11 @@
     }
   };
 
-  if ( window.Modernizr ) {
+  var testName;
+
+  if ( Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
-    for ( var testName in tests) {
+    for ( testName in tests) {
       if ( !Modernizr.hasOwnProperty( testName ) ) {
         // if test hasn't been run, use addTest to run it
         Modernizr.addTest( testName, tests[ testName ] );
@@ -110,28 +114,23 @@
     }
   } else {
     // or create new mini Modernizr that just has the 3 tests
-    window.Modernizr = (function(){
+    Modernizr = window.Modernizr = {
+      _version : '1.6ish: miniModernizr for Isotope'
+    };
 
-      var miniModernizr = {
-            _version : '1.6ish: miniModernizr for Isotope'
-          },
-          classes = ' ',
-          result, testName;
+    var classes = ' ';
+    var result;
 
-      // Run through tests
-      for ( testName in tests) {
-        result = tests[ testName ]();
-        miniModernizr[ testName ] = result;
-        classes += ' ' + ( result ?  '' : 'no-' ) + testName;
-      }
+    // Run through tests
+    for ( testName in tests) {
+      result = tests[ testName ]();
+      Modernizr[ testName ] = result;
+      classes += ' ' + ( result ?  '' : 'no-' ) + testName;
+    }
 
-      // Add the new classes to the <html> element.
-      $('html').addClass( classes );
-
-      return miniModernizr;
-    })();
+    // Add the new classes to the <html> element.
+    $('html').addClass( classes );
   }
-
 
 
   // ========================= isoTransform ===============================
@@ -795,7 +794,7 @@
     },
     
     // removes elements from Isotope widget
-    remove: function( $content ) {
+    remove: function( $content, callback ) {
       // remove elements from Isotope instance in callback
       var instance = this;
       var removeContent = function() {
@@ -808,10 +807,13 @@
         this.styleQueue.push({ $el: $content, style: this.options.hiddenStyle });
         this.$filteredAtoms = this.$filteredAtoms.not( $content );
         this._sort();
-        this.reLayout( removeContent );
+        this.reLayout( removeContent, callback );
       } else {
         // remove it now
         removeContent();
+        if ( callback ) {
+          callback.call( this.element );
+        }
       }
 
     },
