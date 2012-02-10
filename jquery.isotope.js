@@ -102,9 +102,11 @@
     }
   };
 
+  var testName;
+
   if ( Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
-    for ( var testName in tests) {
+    for ( testName in tests) {
       if ( !Modernizr.hasOwnProperty( testName ) ) {
         // if test hasn't been run, use addTest to run it
         Modernizr.addTest( testName, tests[ testName ] );
@@ -112,28 +114,23 @@
     }
   } else {
     // or create new mini Modernizr that just has the 3 tests
-    window.Modernizr = (function(){
+    Modernizr = window.Modernizr = {
+      _version : '1.6ish: miniModernizr for Isotope'
+    };
 
-      var miniModernizr = {
-            _version : '1.6ish: miniModernizr for Isotope'
-          },
-          classes = ' ',
-          result, testName;
+    var classes = ' ';
+    var result;
 
-      // Run through tests
-      for ( testName in tests) {
-        result = tests[ testName ]();
-        miniModernizr[ testName ] = result;
-        classes += ' ' + ( result ?  '' : 'no-' ) + testName;
-      }
+    // Run through tests
+    for ( testName in tests) {
+      result = tests[ testName ]();
+      Modernizr[ testName ] = result;
+      classes += ' ' + ( result ?  '' : 'no-' ) + testName;
+    }
 
-      // Add the new classes to the <html> element.
-      $('html').addClass( classes );
-
-      return miniModernizr;
-    })();
+    // Add the new classes to the <html> element.
+    $('html').addClass( classes );
   }
-
 
 
   // ========================= isoTransform ===============================
