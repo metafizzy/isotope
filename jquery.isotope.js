@@ -811,9 +811,9 @@
       } else {
         // remove it now
         removeContent();
-        if ( callback ) {
-          callback.call( this.element );
-        }
+      }
+      if ( callback ) {
+        callback.call( this.element );
       }
 
     },
