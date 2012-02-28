@@ -34,7 +34,7 @@ $('#container').isotope( 'methodName', [optionalParameters] )
 
 {% endhighlight %}
 
-Adds item elements to the pool of item elements of the container, but does sort, filter or layout. See [Adding items](adding-items.html) for more details. The argument within the callback is the group of elements that were added. 
+Adds item elements to the pool of item elements of the container, but does not sort, filter or layout. See [Adding items](adding-items.html) for more details. The argument within the callback is the group of elements that were added. 
 
 [**See Demo: Adding items**](../demos/adding-items.html)
 
