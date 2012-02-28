@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.11
+ * Isotope v1.5.12
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -9,10 +9,12 @@
  * Copyright 2012 David DeSandro / Metafizzy
  */
 
-/*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
-/*global window: true, jQuery: true */
+/*jshint browser: true, curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
+/*global jQuery: false */
 
 (function( window, $, undefined ){
+
+  'use strict';
 
   // get global vars
   var document = window.document;
@@ -1309,8 +1311,9 @@
     }
 
     function imgLoaded( event ) {
-      if ( event.target.src !== blank && $.inArray( this, loaded ) === -1 ){
-        loaded.push(this);
+      var img = event.target;
+      if ( img.src !== blank && $.inArray( img, loaded ) === -1 ){
+        loaded.push( img );
         if ( --len <= 0 ){
           setTimeout( triggerCallback );
           $images.unbind( '.imagesLoaded', imgLoaded );
