@@ -156,7 +156,7 @@ If you do plan on implementing Infinite Scroll with filtering or sorting (which 
 
 ## Poor type rendering in WebKit
 
-Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. The solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).
+Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. A solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).  Another solution is to [disable transforms](#disabling_transforms).
 
 ## First item breaks Masonry layout
 
