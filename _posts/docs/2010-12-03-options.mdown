@@ -301,6 +301,7 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
 .isotope .isotope-item {
   -webkit-transition-property: top, left, opacity;
      -moz-transition-property: top, left, opacity;
+      -ms-transition-property: top, left, opacity;
        -o-transition-property: top, left, opacity;
           transition-property: top, left, opacity;
 }
