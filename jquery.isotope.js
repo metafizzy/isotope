@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.13
+ * Isotope v1.5.14
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -322,7 +322,7 @@
   };
   
   // styles of container element we want to keep track of
-  var isoContainerStyles = [ 'overflow', 'position', 'width', 'height' ];
+  var isoContainerStyles = [ 'width', 'height' ];
 
   var $window = $(window);
 
@@ -334,6 +334,10 @@
     hiddenClass : 'isotope-hidden',
     hiddenStyle: { opacity: 0, scale: 0.001 },
     visibleStyle: { opacity: 1, scale: 1 },
+    containerStyle: {
+      position: 'relative',
+      overflow: 'hidden'
+    },
     animationEngine: 'best-available',
     animationOptions: {
       queue: false,
@@ -359,15 +363,17 @@
       // get original styles in case we re-apply them in .destroy()
       var elemStyle = this.element[0].style;
       this.originalStyle = {};
-      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
-        var prop = isoContainerStyles[i];
+      // keep track of container styles
+      var containerStyles = isoContainerStyles.slice(0);
+      for ( var prop in this.options.containerStyle ) {
+        containerStyles.push( prop );
+      }
+      for ( var i=0, len = containerStyles.length; i < len; i++ ) {
+        prop = containerStyles[i];
         this.originalStyle[ prop ] = elemStyle[ prop ] || '';
       }
-      
-      this.element.css({
-        overflow : 'hidden',
-        position : 'relative'
-      });
+      // apply container style from options
+      this.element.css( this.options.containerStyle );
       
       this._updateAnimationEngine();
       this._updateUsingTransforms();
@@ -848,8 +854,7 @@
       
       // re-apply saved container styles
       var elemStyle = this.element[0].style;
-      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
-        var prop = isoContainerStyles[i];
+      for ( var prop in this.originalStyle ) {
         elemStyle[ prop ] = this.originalStyle[ prop ];
       }
       
