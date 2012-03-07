@@ -8,6 +8,7 @@ toc:
   - { title: animationEngine, anchor: animationengine }
   - { title: animationOptions, anchor: animationoptions }
   - { title: containerClass, anchor: containerclass }
+  - { title: containerStyle, anchor: containerstyle }
   - { title: filter, anchor: filter }
   - { title: getSortData, anchor: getsortdata }
   - { title: hiddenClass, anchor: hiddenclass }
@@ -83,6 +84,16 @@ $('#container').isotope({
 </dl>
 
 The class applied to the container element.
+
+## containerStyle
+
+<dl class="clearfix">
+  <dt><code>containerStyle</code></dt>
+  <dd class="option-type">Object</dd>
+  <dd class="default"><code>{ position: <span class="s1">'relative'</span>, overflow: <span class="s1">'hidden'</span> }</code></dd>
+</dl>
+
+CSS styles applied to the container element. Relative positioning enables absolute positioning on child items. Hidden overflow ensures that filtered items that lie outside the container do not interfer with subsequent content.
 
 ## filter
 
