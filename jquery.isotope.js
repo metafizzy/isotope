@@ -678,10 +678,11 @@
         } else if ( Modernizr.csstransitions ) {
           // detect if first item has transition
           var i = 0,
-              testElem = this.styleQueue[0].$el,
+              firstItem = this.styleQueue[0],
+              testElem = firstItem && firstItem.$el,
               styleObj;
           // get first non-empty jQ object
-          while ( !testElem.length ) {
+          while ( !testElem || !testElem.length ) {
             styleObj = this.styleQueue[ i++ ];
             // HACK: sometimes styleQueue[i] is undefined
             if ( !styleObj ) {
