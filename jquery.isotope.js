@@ -1,20 +1,24 @@
 /**
- * Isotope v1.5.08
+ * Isotope v1.5.14
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
  * Commercial use requires one-time license fee
  * http://metafizzy.co/#licenses
  *
- * Copyright 2011 David DeSandro / Metafizzy
+ * Copyright 2012 David DeSandro / Metafizzy
  */
 
-/*jshint curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, undef: true */
-/*global Modernizr: true, jQuery: true */
+/*jshint asi: true, browser: true, curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
+/*global jQuery: false */
 
 (function( window, $, undefined ){
 
   'use strict';
+
+  // get global vars
+  var document = window.document;
+  var Modernizr = window.Modernizr;
 
   // helper function
   var capitalize = function( str ) {
@@ -100,9 +104,11 @@
     }
   };
 
-  if ( window.Modernizr ) {
+  var testName;
+
+  if ( Modernizr ) {
     // if there's a previous Modernzir, check if there are necessary tests
-    for ( var testName in tests) {
+    for ( testName in tests) {
       if ( !Modernizr.hasOwnProperty( testName ) ) {
         // if test hasn't been run, use addTest to run it
         Modernizr.addTest( testName, tests[ testName ] );
@@ -110,28 +116,23 @@
     }
   } else {
     // or create new mini Modernizr that just has the 3 tests
-    window.Modernizr = (function(){
+    Modernizr = window.Modernizr = {
+      _version : '1.6ish: miniModernizr for Isotope'
+    };
 
-      var miniModernizr = {
-            _version : '1.6ish: miniModernizr for Isotope'
-          },
-          classes = ' ',
-          result, testName;
+    var classes = ' ';
+    var result;
 
-      // Run through tests
-      for ( testName in tests) {
-        result = tests[ testName ]();
-        miniModernizr[ testName ] = result;
-        classes += ' ' + ( result ?  '' : 'no-' ) + testName;
-      }
+    // Run through tests
+    for ( testName in tests) {
+      result = tests[ testName ]();
+      Modernizr[ testName ] = result;
+      classes += ' ' + ( result ?  '' : 'no-' ) + testName;
+    }
 
-      // Add the new classes to the <html> element.
-      $('html').addClass( classes );
-
-      return miniModernizr;
-    })();
+    // Add the new classes to the <html> element.
+    $('html').addClass( classes );
   }
-
 
 
   // ========================= isoTransform ===============================
@@ -321,7 +322,7 @@
   };
   
   // styles of container element we want to keep track of
-  var isoContainerStyles = [ 'overflow', 'position', 'width', 'height' ];
+  var isoContainerStyles = [ 'width', 'height' ];
 
   var $window = $(window);
 
@@ -333,6 +334,10 @@
     hiddenClass : 'isotope-hidden',
     hiddenStyle: { opacity: 0, scale: 0.001 },
     visibleStyle: { opacity: 1, scale: 1 },
+    containerStyle: {
+      position: 'relative',
+      overflow: 'hidden'
+    },
     animationEngine: 'best-available',
     animationOptions: {
       queue: false,
@@ -358,15 +363,17 @@
       // get original styles in case we re-apply them in .destroy()
       var elemStyle = this.element[0].style;
       this.originalStyle = {};
-      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
-        var prop = isoContainerStyles[i];
+      // keep track of container styles
+      var containerStyles = isoContainerStyles.slice(0);
+      for ( var prop in this.options.containerStyle ) {
+        containerStyles.push( prop );
+      }
+      for ( var i=0, len = containerStyles.length; i < len; i++ ) {
+        prop = containerStyles[i];
         this.originalStyle[ prop ] = elemStyle[ prop ] || '';
       }
-      
-      this.element.css({
-        overflow : 'hidden',
-        position : 'relative'
-      });
+      // apply container style from options
+      this.element.css( this.options.containerStyle );
       
       this._updateAnimationEngine();
       this._updateUsingTransforms();
@@ -388,9 +395,10 @@
       this.reloadItems();
       
       // get top left position of where the bricks should be
-      var $cursor = $( document.createElement('div') ).prependTo( this.element );
-      this.offset = $cursor.position();
-      $cursor.remove();
+      this.offset = {
+        left: parseInt( this.element.css('padding-left'), 10 ),
+        top: parseInt( this.element.css('padding-top'), 10 )
+      };
 
       // add isotope class first time around
       var instance = this;
@@ -584,8 +592,8 @@
     },
 
     _pushPosition : function( $elem, x, y ) {
-      x += this.offset.left;
-      y += this.offset.top;
+      x = Math.round( x + this.offset.left );
+      y = Math.round( y + this.offset.top );
       var position = this.getPositionStyles( x, y );
       this.styleQueue.push({ $el: $elem, style: position });
       if ( this.options.itemPositionDataEnabled ) {
@@ -623,6 +631,7 @@
             this.isUsingJQueryAnimation ? 'animate' : 'css'
           ),
           animOpts = this.options.animationOptions,
+          onLayout = this.options.onLayout,
           objStyleFn, processor,
           triggerCallbackNow, callbackFn;
 
@@ -639,9 +648,11 @@
           obj.$el[ objStyleFn ]( obj.style, animOpts );
         };
         
-      } else if ( callback ) {
+      } else if ( callback || onLayout || animOpts.complete ) {
         // has callback
         var isCallbackTriggered = false,
+            // array of possible callbacks to trigger
+            callbacks = [ callback, onLayout, animOpts.complete ],
             instance = this;
         triggerCallbackNow = true;
         // trigger callback only once
@@ -649,7 +660,13 @@
           if ( isCallbackTriggered ) {
             return;
           }
-          callback.call( instance.element, $elems );
+          var hollaback;
+          for (var i=0, len = callbacks.length; i < len; i++) {
+            hollaback = callbacks[i];
+            if ( typeof hollaback === 'function' ) {
+              hollaback.call( instance.element, $elems );
+            }
+          }
           isCallbackTriggered = true;
         };
         
@@ -785,7 +802,7 @@
     },
     
     // removes elements from Isotope widget
-    remove: function( $content ) {
+    remove: function( $content, callback ) {
       // remove elements from Isotope instance in callback
       var removeContent = function() {
         $content.remove();
@@ -797,10 +814,13 @@
         this.$allAtoms = this.$allAtoms.not( $content );
         this.$filteredAtoms = this.$filteredAtoms.not( $content );
         this._sort();
-        this.reLayout( removeContent );
+        this.reLayout( removeContent, callback );
       } else {
         // remove it now
         removeContent();
+        if ( callback ) {
+          callback.call( this.element );
+        }
       }
 
     },
@@ -833,8 +853,7 @@
       
       // re-apply saved container styles
       var elemStyle = this.element[0].style;
-      for ( var i=0, len = isoContainerStyles.length; i < len; i++ ) {
-        var prop = isoContainerStyles[i];
+      for ( var prop in this.originalStyle ) {
         elemStyle[ prop ] = this.originalStyle[ prop ];
       }
       
@@ -1036,8 +1055,8 @@
         var $this = $(this),
             col = props.index % props.cols,
             row = Math.floor( props.index / props.cols ),
-            x = Math.round( ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2 ),
-            y = Math.round( ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2 );
+            x = ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2,
+            y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1222,8 +1241,8 @@
         var $this = $(this),
             col = Math.floor( props.index / props.rows ),
             row = props.index % props.rows,
-            x = Math.round( ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2 ),
-            y = Math.round( ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2 );
+            x = ( col + 0.5 ) * props.columnWidth - $this.outerWidth(true) / 2,
+            y = ( row + 0.5 ) * props.rowHeight - $this.outerHeight(true) / 2;
         instance._pushPosition( $this, x, y );
         props.index ++;
       });
@@ -1296,8 +1315,9 @@
     }
 
     function imgLoaded( event ) {
-      if ( event.target.src !== blank && $.inArray( this, loaded ) === -1 ){
-        loaded.push(this);
+      var img = event.target;
+      if ( img.src !== blank && $.inArray( img, loaded ) === -1 ){
+        loaded.push( img );
         if ( --len <= 0 ){
           setTimeout( triggerCallback );
           $images.unbind( '.imagesLoaded', imgLoaded );

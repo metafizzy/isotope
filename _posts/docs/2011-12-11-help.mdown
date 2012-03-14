@@ -9,10 +9,11 @@ toc:
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
   - { title: @font-face fonts, anchor: fontface_fonts }
+  - { title: Problems with CSS transforms, anchor: css-transforms }
+  - { title: Getting item position, anchor: getting_item_position }
   - { title: Accessing the instance, anchor: accessing_the_instance }
   - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
   - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
-  - { title: Flash, anchor: flash }
   - { title: Poor type rendering in WebKit, anchor: poor_type_rendering_in_webkit }
   - { title: First item breaks Masonry layout, anchor: first_item_breaks_masonry_layout }
   - { title: Right-to-left layouts, anchor: righttoleft_layouts }
@@ -95,6 +96,31 @@ Both Typekit and Google WebFont Loader provide font events to control scripts ba
 + [Typekit font events](http://blog.typekit.com/2010/10/18/more-control-with-typekits-font-events/)
 + [Google WebFont Loader: Events](http://code.google.com/apis/webfonts/docs/webfont_loader.html#Events)
 
+## Problems with CSS transforms {: #css-transforms}
+
+As the browser implementations of CSS tranforms are still a work-in-progress, they can cause buggy behavoir with other types of dynamic content.
+
+<div id="flash"></div>
+
++ [Flash content in Safari and Firefox](http://dropshado.ws/post/4085720152/css-transforms-breaking-flash), like YouTube or Vimeo videos, Flash ads, or Flash audio players.
+
+### Disabling transforms
+
+Set [`transformsEnabled`](options.html#transformsenabled) to `false`. This is an easy step to take when troubleshooting.
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  // options...
+  transformsEnabled: false
+});
+
+{% endhighlight %}
+
+## Getting item position
+
+CSS transforms will break previous patterns for getting the position of an item. See the [`itemPositionDataEnabled`](options.html#itempositiondataenabled) option for a stop-gap.
+
 ## Accessing the instance
 
 [Similar to jQuery UI](http://docs.jquery.com/UI_Developer_Guide#Internal_functions_.26_scopes_explained), Isotope stores a instance containing properties, settings and methods with jQuery.data. You can access the instance with the `'isotope'` namespace.
@@ -128,24 +154,9 @@ I recommend against using Infinite Scroll with filtering or sorting. This combin
 
 If you do plan on implementing Infinite Scroll with filtering or sorting (which is a _bad idea_), use the `insert` method instead of `appended`.  
 
-## Flash
-
-[Using CSS transforms with Flash content is a bit buggy in Safari and Firefox](http://dropshado.ws/post/4085720152/css-transforms-breaking-flash). This is problematic when using Isotope on item elements that contain Flash content like YouTube or Vimeo videos, Flash ads, or Flash audio players.
-
-The best way to resolve this issue is to disable CSS transforms by setting the [`transformsEnabled` option](options.html#transformsenabled) to <code><span class="kc">false</span></code> and removing scale from [visibleStyle](options.html#visiblestyle) and [hiddenStyle](options.html#hiddenstyle) options.
-
-{% highlight javascript %}
-
-$('#container').isotope({
-  // options...
-  transformsEnabled: false
-});
-
-{% endhighlight %}
-
 ## Poor type rendering in WebKit
 
-Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. The solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).
+Type rendering may appear poor in WebKit browsers like Chrome and Safari. This is because of Isotope's activation of hardware acceleration. A solution is to add add a matching background to the item elements. See more: [dropshado.ws - Resolving anti-aliasing on WebKit hardware-accelerated elements](http://dropshado.ws/post/6142339613/resolving-anti-aliasing-on-webkit-hardware-accelerated).  Another solution is to [disable transforms](#disabling_transforms).
 
 ## First item breaks Masonry layout
 
@@ -197,6 +208,7 @@ $('#container').isotope({
 .isotope .isotope-item {
   -webkit-transition-property: right, top, -webkit-transform, opacity;
      -moz-transition-property: right, top, -moz-transform, opacity;
+      -ms-transition-property: right, top, -ms-transform, opacity;
        -o-transition-property: right, top, -o-transform, opacity;
           transition-property: right, top, transform, opacity;
 }

@@ -8,6 +8,7 @@ toc:
   - { title: animationEngine, anchor: animationengine }
   - { title: animationOptions, anchor: animationoptions }
   - { title: containerClass, anchor: containerclass }
+  - { title: containerStyle, anchor: containerstyle }
   - { title: filter, anchor: filter }
   - { title: getSortData, anchor: getsortdata }
   - { title: hiddenClass, anchor: hiddenclass }
@@ -16,6 +17,7 @@ toc:
   - { title: itemPositionDataEnabled, anchor: itempositiondataenabled }
   - { title: itemSelector, anchor: itemselector }
   - { title: layoutMode, anchor: layoutmode }
+  - { title: onLayout, anchor: onlayout }
   - { title: resizable, anchor: resizable }
   - { title: resizesContainer, anchor: resizescontainer }
   - { title: sortAscending, anchor: sortascending }
@@ -82,6 +84,16 @@ $('#container').isotope({
 </dl>
 
 The class applied to the container element.
+
+## containerStyle
+
+<dl class="clearfix">
+  <dt><code>containerStyle</code></dt>
+  <dd class="option-type">Object</dd>
+  <dd class="default"><code>{ position: <span class="s1">'relative'</span>, overflow: <span class="s1">'hidden'</span> }</code></dd>
+</dl>
+
+CSS styles applied to the container element. Relative positioning enables absolute positioning on child items. Hidden overflow ensures that filtered items that lie outside the container do not interfer with subsequent content.
 
 ## filter
 
@@ -210,6 +222,28 @@ See also docs on [Layout modes](layout-modes.html).
 
 [**See Demo: Layout modes**](../demos/layout-modes.html)
 
+## onLayout
+
+<dl class="clearfix">
+  <dt><code>onLayout</code></dt>
+  <dd class="option-type">Function</dd>
+</dl>
+
+Similiar to a callback, `onLayout` is a function that will be triggered after every time an Isotope instance runs through its layout logic.
+
+{% highlight javascript %}
+
+$('#container').isotope({
+  onLayout: function( $elems ) {
+    // `this` refers to jQuery object of the container element
+    console.log( this.height() );
+    // callback provides jQuery object of laid-out item elements
+    $elems.css({ background: 'blue' });
+  }
+});
+
+{% endhighlight %}
+
 ## resizable
 
 <dl class="clearfix">
@@ -265,7 +299,7 @@ The property name of the method within the `getSortData` option to sort item ele
   <dd class="default"><code>!$.browser.opera</code></dd>
 </dl>
 
-Isotope uses CSS3 transform to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with Flash content](help.html#flash).
+Isotope uses CSS3 transforms to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with CSS transforms](help.html#css-transforms).
 
 Default value is set to <code><span class="kc">false</span></code> for Opera. See [Help: CSS transforms in Opera](help.html#css_transforms_in_opera).
 
@@ -278,6 +312,7 @@ If you do disable transforms, but still want to use [CSS transitions](animating.
 .isotope .isotope-item {
   -webkit-transition-property: top, left, opacity;
      -moz-transition-property: top, left, opacity;
+      -ms-transition-property: top, left, opacity;
        -o-transition-property: top, left, opacity;
           transition-property: top, left, opacity;
 }

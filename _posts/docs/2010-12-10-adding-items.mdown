@@ -71,6 +71,8 @@ You'll need these styles in your CSS for the reveal animation when adding items.
 .isotope .isotope-item.no-transition {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
           transition-duration: 0s;
 }
 
