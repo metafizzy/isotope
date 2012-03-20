@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.14
+ * Isotope v1.5.15
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -806,9 +806,13 @@
     remove: function( $content, callback ) {
       // remove elements from Isotope instance in callback
       var instance = this;
+      // remove() as a callback, for after transition / animation
       var removeContent = function() {
         instance.$allAtoms = instance.$allAtoms.not( $content );
         $content.remove();
+        if ( callback ) {
+          callback.call( this.element );
+        }
       };
 
       if ( $content.filter( ':not(.' + this.options.hiddenClass + ')' ).length ) {
@@ -816,13 +820,10 @@
         this.styleQueue.push({ $el: $content, style: this.options.hiddenStyle });
         this.$filteredAtoms = this.$filteredAtoms.not( $content );
         this._sort();
-        this.reLayout( removeContent, callback );
+        this.reLayout( removeContent );
       } else {
         // remove it now
         removeContent();
-        if ( callback ) {
-          callback.call( this.element );
-        }
       }
 
     },
