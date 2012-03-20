@@ -23,7 +23,10 @@ category: demos
       <li><a href="#remove" data-option-value=".metalloid">metalloid</a></li>
     </ul>
 
-    
+    <ul id="add-remove">
+      <li><a href="#add-remove">Add / remove</a></li>
+    </ul>
+
   </section> <!-- #options -->
   
   <div id="container" class="variable-sizes clickable clearfix">
@@ -34,27 +37,43 @@ category: demos
   
   <script src="../{{ site.jquery_js }}"></script>
   <script src="../{{ site.isotope_js }}"></script>
+  <script src="../js/fake-element.js"></script>
   <script>
     $(function(){
-      
+
       var $container = $('#container');
 
       $container.isotope({
         itemSelector : '.element'
       });
-      
-      $('#removable a').click(function(){
+
+      $('#removable a').click( function( jQEvent ) {
         var selector = $(this).attr('data-option-value');
         var $removable = $container.find( selector );
         $container.isotope( 'remove', $removable );
+        jQEvent.preventDefault();
       });
-      
+
+      $('#add-remove a').click( function( jQEvent ) {
+        var $newEls = $( fakeElement.getGroup() );
+        var $firstTwoElems = $container.data('isotope')
+          .$filteredAtoms.filter( function( i ) {
+            return i < 2;
+          });
+
+        $container
+          .isotope( 'insert', $newEls )
+          .isotope( 'remove', $firstTwoElems, function() {
+            // console.log('items removed')
+          });
+        jQEvent.preventDefault();
+      });
+
       // remove item if clicked
       $container.delegate( '.element', 'click', function(){
         $container.isotope( 'remove', $(this) );
       });
-      
-      
+
     });
   </script>
   
