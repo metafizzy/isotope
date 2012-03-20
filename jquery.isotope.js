@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.15
+ * Isotope v1.5.16
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
