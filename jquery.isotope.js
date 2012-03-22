@@ -395,9 +395,12 @@
       this.reloadItems();
 
       // get top left position of where the bricks should be
+      var _paddingLeft = this.element.css('padding-left');
+      var _paddingTop = this.element.css('padding-top');
+      
       this.offset = {
-        left: parseInt( this.element.css('padding-left'), 10 ),
-        top: parseInt( this.element.css('padding-top'), 10 )
+        left: parseInt( (_paddingLeft ? _paddingLeft : 0), 10 ),
+        top: parseInt( (_paddingTop ? _paddingTop : 0), 10 )
       };
 
       // add isotope class first time around
