@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.16
+ * Isotope v1.5.17
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -396,8 +396,8 @@
 
       // get top left position of where the bricks should be
       this.offset = {
-        left: parseInt( this.element.css('padding-left'), 10 ),
-        top: parseInt( this.element.css('padding-top'), 10 )
+        left: parseInt( ( this.element.css('padding-left') || 0 ), 10 ),
+        top: parseInt( ( this.element.css('padding-top') || 0 ), 10 )
       };
 
       // add isotope class first time around
