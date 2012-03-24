@@ -54,4 +54,4 @@ View the [commit history](https://github.com/desandro/isotope/commits/master/jqu
 
 * * *
 
-Copyright (c) 2011 David DeSandro / Metafizzy LLC
+Copyright (c) 2011-2012 David DeSandro / Metafizzy LLC
