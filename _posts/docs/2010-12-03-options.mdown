@@ -234,11 +234,13 @@ Similiar to a callback, `onLayout` is a function that will be triggered after ev
 {% highlight javascript %}
 
 $('#container').isotope({
-  onLayout: function( $elems ) {
+  onLayout: function( $elems, instance ) {
     // `this` refers to jQuery object of the container element
     console.log( this.height() );
     // callback provides jQuery object of laid-out item elements
     $elems.css({ background: 'blue' });
+    // instance is the Isotope instance
+    console.log( instance.$filteredAtoms.length );
   }
 });
 

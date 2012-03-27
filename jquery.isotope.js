@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.17
+ * Isotope v1.5.18
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -664,7 +664,7 @@
           for (var i=0, len = callbacks.length; i < len; i++) {
             hollaback = callbacks[i];
             if ( typeof hollaback === 'function' ) {
-              hollaback.call( instance.element, $elems );
+              hollaback.call( instance.element, $elems, instance );
             }
           }
           isCallbackTriggered = true;
