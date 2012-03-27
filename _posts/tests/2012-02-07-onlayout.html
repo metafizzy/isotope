@@ -5,7 +5,7 @@ category: tests
 ---
 
 <section id="copy">
-  <p>Tests that onLayout callback is triggering properly, after animation/transition has completed.</p>
+  <p>Tests that <a href="../docs/options.html#onlayout">onLayout callback</a> is triggering properly, after animation/transition has completed.</p>
 
 </section>
 
@@ -48,10 +48,11 @@ category: tests
     var colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'white'],
         colorI = 0;
 
-    function changeBGColor() {
+    function changeBGColor( $elems, instance ) {
       var color = colors[ colorI % colors.length ];
       $container.css({ background: color })
       colorI++;
+      // console.log( $elems.length, instance.$filteredAtoms.length );
     }
 
     function lmk() {
