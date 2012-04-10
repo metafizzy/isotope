@@ -24,22 +24,16 @@ toc:
 
 ## Reporting bugs and issues
 
-[Report bugs and issues on GitHub](http://github.com/desandro/isotope/issues). 
-
-### Guidelines {: #issues-guidelines}
-
-+ Look over open and closed issues before submitting yours.
-+ Add a link to a live site with the bug. If the project is confidential, try re-creating it in [jsFiddle](http://jsfiddle.net).
-
-The issues tracker is for bugs and issues &mdash; when Isotope doesn't work as expected. It is not for implementation issues &mdash; when you are having trouble setting up Isotope. I am unable to personally help with implementation issues but [don't give up](http://metafizzy.co/blog/frustrated-stuck-tired-defeated/)!
+Please read my [Issues Agreement](https://github.com/desandro/issues-agreement/#readme) and then [report bugs and issues on GitHub](http://github.com/desandro/isotope/issues). 
 
 ## Additional resources
 
 + The [Metafizzy blog](http://metafizzy.co/blog/) has posts that cover specialized use cases
++ [Various Isotope tests on jsFiddle](http://www.delicious.com/desandro/re:isotope+fiddle)
++ [My answers on Stack Overflow](http://stackoverflow.com/users/182183/desandro?tab=answers)
 + [Sites using Isotope on Zootool](http://zootool.com/user/desandro/tag:isotope), has screenshots
 + [Sites using Isotope on Delicious](http://www.delicious.com/desandro/using:isotope)
 + [Miscelleanous Isotope content](http://www.delicious.com/desandro/re:isotope)
-+ [Stack Overflow questions on Isotope](http://www.delicious.com/desandro/re:isotope+stackoverflow)
 
 ## Unloaded media
  
