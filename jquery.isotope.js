@@ -811,7 +811,7 @@
         instance.$allAtoms = instance.$allAtoms.not( $content );
         $content.remove();
         if ( callback ) {
-          callback.call( this.element );
+          callback.call( instance.element );
         }
       };
 
