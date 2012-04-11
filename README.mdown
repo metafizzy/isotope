@@ -7,15 +7,13 @@ This package has all the documentation and demos to get you started.
 
 View this project live at [http://isotope.metafizzy.co](http://isotope.metafizzy.co).
 
-Licensing
----------
+## Licensing
 
 **Commercial use requires purchase of one-time license fee per developer seat.** Commercial use  includes any application that makes you money. This includes portfolio sites and premium templates. Commercial licenses may be purchased at [http://metafizzy.co#licenses](http://metafizzy.co#licenses).
 
 Use in non-commercial and personal applications is free.
 
-Viewing this project locally
-----------------------------
+## Viewing this project locally
 
 ### Via download
 
@@ -25,14 +23,15 @@ You can download a zip of all the flat HTML files from [http://meta.metafizzy.co
 
 The documentation and demo pages are generated using [Jekyll](http://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can clone this repo and run Jekyll from Terminal:
 
-    git clone https://github.com/desandro/isotope.git
-    cd isotope/
-    jekyll --server --auto
+``` bash
+git clone https://github.com/desandro/isotope.git
+cd isotope/
+jekyll --server --auto
+```
 
 Then view the live site at [http://localhost:4000](http://localhost:4000).
 
-Changelog
----------
+## Changelog
 
 View the [commit history](https://github.com/desandro/isotope/commits/master/jquery.isotope.js) for a complete robust list of changes to the script.
 
