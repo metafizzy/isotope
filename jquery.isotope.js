@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.18
+ * Isotope v1.5.19
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -811,7 +811,7 @@
         instance.$allAtoms = instance.$allAtoms.not( $content );
         $content.remove();
         if ( callback ) {
-          callback.call( this.element );
+          callback.call( instance.element );
         }
       };
 

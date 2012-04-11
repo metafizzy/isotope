@@ -12,6 +12,4 @@ OUT=jquery.isotope.min.js
 awk '!/^\/\*[jshint|global]/' $IN \
   | uglifyjs \
   | awk '{ORS=""; gsub(/\*\//,"*/\n"); if (NR!=1) print "\n"; print;}' > $OUT
-# add trailing semicolon
-echo ';' >> $OUT
 echo "Minified" $IN "as" $OUT
