@@ -72,7 +72,7 @@ For numerical data, we can convert a text value into a number with `parseInt()` 
 getSortData : {
   // ...
   number : function ( $elem ) {
-    return parseInt( $elem.find('.name').text(), 10 );
+    return parseInt( $elem.find('.number').text(), 10 );
   },
   weight : function ( $elem ) {
     return parseFloat( $elem.find('.weight').text() );
