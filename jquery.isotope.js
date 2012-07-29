@@ -578,7 +578,9 @@
     },
 
     _getSorter : function( elem, sortBy ) {
-      return $.data( elem, 'isotope-sort-data' )[ sortBy ];
+      if ($.data( elem, 'isotope-sort-data' )) {
+        return $.data( elem, 'isotope-sort-data' )[ sortBy ];
+      }
     },
 
     // ====================== Layout Helpers ======================
