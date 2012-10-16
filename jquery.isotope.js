@@ -261,7 +261,7 @@
       WebkitTransitionProperty: 'webkitTransitionEnd',  // webkit
       MozTransitionProperty: 'transitionend',
       OTransitionProperty: 'oTransitionEnd',
-      transitionProperty: 'transitionEnd'
+      transitionProperty: 'transitionend'
     }[ transitionProp ];
 
     transitionDurProp = getStyleProperty('transitionDuration');
