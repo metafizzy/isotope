@@ -138,9 +138,7 @@ isotopeInstance.masonry.columnWidth; // Layout mode specific properties
 
 ## CSS transforms in Opera
 
-Currently, [using CSS transforms in Opera distorts text rendering](http://dropshado.ws/post/1260101028/opera-transform-issues). To avoid this issue, the default value of [`transformsEnabled`](options.html#transformsenabled) is set to <code><span class="kc"></span></code> for Opera.
-
-Also note that the [recommended transition CSS](animating.html#css_transitions) uses `left`/`top` properties for Opera.
+[Using CSS transforms in older versions Opera (< 12) distorts text rendering](http://dropshado.ws/post/1260101028/opera-transform-issues). See how to enable [CSS transitions with top, left positioning](options.html#transformsEnabled-css).
 
 ## Infinite Scroll with filtering or sorting
 

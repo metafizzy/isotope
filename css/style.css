@@ -34,7 +34,7 @@
   -webkit-transition-property: -webkit-transform, opacity;
      -moz-transition-property:    -moz-transform, opacity;
       -ms-transition-property:     -ms-transform, opacity;
-       -o-transition-property:         top, left, opacity;
+       -o-transition-property:      -o-transform, opacity;
           transition-property:         transform, opacity;
 }
 
