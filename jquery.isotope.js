@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.19
+ * Isotope v1.5.20
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -260,8 +260,8 @@
     transitionEndEvent = {
       WebkitTransitionProperty: 'webkitTransitionEnd',  // webkit
       MozTransitionProperty: 'transitionend',
-      OTransitionProperty: 'oTransitionEnd',
-      transitionProperty: 'transitionEnd'
+      OTransitionProperty: 'oTransitionEnd otransitionend',
+      transitionProperty: 'transitionend'
     }[ transitionProp ];
 
     transitionDurProp = getStyleProperty('transitionDuration');
@@ -346,7 +346,7 @@
     sortBy : 'original-order',
     sortAscending : true,
     resizesContainer : true,
-    transformsEnabled: !$.browser.opera, // disable transforms in Opera
+    transformsEnabled: true,
     itemPositionDataEnabled: false
   };
 

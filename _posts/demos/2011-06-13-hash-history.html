@@ -78,11 +78,6 @@ category: demos
             layoutMode: 'masonry'
           };
 
-      // ensure no transforms used in Opera
-      if ( $.browser.opera ) {
-        defaultOptions.transformsEnabled = false;
-      }
-      
       {% include random-sizes.js %}
   
       var setupOptions = $.extend( {}, defaultOptions, {

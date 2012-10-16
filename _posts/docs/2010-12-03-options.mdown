@@ -298,12 +298,10 @@ The property name of the method within the `getSortData` option to sort item ele
 <dl class="clearfix">
   <dt><code>transformsEnabled</code></dt>
   <dd class="option-type">Boolean</dd>
-  <dd class="default"><code>!$.browser.opera</code></dd>
+  <dd class="default"><code><span class="kc">true</span></code></dd>
 </dl>
 
 Isotope uses CSS3 transforms to position item elements, when available in the browser. Setting `transformsEnabled` to <code><span class="kc">false</span></code> will disable this feature so all browsers use top/left absolute positioning. Useful for [resolving issues with CSS transforms](help.html#css-transforms).
-
-Default value is set to <code><span class="kc">false</span></code> for Opera. See [Help: CSS transforms in Opera](help.html#css_transforms_in_opera).
 
 ### Additional CSS {#transformsEnabled-css}
 
