@@ -836,7 +836,7 @@
     },
 
     // destroys widget, returns elements and container back (close) to original style
-    destroy : function() {
+    destroy : function( callback ) {
 
       var usingTransforms = this.usingTransforms;
       var options = this.options;
@@ -867,7 +867,10 @@
         .removeData('isotope');
 
       $window.unbind('.isotope');
-
+      
+      if ( callback ) {
+        callback();
+      }
     },
 
 
