@@ -28,7 +28,7 @@
   // ========================= getStyleProperty by kangax ===============================
   // http://perfectionkills.com/feature-testing-css-properties/
 
-  var prefixes = 'Moz Webkit O ms'.split(' ');
+  var prefixes = 'Moz Webkit O Ms'.split(' ');
 
   var getStyleProperty = function( propName ) {
     var style = document.documentElement.style,
