@@ -82,21 +82,16 @@
     },
 
     csstransforms3d: function() {
-      var test = !!getStyleProperty('perspective');
-      // double check for Chrome's false positive
-      if ( test ) {
-        var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-            mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
-            $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
-                        .appendTo('head'),
-            $div = $('<div id="modernizr" />').appendTo('html');
-
-        test = $div.height() === 3;
+      var ret = !!getStyleProperty('perspective'), $style, $div;
+      if ( ret && 'webkitPerspective' in document.documentElement.style ) {
+        $style = $('<style>@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}</style>').appendTo('head'),
+        $div = $('<div id="modernizr" />').appendTo('body');
+		ret = $div[0].offsetLeft === 9 && $div[0].offsetHeight === 3;
 
         $div.remove();
         $style.remove();
       }
-      return test;
+      return ret;
     },
 
     csstransitions: function() {
