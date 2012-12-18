@@ -632,6 +632,7 @@
           ),
           animOpts = this.options.animationOptions,
           onLayout = this.options.onLayout,
+          noChanged = false,
           objStyleFn, processor,
           triggerCallbackNow, callbackFn;
 
@@ -694,7 +695,19 @@
           // yeah, this is inexact
           var duration = parseFloat( getComputedStyle( testElem[0] )[ transitionDurProp ] );
           if ( duration > 0 ) {
+            //We need to track property changed by ourselves
+            //NOTE : http://stackoverflow.com/questions/9548723/css-transition-event-not-fired-in-jquery-when-there-is-no-property-change
+            noChanged=true;
             processor = function( i, obj ) {
+            
+              noChanged = noChanged && (obj.$el.length==0 || (
+  	          (!obj.style.translate || (obj.style.translate && obj.style.translate[0]==obj.$el.css('translate')[0] && obj.style.translate[1]==obj.$el.css('translate')[1]) ) &&
+		          (!obj.style.opacity || (obj.style.opacity && obj.style.opacity==obj.$el.css('opacity') ) ) &&
+		          (!obj.style.scale || (obj.style.scale && obj.style.scale==obj.$el.css('scale') ) ) &&
+		          (!obj.style.height || (obj.style.height && obj.style.height==obj.$el.height() ) ) &&
+		          (!obj.style.width || (obj.style.width && obj.style.width==obj.$el.width() ) )
+		          ));
+    
               obj.$el[ styleFn ]( obj.style, animOpts )
                 // trigger callback at transition end
                 .one( transitionEndEvent, callbackFn );
@@ -706,7 +719,8 @@
 
       // process styleQueue
       $.each( this.styleQueue, processor );
-
+      triggerCallbackNow=triggerCallbackNow || this.styleQueue.length==0 || noChanged;
+      
       if ( triggerCallbackNow ) {
         callbackFn();
       }
