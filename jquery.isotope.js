@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.21
+ * Isotope v1.5.22
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -426,6 +426,11 @@
           $atoms = selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems,
           // base style for atoms
           atomStyle = { position: 'absolute' };
+
+      // filter out text nodes
+      $atoms.filter( function( i, atom ) {
+        return atom.nodeType === 1;
+      });
 
       if ( this.usingTransforms ) {
         atomStyle.left = 0;
