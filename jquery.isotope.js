@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.24
+ * Isotope v1.5.25
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -280,7 +280,7 @@
    */
 
   var $event = $.event,
-      $eventTrigger = $event[ $event.handle ? 'handle' : 'trigger' ],
+      dispatchMethod = $.event.handle ? 'handle' : 'dispatch',
       resizeTimeout;
 
   $event.special.smartresize = {
@@ -300,7 +300,7 @@
 
       if ( resizeTimeout ) { clearTimeout( resizeTimeout ); }
       resizeTimeout = setTimeout(function() {
-        $eventTrigger.apply( context, args );
+        $event[ dispatchMethod ].apply( context, args );
       }, execAsap === "execAsap"? 0 : 100 );
     }
   };
