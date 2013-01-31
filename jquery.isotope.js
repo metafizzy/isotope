@@ -989,6 +989,8 @@
       for ( i=0; i < setSpan; i++ ) {
         this.masonry.colYs[ shortCol + i ] = setHeight;
       }
+      
+      $("body").removeClass(function(i,c){var m=c.match(/col-(\d*)/);return m?m[0]:m}).addClass("col-"+this.masonry.cols);
 
     },
 
