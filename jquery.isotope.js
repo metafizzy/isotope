@@ -570,29 +570,33 @@
           , sortDir = this.options.sortAscending ? 1 : -1
           , len = sortBy.length
           , sortFunc = function (a, b){              
-              a && isNaN(a) && (a = a.toLowerCase());
-              b && isNaN(b) && (b = b.toLowerCase());              
+              isNaN(a) && (a = a.toLowerCase());
+              isNaN(b) && (b = b.toLowerCase());              
               return ( a > b ) ? 1 : ( a < b ) ? -1 : 0;  
             }
           ;
+      //default an empty sort to original order
+      sortBy[0] = sortBy[0] || 'original-order';
       this.$filteredAtoms.sort(function(alpha, beta){
         var sort, comparison = 0, i = 0
             , a , b 
-            ;
-        if (sortBy[0] === 'original-order' || !(alpha && beta)) {
+        ;
+        if (sortBy[0] === 'original-order') { 
           a = getSorter(alpha, 'original-order' ); 
           b = getSorter(beta, 'original-order' );
           return sortFunc(a, b) * sortDir;
         } else {          
           while(comparison == 0 && i < len){
-            sort = sortBy[i],
-            a = getSorter(alpha, sort),
-            b = getSorter(beta, sort);            
-            comparison = sortFunc(a, b);             
+            sort = sortBy[i];
+            if (sort.length) {
+              a = getSorter(alpha, sort),
+              b = getSorter(beta, sort);            
+              comparison = sortFunc(a, b);
+            }
             i+=1;        
           }          
           return comparison * sortDir;
-        }
+        } 
       }); 
     },
 
