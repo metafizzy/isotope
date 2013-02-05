@@ -579,7 +579,7 @@
         var sort, comparison = 0, i = 0
             , a , b 
             ;
-        if (sortBy[0] === 'original-order') {
+        if (sortBy[0] === 'original-order' || !(alpha && beta)) {
           a = getSorter(alpha, 'original-order' ); 
           b = getSorter(beta, 'original-order' );
           return sortFunc(a, b) * sortDir;
