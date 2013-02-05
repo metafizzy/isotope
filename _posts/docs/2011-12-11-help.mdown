@@ -8,7 +8,7 @@ toc:
   - { title: Additional resources, anchor: additional_resources }
   - { title: Unloaded media, anchor: unloaded_media }
   - { title: Images, anchor: images }
-  - { title: @font-face fonts, anchor: fontface_fonts }
+  - { title: &#64;font-face fonts, anchor: fontface_fonts }
   - { title: Problems with CSS transforms, anchor: css-transforms }
   - { title: Getting item position, anchor: getting_item_position }
   - { title: Accessing the instance, anchor: accessing_the_instance }
