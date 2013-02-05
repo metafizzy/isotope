@@ -570,8 +570,8 @@
           , sortDir = this.options.sortAscending ? 1 : -1
           , len = sortBy.length
           , sortFunc = function (a, b){              
-              isNaN(a) && (a = a.toLowerCase());
-              isNaN(b) && (b = b.toLowerCase());              
+              a && isNaN(a) && (a = a.toLowerCase());
+              b && isNaN(b) && (b = b.toLowerCase());              
               return ( a > b ) ? 1 : ( a < b ) ? -1 : 0;  
             }
           ;
