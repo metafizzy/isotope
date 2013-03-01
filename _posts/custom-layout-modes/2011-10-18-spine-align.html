@@ -69,7 +69,7 @@ $container.isotope({
 
     $elems.each(function(){
       var $this = $(this),
-          isColA = props.colB > props.colA,
+          isColA = props.colA <= props.colB,
           x = isColA ?
             centerX - ( $this.outerWidth(true) + gutterWidth / 2 ) : // left side
             centerX + gutterWidth / 2, // right side
