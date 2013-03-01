@@ -102,7 +102,7 @@ CSS styles applied to the container element. Relative positioning enables absolu
   <dd class="option-type">Selector</dd>
 </dl>
 
-Setting a filter with show item elements that match the selector, and hide elements that do not match. See [docs on filering](filtering.html) for more details.
+Setting a filter with show item elements that match the selector, and hide elements that do not match. See [docs on filtering](filtering.html) for more details.
 
 [**See Demo: Filtering**](../demos/filtering.html)
 
