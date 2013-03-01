@@ -1,6 +1,6 @@
 ## Development freeze
 
-I've got my hands full working on [Packery](metafizzy.co/blog/packery-preview) for the next couple months.
+I've got my hands full working on [Packery](http://metafizzy.co/blog/packery-preview) for the next couple months.
 
 + :cry: Development on Isotope is stopped for a while
 + :sleeping: I won't be snappily responding to new issues
