@@ -648,11 +648,24 @@
 
       if ( this._isInserting && this.isUsingJQueryAnimation ) {
         // if using styleQueue to insert items
+        var animatedDeferreds = [];
+
         processor = function( i, obj ) {
           // only animate if it not being inserted
+          var deferred = new $.Deferred(),
+              localAnimOpts = $.extend(true, {}, animOpts, {
+                complete: function () {
+                  deferred.resolve();
+                }
+              })
           objStyleFn = obj.$el.hasClass('no-transition') ? 'css' : styleFn;
-          obj.$el[ objStyleFn ]( obj.style, animOpts );
+          obj.$el[ objStyleFn ]( obj.style, localAnimOpts );
+          animatedDeferreds.push(deferred);
         };
+
+        $.when.apply($, animatedDeferreds).then(function () {
+          callback && callback();
+        });
 
       } else if ( callback || onLayout || animOpts.complete ) {
         // has callback
