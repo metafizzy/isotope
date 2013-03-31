@@ -936,7 +936,8 @@
       $elems.each(function(){
         var $this  = $(this),
             //how many columns does this brick span
-            colSpan = Math.ceil( $this.outerWidth(true) / props.columnWidth );
+            computedWidth = window.getComputedStyle(this) && parseFloat(window.getComputedStyle(this).width),
+            colSpan = Math.ceil( ( computedWidth || $this.outerWidth(true) ) / props.columnWidth );
         colSpan = Math.min( colSpan, props.cols );
 
         if ( colSpan === 1 ) {
