@@ -3,10 +3,12 @@
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
- * Commercial use requires one-time license fee
- * http://metafizzy.co/#licenses
+ * Commercial use requires one-time purchase of a commercial license
+ * http://isotope.metafizzy.co/license.html
  *
- * Copyright 2012 David DeSandro / Metafizzy
+ * Non-commercial use is licensed under the MIT License
+ *
+ * Copyright 2013 Metafizzy
  */
 
 /*jshint asi: true, browser: true, curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
