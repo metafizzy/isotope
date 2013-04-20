@@ -11,7 +11,7 @@ View this project live at [http://isotope.metafizzy.co](http://isotope.metafizzy
 
 Isotope may be used in commercial projects and applications with the one-time purchase of a commercial license. If you are paid to do your job, and part of your job is implementing Isotope, a commercial license is required.
 
-http://isotope.metafizzy.co/license.html
+http://isotope.metafizzy.co/docs/license.html
 
 For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the MIT License. You may use Isotope for free.
 

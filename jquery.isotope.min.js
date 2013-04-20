@@ -4,7 +4,7 @@
  * http://isotope.metafizzy.co
  *
  * Commercial use requires one-time purchase of a commercial license
- * http://isotope.metafizzy.co/license.html
+ * http://isotope.metafizzy.co/docs/license.html
  *
  * Non-commercial use is licensed under the MIT License
  *
