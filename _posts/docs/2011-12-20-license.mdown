@@ -43,6 +43,13 @@ The Isotope Commercial Organization License is for an organization with a team o
 
 <p>{% include org-buy-button.html %}</p>
 
+### Purchase via PayPal
+
+If you're having trouble using a credit card, try purchasing a license via PayPal:
+
++ [Buy Developer License via PayPal](http://pul.ly/b/13620)
++ [Buy Organization License via PayPal](http://pul.ly/b/36595)
+
 ## Isotope Commercial License Agreement
 
 This Commercial License Agreement is a binding legal agreement between you and Metafizzy LLC (**Metafizzy**). By installing, copying, or using Isotope (the **Software**), you agree to be bound by these terms of this Agreement.

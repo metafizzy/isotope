@@ -35,6 +35,13 @@ Purchasing accepts most credit cards and takes seconds. Once purchased, you'll r
 
 For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the MIT License. You may use Isotope for free.
 
+### Purchase via PayPal
+
+If you're having trouble using a credit card, try purchasing a license via PayPal:
+
++ [Buy Developer License via PayPal](http://pul.ly/b/13620)
++ [Buy Organization License via PayPal](http://pul.ly/b/36595)
+
 ## Getting started
 
 Isotope requires jQuery 1.4.3 and greater.
