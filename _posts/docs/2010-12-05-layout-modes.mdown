@@ -67,7 +67,7 @@ A **horizontal** grid layout where items are centered inside each cell. The grid
 
 $('#container').isotope({
   layoutMode: 'cellsByColumn',
-  cellsByRow: {
+  cellsByColumn: {
     columnWidth: 240,
     rowHeight: 360
   }
