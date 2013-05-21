@@ -15,6 +15,12 @@ http://isotope.metafizzy.co/docs/license.html
 
 For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the MIT License. You may use Isotope for free.
 
+## Support
+
+Try the support forum at CodersClan.
+
+[![Get Support](http://codersclan.net/graphics/getSupport_github4.png)](http://codersclan.net/support/step1.php?repo_id=1)
+
 ## Viewing this project locally
 
 ### Via download
