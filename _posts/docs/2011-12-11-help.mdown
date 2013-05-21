@@ -26,6 +26,12 @@ toc:
 
 Please read my [Issues Agreement](https://github.com/desandro/issues-agreement/#readme) and then [report bugs and issues on GitHub](http://github.com/desandro/isotope/issues). 
 
+## Support
+
+Try the support forum at CodersClan.
+
+[![Get Support](http://codersclan.net/graphics/getSupport_github4.png)](http://codersclan.net/support/step1.php?repo_id=1)
+
 ## Additional resources
 
 + The [Metafizzy blog](http://metafizzy.co/blog/) has posts that cover specialized use cases
