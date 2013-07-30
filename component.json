@@ -1,6 +1,6 @@
 {
   "name": "isotope",
-  "version": "1.5.25",
+  "version": "1.5.25-mr",
   "main": "./jquery.isotope.js",
   "dependencies": {
     "jquery": "~1.9.1"
