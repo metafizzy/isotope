@@ -1,0 +1,12 @@
+{
+  "name": "isotope",
+  "version": "1.5.25",
+  "main": "./jquery.isotope.js",
+  "dependencies": {
+    "jquery": "~1.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:desandro/isotope.git"
+  }
+}
