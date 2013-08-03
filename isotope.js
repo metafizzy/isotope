@@ -14,12 +14,14 @@
 // -------------------------- helpers -------------------------- //
 
 
-// -------------------------- masonryDefinition -------------------------- //
+// -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
 function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create('isotope');
+
+  Isotope.layoutModes = {};
 
   Isotope.prototype._create = function() {
     // call super
@@ -44,8 +46,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
   };
 
   Isotope.prototype.layout = function() {
-    this.filteredItems = this._filter( this.items );
-    this._sort();
+    // this.filteredItems = this._filter( this.items );
+    // this._sort();
     Outlayer.prototype.layout.call( this );
     // this._mode._resetLayout();
     // this._resetLayout();
@@ -120,20 +122,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
   // -------------------------- methods -------------------------- //
 
   Isotope.prototype._resetLayout = function() {
-    this._mode._resetLayout();
+    this._mode()._resetLayout();
   };
 
   Isotope.prototype._getItemLayoutPosition = function( item ) {
-    return this._mode._getItemLayoutPosition( item );
+    return this._mode()._getItemLayoutPosition( item );
   };
 
 
   Isotope.prototype._manageStamp = function( stamp ) {
-    this._mode._manageStamp( stamp );
+    this._mode()._manageStamp( stamp );
   };
 
   Isotope.prototype._getContainerSize = function() {
-    return this._mode._getContainerSize();
+    return this._mode()._getContainerSize();
   };
 
   return Isotope;
