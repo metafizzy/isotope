@@ -52,7 +52,7 @@
 <script>
 docReady( function() {
   var container = document.querySelector('#basic');
-  var iso = new Isotope( container, {
+  var iso = window.iso = new Isotope( container, {
     layoutMode: 'fitRows'
   });
 });
