@@ -17,13 +17,17 @@
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
-function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
+function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create('isotope');
+
+  Isotope.Item = Isotope.prototype.settings.item = Item;
 
   Isotope.layoutModes = {};
 
   Isotope.prototype._create = function() {
+    this.itemGUID = 0;
+
     // call super
     Outlayer.prototype._create.call( this );
 
@@ -34,6 +38,25 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
       this._createLayoutMode( name );
     }
   };
+
+  Isotope.prototype.reloadItems = function() {
+    // reset item ID counter
+    this.itemGUID = 0;
+    // call super
+    Outlayer.prototype.reloadItems.call( this );
+  };
+
+  Isotope.prototype._getItems = function() {
+    var items = Outlayer.prototype._getItems.apply( this, arguments );
+    // assign ID for original-order
+    for ( var i=0, len = items.length; i < len; i++ ) {
+      var item = items[i];
+      item.id = this.itemGUID++;
+    }
+    return items;
+  };
+
+  // -------------------------- layout -------------------------- //
 
   Isotope.prototype._createLayoutMode = function( name ) {
     var LayoutMode = Isotope.layoutModes[ name ];
@@ -69,20 +92,10 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
     var filter = this.options.filter;
     filter = filter || '*';
     var matches = [];
-    var unmatches = [];
     var hiddenMatched = [];
     var visibleUnmatched = [];
 
-    var test;
-    if ( typeof filter === 'function' ) {
-      test = function( item ) {
-        return filter( item.element );
-      };
-    } else {
-      test = function( item ) {
-        return matchesSelector( item.element, filter );
-      };
-    }
+    var test = getFilterTest( filter );
 
     // test each item
     for ( var i=0, len = items.length; i < len; i++ ) {
@@ -93,8 +106,10 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
       // add item to either matched or unmatched group
       var isMatched = test( item );
       item.isFilterMatched = isMatched;
-      var group = isMatched ? matches : unmatches;
-      group.push( item );
+      // add to matches if its a match
+      if ( isMatched ) {
+        matches.push( item );
+      }
       // add to additional group if item needs to be hidden or revealed
       if ( isMatched && item.isHidden ) {
         hiddenMatched.push( item );
@@ -109,8 +124,31 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector ) {
     return matches;
   };
 
+  // get a function or a matchesSelector test given the filter
+  function getFilterTest( filter ) {
+    var test;
+    if ( typeof filter === 'function' ) {
+      test = function( item ) {
+        return filter( item.element );
+      };
+    } else {
+      test = function( item ) {
+        return matchesSelector( item.element, filter );
+      };
+    }
+    return test;
+  }
+
   // -------------------------- sort -------------------------- //
 
+  Isotope.prototype.updateSortData = function( items ) {
+    // default to all items if none are passed in
+    items = items || this.items;
+    for ( var i=0, len = items.length; i < len; i++ ) {
+      var item = items[i];
+      item.updateSortData();
+    }
+  };
 
   // Isotope.prototype._sort = function() {
   //   var sortBy = this.options.sortBy;
@@ -149,7 +187,8 @@ if ( typeof define === 'function' && define.amd ) {
   define( [
       'outlayer',
       'get-size',
-      'matches-selector'
+      'matches-selector',
+      './item.js'
     ],
     isotopeDefinition );
 } else {
@@ -157,7 +196,8 @@ if ( typeof define === 'function' && define.amd ) {
   window.Isotope = isotopeDefinition(
     window.Outlayer,
     window.getSize,
-    window.matchesSelector
+    window.matchesSelector,
+    window.Isotope.Item
   );
 }
 
