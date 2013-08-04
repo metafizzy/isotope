@@ -75,7 +75,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
     this.filteredItems = this._filter( this.items );
     this._sort();
     // Outlayer.prototype.layout.call( this );
-    this._mode()._resetLayout();
     this._resetLayout();
     this._manageStamps();
 
