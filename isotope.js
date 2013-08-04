@@ -13,13 +13,14 @@
 
 // -------------------------- helpers -------------------------- //
 
-
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
 function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
   // create an Outlayer layout class
-  var Isotope = Outlayer.create('isotope');
+  var Isotope = Outlayer.create( 'isotope', {
+    sortAscending: true
+  });
 
   Isotope.Item = Isotope.prototype.settings.item = Item;
 
@@ -27,7 +28,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
 
   Isotope.prototype._create = function() {
     this.itemGUID = 0;
-
     // call super
     Outlayer.prototype._create.call( this );
 
@@ -37,6 +37,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
     for ( var name in Isotope.layoutModes ) {
       this._createLayoutMode( name );
     }
+    // keep of track of sortBys
+    this.sortHistory = [ 'original-order' ];
+    this.updateSortData();
   };
 
   Isotope.prototype.reloadItems = function() {
@@ -70,7 +73,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
 
   Isotope.prototype.layout = function() {
     this.filteredItems = this._filter( this.items );
-    // this._sort();
+    this._sort();
     // Outlayer.prototype.layout.call( this );
     this._mode()._resetLayout();
     this._resetLayout();
@@ -150,13 +153,38 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
     }
   };
 
-  // Isotope.prototype._sort = function() {
-  //   var sortBy = this.options.sortBy;
-  //   function sortFn( a, b ) {
-  //
-  //   }
-  //   this.filteredItems.sort( );
-  // };
+  // sort filteredItem order
+  Isotope.prototype._sort = function() {
+    var sortByOpt = this.options.sortBy;
+    if ( !sortByOpt ) {
+      return;
+    }
+    // concat all sortBy and sortHistory
+    var sortBys = [].concat.apply( sortByOpt, this.sortHistory );
+    var sortAsc = this.options.sortAscending;
+    // sort magic
+    this.filteredItems.sort( function sorter( itemA, itemB ) {
+      // cycle through all sortKeys
+      for ( var i = 0, len = sortBys.length; i < len; i++ ) {
+        var sortBy = sortBys[i];
+        var a = itemA.sortData[ sortBy ];
+        var b = itemB.sortData[ sortBy ];
+        if ( a > b || a < b ) {
+          // if sortAsc is an object, use the value given the sortBy key
+          var isAscending = sortAsc[ sortBy ] !== undefined ? sortAsc[ sortBy ] : sortAsc;
+          var direction = isAscending ? 1 : -1;
+          return ( a > b ? 1 : -1 ) * direction;
+        }
+      }
+      return 0;
+    });
+    // keep track of sortBy History
+    var lastSortBy = this.sortHistory[ this.sortHistory.length - 1 ];
+    if ( sortByOpt !== lastSortBy ) {
+      // add to front, oldest goes in last
+      this.sortHistory.unshift( sortByOpt );
+    }
+  };
 
   // -------------------------- methods -------------------------- //
 
@@ -167,7 +195,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
   Isotope.prototype._getItemLayoutPosition = function( item ) {
     return this._mode()._getItemLayoutPosition( item );
   };
-
 
   Isotope.prototype._manageStamp = function( stamp ) {
     this._mode()._manageStamp( stamp );
