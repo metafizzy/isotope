@@ -21,7 +21,7 @@ FitRows.prototype._getItemLayoutPosition = function( item ) {
   item.getSize();
 
   // if this element cannot fit in the current row
-  if ( this.x !== 0 && item.size.width + this.x > this.isotope.size.innerWidth ) {
+  if ( this.x !== 0 && item.size.outerWidth + this.x > this.isotope.size.innerWidth ) {
     this.x = 0;
     this.y = this.maxY;
   }
@@ -32,7 +32,7 @@ FitRows.prototype._getItemLayoutPosition = function( item ) {
   };
 
   this.maxY = Math.max( this.maxY, this.y + item.size.outerHeight );
-  this.x += item.size.width;
+  this.x += item.size.outerWidth;
 
   return position;
 };
