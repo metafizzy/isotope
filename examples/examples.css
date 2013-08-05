@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+#container,
 .container {
   background: #EEE;
   width: 50%;
@@ -30,3 +31,52 @@
   position: absolute;
   border: 1px solid;
 }
+
+
+/* element */
+
+.element {
+  width: 80px;
+  height: 90px;
+  margin: 5px;
+  background: #DDD;
+  float: left;
+  position: relative;
+  padding: 5px;
+}
+
+.element > * {
+  margin: 0;
+}
+
+.element .number {
+  right: 5px;
+  top: 5px;
+  position: absolute;
+}
+
+.element .symbol {
+  font-size: 30px;
+  left: 5px;
+  top: 5px;
+  color: white;
+}
+
+.element .name {
+  font-size: 14px;
+}
+
+.element .weight {
+  font-size: 14px;
+}
+
+.element.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
+.element.alkaline-earth  { background: #F80; background: hsl(  36, 100%, 50%); }
+.element.lanthanoid      { background: #FF0; background: hsl(  72, 100%, 50%); }
+.element.actinoid        { background: #0F0; background: hsl( 108, 100%, 50%); }
+.element.transition      { background: #0F8; background: hsl( 144, 100%, 50%); }
+.element.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
+.element.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
+.element.other.nonmetal  { background: #00F; background: hsl( 252, 100%, 50%); }
+.element.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
+.element.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
