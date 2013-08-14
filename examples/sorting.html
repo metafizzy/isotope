@@ -152,22 +152,30 @@ docReady( function() {
   var iso = window.iso = new Isotope( container, {
     layoutMode: 'fitRows',
     getSortData: {
-      number: function( itemElem ) {
-        return parseInt( getText( itemElem.querySelector('.number') ), 10 );
-      },
-      symbol: function( itemElem ) {
-        return getText( itemElem.querySelector('.symbol') );
-      },
-      name: function( itemElem ) {
-        return getText( itemElem.querySelector('.name') );
-      },
+      // number: function( itemElem ) {
+      //   return parseInt( getText( itemElem.querySelector('.number') ), 10 );
+      // },
+      // symbol: function( itemElem ) {
+      //   return getText( itemElem.querySelector('.symbol') );
+      // },
+      // name: function( itemElem ) {
+      //   return getText( itemElem.querySelector('.name') );
+      // },
+      // category: function( itemElem ) {
+      //   return itemElem.getAttribute('data-category');
+      // },
+
+      number: '.number parseInt',
+      symbol: '.symbol',
+      name: '.name',
+      category: '[data-category]',
+
       weight: function( itemElem ) {
         // remove parenthesis
         return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
-      },
-      category: function( itemElem ) {
-        return itemElem.getAttribute('data-category');
       }
+
+
     }
   });
 
