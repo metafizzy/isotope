@@ -4,7 +4,7 @@
 
 var Isotope = window.Isotope;
 var Outlayer = window.Outlayer;
-var FitRows = Isotope.LayoutMode.create( 'fitRows', {
+var FitRows = Isotope.createLayoutMode( 'fitRows', {
   foo: 'bar'
 });
 
