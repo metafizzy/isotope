@@ -73,8 +73,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     var LayoutMode = layoutMode.modes[ name ];
     // set mode options
     // HACK extend initial options, back-fill in default options
+    var initialOpts = this.options[ name ] || {};
     this.options[ name ] = LayoutMode.options ?
-      extend( LayoutMode.options, this.options[ name ] || {} ) : {};
+      extend( LayoutMode.options, initialOpts ) : initialOpts;
     // init layout mode instance
     this.modes[ name ] = new LayoutMode( this );
   };

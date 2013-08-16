@@ -168,18 +168,6 @@ docReady( function() {
       columnWidth: 120
     },
     getSortData: {
-      // number: function( itemElem ) {
-      //   return parseInt( getText( itemElem.querySelector('.number') ), 10 );
-      // },
-      // symbol: function( itemElem ) {
-      //   return getText( itemElem.querySelector('.symbol') );
-      // },
-      // name: function( itemElem ) {
-      //   return getText( itemElem.querySelector('.name') );
-      // },
-      // category: function( itemElem ) {
-      //   return itemElem.getAttribute('data-category');
-      // },
 
       number: '.number parseInt',
       symbol: '.symbol',
@@ -190,7 +178,6 @@ docReady( function() {
         // remove parenthesis
         return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
       }
-
 
     }
   });
