@@ -17,7 +17,6 @@ layoutMode.create = function( namespace, options ) {
     // link properties
     if ( isotope ) {
       this.options = isotope.options[ this.namespace ];
-      console.log( this.options );
       this._getMeasurement = isotope._getMeasurement;
       this.element = isotope.element;
       this.items = isotope.items;
