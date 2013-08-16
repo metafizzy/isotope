@@ -4,20 +4,62 @@
 
 // --------------------------  -------------------------- //
 
-var Isotope = window.Isotope;
+// var Isotope = window.Isotope;
 
-Isotope.createLayoutMode = function( namespace, options ) {
+var layoutMode = {};
+
+layoutMode.options = {};
+layoutMode.modes = {};
+
+layoutMode.create = function( namespace, options ) {
   function LayoutMode( isotope ) {
     this.isotope = isotope;
-    // link options to isotope.options
-    this.options = isotope && isotope.options[ this.namespace ];
+    // link properties
+    if ( isotope ) {
+      this.options = isotope.options[ this.namespace ];
+      console.log( this.options );
+      this._getMeasurement = isotope._getMeasurement;
+      this.element = isotope.element;
+      this.items = isotope.items;
+      this.size = isotope.size;
+      // this.getSize = isotope.getSize;
+      // this._getElementOffset = isotope._getElementOffset;
+    }
   }
+
+  // default options
+  if ( options ) {
+    LayoutMode.options = options;
+  }
+
+  // Outlayer.prototype._getMeasurement = function( measurement, size ) {
+  //   var option = this.options[ measurement ];
+  //   var elem;
+  //   if ( !option ) {
+  //     // default to 0
+  //     this[ measurement ] = 0;
+  //   } else {
+  //     if ( typeof option === 'string' ) {
+  //       elem = this.element.querySelector( option );
+  //     } else if ( isElement( option ) ) {
+  //       elem = option;
+  //     }
+  //     // use size of element, if element
+  //     this[ measurement ] = elem ? getSize( elem )[ size ] : option;
+  //   }
+  // };
+
+
+
   LayoutMode.prototype.namespace = namespace;
   // set default options
-  Isotope.prototype.options[ namespace ] = options || {};
+  // layoutMode.options[ namespace ] = options || {};
   // register in Isotope
-  Isotope.layoutModes[ namespace ] = LayoutMode;
+  layoutMode.modes[ namespace ] = LayoutMode;
   return LayoutMode;
 };
+
+var Isotope = window.Isotope = window.Isotope || {};
+Isotope.layoutMode = layoutMode;
 
 })( window );

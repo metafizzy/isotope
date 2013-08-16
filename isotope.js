@@ -13,18 +13,26 @@
 
 // -------------------------- helpers -------------------------- //
 
+// extend objects
+function extend( a, b ) {
+  for ( var prop in b ) {
+    a[ prop ] = b[ prop ];
+  }
+  return a;
+}
+
+
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
-function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
+function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create( 'isotope', {
     sortAscending: true
   });
 
   Isotope.Item = Isotope.prototype.settings.item = Item;
-
-  Isotope.layoutModes = {};
+  Isotope.layoutMode = layoutMode;
 
   Isotope.prototype._create = function() {
     this.itemGUID = 0;
@@ -34,7 +42,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
     // create layout modes
     this.modes = {};
     // create from registered layout modes
-    for ( var name in Isotope.layoutModes ) {
+    for ( var name in layoutMode.modes ) {
       this._initLayoutMode( name );
     }
     // keep of track of sortBys
@@ -62,7 +70,12 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
   // -------------------------- layout -------------------------- //
 
   Isotope.prototype._initLayoutMode = function( name ) {
-    var LayoutMode = Isotope.layoutModes[ name ];
+    var LayoutMode = layoutMode.modes[ name ];
+    // set mode options
+    // HACK extend initial options, back-fill in default options
+    this.options[ name ] = LayoutMode.options ?
+      extend( LayoutMode.options, this.options[ name ] || {} ) : {};
+    // init layout mode instance
     this.modes[ name ] = new LayoutMode( this );
   };
 
@@ -222,10 +235,11 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      'outlayer',
-      'get-size',
-      'matches-selector',
-      './item.js'
+      'outlayer/outlayer',
+      'get-size/get-size',
+      'matches-selector/matches-selector',
+      './item.js',
+      './layout-modes.js'
     ],
     isotopeDefinition );
 } else {
@@ -234,7 +248,8 @@ if ( typeof define === 'function' && define.amd ) {
     window.Outlayer,
     window.getSize,
     window.matchesSelector,
-    window.Isotope.Item
+    window.Isotope.Item,
+    window.Isotope.layoutMode
   );
 }
 
