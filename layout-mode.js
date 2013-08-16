@@ -5,30 +5,12 @@
 // --------------------------  -------------------------- //
 
 var Isotope = window.Isotope;
-var Outlayer = window.Outlayer;
 
 function LayoutMode( isotope ) {
   this.isotope = isotope;
   // link options to isotope.options
   this.options = isotope && isotope.options[ this.namespace ];
 }
-
-// default methods just defer to Isotope
-LayoutMode.prototype._resetLayout = function() {
-  Outlayer.prototype._resetLayout.apply( this.isotope, arguments );
-};
-
-LayoutMode.prototype._getItemLayoutPosition = function() {
-  return Outlayer.prototype._getItemLayoutPosition.apply( this.isotope, arguments );
-};
-
-LayoutMode.prototype._manageStamp = function() {
-  Outlayer.prototype._manageStamp.apply( this.isotope, arguments );
-};
-
-LayoutMode.prototype._getContainerSize = function() {
-  return Outlayer.prototype._getContainerSize.apply( this.isotope, arguments );
-};
 
 // -------------------------- create -------------------------- //
 
