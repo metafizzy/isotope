@@ -35,7 +35,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
     this.modes = {};
     // create from registered layout modes
     for ( var name in Isotope.layoutModes ) {
-      this._createLayoutMode( name );
+      this._initLayoutMode( name );
     }
     // keep of track of sortBys
     this.sortHistory = [ 'original-order' ];
@@ -61,10 +61,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item ) {
 
   // -------------------------- layout -------------------------- //
 
-  Isotope.prototype._createLayoutMode = function( name ) {
+  Isotope.prototype._initLayoutMode = function( name ) {
     var LayoutMode = Isotope.layoutModes[ name ];
-    var options = this.options[ name ];
-    this.modes[ name ] = new LayoutMode( this, options );
+    this.modes[ name ] = new LayoutMode( this );
   };
 
   Isotope.prototype._mode = function() {
