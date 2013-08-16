@@ -75,28 +75,12 @@ function mungeSorter( sorter ) {
   }
 
   var args = trim( sorter ).split(' ');
-  var parser;
-
-  // use second argument as a parser
-  switch ( args[1] ) {
-    case 'parseInt' :
-      parser = function( val ) {
-        return parseInt( val, 10 );
-      };
-      break;
-    case 'parseFloat' :
-      parser = function( val ) {
-        return parseFloat( val );
-      };
-  }
 
   var query = args[0];
+  // check if query looks like [an-attribute]
   var attrMatch = query.match( /^\[(.+)\]$/ );
   var attr = attrMatch && attrMatch[1];
-
-
   var getValue;
-
   // if query looks like [foo-bar], get attribute
   if ( attr ) {
     getValue = function( elem ) {
@@ -108,7 +92,19 @@ function mungeSorter( sorter ) {
       return getText( elem.querySelector( query ) );
     };
   }
-
+  // use second argument as a parser
+  var parser;
+  switch ( args[1] ) {
+    case 'parseInt' :
+      parser = function( val ) {
+        return parseInt( val, 10 );
+      };
+      break;
+    case 'parseFloat' :
+      parser = function( val ) {
+        return parseFloat( val );
+      };
+  }
   // parse the value, if there was a parser
   sorter = parser ? function( elem ) {
     return parser( getValue( elem ) );
