@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>sorting</title>
+  <title>masonry</title>
 
   <link rel="stylesheet" href="examples.css" />
   <style>
@@ -159,11 +159,14 @@
 <script src="../layout-mode.js"></script>
 <script src="../isotope.js"></script>
 <script src="../layout-modes/masonry.js"></script>
+<script src="../layout-modes/fit-rows.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
+    // sortBy: 'symbol',
+    // filter: '.metal',
     layoutMode: 'masonry',
     masonry: {
       columnWidth: 90

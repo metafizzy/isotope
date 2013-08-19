@@ -6,9 +6,10 @@
 
 // var Isotope = window.Isotope;
 
+function layoutModeDefinition( Outlayer ) {
+
 var layoutMode = {};
 
-layoutMode.options = {};
 layoutMode.modes = {};
 
 layoutMode.create = function( namespace, options ) {
@@ -31,34 +32,59 @@ layoutMode.create = function( namespace, options ) {
     LayoutMode.options = options;
   }
 
-  // Outlayer.prototype._getMeasurement = function( measurement, size ) {
-  //   var option = this.options[ measurement ];
-  //   var elem;
-  //   if ( !option ) {
-  //     // default to 0
-  //     this[ measurement ] = 0;
-  //   } else {
-  //     if ( typeof option === 'string' ) {
-  //       elem = this.element.querySelector( option );
-  //     } else if ( isElement( option ) ) {
-  //       elem = option;
-  //     }
-  //     // use size of element, if element
-  //     this[ measurement ] = elem ? getSize( elem )[ size ] : option;
-  //   }
-  // };
-
-
-
   LayoutMode.prototype.namespace = namespace;
-  // set default options
-  // layoutMode.options[ namespace ] = options || {};
   // register in Isotope
   layoutMode.modes[ namespace ] = LayoutMode;
+
+  // -------------------------- methods -------------------------- //
+
+  // default method handler
+  // trigger Outlayer method with Isotope as this
+  LayoutMode.prototype._outlayerMethod = function( methodName, args ) {
+    return Outlayer.prototype[ methodName ].apply( this.isotope, args );
+  };
+
+  LayoutMode.prototype._resetLayout = function() {
+    this._outlayerMethod( '_resetLayout', arguments );
+  };
+
+  LayoutMode.prototype._getItemLayoutPosition = function( /* item  */) {
+    return this._outlayerMethod( '_getItemLayoutPosition', arguments );
+  };
+
+  LayoutMode.prototype._manageStamp = function(/* stamp */) {
+    this._outlayerMethod( '_manageStamp', arguments );
+  };
+
+  LayoutMode.prototype._getContainerSize = function() {
+    return this._outlayerMethod( '_getContainerSize', arguments );
+  };
+
+  LayoutMode.prototype.resize = function() {
+    this._outlayerMethod( 'resize', arguments );
+  };
+
   return LayoutMode;
 };
 
-var Isotope = window.Isotope = window.Isotope || {};
-Isotope.layoutMode = layoutMode;
+
+return layoutMode;
+
+}
+
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( [
+      'outlayer/outlayer'
+    ],
+    layoutModeDefinition );
+} else {
+  // browser global
+  window.Isotope = window.Isotope || {};
+  window.Isotope.layoutMode = layoutModeDefinition(
+    window.Outlayer
+  );
+}
+
 
 })( window );

@@ -214,31 +214,23 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   // -------------------------- methods -------------------------- //
 
   Isotope.prototype._resetLayout = function() {
-    this._modeMethod( '_resetLayout', arguments );
+    this._mode()._resetLayout();
   };
 
-  Isotope.prototype._getItemLayoutPosition = function( /* item  */) {
-    return this._modeMethod( '_getItemLayoutPosition', arguments );
+  Isotope.prototype._getItemLayoutPosition = function( item  ) {
+    return this._mode()._getItemLayoutPosition( item );
   };
 
-  Isotope.prototype._manageStamp = function(/* stamp */) {
-    this._modeMethod( '_manageStamp', arguments );
+  Isotope.prototype._manageStamp = function( stamp ) {
+    this._mode()._manageStamp( stamp );
   };
 
   Isotope.prototype._getContainerSize = function() {
-    return this._modeMethod( '_getContainerSize', arguments );
+    return this._mode()._getContainerSize();
   };
 
-  Isotope.prototype._modeMethod = function( methodName, args ) {
-    var mode = this._mode();
-    var modeMethod = mode[ methodName ];
-    // use mode's method, if there
-    if ( modeMethod ) {
-      return modeMethod.apply( mode, args );
-    } else {
-      // otherwise, default to Outlayer prototype
-      return Outlayer.prototype[ methodName ].apply( this, args );
-    }
+  Isotope.prototype.resize = function() {
+    this._mode().resize();
   };
 
   return Isotope;

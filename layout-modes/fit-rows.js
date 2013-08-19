@@ -2,14 +2,16 @@
 
 'use strict';
 
-var Isotope = window.Isotope;
-var Outlayer = window.Outlayer;
-var FitRows = Isotope.createLayoutMode( 'fitRows', {
+function fitRowsDefinition( layoutMode ) {
+
+var FitRows = layoutMode.create( 'fitRows', {
   foo: 'bar'
 });
 
+var __resetLayout = FitRows.prototype._resetLayout;
 FitRows.prototype._resetLayout = function() {
-  Outlayer.prototype._resetLayout.apply( this.isotope, arguments );
+  // call original _resetLayout
+  __resetLayout.call( this );
   this.x = 0;
   this.y = 0;
   this.maxY = 0;
@@ -38,5 +40,22 @@ FitRows.prototype._getItemLayoutPosition = function( item ) {
 FitRows.prototype._getContainerSize = function() {
   return { height: this.maxY };
 };
+
+return FitRows;
+
+}
+
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( [
+      '../layout-mode'
+    ],
+    fitRowsDefinition );
+} else {
+  // browser global
+  fitRowsDefinition(
+    window.Isotope.layoutMode
+  );
+}
 
 })( window );
