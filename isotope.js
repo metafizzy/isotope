@@ -85,15 +85,18 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   };
 
   Isotope.prototype.layout = function() {
+    // don't animate first layout
+    var isInstant = this._isInitInstant = this.options.isLayoutInstant !== undefined ?
+      this.options.isLayoutInstant : !this._isLayoutInited;
+
     this.filteredItems = this._filter( this.items );
     this._sort();
     // Outlayer.prototype.layout.call( this );
     this._resetLayout();
     this._manageStamps();
 
-    // don't animate first layout
-    var isInstant = this.options.isLayoutInstant !== undefined ?
-      this.options.isLayoutInstant : !this._isLayoutInited;
+    // var isInstant = this.options.isLayoutInstant !== undefined ?
+    //   this.options.isLayoutInstant : !this._isLayoutInited;
     this.layoutItems( this.filteredItems, isInstant );
 
     // flag for initalized
@@ -133,8 +136,18 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
       }
     }
 
+    // HACK
+    // disable transition on init
+    var _transitionDuration = this.options.transitionDuration;
+    if ( this._isInitInstant ) {
+      this.options.transitionDuration = 0;
+    }
     this.reveal( hiddenMatched );
     this.hide( visibleUnmatched );
+    // set back
+    if ( this._isInitInstant ) {
+      this.options.transitionDuration = _transitionDuration;
+    }
 
     return matches;
   };
