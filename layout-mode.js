@@ -4,8 +4,6 @@
 
 // --------------------------  -------------------------- //
 
-// var Isotope = window.Isotope;
-
 function layoutModeDefinition( Outlayer ) {
 
 var layoutMode = {};
@@ -13,6 +11,7 @@ var layoutMode = {};
 layoutMode.modes = {};
 
 layoutMode.create = function( namespace, options ) {
+  // layout mode class
   function LayoutMode( isotope ) {
     this.isotope = isotope;
     // link properties
