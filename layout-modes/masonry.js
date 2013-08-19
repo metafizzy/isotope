@@ -63,7 +63,7 @@ function masonryDefinition( layoutMode, Masonry, getSize ) {
       return;
     }
 
-    this.layout();
+    this.isotope.layout();
 
     delete this.isotope.resizeTimeout;
   };
@@ -76,7 +76,7 @@ function masonryDefinition( layoutMode, Masonry, getSize ) {
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../isotope',
+      '../layout-mode',
       'masonry/masonry',
       'get-size/get-size'
     ],
