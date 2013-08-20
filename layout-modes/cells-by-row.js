@@ -6,11 +6,7 @@ function cellsByRowDefinition( layoutMode, getSize ) {
 
   var CellsByRow = layoutMode.create( 'cellsByRow' );
 
-  var __resetLayout = CellsByRow.prototype._resetLayout;
-
   CellsByRow.prototype._resetLayout = function() {
-    // call super
-    __resetLayout.call( this );
     var containerSize = this.isotope.size;
     this.itemIndex = 0;
 

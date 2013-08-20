@@ -29,6 +29,7 @@ function masonryDefinition( layoutMode, Masonry, getSize ) {
 
   MasonryMode.prototype.getSize = function() {
     this.isotope.getSize();
+    this.size = this.isotope.size;
   };
 
   MasonryMode.prototype._manageStamp = function( stamp ) {

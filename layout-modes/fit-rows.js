@@ -8,10 +8,7 @@ var FitRows = layoutMode.create( 'fitRows', {
   foo: 'bar'
 });
 
-var __resetLayout = FitRows.prototype._resetLayout;
 FitRows.prototype._resetLayout = function() {
-  // call original _resetLayout
-  __resetLayout.call( this );
   this.x = 0;
   this.y = 0;
   this.maxY = 0;

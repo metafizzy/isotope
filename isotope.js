@@ -214,6 +214,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   // -------------------------- methods -------------------------- //
 
   Isotope.prototype._resetLayout = function() {
+    // trigger original reset layout
+    Outlayer.prototype._resetLayout.call( this );
     this._mode()._resetLayout();
   };
 
