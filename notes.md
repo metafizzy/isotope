@@ -1,3 +1,11 @@
+## to do
+
+isOriginTop / isOriginLeft integration
+
+manageStamp
+
+## tests
+
 sortBy an array
 
 sortBy the history
@@ -13,8 +21,6 @@ sortAscending
 sortAscending for object
 
 
----
+## bugs
 
-set default options somewhere
-
-new layout mode comes with those options by default
+click _filter: some_, then while transitioning _filter: all_. The some will be hidden when transition ends

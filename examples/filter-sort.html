@@ -3,37 +3,33 @@
 <head>
   <meta charset="utf-8">
 
-  <title>cellsByRow</title>
+  <title>filter sort</title>
 
   <link rel="stylesheet" href="examples.css" />
   <style>
-    .element.alkali          { width: 170px; height: 120px; }
-    .element.alkaline-earth  {}
-    .element.lanthanoid      { height: 170px; }
-    .element.actinoid        { width: 170px; }
-    .element.transition      { height: 220px; }
-/*    .element.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
-    .element.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
-    .element.other.nonmetal  { background: #00F; background: hsl( 252, 100%, 50%); }
-    .element.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
-    .element.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }*/
+  #container { width: 100%; }
   </style>
-
 </head>
 <body>
 
-  <h1>cellsByRow</h1>
+  <h1>filter sort</h1>
 
 <div id="options">
+  <h2>Filter</h2>
+  <div class="option-set" data-isotope-key="filter">
+    <button data-isotope-value="*">show all</button>
+    <button data-isotope-value=".metal">metal</button>
+    <button data-isotope-value=".post-transition">post-transition</button>
+  </div>
   <h2>Sort</h2>
-  <ul class="option-set">
-    <li><a href="#original-order">original-order</a></li>
-    <li><a href="#number">number</a></li>
-    <li><a href="#name">name</a></li>
-    <li><a href="#symbol">symbol</a></li>
-    <li><a href="#weight">weight</a></li>
-    <li><a href="#category">category</a></li>
-  </ul>
+  <div class="option-set" data-isotope-key="sortBy">
+    <button data-isotope-value="original-order">original-order</button>
+    <button data-isotope-value="number">number</button>
+    <button data-isotope-value="name">name</button>
+    <button data-isotope-value="symbol">symbol</button>
+    <button data-isotope-value="weight">weight</button>
+    <button data-isotope-value="category">category</button>
+  </div>
 </div>
 
 <div id="container">
@@ -153,59 +149,43 @@
 <script src="../bower_components/matches-selector/matches-selector.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
-<script src="../bower_components/masonry/masonry.js"></script>
 
 <script src="../item.js"></script>
 <script src="../layout-mode.js"></script>
 <script src="../isotope.js"></script>
 <script src="../layout-modes/fit-rows.js"></script>
-<script src="../layout-modes/cells-by-row.js"></script>
-<script src="../layout-modes/vertical.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
-    // sortBy: 'symbol',
-    // filter: '.metal',
-    layoutMode: 'cellsByRow',
-    isOriginLeft: false,
-    isOriginTop: false,
-    cellsByRow: {
-      columnWidth: 200,
-      rowHeight: 150
-    },
-    vertical: {
-      horizontalAlignment: 0.5
-    },
+    layoutMode: 'fitRows',
+    transitionDuration: '0.8s',
     getSortData: {
-
       number: '.number parseInt',
       symbol: '.symbol',
       name: '.name',
       category: '[data-category]',
-
       weight: function( itemElem ) {
         // remove parenthesis
         return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
       }
-
     }
   });
 
   var options = document.querySelector('#options');
 
   eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'a' ) ) {
+    if ( !matchesSelector( event.target, 'button' ) ) {
       return;
     }
 
-    // use link's href, remove leading hash
-    var sortBy = event.target.getAttribute('href').slice( 1 );
-    sortBy.slice( 0, 1 );
-    iso.options.sortBy = sortBy;
+    // var opt = {};
+    var key = event.target.parentNode.getAttribute('data-isotope-key');
+    var value = event.target.getAttribute('data-isotope-value');
+    console.log( key, value );
+    iso.options[ key ] = value;
     iso.layout();
-    event.preventDefault();
   });
 
 });
@@ -218,3 +198,6 @@ function getText( elem ) {
 
 </body>
 </html>
+
+
+
