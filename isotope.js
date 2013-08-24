@@ -81,7 +81,11 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   };
 
   Isotope.prototype._mode = function() {
-    return this.modes[ this.options.layoutMode ];
+    var mode = this.modes[ this.options.layoutMode ];
+    if ( !mode ) {
+      throw new Error( 'No layout mode: ' + this.options.layoutMode );
+    }
+    return mode;
   };
 
   Isotope.prototype.layout = function() {
