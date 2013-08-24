@@ -154,6 +154,8 @@
 <script src="../layout-mode.js"></script>
 <script src="../isotope.js"></script>
 <script src="../layout-modes/fit-rows.js"></script>
+<script src="../layout-modes/cells-by-row.js"></script>
+<script src="../layout-modes/vertical.js"></script>
 
 <script>
 docReady( function() {
@@ -161,6 +163,10 @@ docReady( function() {
   var iso = window.iso = new Isotope( container, {
     layoutMode: 'fitRows',
     transitionDuration: '0.8s',
+    cellsByRow: {
+      columnWidth: 130,
+      rowHeight: 140,
+    },
     getSortData: {
       number: '.number parseInt',
       symbol: '.symbol',

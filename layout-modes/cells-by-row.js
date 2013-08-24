@@ -29,10 +29,9 @@ function cellsByRowDefinition( layoutMode, getSize ) {
         // or size of container
         containerSize.innerHeight;
     }
-
+    // set cols
     this.cols = Math.floor( containerSize.innerWidth / this.columnWidth );
     this.cols = Math.max( this.cols, 1 );
-
   };
 
   CellsByRow.prototype._getItemLayoutPosition = function( item ) {
@@ -48,7 +47,7 @@ function cellsByRowDefinition( layoutMode, getSize ) {
 
   CellsByRow.prototype._getContainerSize = function() {
     return {
-      height: ( this.itemIndex / this.cols ) * this.rowHeight
+      height: Math.ceil( this.itemIndex / this.cols ) * this.rowHeight
     };
   };
 
