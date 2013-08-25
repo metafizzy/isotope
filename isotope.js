@@ -88,7 +88,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     return mode;
   };
 
-  Isotope.prototype.layout = function() {
+  Isotope.prototype.layout = function( opts ) {
+    this.option( opts );
+
     // don't animate first layout
     var isInstant = this._isInitInstant = this.options.isLayoutInstant !== undefined ?
       this.options.isLayoutInstant : !this._isLayoutInited;
