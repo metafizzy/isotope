@@ -1,5 +1,7 @@
 ## to do
 
+add horizontal layout modes
+
 isOriginTop / isOriginLeft integration
 
 manageStamp
@@ -23,4 +25,3 @@ sortAscending for object
 
 ## bugs
 
-click _filter: some_, then while transitioning _filter: all_. The some will be hidden when transition ends
