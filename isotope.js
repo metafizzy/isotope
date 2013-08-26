@@ -80,14 +80,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     this.modes[ name ] = new LayoutMode( this );
   };
 
-  Isotope.prototype._mode = function() {
-    var mode = this.modes[ this.options.layoutMode ];
-    if ( !mode ) {
-      throw new Error( 'No layout mode: ' + this.options.layoutMode );
-    }
-    return mode;
-  };
-
   Isotope.prototype.layout = function( opts ) {
     this.option( opts );
 
@@ -219,6 +211,19 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
 
   // -------------------------- methods -------------------------- //
 
+  // get layout mode
+  Isotope.prototype._mode = function() {
+    var layoutMode = this.options.layoutMode;
+    var mode = this.modes[ layoutMode ];
+    if ( !mode ) {
+      throw new Error( 'No layout mode: ' + layoutMode );
+    }
+    // HACK sync mode's options
+    // any options set after init for layout mode need to be synced
+    mode.options = this.options[ layoutMode ];
+    return mode;
+  };
+
   Isotope.prototype._resetLayout = function() {
     // trigger original reset layout
     Outlayer.prototype._resetLayout.call( this );
@@ -239,6 +244,22 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
 
   Isotope.prototype.resize = function() {
     this._mode().resize();
+  };
+
+  // for vertical layout modes
+  Isotope.prototype.resizeVertical = function() {
+    // don't trigger if size did not change
+    var size = getSize( this.element );
+    // check that this.size and size are there
+    // IE8 triggers resize on body size change, so they might not be
+    var hasSizes = this.size && size;
+    if ( hasSizes && size.innerHeight === this.size.innerHeight ) {
+      return;
+    }
+
+    this.layout();
+
+    delete this.resizeTimeout;
   };
 
   return Isotope;
