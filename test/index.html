@@ -6,98 +6,48 @@
   <title>Masonry tests</title>
 
   <link rel="stylesheet" href="tests.css" />
-  <link rel="stylesheet" href="../components/qunit/qunit.css" />
+  <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" />
 
-<script src="../components/classie/classie.js"></script>
-<script src="../components/eventie/eventie.js"></script>
-<script src="../components/doc-ready/doc-ready.js"></script>
-<script src="../components/eventEmitter/EventEmitter.js"></script>
-<script src="../components/eventEmitter/EventEmitter.min.js"></script>
-<script src="../components/get-style-property/get-style-property.js"></script>
-<script src="../components/get-size/get-size.js"></script>
-<script src="../components/jquery-bridget/jquery.bridget.js"></script>
-<script src="../components/matches-selector/matches-selector.js"></script>
-<script src="../components/outlayer/item.js"></script>
-<script src="../components/outlayer/outlayer.js"></script>
-<script src="../components/qunit/qunit.js"></script>
-<script src="../masonry.js"></script>
+<script src="../bower_components/qunit/qunit/qunit.js"></script>
 
-<script src="helpers.js"></script>
-<!-- tests -->
-<script src="basic-layout.js"></script>
-<script src="gutter.js"></script>
-<script src="stamp.js"></script>
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+<script src="../bower_components/masonry/masonry.js"></script>
+
+<script src="../item.js"></script>
+<script src="../layout-mode.js"></script>
+<script src="../isotope.js"></script>
+<script src="../layout-modes/fit-rows.js"></script>
+<script src="../layout-modes/masonry.js"></script>
+
+<script src="sorting1.js"></script>
 
 </head>
 <body>
 
-  <h1>Masonry tests</h1>
+  <h1>Isotope tests</h1>
 
   <div id="qunit"></div>
 
-  <h2>Basic layout top left</h2>
+  <h2>Sorting</h2>
 
-  <div id="basic-layout-top-left" class="container basic-layout">
-    <div class="item"></div>
-    <div class="item h4"></div>
-    <div class="item h3"></div>
-    <div class="item h3"></div>
-    <div class="item w2"></div>
+  <div id="sorting1" class="container">
+    <div class="item"><b>B</b><i>4</i></div>
+    <div class="item"><b>B</b><i>2</i></div>
+    <div class="item"><b>A</b><i>4</i></div>
+    <div class="item"><b>A</b><i>1</i></div>
+    <div class="item"><b>B</b><i>1</i></div>
+    <div class="item"><b>A</b><i>3</i></div>
+    <div class="item"><b>A</b><i>2</i></div>
   </div>
 
-  <h2>Basic layout top right</h2>
-  <div id="basic-layout-top-right" class="container basic-layout">
-    <div class="item"></div>
-    <div class="item h4"></div>
-    <div class="item h3"></div>
-    <div class="item h3"></div>
-    <div class="item w2"></div>
-  </div>
-
-  <h2>Basic layout bottom left</h2>
-  <div id="basic-layout-bottom-left" class="container basic-layout">
-    <div class="item"></div>
-    <div class="item h4"></div>
-    <div class="item h3"></div>
-    <div class="item h3"></div>
-    <div class="item w2"></div>
-  </div>
-
-  <h2>Basic layout bottom right</h2>
-  <div id="basic-layout-bottom-right" class="container basic-layout">
-    <div class="item"></div>
-    <div class="item h4"></div>
-    <div class="item h3"></div>
-    <div class="item h3"></div>
-    <div class="item w2"></div>
-  </div>
-
-  <h2>Gutter</h2>
-  <div id="gutter" class="container has-stamp">
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item h3"></div>
-    <div class="item w2"></div>
-  </div>
-
-  <h2>Stamp</h2>
-  <div id="stamp-top-left" class="container has-stamp">
-    <div class="stamp stamp1"></div>
-    <div class="stamp stamp2"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-  </div>
-
-  <div id="stamp-bottom-right" class="container has-stamp">
-    <div class="stamp stamp1"></div>
-    <div class="stamp stamp2"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <div class="item"></div>
-  </div>
 
 </body>
 </html>
