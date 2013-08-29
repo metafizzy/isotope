@@ -18,7 +18,6 @@ function horizontalDefinition( layoutMode ) {
       this.options.verticalAlignment;
     var x = this.x;
     this.x += item.size.outerWidth;
-    console.log( x, y );
     return { x: x, y: y };
   };
 

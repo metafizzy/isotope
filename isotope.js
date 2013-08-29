@@ -81,20 +81,17 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   };
 
   Isotope.prototype.layout = function( opts ) {
+    // set any options pass
     this.option( opts );
-
     // don't animate first layout
     var isInstant = this._isInitInstant = this.options.isLayoutInstant !== undefined ?
       this.options.isLayoutInstant : !this._isLayoutInited;
-
+      //
     this.filteredItems = this._filter( this.items );
     this._sort();
-    // Outlayer.prototype.layout.call( this );
+    // layout flow
     this._resetLayout();
     this._manageStamps();
-
-    // var isInstant = this.options.isLayoutInstant !== undefined ?
-    //   this.options.isLayoutInstant : !this._isLayoutInited;
     this.layoutItems( this.filteredItems, isInstant );
 
     // flag for initalized
