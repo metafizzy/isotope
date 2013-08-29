@@ -1,6 +1,6 @@
 ## to do
 
-add horizontal layout modes
+masonryHorizontal
 
 isOriginTop / isOriginLeft integration
 
