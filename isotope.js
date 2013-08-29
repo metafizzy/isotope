@@ -259,8 +259,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     }
 
     this.layout();
-
-    delete this.resizeTimeout;
   };
 
   return Isotope;
