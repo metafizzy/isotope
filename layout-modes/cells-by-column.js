@@ -35,7 +35,7 @@ function cellsByColumnDefinition( layoutMode ) {
   };
 
   CellsByColumn.prototype.resize = function() {
-    this.isotope.resizeVertical();
+    this.resizeVertical();
   };
 
   return CellsByColumn;

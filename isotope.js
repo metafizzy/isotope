@@ -247,20 +247,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     this._mode().resize();
   };
 
-  // for vertical layout modes
-  Isotope.prototype.resizeVertical = function() {
-    // don't trigger if size did not change
-    var size = getSize( this.element );
-    // check that this.size and size are there
-    // IE8 triggers resize on body size change, so they might not be
-    var hasSizes = this.size && size;
-    if ( hasSizes && size.innerHeight === this.size.innerHeight ) {
-      return;
-    }
-
-    this.layout();
-  };
-
   return Isotope;
 }
 

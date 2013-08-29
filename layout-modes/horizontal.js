@@ -27,7 +27,7 @@ function horizontalDefinition( layoutMode ) {
   };
 
   Horizontal.prototype.resize = function() {
-    this.isotope.resizeVertical();
+    this.resizeVertical();
   };
 
   return Horizontal;

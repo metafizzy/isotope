@@ -37,7 +37,7 @@ function fitColumnsDefinition( layoutMode ) {
   };
 
   FitColumns.prototype.resize = function() {
-    this.isotope.resizeVertical();
+    this.resizeVertical();
   };
 
   return FitColumns;

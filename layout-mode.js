@@ -63,6 +63,20 @@ layoutMode.create = function( namespace, options ) {
     this._outlayerMethod( 'resize', arguments );
   };
 
+  // for horizontal layout modes, check vertical size
+  LayoutMode.prototype.resizeVertical = function() {
+    // don't trigger if size did not change
+    var size = getSize( this.isotope.element );
+    // check that this.size and size are there
+    // IE8 triggers resize on body size change, so they might not be
+    var hasSizes = this.isotope.size && size;
+    if ( hasSizes && size.innerHeight === this.isotope.size.innerHeight ) {
+      return;
+    }
+
+    this.isotope.layout();
+  };
+
   // ----- measurements ----- //
 
   LayoutMode.prototype.getColumnWidth = function() {
