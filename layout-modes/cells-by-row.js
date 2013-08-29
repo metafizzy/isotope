@@ -2,35 +2,18 @@
 
 'use strict';
 
-function cellsByRowDefinition( layoutMode, getSize ) {
+function cellsByRowDefinition( layoutMode ) {
 
   var CellsByRow = layoutMode.create( 'cellsByRow' );
 
   CellsByRow.prototype._resetLayout = function() {
-    var containerSize = this.isotope.size;
+    // reset properties
     this.itemIndex = 0;
-
-    this._getMeasurement( 'columnWidth', 'outerWidth' );
-    this._getMeasurement( 'rowHeight', 'outerHeight' );
-
-    var firstItem = this.items[0];
-    var firstItemSize = firstItem && firstItem.element && getSize( firstItem.element );
-
-    if ( !this.columnWidth ) {
-      // columnWidth fall back to item of first element
-      this.columnWidth = firstItemSize ? firstItemSize.outerWidth :
-        // or size of container
-        containerSize.innerWidth;
-    }
-
-    if ( !this.rowHeight ) {
-      // rowHeight fall back to item of first element
-      this.rowHeight = firstItemSize ? firstItemSize.outerHeight :
-        // or size of container
-        containerSize.innerHeight;
-    }
+    // measurements
+    this.getColumnWidth();
+    this.getRowHeight();
     // set cols
-    this.cols = Math.floor( containerSize.innerWidth / this.columnWidth );
+    this.cols = Math.floor( this.isotope.size.innerWidth / this.columnWidth );
     this.cols = Math.max( this.cols, 1 );
   };
 

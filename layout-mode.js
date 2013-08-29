@@ -4,7 +4,7 @@
 
 // --------------------------  -------------------------- //
 
-function layoutModeDefinition( Outlayer ) {
+function layoutModeDefinition( getSize, Outlayer ) {
 
 var layoutMode = {};
 
@@ -35,7 +35,7 @@ layoutMode.create = function( namespace, options ) {
   // register in Isotope
   layoutMode.modes[ namespace ] = LayoutMode;
 
-  // -------------------------- methods -------------------------- //
+  // ----- methods ----- //
 
   // default method handler
   // trigger Outlayer method with Isotope as this
@@ -63,6 +63,41 @@ layoutMode.create = function( namespace, options ) {
     this._outlayerMethod( 'resize', arguments );
   };
 
+  // ----- measurements ----- //
+
+  LayoutMode.prototype.getColumnWidth = function() {
+    this._getMeasurement( 'columnWidth', 'outerWidth' );
+    if ( this.columnWidth ) {
+      // got column width, we can chill
+      return;
+    }
+    // columnWidth fall back to item of first element
+    var firstItemSize = this.getFirstItemSize();
+    this.columnWidth = firstItemSize && firstItemSize.outerWidth ||
+      // or size of container
+      this.isotope.size.innerWidth;
+  };
+
+  LayoutMode.prototype.getRowHeight = function() {
+    this._getMeasurement( 'rowHeight', 'outerHeight' );
+    if ( this.rowHeight ) {
+      // got column width, we can chill
+      return;
+    }
+    // columnWidth fall back to item of first element
+    var firstItemSize = this.getFirstItemSize();
+    this.rowHeight = firstItemSize && firstItemSize.outerHeight ||
+      // or size of container
+      this.isotope.size.innerHeight;
+  };
+
+  LayoutMode.prototype.getFirstItemSize = function() {
+    var firstItem = this.isotope.filteredItems[0];
+    return firstItem && firstItem.element && getSize( firstItem.element );
+  };
+
+  // -----  ----- //
+
   return LayoutMode;
 };
 
@@ -74,6 +109,7 @@ return layoutMode;
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
+      'get-size/get-size',
       'outlayer/outlayer'
     ],
     layoutModeDefinition );
@@ -81,6 +117,7 @@ if ( typeof define === 'function' && define.amd ) {
   // browser global
   window.Isotope = window.Isotope || {};
   window.Isotope.layoutMode = layoutModeDefinition(
+    window.getSize,
     window.Outlayer
   );
 }
