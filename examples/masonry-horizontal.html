@@ -20,6 +20,27 @@
   .element.lanthanoid      { height: 190px; }
   .element.actinoid        { width: 170px; }
   .element.transition      { width: 220px; }
+
+  .stamp {
+    background: #DDD;
+    border: 2px dotted;
+    position: absolute;
+  }
+
+  .stamp1 {
+    height: 30%;
+    width: 80px;
+    left: 30px;
+    top: 10%;
+  }
+
+  .stamp2 {
+    height: 200px;
+    width: 40px;
+    left: 15px;
+    top: 100px;
+  }
+
   </style>
 </head>
 <body>
@@ -45,6 +66,9 @@
 </div>
 
 <div id="container">
+  <div class="stamp stamp1"></div>
+  <div class="stamp stamp2"></div>
+
 
   <div class="element transition metal   " data-symbol="Hg" data-category="transition">
     <p class="number">80</p>
@@ -175,7 +199,7 @@ docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
     itemSelector: '.element',
-    // stamp: '.stamp',
+    stamp: '.stamp',
     layoutMode: 'masonryHorizontal',
     transitionDuration: '0.8s',
     masonryHorizontal: {

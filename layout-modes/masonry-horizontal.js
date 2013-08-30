@@ -95,16 +95,16 @@ function masonryHorizontalDefinition( getSize, layoutMode ) {
 
   MasonryHorizontal.prototype._manageStamp = function( stamp ) {
     var stampSize = getSize( stamp );
-    var offset = this._getElementOffset( stamp );
+    var offset = this.isotope._getElementOffset( stamp );
     // get the rows that this stamp affects
-    var firstY = this.options.isOriginTop ? offset.top : offset.bottom;
+    var firstY = this.isotope.options.isOriginTop ? offset.top : offset.bottom;
     var lastY = firstY + stampSize.outerHeight;
     var firstRow = Math.floor( firstY / this.rowHeight );
     firstRow = Math.max( 0, firstRow );
     var lastRow = Math.floor( lastY / this.rowHeight );
     lastRow = Math.min( this.rows - 1, lastRow );
-    // set rowXs to bottom of the stamp
-    var stampMaxX = ( this.options.isOriginLeft ? offset.left : offset.right ) +
+    // set rowXs to outside edge of the stamp
+    var stampMaxX = ( this.isotope.options.isOriginLeft ? offset.left : offset.right ) +
       stampSize.outerWidth;
     for ( var i = firstRow; i <= lastRow; i++ ) {
       this.rowXs[i] = Math.max( stampMaxX, this.rowXs[i] );
