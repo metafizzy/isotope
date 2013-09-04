@@ -181,9 +181,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     }
     // concat all sortBy and sortHistory
     var sortBys = [].concat.apply( sortByOpt, this.sortHistory );
-    var sortAsc = this.options.sortAscending;
     // sort magic
-    this.filteredItems.sort( function sorter( itemA, itemB ) {
+    var sorter = getSorter( sortBys, this.options.sortAscending );
+    this.filteredItems.sort( sorter );
+    // keep track of sortBy History
+    var lastSortBy = this.sortHistory[ this.sortHistory.length - 1 ];
+    if ( sortByOpt !== lastSortBy ) {
+      // add to front, oldest goes in last
+      this.sortHistory.unshift( sortByOpt );
+    }
+  };
+
+  // returns a function used for sorting
+  function getSorter( sortBys, sortAsc ) {
+    return function sorter( itemA, itemB ) {
       // cycle through all sortKeys
       for ( var i = 0, len = sortBys.length; i < len; i++ ) {
         var sortBy = sortBys[i];
@@ -197,14 +208,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
         }
       }
       return 0;
-    });
-    // keep track of sortBy History
-    var lastSortBy = this.sortHistory[ this.sortHistory.length - 1 ];
-    if ( sortByOpt !== lastSortBy ) {
-      // add to front, oldest goes in last
-      this.sortHistory.unshift( sortByOpt );
-    }
-  };
+    };
+  }
 
   // -------------------------- methods -------------------------- //
 

@@ -193,7 +193,8 @@ docReady( function() {
 
     if ( key === 'filter' && value === 'number-greater-than-50' ) {
       value = function( elem ) {
-        return parseInt( elem.querySelector('.number').textContent, 10 ) > 40;
+        var numberText = getText( elem.querySelector('.number') );
+        return parseInt( numberText, 10 ) > 40;
       };
     }
     console.log( key, value );
