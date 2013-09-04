@@ -20,6 +20,7 @@
     <button data-isotope-value="*">show all</button>
     <button data-isotope-value=".metal">metal</button>
     <button data-isotope-value=".post-transition">post-transition</button>
+    <button data-isotope-value="number-greater-than-50">number > 50</button>
   </div>
   <h2>Sort</h2>
   <div class="option-set" data-isotope-key="sortBy">
@@ -189,6 +190,12 @@ docReady( function() {
     // var opt = {};
     var key = event.target.parentNode.getAttribute('data-isotope-key');
     var value = event.target.getAttribute('data-isotope-value');
+
+    if ( key === 'filter' && value === 'number-greater-than-50' ) {
+      value = function( elem ) {
+        return parseInt( elem.querySelector('.number').textContent, 10 ) > 40;
+      };
+    }
     console.log( key, value );
     iso.options[ key ] = value;
     iso.layout();
