@@ -57,8 +57,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     Outlayer.prototype.reloadItems.call( this );
   };
 
-  Isotope.prototype._getItems = function() {
-    var items = Outlayer.prototype._getItems.apply( this, arguments );
+  Isotope.prototype._itemize = function() {
+    var items = Outlayer.prototype._itemize.apply( this, arguments );
     // assign ID for original-order
     for ( var i=0, len = items.length; i < len; i++ ) {
       var item = items[i];
