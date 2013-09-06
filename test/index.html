@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Masonry tests</title>
+  <title>Isotope tests</title>
 
   <link rel="stylesheet" href="tests.css" />
   <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" />
@@ -28,6 +28,7 @@
 <script src="../layout-modes/masonry.js"></script>
 
 <script src="sorting.js"></script>
+<script src="get-sort-data.js"></script>
 
 </head>
 <body>
@@ -48,6 +49,15 @@
     <div class="item"><b>A</b><i>2</i></div>
   </div>
 
+  <h2>getSortData</h2>
+
+  <div id="get-sort-data" class="container">
+    <div class="item" data-ninja-turtle="leonardo">
+      <span class="fruit">watermelon</span>
+      <b>3.14</b>
+      <i>42</i>
+    </div>
+  </div>
 
 </body>
 </html>

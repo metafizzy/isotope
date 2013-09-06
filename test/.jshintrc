@@ -5,8 +5,7 @@
   "undef": true,
   "unused": true,
   "predef": {
-    "Masonry": false,
-    "checkItemPositions": false,
+    "Isotope": false,
 
     "asyncTest": false,
     "deepEqual": false,

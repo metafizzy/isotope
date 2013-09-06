@@ -2,8 +2,6 @@
 
 ## tests
 
-getSortData shorthand
-
 filter
 
 updateSortData
