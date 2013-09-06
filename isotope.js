@@ -8,9 +8,6 @@
 
 'use strict';
 
-// vars
-// var document = window.document;
-
 // -------------------------- helpers -------------------------- //
 
 // extend objects
@@ -20,7 +17,6 @@ function extend( a, b ) {
   }
   return a;
 }
-
 
 // -------------------------- isotopeDefinition -------------------------- //
 
@@ -118,7 +114,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
       }
       // add item to either matched or unmatched group
       var isMatched = test( item );
-      item.isFilterMatched = isMatched;
+      // item.isFilterMatched = isMatched;
       // add to matches if its a match
       if ( isMatched ) {
         matches.push( item );
