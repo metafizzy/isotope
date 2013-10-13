@@ -80,3 +80,25 @@
 .element.other.nonmetal  { background: #00F; background: hsl( 252, 100%, 50%); }
 .element.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
 .element.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
+
+/* stamps */
+
+.stamp {
+  position: absolute;
+  background: hsla(0, 100%, 50%, 0.8);
+  border: 1px solid;
+}
+
+.stamp1 {
+  left: 10%;
+  top: 20px;
+  width: 20%;
+  height: 200px;
+}
+
+.stamp2 {
+  right: 200px;
+  top: 100px;
+  width: 100px;
+  height: 100px;
+}
