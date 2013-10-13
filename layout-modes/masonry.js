@@ -65,8 +65,6 @@ function masonryDefinition( layoutMode, Masonry, getSize ) {
     }
 
     this.isotope.layout();
-
-    delete this.isotope.resizeTimeout;
   };
 
   return MasonryMode;
