@@ -95,7 +95,7 @@ layoutMode.create = function( namespace, options ) {
   LayoutMode.prototype.getRowHeight = function() {
     this._getMeasurement( 'rowHeight', 'outerHeight' );
     if ( this.rowHeight ) {
-      // got column width, we can chill
+      // got rowHeight, we can chill
       return;
     }
     // columnWidth fall back to item of first element
