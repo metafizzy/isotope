@@ -21,8 +21,6 @@ layoutMode.create = function( namespace, options ) {
       this.element = isotope.element;
       this.items = isotope.filteredItems;
       this.size = isotope.size;
-      // this.getSize = isotope.getSize;
-      // this._getElementOffset = isotope._getElementOffset;
     }
   }
 
@@ -35,41 +33,33 @@ layoutMode.create = function( namespace, options ) {
   // register in Isotope
   layoutMode.modes[ namespace ] = LayoutMode;
 
-  // ----- methods ----- //
 
-  // default method handler
-  // trigger Outlayer method with Isotope as this
-  LayoutMode.prototype._outlayerMethod = function( methodName, args ) {
-    return Outlayer.prototype[ methodName ].apply( this.isotope, args );
-  };
+  /**
+   * some methods should just defer to default Outlayer method
+   * and reference the Isotope instance as `this`
+  **/
+  ( function() {
+    var facadeMethods = [
+      '_resetLayout',
+      '_getItemLayoutPosition',
+      '_manageStamp',
+      '_getContainerSize',
+      '_getElementOffset',
+      'resize',
+      'layout'
+    ];
 
-  LayoutMode.prototype._resetLayout = function() {
-    this._outlayerMethod( '_resetLayout', arguments );
-  };
+    for ( var i=0, len = facadeMethods.length; i < len; i++ ) {
+      var methodName = facadeMethods[i];
+      LayoutMode.prototype[ methodName ] = getOutlayerMethod( methodName );
+    }
 
-  LayoutMode.prototype._getItemLayoutPosition = function( /* item  */) {
-    return this._outlayerMethod( '_getItemLayoutPosition', arguments );
-  };
-
-  LayoutMode.prototype._manageStamp = function(/* stamp */) {
-    this._outlayerMethod( '_manageStamp', arguments );
-  };
-
-  LayoutMode.prototype._getContainerSize = function() {
-    return this._outlayerMethod( '_getContainerSize', arguments );
-  };
-
-  LayoutMode.prototype._getElementOffset = function(/* elem */) {
-    return this._outlayerMethod( '_getElementOffset', arguments );
-  };
-
-  LayoutMode.prototype.resize = function() {
-    this._outlayerMethod( 'resize', arguments );
-  };
-
-  LayoutMode.prototype.layout = function() {
-    this._outlayerMethod( 'layout', arguments );
-  };
+    function getOutlayerMethod( methodName ) {
+      return function() {
+        return Outlayer.prototype[ methodName ].apply( this.isotope, arguments );
+      };
+    }
+  })();
 
   // -----  ----- //
 
