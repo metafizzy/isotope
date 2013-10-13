@@ -48,6 +48,8 @@ Item.prototype._create = function() {
   this.sortData = {};
 };
 
+// TODO - move this to Isotope, so it isn't munging sorter
+// for every item
 Item.prototype.updateSortData = function() {
   // default sorters
   this.sortData.id = this.id;
@@ -125,6 +127,12 @@ function getParser( arg ) {
       parser = function( val ) {
         return parseFloat( val );
       };
+    default :
+      // just return val if parser isn't one of these
+      // TODO - console log that that parser doesn't exist
+      parser = function( val ) {
+        return val;
+      }
   }
   return parser;
 }
