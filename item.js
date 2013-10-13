@@ -1,5 +1,5 @@
 /**
- * Packery Item Element
+ * Isotope Item
 **/
 
 ( function( window ) {
@@ -84,11 +84,11 @@ function mungeSorter( sorter ) {
   var parser = getParser( args[1] );
   // parse the value, if there was a parser
   sorter = parser ? function( elem ) {
-    return parser( getValue( elem ) );
+    return elem && parser( getValue( elem ) );
   } :
   // otherwise just return value
   function( elem ) {
-    return getValue( elem );
+    return elem && getValue( elem );
   };
 
   return sorter;
@@ -105,7 +105,8 @@ function getValueGetter( attr, query ) {
   } else {
     // otherwise, assume its a querySelector, and get its text
     getValue = function( elem ) {
-      return getText( elem.querySelector( query ) );
+      var child = elem.querySelector( query );
+      return child && getText( child );
     };
   }
   return getValue;
