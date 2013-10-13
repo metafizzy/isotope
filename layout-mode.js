@@ -59,9 +59,19 @@ layoutMode.create = function( namespace, options ) {
     return this._outlayerMethod( '_getContainerSize', arguments );
   };
 
+  LayoutMode.prototype._getElementOffset = function(/* elem */) {
+    return this._outlayerMethod( '_getElementOffset', arguments );
+  };
+
   LayoutMode.prototype.resize = function() {
     this._outlayerMethod( 'resize', arguments );
   };
+
+  LayoutMode.prototype.layout = function() {
+    this._outlayerMethod( 'layout', arguments );
+  };
+
+  // -----  ----- //
 
   // for horizontal layout modes, check vertical size
   LayoutMode.prototype.resizeVertical = function() {
@@ -108,6 +118,13 @@ layoutMode.create = function( namespace, options ) {
   LayoutMode.prototype.getFirstItemSize = function() {
     var firstItem = this.isotope.filteredItems[0];
     return firstItem && firstItem.element && getSize( firstItem.element );
+  };
+
+  // ----- methods that should reference isotope ----- //
+
+  LayoutMode.prototype.getSize = function() {
+    this.isotope.getSize();
+    this.size = this.isotope.size;
   };
 
   // -----  ----- //

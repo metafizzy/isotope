@@ -21,51 +21,20 @@ function extend( a, b ) {
 // -------------------------- masonryDefinition -------------------------- //
 
 // used for AMD definition and requires
-function masonryDefinition( layoutMode, Masonry, getSize ) {
+function masonryDefinition( layoutMode, Masonry ) {
   // create an Outlayer layout class
   var MasonryMode = layoutMode.create('masonry');
+
+  // save on to these methods
+  var _getElementOffset = MasonryMode.prototype._getElementOffset;
+  var layout = MasonryMode.prototype.layout;
+
   // sub-class Masonry
   extend( MasonryMode.prototype, Masonry.prototype );
 
-  MasonryMode.prototype.getSize = function() {
-    this.isotope.getSize();
-    this.size = this.isotope.size;
-  };
-
-  MasonryMode.prototype._manageStamp = function( stamp ) {
-    var stampSize = getSize( stamp );
-    var offset = this.isotope._getElementOffset( stamp );
-    // get the columns that this stamp affects
-    var firstX = this.isotope.options.isOriginLeft ? offset.left : offset.right;
-    var lastX = firstX + stampSize.outerWidth;
-    var firstCol = Math.floor( firstX / this.columnWidth );
-    firstCol = Math.max( 0, firstCol );
-    var lastCol = Math.floor( lastX / this.columnWidth );
-    lastCol = Math.min( this.cols - 1, lastCol );
-    // set colYs to bottom of the stamp
-    var stampMaxY = ( this.isotope.options.isOriginTop ? offset.top : offset.bottom ) +
-      stampSize.outerHeight;
-    for ( var i = firstCol; i <= lastCol; i++ ) {
-      this.colYs[i] = Math.max( stampMaxY, this.colYs[i] );
-    }
-  };
-
-  // debounced, layout on resize
-  // HEADS UP this overwrites Outlayer.resize
-  // Any changes in Outlayer.resize need to be manually added here
-  MasonryMode.prototype.resize = function() {
-    // don't trigger if size did not change
-    var container = this._getSizingContainer();
-    var size = getSize( container );
-    // check that this.size and size are there
-    // IE8 triggers resize on body size change, so they might not be
-    var hasSizes = this.size && size;
-    if ( hasSizes && size.innerWidth === this._containerWidth ) {
-      return;
-    }
-
-    this.isotope.layout();
-  };
+  // set back, as it was overwritten by Masonry
+  MasonryMode.prototype._getElementOffset = _getElementOffset;
+  MasonryMode.prototype.layout = layout;
 
   return MasonryMode;
 }
@@ -76,16 +45,14 @@ if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
       '../layout-mode',
-      'masonry/masonry',
-      'get-size/get-size'
+      'masonry/masonry'
     ],
     masonryDefinition );
 } else {
   // browser global
   masonryDefinition(
     window.Isotope.layoutMode,
-    window.Masonry,
-    window.getSize
+    window.Masonry
   );
 }
 
