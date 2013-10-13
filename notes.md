@@ -14,4 +14,6 @@ layoutComplete test after
 
 provide nice error if getText doesn't provide an element
 
+move munge sorter to separate file?
+
 ## bugs

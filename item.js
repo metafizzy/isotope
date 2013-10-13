@@ -6,30 +6,6 @@
 
 'use strict';
 
-// -------------------------- helpers -------------------------- //
-
-// trim
-
-var trim = String.prototype.trim ?
-  function( str ) {
-    return str.trim();
-  } :
-  function( str ) {
-    return str.replace( /^\s+|\s+$/g, '' );
-  };
-
-
-var docElem = document.documentElement;
-
-var getText = docElem.textContent ?
-  function( elem ) {
-    return elem.textContent;
-  } :
-  function( elem ) {
-    return elem.innerText;
-  };
-
-
 // -------------------------- Item -------------------------- //
 
 function itemDefinition( Outlayer ) {
@@ -48,8 +24,6 @@ Item.prototype._create = function() {
   this.sortData = {};
 };
 
-// TODO - move this to Isotope, so it isn't munging sorter
-// for every item
 Item.prototype.updateSortData = function() {
   // default sorters
   this.sortData.id = this.id;
@@ -58,84 +32,12 @@ Item.prototype.updateSortData = function() {
   this.sortData.random = Math.random();
   // go thru getSortData obj and apply the sorters
   var getSortData = this.layout.options.getSortData;
+  var sorters = this.layout._sorters;
   for ( var key in getSortData ) {
-    var sorter = getSortData[ key ];
-    sorter = mungeSorter( sorter );
+    var sorter = sorters[ key ];
     this.sortData[ key ] = sorter( this.element, this );
   }
 };
-
-// add a magic layer to sorters
-// for convienent shorthands
-// .foo-bar will use the text of .foo-bar querySelector
-// [foo-bar] will use attribute
-// you can also add parser
-// `.foo-bar parseInt` will parse that as a number
-function mungeSorter( sorter ) {
-  if ( typeof sorter !== 'string' ) {
-    return sorter;
-  }
-  // parse the sorter string
-  var args = trim( sorter ).split(' ');
-  var query = args[0];
-  // check if query looks like [an-attribute]
-  var attrMatch = query.match( /^\[(.+)\]$/ );
-  var attr = attrMatch && attrMatch[1];
-  var getValue = getValueGetter( attr, query );
-  // use second argument as a parser
-  var parser = getParser( args[1] );
-  // parse the value, if there was a parser
-  sorter = parser ? function( elem ) {
-    return elem && parser( getValue( elem ) );
-  } :
-  // otherwise just return value
-  function( elem ) {
-    return elem && getValue( elem );
-  };
-
-  return sorter;
-}
-
-// get an attribute getter, or get text of the querySelector
-function getValueGetter( attr, query ) {
-  var getValue;
-  // if query looks like [foo-bar], get attribute
-  if ( attr ) {
-    getValue = function( elem ) {
-      return elem.getAttribute( attr );
-    };
-  } else {
-    // otherwise, assume its a querySelector, and get its text
-    getValue = function( elem ) {
-      var child = elem.querySelector( query );
-      return child && getText( child );
-    };
-  }
-  return getValue;
-}
-
-// return a parser function if arg matches
-function getParser( arg ) {
-  var parser;
-  switch ( arg ) {
-    case 'parseInt' :
-      parser = function( val ) {
-        return parseInt( val, 10 );
-      };
-      break;
-    case 'parseFloat' :
-      parser = function( val ) {
-        return parseFloat( val );
-      };
-    default :
-      // just return val if parser isn't one of these
-      // TODO - console log that that parser doesn't exist
-      parser = function( val ) {
-        return val;
-      }
-  }
-  return parser;
-}
 
 return Item;
 

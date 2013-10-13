@@ -18,6 +18,24 @@ function extend( a, b ) {
   return a;
 }
 
+var trim = String.prototype.trim ?
+  function( str ) {
+    return str.trim();
+  } :
+  function( str ) {
+    return str.replace( /^\s+|\s+$/g, '' );
+  };
+
+var docElem = document.documentElement;
+
+var getText = docElem.textContent ?
+  function( elem ) {
+    return elem.textContent;
+  } :
+  function( elem ) {
+    return elem.innerText;
+  };
+
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
@@ -41,6 +59,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     for ( var name in layoutMode.modes ) {
       this._initLayoutMode( name );
     }
+    // functions that sort items
+    this._sorters = {};
     // keep of track of sortBys
     this.sortHistory = [ 'original-order' ];
     this.updateSortData();
@@ -158,16 +178,110 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     return test;
   }
 
-  // -------------------------- sort -------------------------- //
+  // -------------------------- sorting -------------------------- //
 
   Isotope.prototype.updateSortData = function( items ) {
+    // update sorters
+    var getSortData = this.options.getSortData;
+    for ( var key in getSortData ) {
+      var sorter = getSortData[ key ];
+      this._sorters[ key ] = mungeSorter( sorter );
+    }
+    // update item sort data
     // default to all items if none are passed in
     items = items || this.items;
     for ( var i=0, len = items.length; i < len; i++ ) {
       var item = items[i];
+      if ( item.isIgnored ) {
+        continue;
+      }
       item.updateSortData();
     }
   };
+
+  // ----- munge sorter ----- //
+
+  // encapsulate this, as we just need mungeSorter
+  // other functions in here are just for munging
+  var mungeSorter = ( function() {
+    // add a magic layer to sorters for convienent shorthands
+    // `.foo-bar` will use the text of .foo-bar querySelector
+    // `[foo-bar]` will use attribute
+    // you can also add parser
+    // `.foo-bar parseInt` will parse that as a number
+    function mungeSorter( sorter ) {
+      // if not a string, return function or whatever it is
+      if ( typeof sorter !== 'string' ) {
+        return sorter;
+      }
+      // parse the sorter string
+      var args = trim( sorter ).split(' ');
+      var query = args[0];
+      // check if query looks like [an-attribute]
+      var attrMatch = query.match( /^\[(.+)\]$/ );
+      var attr = attrMatch && attrMatch[1];
+      var getValue = getValueGetter( attr, query );
+      // use second argument as a parser
+      var parser = getParser( args[1] );
+      // parse the value, if there was a parser
+      sorter = parser ? function( elem ) {
+        return elem && parser( getValue( elem ) );
+      } :
+      // otherwise just return value
+      function( elem ) {
+        return elem && getValue( elem );
+      };
+
+      return sorter;
+    }
+
+    // get an attribute getter, or get text of the querySelector
+    function getValueGetter( attr, query ) {
+      var getValue;
+      // if query looks like [foo-bar], get attribute
+      if ( attr ) {
+        getValue = function( elem ) {
+          return elem.getAttribute( attr );
+        };
+      } else {
+        // otherwise, assume its a querySelector, and get its text
+        getValue = function( elem ) {
+          var child = elem.querySelector( query );
+          return child && getText( child );
+        };
+      }
+      return getValue;
+    }
+
+    // return a parser function if arg matches
+    function getParser( arg ) {
+      var parser;
+      switch ( arg ) {
+        case 'parseInt' :
+          parser = function( val ) {
+            return parseInt( val, 10 );
+          };
+          break;
+        case 'parseFloat' :
+          parser = function( val ) {
+            return parseFloat( val );
+          };
+          break;
+        default :
+          // just return val if parser isn't one of these
+          // TODO - console log that that parser doesn't exist
+          parser = function( val ) {
+            return val;
+          };
+      }
+      return parser;
+    }
+
+    return mungeSorter;
+  })();
+
+
+  // ----- sort method ----- //
 
   // sort filteredItem order
   Isotope.prototype._sort = function() {
@@ -178,8 +292,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     // concat all sortBy and sortHistory
     var sortBys = [].concat.apply( sortByOpt, this.sortHistory );
     // sort magic
-    var sorter = getSorter( sortBys, this.options.sortAscending );
-    this.filteredItems.sort( sorter );
+    var itemSorter = getItemSorter( sortBys, this.options.sortAscending );
+    this.filteredItems.sort( itemSorter );
     // keep track of sortBy History
     var lastSortBy = this.sortHistory[ this.sortHistory.length - 1 ];
     if ( sortByOpt !== lastSortBy ) {
@@ -189,7 +303,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   };
 
   // returns a function used for sorting
-  function getSorter( sortBys, sortAsc ) {
+  function getItemSorter( sortBys, sortAsc ) {
     return function sorter( itemA, itemB ) {
       // cycle through all sortKeys
       for ( var i = 0, len = sortBys.length; i < len; i++ ) {
