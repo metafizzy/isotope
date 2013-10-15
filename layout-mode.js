@@ -65,29 +65,32 @@ function layoutModeDefinition( getSize, Outlayer ) {
   // ----- measurements ----- //
 
   LayoutMode.prototype.getColumnWidth = function() {
-    this._getMeasurement( 'columnWidth', 'outerWidth' );
-    if ( this.columnWidth ) {
-      // got column width, we can chill
-      return;
-    }
-    // columnWidth fall back to item of first element
-    var firstItemSize = this.getFirstItemSize();
-    this.columnWidth = firstItemSize && firstItemSize.outerWidth ||
-      // or size of container
-      this.isotope.size.innerWidth;
+    this.getSegmentSize( 'column', 'Width' );
   };
 
   LayoutMode.prototype.getRowHeight = function() {
-    this._getMeasurement( 'rowHeight', 'outerHeight' );
-    if ( this.rowHeight ) {
-      // got rowHeight, we can chill
+    this.getSegmentSize( 'row', 'Height' );
+  };
+
+  /**
+   * get columnWidth or rowHeight
+   * segment: 'column' or 'row'
+   * size 'Width' or 'Height'
+  **/
+  LayoutMode.prototype.getSegmentSize = function( segment, size ) {
+    var segmentName = segment + size;
+    var outerSize = 'outer' + size;
+    // columnWidth / outerWidth // rowHeight / outerHeight
+    this._getMeasurement( segmentName, outerSize );
+    // got rowHeight or columnWidth, we can chill
+    if ( this[ segmentName ] ) {
       return;
     }
-    // columnWidth fall back to item of first element
+    // fall back to item of first element
     var firstItemSize = this.getFirstItemSize();
-    this.rowHeight = firstItemSize && firstItemSize.outerHeight ||
+    this.rowHeight = firstItemSize && firstItemSize[ outerSize ] ||
       // or size of container
-      this.isotope.size.innerHeight;
+      this.isotope.size[ 'inner' + size ];
   };
 
   LayoutMode.prototype.getFirstItemSize = function() {
