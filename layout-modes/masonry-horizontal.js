@@ -20,7 +20,7 @@ var indexOf = Array.prototype.indexOf ?
 
 // -------------------------- definition -------------------------- //
 
-function masonryHorizontalDefinition( getSize, layoutMode ) {
+function masonryHorizontalDefinition( getSize, LayoutMode ) {
   // create an Outlayer layout class
   var MasonryHorizontal = LayoutMode.create('masonryHorizontal');
 
