@@ -8,7 +8,8 @@ test( 'getSortData', function() {
       ninjaTurtle: '[data-ninja-turtle]',
       fruit: 'span.fruit',
       b: 'b parseFloat',
-      i: 'i parseInt'
+      i: 'i parseInt',
+      bbroke: 'b foobar'
     }
   });
 
@@ -18,5 +19,6 @@ test( 'getSortData', function() {
   equal( item.sortData.fruit, 'watermelon', 'query selector shorthand' );
   equal( item.sortData.b, 3.14, 'parseFloat parser' );
   equal( item.sortData.i, 42, 'parseInt parser' );
+  equal( item.sortData.bbroke, '3.14', 'default nonparser' );
 
 });
