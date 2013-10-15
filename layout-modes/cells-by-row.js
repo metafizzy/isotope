@@ -2,9 +2,9 @@
 
 'use strict';
 
-function cellsByRowDefinition( layoutMode ) {
+function cellsByRowDefinition( LayoutMode ) {
 
-  var CellsByRow = layoutMode.create( 'cellsByRow' );
+  var CellsByRow = LayoutMode.create( 'cellsByRow' );
 
   CellsByRow.prototype._resetLayout = function() {
     // reset properties
@@ -48,7 +48,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   cellsByRowDefinition(
-    window.Isotope.layoutMode,
+    window.Isotope.LayoutMode,
     window.getSize
   );
 }

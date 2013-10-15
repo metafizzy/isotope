@@ -2,9 +2,9 @@
 
 'use strict';
 
-function verticalDefinition( layoutMode ) {
+function verticalDefinition( LayoutMode ) {
 
-var Vertical = layoutMode.create( 'vertical', {
+var Vertical = LayoutMode.create( 'vertical', {
   horizontalAlignment: 0
 });
 
@@ -38,7 +38,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   verticalDefinition(
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 

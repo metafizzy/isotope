@@ -2,9 +2,9 @@
 
 'use strict';
 
-function fitRowsDefinition( layoutMode ) {
+function fitRowsDefinition( LayoutMode ) {
 
-var FitRows = layoutMode.create( 'fitRows', {
+var FitRows = LayoutMode.create( 'fitRows', {
   foo: 'bar'
 });
 
@@ -51,7 +51,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   fitRowsDefinition(
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 

@@ -22,7 +22,7 @@ var indexOf = Array.prototype.indexOf ?
 
 function masonryHorizontalDefinition( getSize, layoutMode ) {
   // create an Outlayer layout class
-  var MasonryHorizontal = layoutMode.create('masonryHorizontal');
+  var MasonryHorizontal = LayoutMode.create('masonryHorizontal');
 
   MasonryHorizontal.prototype._resetLayout = function() {
     this.getRowHeight();
@@ -138,7 +138,7 @@ if ( typeof define === 'function' && define.amd ) {
   // browser global
   masonryHorizontalDefinition(
     window.getSize,
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 

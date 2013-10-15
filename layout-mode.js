@@ -6,11 +6,6 @@
 
 function layoutModeDefinition( getSize, Outlayer ) {
 
-var layoutMode = {};
-
-layoutMode.modes = {};
-
-layoutMode.create = function( namespace, options ) {
   // layout mode class
   function LayoutMode( isotope ) {
     this.isotope = isotope;
@@ -23,16 +18,6 @@ layoutMode.create = function( namespace, options ) {
       this.size = isotope.size;
     }
   }
-
-  // default options
-  if ( options ) {
-    LayoutMode.options = options;
-  }
-
-  LayoutMode.prototype.namespace = namespace;
-  // register in Isotope
-  layoutMode.modes[ namespace ] = LayoutMode;
-
 
   /**
    * some methods should just defer to default Outlayer method
@@ -117,13 +102,32 @@ layoutMode.create = function( namespace, options ) {
     this.size = this.isotope.size;
   };
 
-  // -----  ----- //
+  // -------------------------- create -------------------------- //
+
+  LayoutMode.modes = {};
+
+  LayoutMode.create = function( namespace, options ) {
+
+    function Mode() {
+      LayoutMode.apply( this, arguments );
+    }
+
+    Mode.prototype = new LayoutMode();
+
+    // default options
+    if ( options ) {
+      Mode.options = options;
+    }
+
+    Mode.prototype.namespace = namespace;
+    // register in Isotope
+    LayoutMode.modes[ namespace ] = Mode;
+
+    return Mode;
+  };
+
 
   return LayoutMode;
-};
-
-
-return layoutMode;
 
 }
 
@@ -137,7 +141,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   window.Isotope = window.Isotope || {};
-  window.Isotope.layoutMode = layoutModeDefinition(
+  window.Isotope.LayoutMode = layoutModeDefinition(
     window.getSize,
     window.Outlayer
   );

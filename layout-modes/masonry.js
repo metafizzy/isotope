@@ -21,9 +21,9 @@ function extend( a, b ) {
 // -------------------------- masonryDefinition -------------------------- //
 
 // used for AMD definition and requires
-function masonryDefinition( layoutMode, Masonry ) {
+function masonryDefinition( LayoutMode, Masonry ) {
   // create an Outlayer layout class
-  var MasonryMode = layoutMode.create('masonry');
+  var MasonryMode = LayoutMode.create('masonry');
 
   // save on to these methods
   var _getElementOffset = MasonryMode.prototype._getElementOffset;
@@ -51,7 +51,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   masonryDefinition(
-    window.Isotope.layoutMode,
+    window.Isotope.LayoutMode,
     window.Masonry
   );
 }

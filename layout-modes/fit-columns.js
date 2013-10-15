@@ -2,9 +2,9 @@
 
 'use strict';
 
-function fitColumnsDefinition( layoutMode ) {
+function fitColumnsDefinition( LayoutMode ) {
 
-  var FitColumns = layoutMode.create('fitColumns');
+  var FitColumns = LayoutMode.create('fitColumns');
 
   FitColumns.prototype._resetLayout = function() {
     this.x = 0;
@@ -53,7 +53,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   fitColumnsDefinition(
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 

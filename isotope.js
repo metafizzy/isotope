@@ -39,14 +39,14 @@ var getText = docElem.textContent ?
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
-function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode ) {
+function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create( 'isotope', {
     sortAscending: true
   });
 
   Isotope.Item = Isotope.prototype.settings.item = Item;
-  Isotope.layoutMode = layoutMode;
+  Isotope.LayoutMode = LayoutMode;
 
   Isotope.prototype._create = function() {
     this.itemGUID = 0;
@@ -56,7 +56,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
     // create layout modes
     this.modes = {};
     // create from registered layout modes
-    for ( var name in layoutMode.modes ) {
+    for ( var name in LayoutMode.modes ) {
       this._initLayoutMode( name );
     }
     // functions that sort items
@@ -86,14 +86,14 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, layoutMode
   // -------------------------- layout -------------------------- //
 
   Isotope.prototype._initLayoutMode = function( name ) {
-    var LayoutMode = layoutMode.modes[ name ];
+    var Mode = LayoutMode.modes[ name ];
     // set mode options
     // HACK extend initial options, back-fill in default options
     var initialOpts = this.options[ name ] || {};
-    this.options[ name ] = LayoutMode.options ?
-      extend( LayoutMode.options, initialOpts ) : initialOpts;
+    this.options[ name ] = Mode.options ?
+      extend( Mode.options, initialOpts ) : initialOpts;
     // init layout mode instance
-    this.modes[ name ] = new LayoutMode( this );
+    this.modes[ name ] = new Mode( this );
   };
 
   Isotope.prototype.layout = function( opts ) {
@@ -385,7 +385,7 @@ if ( typeof define === 'function' && define.amd ) {
     window.getSize,
     window.matchesSelector,
     window.Isotope.Item,
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 

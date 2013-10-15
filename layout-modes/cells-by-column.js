@@ -2,9 +2,9 @@
 
 'use strict';
 
-function cellsByColumnDefinition( layoutMode ) {
+function cellsByColumnDefinition( LayoutMode ) {
 
-  var CellsByColumn = layoutMode.create( 'cellsByColumn' );
+  var CellsByColumn = LayoutMode.create( 'cellsByColumn' );
 
   CellsByColumn.prototype._resetLayout = function() {
     // reset properties
@@ -51,7 +51,7 @@ if ( typeof define === 'function' && define.amd ) {
 } else {
   // browser global
   cellsByColumnDefinition(
-    window.Isotope.layoutMode
+    window.Isotope.LayoutMode
   );
 }
 
