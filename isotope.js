@@ -295,8 +295,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     var itemSorter = getItemSorter( sortBys, this.options.sortAscending );
     this.filteredItems.sort( itemSorter );
     // keep track of sortBy History
-    var lastSortBy = this.sortHistory[ this.sortHistory.length - 1 ];
-    if ( sortByOpt !== lastSortBy ) {
+    if ( sortByOpt !== this.sortHistory[0] ) {
       // add to front, oldest goes in last
       this.sortHistory.unshift( sortByOpt );
     }
