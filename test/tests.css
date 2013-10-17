@@ -59,3 +59,14 @@ body {
   width: 200px;
   height: 20px;
 }
+
+/* ---- get segment size ---- */
+
+#get-segment-size .grid-sizer {
+  /* 57 outer width */
+  width: 52px;
+  margin-right: 5px;
+ /* 47 outer height */
+  height: 40px;
+  margin-bottom: 7px;
+}

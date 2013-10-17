@@ -88,7 +88,7 @@ function layoutModeDefinition( getSize, Outlayer ) {
     }
     // fall back to item of first element
     var firstItemSize = this.getFirstItemSize();
-    this.rowHeight = firstItemSize && firstItemSize[ outerSize ] ||
+    this[ segmentName ] = firstItemSize && firstItemSize[ outerSize ] ||
       // or size of container
       this.isotope.size[ 'inner' + size ];
   };
