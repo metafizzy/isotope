@@ -45,7 +45,7 @@ function cellsByColumnDefinition( LayoutMode ) {
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../layout-mode'
+      '../js/layout-mode'
     ],
     cellsByColumnDefinition );
 } else {

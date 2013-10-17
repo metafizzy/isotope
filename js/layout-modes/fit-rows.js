@@ -45,7 +45,7 @@ return FitRows;
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../layout-mode'
+      '../js/layout-mode'
     ],
     fitRowsDefinition );
 } else {

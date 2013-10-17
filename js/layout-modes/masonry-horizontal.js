@@ -131,7 +131,7 @@ if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
       'get-size/get-size',
-      '../layout-mode'
+      '../js/layout-mode'
     ],
     masonryHorizontalDefinition );
 } else {

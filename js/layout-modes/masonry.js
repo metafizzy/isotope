@@ -44,7 +44,7 @@ function masonryDefinition( LayoutMode, Masonry ) {
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../layout-mode',
+      '../js/layout-mode',
       'masonry/masonry'
     ],
     masonryDefinition );
