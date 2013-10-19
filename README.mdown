@@ -17,7 +17,7 @@ For non-commercial, personal, or open source projects and applications, you may 
 
 ## Support
 
-Need help with getting Isotope up and running? Got a time-consuming code problem you want to get solved quickly? 
+Need help with getting Isotope up and running? Got a time-consuming problem you want to get solved quickly? 
 
 Get <a href="http://codersclan.net/?repo_id=1">Isotope support on CodersClan.</a>
 
