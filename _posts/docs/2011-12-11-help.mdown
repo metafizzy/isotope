@@ -30,7 +30,7 @@ Please read my [Issues Agreement](https://github.com/desandro/issues-agreement/#
 
 Need help with getting Isotope up and running? Got a time-consuming problem you want to get solved quickly?  Get [Isotope support on CodersClan](http://codersclan.net/?repo_id=1).
 
-<p><a href="http://codersclan.net/?repo_id=1"><img src="http://www.codersclan.net/gs_button/?repo_id=1" width="200" /></a></p>
+  <p><a href="http://codersclan.net/?repo_id=1"><img src="http://www.codersclan.net/gs_button/?repo_id=1" width="200" /></a></p>
 
 ## Additional resources
 
