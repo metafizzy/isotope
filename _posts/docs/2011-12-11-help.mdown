@@ -7,17 +7,6 @@ toc:
   - { title: Reporting bugs and issues, anchor: reporting_bugs_and_issues }
   - { title: Additional resources, anchor: additional_resources }
   - { title: Unloaded media, anchor: unloaded_media }
-  - { title: Images, anchor: images }
-  - { title: font-face fonts, anchor: fontface_fonts }
-  - { title: Problems with CSS transforms, anchor: css-transforms }
-  - { title: Getting item position, anchor: getting_item_position }
-  - { title: Accessing the instance, anchor: accessing_the_instance }
-  - { title: CSS transforms in Opera, anchor: css_transforms_in_opera }
-  - { title: Infinite Scroll with filtering or sorting, anchor: infinite_scroll_with_filtering_or_sorting}
-  - { title: Poor type rendering in WebKit, anchor: poor_type_rendering_in_webkit }
-  - { title: First item breaks Masonry layout, anchor: first_item_breaks_masonry_layout }
-  - { title: Right-to-left layouts, anchor: righttoleft_layouts }
-  - { title: Preventing clicks on filtered items, anchor: unclickable-filtered }
 
 ---
 
@@ -29,6 +18,8 @@ Please read my [Issues Agreement](https://github.com/desandro/issues-agreement/#
 ## Support
 
 Need help with getting Isotope up and running? Got a time-consuming problem you want to get solved quickly?  Get [Isotope support on CodersClan](http://codersclan.net/?repo_id=1).
+
+<p><a href="http://codersclan.net/?repo_id=1"><img src="http://www.codersclan.net/gs_button/?repo_id=1" width="200" /></a></p>
 
 ## Additional resources
 
