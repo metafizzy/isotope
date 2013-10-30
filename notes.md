@@ -9,6 +9,7 @@ move munge sorter to separate file?
 ## tests
 
 filter
+  jQuery filtering
 
 updateSortData
 

@@ -8,6 +8,10 @@
 
 'use strict';
 
+// -------------------------- vars -------------------------- //
+
+var jQuery = window.jQuery;
+
 // -------------------------- helpers -------------------------- //
 
 // extend objects
@@ -124,7 +128,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     var hiddenMatched = [];
     var visibleUnmatched = [];
 
-    var test = getFilterTest( filter );
+    var test = this._getFilterTest( filter );
 
     // test each item
     for ( var i=0, len = items.length; i < len; i++ ) {
@@ -163,10 +167,14 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     return matches;
   };
 
-  // get a function or a matchesSelector test given the filter
-  function getFilterTest( filter ) {
+  // get a jQuery, function, or a matchesSelector test given the filter
+  Isotope.prototype._getFilterTest = function( filter ) {
     var test;
-    if ( typeof filter === 'function' ) {
+    if ( jQuery && this.options.isJQueryFiltering ) {
+      test = function( item ) {
+        return jQuery( item.element ).is( filter );
+      };
+    } else if ( typeof filter === 'function' ) {
       test = function( item ) {
         return filter( item.element );
       };
@@ -176,7 +184,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       };
     }
     return test;
-  }
+  };
 
   // -------------------------- sorting -------------------------- //
 
