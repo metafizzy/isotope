@@ -6,6 +6,7 @@
   "unused": true,
   "predef": {
     "Isotope": false,
+    "getText": false,
 
     "asyncTest": false,
     "deepEqual": false,

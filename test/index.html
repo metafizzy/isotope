@@ -21,6 +21,8 @@
 <script src="../bower_components/outlayer/outlayer.js"></script>
 <script src="../bower_components/masonry/masonry.js"></script>
 
+<script src="../bower_components/jquery/jquery.js"></script>
+
 <script src="../js/item.js"></script>
 <script src="../js/layout-mode.js"></script>
 <script src="../js/isotope.js"></script>
@@ -28,8 +30,10 @@
 <script src="../js/layout-modes/masonry.js"></script>
 <script src="../js/layout-modes/cells-by-row.js"></script>
 
+<script src="helpers.js"></script>
 <script src="sorting.js"></script>
 <script src="get-sort-data.js"></script>
+<script src="filtering.js"></script>
 <script src="layout-complete.js"></script>
 <script src="get-segment-size.js"></script>
 
@@ -60,6 +64,18 @@
       <b>3.14</b>
       <i>42</i>
     </div>
+  </div>
+
+  <h2>Filtering</h2>
+
+  <div id="filtering" class="container">
+    <div data-item-id="1" class="item orange">5</div>
+    <div data-item-id="2" class="item">3</div>
+    <div data-item-id="3" class="item orange tall">2</div>
+    <div data-item-id="4" class="item tall">9</div>
+    <div data-item-id="5" class="item">7</div>
+    <div data-item-id="6" class="item orange">1</div>
+    <div data-item-id="7" class="item orange tall">8</div>
   </div>
 
   <h2>layoutComplete</h2>

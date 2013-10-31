@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "doc-ready": "desandro/doc-ready",
+    "jquery": "1",
     "qunit": "1.12"
   }
 }

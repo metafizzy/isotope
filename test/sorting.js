@@ -2,16 +2,6 @@
 
 'use strict';
 
-var docElem = document.documentElement;
-
-var getText = docElem.textContent ?
-  function( elem ) {
-    return elem.textContent;
-  } :
-  function( elem ) {
-    return elem.innerText;
-  };
-
 function getItemsText( iso ) {
   var texts = [];
   for ( var i=0, len = iso.filteredItems.length; i < len; i++ ) {
