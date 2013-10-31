@@ -25,7 +25,7 @@ test( 'sorting', function() {
       sortBy: 'number'
     });
 
-    iso.layout({ sortBy: 'letter' });
+    iso.magic({ sortBy: 'letter' });
 
     var texts = getItemsText( iso );
 
@@ -48,12 +48,12 @@ test( 'sorting', function() {
 
     equal( getItemsText( iso ), 'A1,A2,A3,A4,B1,B2,B4', 'sortBy array' );
 
-    iso.layout({
+    iso.magic({
       sortAscending: false
     });
     equal( getItemsText( iso ), 'B4,B2,B1,A4,A3,A2,A1', 'sortAscending false' );
 
-    iso.layout({
+    iso.magic({
       sortAscending: {
         letter: true,
         number: false

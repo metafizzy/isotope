@@ -10,6 +10,10 @@ move munge sorter to separate file?
 
 updateSortData
 
+## discuss
+
+Method name for filterSortMagic. Currently .magic()
+
 ## bugs
 
 ## misc

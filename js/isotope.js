@@ -103,15 +103,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this.modes[ name ] = new Mode( this );
   };
 
-  Isotope.prototype.layout = function( opts ) {
-    // set any options pass
-    this.option( opts );
+
+  Isotope.prototype.layout = function() {
+    // if first time doing layout, do all magic
+    if ( !this._isLayoutInited && this.options.isInitLayout ) {
+      this.magic();
+      return;
+    }
+    this._layout();
+  };
+
+  // private method to be used in layout() & magic()
+  Isotope.prototype._layout = function() {
     // don't animate first layout
-    var isInstant = this._isInitInstant = this.options.isLayoutInstant !== undefined ?
-      this.options.isLayoutInstant : !this._isLayoutInited;
-      //
-    this.filteredItems = this._filter( this.items );
-    this._sort();
+    var isInstant = this._getIsInstant();
     // layout flow
     this._resetLayout();
     this._manageStamps();
@@ -121,6 +126,27 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this._isLayoutInited = true;
   };
 
+  // filter + sort + layout
+  Isotope.prototype.magic = function( opts ) {
+    // set any options pass
+    this.option( opts );
+    this._getIsInstant();
+    // where the magic happens, amirite
+    this.filteredItems = this._filter( this.items );
+    this._sort();
+    this._layout();
+  };
+  // alias
+  Isotope.prototype.filterSortLayout = Isotope.prototype.magic;
+
+  // HACK
+  // Don't animate/transition first layout
+  // Or don't animate/transition other layouts
+  Isotope.prototype._getIsInstant = function() {
+    var isInstant = this.options.isLayoutInstant !== undefined ?
+      this.options.isLayoutInstant : !this._isLayoutInited;
+    return this._isInstant = isInstant;
+  };
 
   // -------------------------- filter -------------------------- //
 
@@ -155,15 +181,15 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     }
 
     // HACK
-    // disable transition on init
+    // disable transition if instant
     var _transitionDuration = this.options.transitionDuration;
-    if ( this._isInitInstant ) {
+    if ( this._isInstant ) {
       this.options.transitionDuration = 0;
     }
     this.reveal( hiddenMatched );
     this.hide( visibleUnmatched );
     // set back
-    if ( this._isInitInstant ) {
+    if ( this._isInstant ) {
       this.options.transitionDuration = _transitionDuration;
     }
 
