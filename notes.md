@@ -27,4 +27,32 @@ iso.go()
 iso.change()
 iso.activate();
 iso.move()
-iso.processLayout
+iso.processLayout()
+iso.rearrange()
+iso.arrange({})
+iso.reload()
+iso.update()
+iso.radiate()
+iso.form({})
+iso.stabilize()
+iso.react()
+iso.act()
+iso.doStuff()
+iso.position
+iso.configure
+iso.apply
+iso.display({})
+
+
+Orrrrrr keep .layout() and have reLayout()
+
+
+---
+
+                 Masonry Isotope Packery
+Masonry Layouts     x        x       x
+no gaps                              x
+draggable                            x
+filtering                    x
+sorting                      x
+multiple layout              x
