@@ -203,8 +203,7 @@ docReady( function() {
     // use link's href, remove leading hash
     var sortBy = event.target.getAttribute('href').slice( 1 );
     sortBy.slice( 0, 1 );
-    iso.options.sortBy = sortBy;
-    iso.layout();
+    iso.arrange({ sortBy: sortBy });
     event.preventDefault();
   });
 
