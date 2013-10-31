@@ -11,3 +11,16 @@ move munge sorter to separate file?
 updateSortData
 
 ## bugs
+
+## misc
+
+iso.filterSortLayout()
+iso.magic()
+iso.isotope()
+iso.process()
+iso.fullLayout()
+iso.go()
+iso.change()
+iso.activate();
+iso.move()
+iso.processLayout

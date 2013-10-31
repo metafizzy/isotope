@@ -63,6 +63,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     for ( var name in LayoutMode.modes ) {
       this._initLayoutMode( name );
     }
+    // start filteredItems with all items
+    this.filteredItems = this.items;
+
     // functions that sort items
     this._sorters = {};
     // keep of track of sortBys
