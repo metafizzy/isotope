@@ -35,7 +35,7 @@ test( 'filtering', function() {
   equal( ids, '1,2,3,4,5,6,7', 'all items there by default' );
 
   function checkFilter( filter, expectedIDs, message ) {
-    iso.magic({ filter: filter });
+    iso.arrange({ filter: filter });
     ids = getFilteredItemIDs( iso );
     equal( ids, expectedIDs, message || filter );
   }
@@ -44,7 +44,7 @@ test( 'filtering', function() {
   checkFilter( '.tall', '3,4,7' );
   checkFilter( '.tall.orange', '3,7' );
 
-  iso.magic({
+  iso.arrange({
     filter: function( elem ) {
       var num = parseInt( getText( elem ), 10 );
       return num > 5;
@@ -63,7 +63,7 @@ test( 'filtering', function() {
   checkFilter( ':not(.orange)', '2,4,5' );
   checkFilter( '.orange:not(.tall)', '1,6' );
 
-  iso.magic({
+  iso.arrange({
     filter: function() {
       var num = parseInt( $(this).text(), 10 );
       return num > 5;

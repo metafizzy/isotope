@@ -107,7 +107,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   Isotope.prototype.layout = function() {
     // if first time doing layout, do all magic
     if ( !this._isLayoutInited && this.options.isInitLayout ) {
-      this.magic();
+      this.arrange();
       return;
     }
     this._layout();
@@ -127,7 +127,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   };
 
   // filter + sort + layout
-  Isotope.prototype.magic = function( opts ) {
+  Isotope.prototype.arrange = function( opts ) {
     // set any options pass
     this.option( opts );
     this._getIsInstant();
@@ -136,8 +136,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this._sort();
     this._layout();
   };
-  // alias
-  Isotope.prototype.filterSortLayout = Isotope.prototype.magic;
+  // alias to _init for main plugin method
+  Isotope.prototype._init = Isotope.prototype.arrange;
 
   // HACK
   // Don't animate/transition first layout

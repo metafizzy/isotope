@@ -14,7 +14,7 @@ test( 'layoutComplete', function() {
         next();
       });
 
-      iso.magic({
+      iso.arrange({
         filter: '.a1'
       });
     },
@@ -24,7 +24,7 @@ test( 'layoutComplete', function() {
         next();
       });
 
-      iso.magic({
+      iso.arrange({
         filter: '.b2'
       });
     },
@@ -34,7 +34,7 @@ test( 'layoutComplete', function() {
         next();
       });
 
-      iso.magic({
+      iso.arrange({
         sortBy: 'random'
       });
     },
@@ -44,13 +44,13 @@ test( 'layoutComplete', function() {
         next();
       });
 
-      iso.magic({
+      iso.arrange({
         filter: '.a2',
         transitionDuration: '0.6s'
       });
 
       setTimeout( function() {
-        iso.magic({
+        iso.arrange({
           filter: '.b2'
         });
       }, 300 );

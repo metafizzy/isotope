@@ -47,7 +47,7 @@ iso.display({})
 Orrrrrr keep .layout() and have reLayout()
 
 
----
+## Isotope vs Masonry vs Packery
 
                  Masonry Isotope Packery
 Masonry Layouts     x        x       x
