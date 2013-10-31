@@ -54,6 +54,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   Isotope.prototype._create = function() {
     this.itemGUID = 0;
+    // functions that sort items
+    this._sorters = {};
     // call super
     Outlayer.prototype._create.call( this );
 
@@ -65,12 +67,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     }
     // start filteredItems with all items
     this.filteredItems = this.items;
-
-    // functions that sort items
-    this._sorters = {};
     // keep of track of sortBys
     this.sortHistory = [ 'original-order' ];
-    this.updateSortData();
   };
 
   Isotope.prototype.reloadItems = function() {
@@ -87,7 +85,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       var item = items[i];
       item.id = this.itemGUID++;
     }
+    this.updateSortData( items );
     return items;
+  };
+
+  /**
+   * Filter, sort, and layout newly-appended item elements
+   * @param {Array or NodeList or Element} elems
+   */
+  Isotope.prototype.insert = function( elems ) {
+    var items = this.addItems( elems );
+    if ( !items.length ) {
+      return;
+    }
+    this.arrange();
   };
 
   // -------------------------- layout -------------------------- //
@@ -398,6 +409,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   Isotope.prototype.resize = function() {
     this._mode().resize();
   };
+
+  // -----  ----- //
 
   return Isotope;
 }
