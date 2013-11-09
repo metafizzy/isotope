@@ -10,7 +10,9 @@ updateSortData
 
 ## discuss
 
-Method name for filterSortMagic. Currently .magic()
+Method name for filterSortMagic. Currently .arrange()
+
+default to isJQueryFiltering = true, vs. not
 
 ## bugs
 
@@ -54,3 +56,10 @@ draggable                            x
 filtering                    x
 sorting                      x
 multiple layout              x
+
+
+## Combination filters
+
+.a OR .b = .a, .b
+.a AND .b = .a.b
+
