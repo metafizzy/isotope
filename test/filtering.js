@@ -28,6 +28,7 @@ function getFilteredItemIDs( iso ) {
 test( 'filtering', function() {
 
   var iso = new Isotope( '#filtering', {
+    isJQueryFiltering: false,
     transitionDuration: 0
   });
 

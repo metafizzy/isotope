@@ -46,6 +46,7 @@ var getText = docElem.textContent ?
 function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create( 'isotope', {
+    isJQueryFiltering: true,
     sortAscending: true
   });
 
