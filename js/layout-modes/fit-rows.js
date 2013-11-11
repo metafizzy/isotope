@@ -4,9 +4,7 @@
 
 function fitRowsDefinition( LayoutMode ) {
 
-var FitRows = LayoutMode.create( 'fitRows', {
-  foo: 'bar'
-});
+var FitRows = LayoutMode.create('fitRows');
 
 FitRows.prototype._resetLayout = function() {
   this.x = 0;
