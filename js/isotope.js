@@ -63,14 +63,14 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
     // create layout modes
     this.modes = {};
-    // create from registered layout modes
-    for ( var name in LayoutMode.modes ) {
-      this._initLayoutMode( name );
-    }
     // start filteredItems with all items
     this.filteredItems = this.items;
     // keep of track of sortBys
     this.sortHistory = [ 'original-order' ];
+    // create from registered layout modes
+    for ( var name in LayoutMode.modes ) {
+      this._initLayoutMode( name );
+    }
   };
 
   Isotope.prototype.reloadItems = function() {
