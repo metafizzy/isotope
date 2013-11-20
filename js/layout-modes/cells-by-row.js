@@ -41,7 +41,7 @@ function cellsByRowDefinition( LayoutMode ) {
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../js/layout-mode',
+      '../layout-mode',
       'get-size/get-size'
     ],
     cellsByRowDefinition );

@@ -32,7 +32,7 @@ return Vertical;
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [
-      '../js/layout-mode'
+      '../layout-mode'
     ],
     verticalDefinition );
 } else {
