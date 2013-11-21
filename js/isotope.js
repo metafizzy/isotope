@@ -425,8 +425,8 @@ if ( typeof define === 'function' && define.amd ) {
       'outlayer/outlayer',
       'get-size/get-size',
       'matches-selector/matches-selector',
-      './item.js',
-      './layout-modes.js'
+      './item',
+      './layout-modes'
     ],
     isotopeDefinition );
 } else {
