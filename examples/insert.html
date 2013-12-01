@@ -34,11 +34,13 @@
 <script src="../bower_components/matches-selector/matches-selector.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
+<script src="../bower_components/masonry/masonry.js"></script>
 
 <script src="../js/item.js"></script>
 <script src="../js/layout-mode.js"></script>
 <script src="../js/isotope.js"></script>
 <script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/masonry.js"></script>
 
 <script>
 
@@ -46,7 +48,7 @@ docReady( function() {
 
   var container = document.querySelector('#container');
   var iso = new Isotope( container, {
-    layoutMode: 'fitRows',
+    layoutMode: 'masonry',
     getSortData: {
       b: 'b parseInt'
     },

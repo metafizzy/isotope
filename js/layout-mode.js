@@ -30,8 +30,7 @@ function layoutModeDefinition( getSize, Outlayer ) {
       '_manageStamp',
       '_getContainerSize',
       '_getElementOffset',
-      'resize',
-      'layout'
+      'resize'
     ];
 
     for ( var i=0, len = facadeMethods.length; i < len; i++ ) {
@@ -99,6 +98,10 @@ function layoutModeDefinition( getSize, Outlayer ) {
   };
 
   // ----- methods that should reference isotope ----- //
+
+  LayoutMode.prototype.layout = function() {
+    this.isotope.layout.apply( this.isotope, arguments );
+  };
 
   LayoutMode.prototype.getSize = function() {
     this.isotope.getSize();
