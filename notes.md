@@ -8,6 +8,9 @@ move munge sorter to separate file?
 
 updateSortData
 
+remove removes from filteredItems
+insert with Masonry, do layout
+
 ## discuss
 
 Method name for filterSortMagic. Currently .arrange()
