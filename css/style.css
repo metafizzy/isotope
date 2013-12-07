@@ -447,7 +447,7 @@ body {
   width: 200px;
   position: absolute;
   left: 10px;
-  top: 0px;
+  top: 60px;
   padding-top: 20px;
   font-size: 12px;
 }
@@ -834,7 +834,22 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
           border-radius: 10px;
 }
 
+#top-banner {
+}
 
+#top-banner a {
+  display: block;
+  background: #FF0;
+  color: #06F;
+  padding: 0.5em;
+  font-family: Helvetica Neue, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+#top-banner a:hover { background: white; color: #F06; }
 
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
