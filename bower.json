@@ -1,6 +1,6 @@
 {
   "name": "isotope",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "Filter and sort magical layouts",
   "main": [
     "js/item.js",

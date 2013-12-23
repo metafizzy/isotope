@@ -1,5 +1,5 @@
 /*!
- * Isotope v2.0.0-beta.3
+ * Isotope v2.0.0-beta.4
  * Magical sorting and filtering layouts
  * http://isotope.metafizzy.co
  */
@@ -133,17 +133,6 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     return items;
   };
 
-  /**
-   * Filter, sort, and layout newly-appended item elements
-   * @param {Array or NodeList or Element} elems
-   */
-  Isotope.prototype.insert = function( elems ) {
-    var items = this.addItems( elems );
-    if ( !items.length ) {
-      return;
-    }
-    this.arrange();
-  };
 
   // -------------------------- layout -------------------------- //
 
@@ -454,7 +443,63 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this._mode().resize();
   };
 
-  // -------------------------- remove -------------------------- //
+  // -------------------------- adding & removing -------------------------- //
+
+  // HEADS UP overwrites default Outlayer appended
+  Isotope.prototype.appended = function( elems ) {
+    var items = this.addItems( elems );
+    if ( !items.length ) {
+      return;
+    }
+    var filteredItems = this._filterRevealAdded( items );
+    // add to filteredItems
+    this.filteredItems = this.filteredItems.concat( filteredItems );
+  };
+
+  // HEADS UP overwrites default Outlayer prepended
+  Isotope.prototype.prepended = function( elems ) {
+    var items = this._itemize( elems );
+    if ( !items.length ) {
+      return;
+    }
+    // add items to beginning of collection
+    var previousItems = this.items.slice(0);
+    this.items = items.concat( previousItems );
+    // start new layout
+    this._resetLayout();
+    this._manageStamps();
+    // layout new stuff without transition
+    var filteredItems = this._filterRevealAdded( items );
+    // layout previous items
+    this.layoutItems( previousItems );
+    // add to filteredItems
+    this.filteredItems = filteredItems.concat( this.filteredItems );
+  };
+
+  Isotope.prototype._filterRevealAdded = function( items ) {
+    // disable transition for filtering
+    var transitionDuration = this.options.transitionDuration;
+    this.options.transitionDuration = 0;
+    var filteredItems = this._filter( items );
+    // re-enable transition for reveal
+    this.options.transitionDuration = transitionDuration;
+    // layout and reveal just the new items
+    this.layoutItems( filteredItems, true );
+    this.reveal( filteredItems );
+    return items;
+  };
+
+  /**
+   * Filter, sort, and layout newly-appended item elements
+   * @param {Array or NodeList or Element} elems
+   */
+  Isotope.prototype.insert = function( elems ) {
+    var items = this.addItems( elems );
+    if ( !items.length ) {
+      return;
+    }
+    this.arrange();
+  };
 
   var _remove = Isotope.prototype.remove;
   Isotope.prototype.remove = function( elems ) {
