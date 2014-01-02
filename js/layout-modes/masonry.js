@@ -28,6 +28,7 @@ function masonryDefinition( LayoutMode, Masonry ) {
   // save on to these methods
   var _getElementOffset = MasonryMode.prototype._getElementOffset;
   var layout = MasonryMode.prototype.layout;
+  var _getMeasurement = MasonryMode.prototype._getMeasurement;
 
   // sub-class Masonry
   extend( MasonryMode.prototype, Masonry.prototype );
@@ -35,6 +36,14 @@ function masonryDefinition( LayoutMode, Masonry ) {
   // set back, as it was overwritten by Masonry
   MasonryMode.prototype._getElementOffset = _getElementOffset;
   MasonryMode.prototype.layout = layout;
+  MasonryMode.prototype._getMeasurement = _getMeasurement;
+
+  var measureColumns = MasonryMode.prototype.measureColumns;
+  MasonryMode.prototype.measureColumns = function() {
+    // set items, used if measuring first item
+    this.items = this.isotope.filteredItems;
+    measureColumns.call( this );
+  };
 
   return MasonryMode;
 }

@@ -12,7 +12,6 @@ function layoutModeDefinition( getSize, Outlayer ) {
     // link properties
     if ( isotope ) {
       this.options = isotope.options[ this.namespace ];
-      this._getMeasurement = isotope._getMeasurement;
       this.element = isotope.element;
       this.items = isotope.filteredItems;
       this.size = isotope.size;
@@ -62,6 +61,11 @@ function layoutModeDefinition( getSize, Outlayer ) {
   };
 
   // ----- measurements ----- //
+
+  LayoutMode.prototype._getMeasurement = function() {
+    console.log('getting measurement', this.options.columnWidth );
+    this.isotope._getMeasurement.apply( this, arguments );
+  };
 
   LayoutMode.prototype.getColumnWidth = function() {
     this.getSegmentSize( 'column', 'Width' );
