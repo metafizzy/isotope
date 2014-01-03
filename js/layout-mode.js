@@ -63,7 +63,6 @@ function layoutModeDefinition( getSize, Outlayer ) {
   // ----- measurements ----- //
 
   LayoutMode.prototype._getMeasurement = function() {
-    console.log('getting measurement', this.options.columnWidth );
     this.isotope._getMeasurement.apply( this, arguments );
   };
 
