@@ -1,5 +1,5 @@
 /*!
- * Isotope v2.0.0-beta.6
+ * Isotope v2.0.0-beta.7
  * Magical sorting and filtering layouts
  * http://isotope.metafizzy.co
  */
