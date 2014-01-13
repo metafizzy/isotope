@@ -319,7 +319,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       var attr = attrMatch && attrMatch[1];
       var getValue = getValueGetter( attr, query );
       // use second argument as a parser
-      var parser = getParser( args[1] );
+      var parser = Isotope.sortDataParsers[ args[1] ];
       // parse the value, if there was a parser
       sorter = parser ? function( elem ) {
         return elem && parser( getValue( elem ) );
@@ -350,33 +350,18 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       return getValue;
     }
 
-    // return a parser function if arg matches
-    function getParser( arg ) {
-      var parser;
-      switch ( arg ) {
-        case 'parseInt' :
-          parser = function( val ) {
-            return parseInt( val, 10 );
-          };
-          break;
-        case 'parseFloat' :
-          parser = function( val ) {
-            return parseFloat( val );
-          };
-          break;
-        default :
-          // just return val if parser isn't one of these
-          // TODO - console log that that parser doesn't exist
-          parser = function( val ) {
-            return val;
-          };
-      }
-      return parser;
-    }
-
     return mungeSorter;
   })();
 
+  // parsers used in getSortData shortcut strings
+  Isotope.sortDataParsers = {
+    'parseInt': function( val ) {
+      return parseInt( val, 10 );
+    },
+    'parseFloat': function( val ) {
+      return parseFloat( val );
+    }
+  };
 
   // ----- sort method ----- //
 
