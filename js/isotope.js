@@ -100,6 +100,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this.itemGUID = 0;
     // functions that sort items
     this._sorters = {};
+    this._getSorters();
     // call super
     Outlayer.prototype._create.call( this );
 
@@ -129,7 +130,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       var item = items[i];
       item.id = this.itemGUID++;
     }
-    this.updateSortData( items );
+    this._updateItemsSortData( items );
     return items;
   };
 
@@ -261,21 +262,36 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   // -------------------------- sorting -------------------------- //
 
-  Isotope.prototype.updateSortData = function( items ) {
-    // update sorters
+  /**
+   * @params {Array} elems
+   * @public
+   */
+  Isotope.prototype.updateSortData = function( elems ) {
+    this._getSorters();
+    // update item sort data
+    // default to all items if none are passed in
+    elems = makeArray( elems );
+    var items = this.getItems( elems );
+    // if no items found, update all items
+    items = items.length ? items : this.items;
+    this._updateItemsSortData( items );
+  };
+
+  Isotope.prototype._getSorters = function() {
     var getSortData = this.options.getSortData;
     for ( var key in getSortData ) {
       var sorter = getSortData[ key ];
       this._sorters[ key ] = mungeSorter( sorter );
     }
-    // update item sort data
-    // default to all items if none are passed in
-    items = items || this.items;
+  };
+
+  /**
+   * @params {Array} items - of Isotope.Items
+   * @private
+   */
+  Isotope.prototype._updateItemsSortData = function( items ) {
     for ( var i=0, len = items.length; i < len; i++ ) {
       var item = items[i];
-      if ( item.isIgnored ) {
-        continue;
-      }
       item.updateSortData();
     }
   };
