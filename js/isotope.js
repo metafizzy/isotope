@@ -243,21 +243,22 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   // get a jQuery, function, or a matchesSelector test given the filter
   Isotope.prototype._getFilterTest = function( filter ) {
-    var test;
     if ( jQuery && this.options.isJQueryFiltering ) {
-      test = function( item ) {
+      // use jQuery
+      return function( item ) {
         return jQuery( item.element ).is( filter );
       };
-    } else if ( typeof filter === 'function' ) {
-      test = function( item ) {
+    }
+    if ( typeof filter === 'function' ) {
+      // use filter as function
+      return function( item ) {
         return filter( item.element );
       };
-    } else {
-      test = function( item ) {
-        return matchesSelector( item.element, filter );
-      };
     }
-    return test;
+    // default, use filter as selector string
+    return function( item ) {
+      return matchesSelector( item.element, filter );
+    };
   };
 
   // -------------------------- sorting -------------------------- //
