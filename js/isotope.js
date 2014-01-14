@@ -225,17 +225,16 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       }
     }
 
-    // HACK
-    // disable transition if instant
-    var _transitionDuration = this.options.transitionDuration;
-    if ( this._isInstant ) {
-      this.options.transitionDuration = 0;
+    var _this = this;
+    function hideReveal() {
+      _this.reveal( hiddenMatched );
+      _this.hide( visibleUnmatched );
     }
-    this.reveal( hiddenMatched );
-    this.hide( visibleUnmatched );
-    // set back
+
     if ( this._isInstant ) {
-      this.options.transitionDuration = _transitionDuration;
+      this._noTransition( hideReveal );
+    } else {
+      hideReveal();
     }
 
     return matches;
@@ -479,12 +478,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   };
 
   Isotope.prototype._filterRevealAdded = function( items ) {
-    // disable transition for filtering
-    var transitionDuration = this.options.transitionDuration;
-    this.options.transitionDuration = 0;
-    var filteredItems = this._filter( items );
-    // re-enable transition for reveal
-    this.options.transitionDuration = transitionDuration;
+    var filteredItems = this._noTransition( function() {
+      return this._filter( items );
+    });
     // layout and reveal just the new items
     this.layoutItems( filteredItems, true );
     this.reveal( filteredItems );
@@ -519,6 +515,25 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       // remove item from collection
       removeFrom( item, this.filteredItems );
     }
+  };
+
+  /**
+   * trigger fn without transition
+   * kind of hacky to have this in the first place
+   * @param {Function} fn
+   * @returns ret
+   * @private
+   */
+  Isotope.prototype._noTransition = function( fn ) {
+    // save transitionDuration before disabling
+    var transitionDuration = this.options.transitionDuration;
+    // disable transition
+    this.options.transitionDuration = 0;
+    // do it
+    var returnValue = fn.call( this );
+    // re-enable transition for reveal
+    this.options.transitionDuration = transitionDuration;
+    return returnValue;
   };
 
   // -----  ----- //
