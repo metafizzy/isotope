@@ -496,7 +496,35 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     if ( !items.length ) {
       return;
     }
+    // filter new stuff
+    /*
+    // this way adds hides new filtered items with NO transition
+    // so user can't see if new hidden items have been inserted
+    var filteredInsertItems;
+    this._noTransition( function() {
+      filteredInsertItems = this._filter( items );
+      // hide all new items
+      this.hide( filteredInsertItems );
+    });
+    // */
+    // this way hides new filtered items with transition
+    // so user at least sees that something has been added
+    var filteredInsertItems = this._filter( items );
+    // hide all newitems
+    this._noTransition( function() {
+      this.hide( filteredInsertItems );
+    });
+    // */
+    // set flag
+    for ( var i=0, len = items.length; i < len; i++ ) {
+      items[i].isLayoutInstant = true;
+    }
     this.arrange();
+    // reset flag
+    for ( i=0; i < len; i++ ) {
+      delete items[i].isLayoutInstant;
+    }
+    this.reveal( filteredInsertItems );
   };
 
   var _remove = Isotope.prototype.remove;
