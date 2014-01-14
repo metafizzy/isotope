@@ -12,7 +12,7 @@
 
 <h1>insert</h1>
 
-<p><button id="insert">Insert</button></p>
+<p><button id="insert">Insert</button> <button id="append">Append</button></p>
 
 <div id="container">
   <div class="item"><b>49</b></div>
@@ -49,6 +49,7 @@ docReady( function() {
   var container = document.querySelector('#container');
   var iso = new Isotope( container, {
     layoutMode: 'masonry',
+    transitionDuration: '0.8s',
     getSortData: {
       b: 'b parseInt'
     },
@@ -59,13 +60,18 @@ docReady( function() {
     }
   });
 
+  function getAppendedItems() {
+    return [ appendItem(), appendItem(), appendItem() ];
+  }
+
   eventie.bind( document.querySelector('#insert'), 'click', function() {
     // append 3 new items
-    var appendedItems = [];
-    appendedItems.push( appendItem() );
-    appendedItems.push( appendItem() );
-    appendedItems.push( appendItem() );
-    iso.insert( appendedItems );
+    iso.insert( getAppendedItems() );
+  });
+
+  eventie.bind( document.querySelector('#append'), 'click', function() {
+    // append 3 new items
+    iso.appended( getAppendedItems() );
   });
 
   function appendItem() {

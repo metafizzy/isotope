@@ -100,6 +100,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     this.itemGUID = 0;
     // functions that sort items
     this._sorters = {};
+    this._getSorters();
     // call super
     Outlayer.prototype._create.call( this );
 
@@ -129,7 +130,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       var item = items[i];
       item.id = this.itemGUID++;
     }
-    this.updateSortData( items );
+    this._updateItemsSortData( items );
     return items;
   };
 
@@ -224,17 +225,16 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       }
     }
 
-    // HACK
-    // disable transition if instant
-    var _transitionDuration = this.options.transitionDuration;
-    if ( this._isInstant ) {
-      this.options.transitionDuration = 0;
+    var _this = this;
+    function hideReveal() {
+      _this.reveal( hiddenMatched );
+      _this.hide( visibleUnmatched );
     }
-    this.reveal( hiddenMatched );
-    this.hide( visibleUnmatched );
-    // set back
+
     if ( this._isInstant ) {
-      this.options.transitionDuration = _transitionDuration;
+      this._noTransition( hideReveal );
+    } else {
+      hideReveal();
     }
 
     return matches;
@@ -242,40 +242,56 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   // get a jQuery, function, or a matchesSelector test given the filter
   Isotope.prototype._getFilterTest = function( filter ) {
-    var test;
     if ( jQuery && this.options.isJQueryFiltering ) {
-      test = function( item ) {
+      // use jQuery
+      return function( item ) {
         return jQuery( item.element ).is( filter );
       };
-    } else if ( typeof filter === 'function' ) {
-      test = function( item ) {
+    }
+    if ( typeof filter === 'function' ) {
+      // use filter as function
+      return function( item ) {
         return filter( item.element );
       };
-    } else {
-      test = function( item ) {
-        return matchesSelector( item.element, filter );
-      };
     }
-    return test;
+    // default, use filter as selector string
+    return function( item ) {
+      return matchesSelector( item.element, filter );
+    };
   };
 
   // -------------------------- sorting -------------------------- //
 
-  Isotope.prototype.updateSortData = function( items ) {
-    // update sorters
+  /**
+   * @params {Array} elems
+   * @public
+   */
+  Isotope.prototype.updateSortData = function( elems ) {
+    this._getSorters();
+    // update item sort data
+    // default to all items if none are passed in
+    elems = makeArray( elems );
+    var items = this.getItems( elems );
+    // if no items found, update all items
+    items = items.length ? items : this.items;
+    this._updateItemsSortData( items );
+  };
+
+  Isotope.prototype._getSorters = function() {
     var getSortData = this.options.getSortData;
     for ( var key in getSortData ) {
       var sorter = getSortData[ key ];
       this._sorters[ key ] = mungeSorter( sorter );
     }
-    // update item sort data
-    // default to all items if none are passed in
-    items = items || this.items;
+  };
+
+  /**
+   * @params {Array} items - of Isotope.Items
+   * @private
+   */
+  Isotope.prototype._updateItemsSortData = function( items ) {
     for ( var i=0, len = items.length; i < len; i++ ) {
       var item = items[i];
-      if ( item.isIgnored ) {
-        continue;
-      }
       item.updateSortData();
     }
   };
@@ -303,7 +319,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       var attr = attrMatch && attrMatch[1];
       var getValue = getValueGetter( attr, query );
       // use second argument as a parser
-      var parser = getParser( args[1] );
+      var parser = Isotope.sortDataParsers[ args[1] ];
       // parse the value, if there was a parser
       sorter = parser ? function( elem ) {
         return elem && parser( getValue( elem ) );
@@ -334,33 +350,18 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       return getValue;
     }
 
-    // return a parser function if arg matches
-    function getParser( arg ) {
-      var parser;
-      switch ( arg ) {
-        case 'parseInt' :
-          parser = function( val ) {
-            return parseInt( val, 10 );
-          };
-          break;
-        case 'parseFloat' :
-          parser = function( val ) {
-            return parseFloat( val );
-          };
-          break;
-        default :
-          // just return val if parser isn't one of these
-          // TODO - console log that that parser doesn't exist
-          parser = function( val ) {
-            return val;
-          };
-      }
-      return parser;
-    }
-
     return mungeSorter;
   })();
 
+  // parsers used in getSortData shortcut strings
+  Isotope.sortDataParsers = {
+    'parseInt': function( val ) {
+      return parseInt( val, 10 );
+    },
+    'parseFloat': function( val ) {
+      return parseFloat( val );
+    }
+  };
 
   // ----- sort method ----- //
 
@@ -477,12 +478,9 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   };
 
   Isotope.prototype._filterRevealAdded = function( items ) {
-    // disable transition for filtering
-    var transitionDuration = this.options.transitionDuration;
-    this.options.transitionDuration = 0;
-    var filteredItems = this._filter( items );
-    // re-enable transition for reveal
-    this.options.transitionDuration = transitionDuration;
+    var filteredItems = this._noTransition( function() {
+      return this._filter( items );
+    });
     // layout and reveal just the new items
     this.layoutItems( filteredItems, true );
     this.reveal( filteredItems );
@@ -498,7 +496,35 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     if ( !items.length ) {
       return;
     }
+    // filter new stuff
+    /*
+    // this way adds hides new filtered items with NO transition
+    // so user can't see if new hidden items have been inserted
+    var filteredInsertItems;
+    this._noTransition( function() {
+      filteredInsertItems = this._filter( items );
+      // hide all new items
+      this.hide( filteredInsertItems );
+    });
+    // */
+    // this way hides new filtered items with transition
+    // so user at least sees that something has been added
+    var filteredInsertItems = this._filter( items );
+    // hide all newitems
+    this._noTransition( function() {
+      this.hide( filteredInsertItems );
+    });
+    // */
+    // set flag
+    for ( var i=0, len = items.length; i < len; i++ ) {
+      items[i].isLayoutInstant = true;
+    }
     this.arrange();
+    // reset flag
+    for ( i=0; i < len; i++ ) {
+      delete items[i].isLayoutInstant;
+    }
+    this.reveal( filteredInsertItems );
   };
 
   var _remove = Isotope.prototype.remove;
@@ -517,6 +543,25 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
       // remove item from collection
       removeFrom( item, this.filteredItems );
     }
+  };
+
+  /**
+   * trigger fn without transition
+   * kind of hacky to have this in the first place
+   * @param {Function} fn
+   * @returns ret
+   * @private
+   */
+  Isotope.prototype._noTransition = function( fn ) {
+    // save transitionDuration before disabling
+    var transitionDuration = this.options.transitionDuration;
+    // disable transition
+    this.options.transitionDuration = 0;
+    // do it
+    var returnValue = fn.call( this );
+    // re-enable transition for reveal
+    this.options.transitionDuration = transitionDuration;
+    return returnValue;
   };
 
   // -----  ----- //

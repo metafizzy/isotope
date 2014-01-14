@@ -25,6 +25,9 @@ Item.prototype._create = function() {
 };
 
 Item.prototype.updateSortData = function() {
+  if ( this.isIgnored ) {
+    return;
+  }
   // default sorters
   this.sortData.id = this.id;
   // for backward compatibility
