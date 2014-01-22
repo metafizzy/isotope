@@ -13,8 +13,8 @@
   "dependencies": {
     "get-size": "desandro/get-size",
     "matches-selector": "desandro/matches-selector",
-    "outlayer": "metafizzy/outlayer#>=1.1 <2",
     "masonry": ">=3.1"
+    "outlayer": ">=1.1.10 <2",
   },
   "devDependencies": {
     "doc-ready": "desandro/doc-ready",

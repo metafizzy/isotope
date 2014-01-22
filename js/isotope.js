@@ -93,7 +93,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     sortAscending: true
   });
 
-  Isotope.Item = Isotope.prototype.settings.item = Item;
+  Isotope.Item = Item;
   Isotope.LayoutMode = LayoutMode;
 
   Isotope.prototype._create = function() {
