@@ -34,7 +34,7 @@ The documentation and demo pages are generated using [Jekyll](http://github.com/
 ``` bash
 git clone https://github.com/desandro/isotope.git
 cd isotope/
-jekyll --server --auto
+jekyll serve --watch
 ```
 
 Then view the live site at [http://localhost:4000](http://localhost:4000).
