@@ -60,25 +60,26 @@ docReady( function() {
     }
   });
 
-  function getAppendedItems() {
-    return [ appendItem(), appendItem(), appendItem() ];
-  }
-
   eventie.bind( document.querySelector('#insert'), 'click', function() {
     // append 3 new items
-    iso.insert( getAppendedItems() );
+    iso.insert( [ getItem(), getItem(), getItem() ] );
   });
 
   eventie.bind( document.querySelector('#append'), 'click', function() {
     // append 3 new items
-    iso.appended( getAppendedItems() );
+    iso.appended( [ appendItem(), appendItem(), appendItem() ] );
   });
 
-  function appendItem() {
+  function getItem() {
     var item = document.createElement('div');
     item.className = 'item';
     var num = Math.floor( Math.random() * 100 );
     item.innerHTML = '<b>' + num + '</b>';
+    return item;
+  }
+
+  function appendItem() {
+    var item = getItem();
     container.appendChild( item );
     return item;
   }

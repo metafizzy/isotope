@@ -496,6 +496,13 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     if ( !items.length ) {
       return;
     }
+    // append item elements
+    var i, item;
+    var len = items.length;
+    for ( i=0; i < len; i++ ) {
+      item = items[i];
+      this.element.appendChild( item.element );
+    }
     // filter new stuff
     /*
     // this way adds hides new filtered items with NO transition
@@ -516,7 +523,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     });
     // */
     // set flag
-    for ( var i=0, len = items.length; i < len; i++ ) {
+    for ( i=0; i < len; i++ ) {
       items[i].isLayoutInstant = true;
     }
     this.arrange();
