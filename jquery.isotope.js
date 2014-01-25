@@ -20,6 +20,7 @@
 
   // get global vars
   var document = window.document;
+  var docElem = document.documentElement;
   var Modernizr = window.Modernizr;
 
   // helper function
@@ -33,7 +34,7 @@
   var prefixes = 'Moz Webkit O Ms'.split(' ');
 
   var getStyleProperty = function( propName ) {
-    var style = document.documentElement.style,
+    var style = docElem.style,
         prefixed;
 
     // test standard property first
@@ -86,11 +87,9 @@
     csstransforms3d: function() {
       var test = !!getStyleProperty('perspective');
       // double check for Chrome's false positive
-      if ( test ) {
-        var vendorCSSPrefixes = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-            mediaQuery = '@media (' + vendorCSSPrefixes.join('transform-3d),(') + 'modernizr)',
-            $style = $('<style>' + mediaQuery + '{#modernizr{height:3px}}' + '</style>')
-                        .appendTo('head'),
+      if ( test && 'webkitPerspective' in docElem.style ) {
+        var $style = $('<style>@media (transform-3d),(-webkit-transform-3d)' +
+              '{#modernizr{height:3px}}</style>').appendTo('head'),
             $div = $('<div id="modernizr" />').appendTo('html');
 
         test = $div.height() === 3;
