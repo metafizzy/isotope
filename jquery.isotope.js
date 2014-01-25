@@ -1,5 +1,5 @@
 /**
- * Isotope v1.5.25
+ * Isotope v1.5.26
  * An exquisite jQuery plugin for magical layouts
  * http://isotope.metafizzy.co
  *
@@ -8,7 +8,7 @@
  *
  * Non-commercial use is licensed under the MIT License
  *
- * Copyright 2013 Metafizzy
+ * Copyright 2014 Metafizzy
  */
 
 /*jshint asi: true, browser: true, curly: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
