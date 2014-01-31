@@ -568,6 +568,7 @@
     _sort : function() {
 
       var sortBy = this.options.sortBy,
+          naturalSorting = this.options.naturalSorting,
           getSorter = this._getSorter,
           sortDir = this.options.sortAscending ? 1 : -1,
           sortFn = function( alpha, beta ) {
@@ -578,6 +579,8 @@
               a = getSorter( alpha, 'original-order' );
               b = getSorter( beta, 'original-order' );
             }
+            if (naturalSorting)
+              return naturalSort(a, b) * sortDir;
             return ( ( a > b ) ? 1 : ( a < b ) ? -1 : 0 ) * sortDir;
           };
 
