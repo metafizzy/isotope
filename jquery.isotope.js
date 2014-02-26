@@ -595,6 +595,9 @@
     },
 
     _positionAbs : function( x, y ) {
+      if ( $('html').attr('dir') === 'rtl' ) {
+        return { right: x, top: y };
+      }
       return { left: x, top: y };
     },
 
