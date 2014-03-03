@@ -585,7 +585,11 @@ if ( typeof define === 'function' && define.amd ) {
       'get-size/get-size',
       'matches-selector/matches-selector',
       './item',
-      './layout-mode'
+      './layout-mode',
+      // include default layout modes
+      './layout-modes/masonry',
+      './layout-modes/fit-rows',
+      './layout-modes/vertical'
     ],
     isotopeDefinition );
 } else {

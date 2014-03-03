@@ -16,22 +16,19 @@ requirejs( [ '../js/isotope', '../js/layout-modes/masonry' ], function( Isotope 
 // */
 
 // isotope.pkgd.js
-/*
-requirejs( [  'require', 'js/isotope.pkgd.js' ],
-  function( require, Isotope ) {
-    require( [ 'isotope/js/layout-modes/fit-rows' ], function() {
-      new Isotope( '#basic', {
-        layoutMode: 'fitRows',
-        masonry: {
-          columnWidth: 60
-        }
-      });
-    });
-  }
-);
+// /*
+requirejs( [ 'js/isotope.pkgd.js' ], function( Isotope ) {
+  new Isotope( '#basic', {
+    layoutMode: 'masonry',
+    masonry: {
+      columnWidth: 60
+    }
+  });
+});
 // */
 
 // isotope.pkgd.js and jQuery
+/*
 requirejs.config({
   paths: {
     jquery: '../../bower_components/jquery/jquery'
@@ -42,7 +39,6 @@ requirejs( [ 'require', 'jquery', 'js/isotope.pkgd.js' ],
   function( require, $, Isotope ) {
     require( [
       'jquery-bridget/jquery.bridget',
-      'isotope/js/layout-modes/masonry'
     ],
     function() {
       $.bridget( 'isotope', Isotope );
@@ -54,3 +50,5 @@ requirejs( [ 'require', 'jquery', 'js/isotope.pkgd.js' ],
     }
   );
 });
+
+// */
