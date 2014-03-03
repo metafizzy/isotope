@@ -6,8 +6,8 @@ All bug reports and problem issues require a reduced test case. See [CSS Tricks 
 
 + A reduced test case is an isolated example that demonstrates the bug or issue.
 + It contains the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug. No extra functionality or styling.
-+ Any one of the [CodePen examples](http://codepen.io/desandro/tag/masonry-docs) in [the docs](http://masonry.desandro.com) may be forked and used to build your reduced test case.
++ Any one of the [CodePen examples](http://codepen.io/desandro/tag/isotope-docs) in [the docs](http://isotope.metafizzy.co) may be forked and used to build your reduced test case.
 + A link to your site is **not** a reduced test case.
 + Until you provide a reduced test case, your issue will be closed.
 
-I realize this guideline may seem a little harsh, but it dramatically helps both of you and me. Reduced test cases help you identify the issue at hand and understand your own code. On my side, they greatly reduce the amount of time spent resolving the issue.
+Reduced test cases dramatically help both you and me. They help you identify the issue at hand and understand your own code. On my side, they greatly reduce the amount of time spent resolving the issue.
