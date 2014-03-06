@@ -429,11 +429,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   };
 
   Isotope.prototype._manageStamp = function( stamp ) {
-    var mode = this._mode();
-    // HACK copy over some options
-    mode.options.isOriginLeft = this.options.isOriginLeft;
-    mode.options.isOriginTop = this.options.isOriginTop;
-    mode._manageStamp( stamp );
+    this._mode()._manageStamp( stamp );
   };
 
   Isotope.prototype._getContainerSize = function() {
