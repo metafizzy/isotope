@@ -29,7 +29,7 @@ function layoutModeDefinition( getSize, Outlayer ) {
       '_manageStamp',
       '_getContainerSize',
       '_getElementOffset',
-      'resize'
+      'needsResizeLayout'
     ];
 
     for ( var i=0, len = facadeMethods.length; i < len; i++ ) {
@@ -47,17 +47,13 @@ function layoutModeDefinition( getSize, Outlayer ) {
   // -----  ----- //
 
   // for horizontal layout modes, check vertical size
-  LayoutMode.prototype.resizeVertical = function() {
+  LayoutMode.prototype.needsVerticalResizeLayout = function() {
     // don't trigger if size did not change
     var size = getSize( this.isotope.element );
     // check that this.size and size are there
     // IE8 triggers resize on body size change, so they might not be
     var hasSizes = this.isotope.size && size;
-    if ( hasSizes && size.innerHeight === this.isotope.size.innerHeight ) {
-      return;
-    }
-
-    this.isotope.layout();
+    return hasSizes && size.innerHeight !== this.isotope.size.innerHeight;
   };
 
   // ----- measurements ----- //

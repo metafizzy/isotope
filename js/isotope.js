@@ -436,8 +436,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     return this._mode()._getContainerSize();
   };
 
-  Isotope.prototype.resize = function() {
-    this._mode().resize();
+  Isotope.prototype.needsResizeLayout = function() {
+    return this._mode().needsResizeLayout();
   };
 
   // -------------------------- adding & removing -------------------------- //
