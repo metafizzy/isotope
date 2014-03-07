@@ -6,7 +6,7 @@ requirejs.config({
   baseUrl: '../bower_components'
 });
 
-requirejs( [ '../js/isotope', '../js/layout-modes/masonry' ], function( Isotope ) {
+requirejs( [ '../js/isotope' ], function( Isotope ) {
   new Isotope( '#basic', {
     masonry: {
       columnWidth: 60
@@ -16,7 +16,7 @@ requirejs( [ '../js/isotope', '../js/layout-modes/masonry' ], function( Isotope 
 // */
 
 // isotope.pkgd.js
-// /*
+/*
 requirejs( [ 'js/isotope.pkgd.js' ], function( Isotope ) {
   new Isotope( '#basic', {
     layoutMode: 'masonry',
@@ -27,18 +27,43 @@ requirejs( [ 'js/isotope.pkgd.js' ], function( Isotope ) {
 });
 // */
 
-// isotope.pkgd.js and jQuery
+// bower components and jQuery
 /*
+requirejs.config({
+  baseUrl: '../bower_components',
+  paths: {
+    jquery: 'jquery/jquery'
+  }
+})
+
+requirejs( [
+    'jquery',
+    'isotope/js/isotope',
+    'jquery-bridget/jquery.bridget'
+  ],
+  function( $, Isotope ) {
+    $.bridget( 'isotope', Isotope );
+    $('#basic').isotope({
+      masonry: {
+        columnWidth: 60
+      }
+    });
+});
+
+// */
+
+// isotope.pkgd.js and jQuery
+// /*
 requirejs.config({
   paths: {
     jquery: '../../bower_components/jquery/jquery'
   }
-})
+});
 
 requirejs( [ 'require', 'jquery', 'js/isotope.pkgd.js' ],
   function( require, $, Isotope ) {
     require( [
-      'jquery-bridget/jquery.bridget',
+      'jquery-bridget/jquery.bridget'
     ],
     function() {
       $.bridget( 'isotope', Isotope );
@@ -52,3 +77,4 @@ requirejs( [ 'require', 'jquery', 'js/isotope.pkgd.js' ],
 });
 
 // */
+
