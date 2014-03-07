@@ -45,6 +45,14 @@ function masonryDefinition( LayoutMode, Masonry ) {
     measureColumns.call( this );
   };
 
+  // HACK copy over isOriginLeft/Top options
+  var _manageStamp = MasonryMode.prototype._manageStamp;
+  MasonryMode.prototype._manageStamp = function() {
+    this.options.isOriginLeft = this.isotope.options.isOriginLeft;
+    this.options.isOriginTop = this.isotope.options.isOriginTop;
+    _manageStamp.apply( this, arguments );
+  };
+
   return MasonryMode;
 }
 
