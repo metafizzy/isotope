@@ -2,4 +2,4 @@ _site
 isotope-site.zip
 components/
 bower_components/
-isotope.pkgd.js
+node_modules/

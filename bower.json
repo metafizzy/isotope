@@ -29,6 +29,10 @@
   "ignore": [
     "test/",
     "examples/",
-    "**/.*"
+    "**/.*",
+    "tasks/",
+    "Gruntfile.js",
+    "package.json",
+    "notes.md"
   ]
 }
