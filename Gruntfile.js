@@ -1,11 +1,16 @@
-
-var getBannerComment = require('./tasks/utils/get-banner-comment.js');
+/*jshint node: true, strict: false */
 
 // -------------------------- grunt -------------------------- //
 
 module.exports = function( grunt ) {
 
-  var banner = getBannerComment( grunt );
+  var banner = ( function() {
+    var src = grunt.file.read('js/isotope.js');
+    var re = new RegExp('^\\s*(?:\\/\\*[\\s\\S]*?\\*\\/)\\s*');
+    var matches = src.match( re );
+    var banner = matches[0].replace( 'Isotope', 'Isotope PACKAGED' );
+    return banner;
+  })();
 
   grunt.initConfig({
     // ----- global settings ----- //
@@ -15,8 +20,8 @@ module.exports = function( grunt ) {
     // ----- tasks settings ----- //
 
     jshint: {
-      docs: [ 'js/controller.js', 'js/*/*.js'  ],
-      options: grunt.file.readJSON('js/.jshintrc')
+      docs: [ 'js/**/*.js'  ],
+      options: grunt.file.readJSON('.jshintrc')
     },
 
     requirejs: {
@@ -27,9 +32,10 @@ module.exports = function( grunt ) {
             'jquery-bridget/jquery.bridget',
             'isotope/js/isotope'
           ],
-          out: 'build/isotope.pkgd.js',
+          out: 'dist/isotope.pkgd.js',
           optimize: 'none',
           paths: {
+            isotope: '../',
             jquery: 'empty:'
           },
           wrap: {
@@ -39,146 +45,43 @@ module.exports = function( grunt ) {
       }
     },
 
-    concat: {
-      'docs-js': {
-        src: [
-          // docs js
-          'js/controller.js',
-          'js/pages/*.js'
-        ],
-        dest: 'build/js/isotope-docs.js'
-      },
-
-      'docs-css': {
-        src: [ 'css/*.css', '!css/isotope-docs.css' ],
-        dest: 'build/css/isotope-docs.css'
-      }
-
-    },
-
     uglify: {
       pkgd: {
         files: {
-          'build/isotope.pkgd.min.js': [ 'build/isotope.pkgd.js' ]
+          'dist/isotope.pkgd.min.js': [ 'dist/isotope.pkgd.js' ]
         },
         options: {
           banner: banner
         }
-      },
-      'docs': {
-        files: {
-          'build/js/isotope-docs.min.js': [ 'build/js/isotope-docs.js' ]
-        }
-      }
-    },
-
-    // ----- handlebars templating ----- //
-    template: {
-      docs: {
-        files: {
-          'build/': 'content/**/*.*'
-        },
-        options: {
-          templates: 'templates/*.mustache',
-          defaultTemplate: 'page',
-          dataFiles: "data/*.json",
-          partialFiles: {
-            'submitting-issues': 'bower_components/isotope/CONTRIBUTING.mdown'
-          },
-          helpers: {
-            firstValue: function( ary ) {
-              return ary[0];
-            },
-            plusOne: function( str ) {
-              return parseInt( str, 10 ) + 1;
-            }
-          }
-        }
-      }
-    },
-
-    // ----- copy ----- //
-    copy: {
-      "public": {
-        files: [
-          {
-            expand: true, // enable dynamic options
-            cwd: 'public/', // set cwd, excludes it in build path
-            src: [ '**', '!.htaccess' ],
-            dest: 'build/'
-          }
-        ]
-      },
-      css: {
-        files: [
-          {
-            expand: true, // enable dynamic options
-            cwd: 'css/', // set cwd, excludes it in build path
-            src: [ '*' ],
-            dest: 'build/css/'
-          }
-        ]
-      },
-      js: {
-        files: [
-          {
-            expand: true, // enable dynamic options
-            cwd: 'js/', // set cwd, excludes it in build path
-            src: [ '**' ],
-            dest: 'build/js/'
-          }
-        ]
-      },
-      bowerSources: {
-        // additional sources will be set in bower-list-map
-        src: [
-          'bower_components/jquery/jquery.min.js'
-        ],
-        dest: 'build/'
-      }
-    },
-
-
-    watch: {
-      content: {
-        files: [ 'content/**/*.*', 'templates/*.mustache' ],
-        tasks: [ 'template' ]
-      },
-      "public": {
-        files: [ 'public/**' ],
-        tasks: [ 'copy:public' ]
-      },
-      css: {
-        files: [ 'css/*' ],
-        tasks: [ 'copy:css' ]
-      },
-      js: {
-        files: [ 'js/**' ],
-        tasks: [ 'copy:js' ]
       }
     }
 
   });
 
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-requirejs');
-  grunt.loadNpmTasks('grunt-fizzy-docs');
 
-  grunt.loadTasks('tasks/');
+  grunt.registerTask( 'pkgd-edit', function() {
+    var outFile = grunt.config.get('requirejs.pkgd.options.out');
+    var contents = grunt.file.read( outFile );
+    // get requireJS definition code
+    var definitionRE = /define\(\s*'isotope\/js\/isotope'(.|\n)+isotopeDefinition\s*\)/;
+    var definition = contents.match( definitionRE )[0];
+    // remove name module
+    var fixDefinition = definition.replace( "'isotope/js/isotope',", '' )
+      // ./item -> isotope/js/item
+      .replace( /'.\//g, "'isotope/js/" );
+    contents = contents.replace( definition, fixDefinition );
+    grunt.file.write( outFile, contents );
+    grunt.log.writeln( 'Edited ' + outFile );
+  });
 
   grunt.registerTask( 'default', [
     'jshint',
     'requirejs',
     'pkgd-edit',
-    'int-bower',
-    'concat',
-    'uglify',
-    'template',
-    'copy'
+    'uglify'
   ]);
 
 };

@@ -190,7 +190,8 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
   Isotope.prototype._getIsInstant = function() {
     var isInstant = this.options.isLayoutInstant !== undefined ?
       this.options.isLayoutInstant : !this._isLayoutInited;
-    return this._isInstant = isInstant;
+    this._isInstant = isInstant;
+    return isInstant;
   };
 
   // -------------------------- filter -------------------------- //
