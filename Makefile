@@ -1,3 +1,6 @@
+build:
+	jekyll build
+
 zip:
 	rm -rf _site/isotope-v1-docs.zip
 	cp -r _site isotope-v1-docs
@@ -7,5 +10,4 @@ zip:
 deploy: 
 	s3cmd sync _site/. s3://isotope.metafizzy.co/v1/
 
-prod:
-	zip deploy
+prod: build zip deploy
