@@ -556,7 +556,7 @@
             // keep original order original
             sortData[ key ] = $.data( this, 'isotope-sort-data' )[ key ];
           } else {
-            sortData[ key ] = getSortData[ key ]( $this, instance );
+            sortData[ key ] = getSortData[ key ]( $this, instance, key );
           }
         }
         // apply sort data to element
