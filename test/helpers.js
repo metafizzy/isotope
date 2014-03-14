@@ -3,7 +3,7 @@
 'use strict';
 
 // ----- default layout mode ----- //
-Isotope.prototype.options.layoutMode = 'fitRows';
+Isotope.defaults.layoutMode = 'fitRows';
 
 // ----- getText ----- //
 var docElem = document.documentElement;
