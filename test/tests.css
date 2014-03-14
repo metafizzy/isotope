@@ -37,6 +37,9 @@ body {
 .item.h4 { height:  90px; }
 .item.h5 { height: 110px; }
 
+/* ---- stamp ---- */
+
+
 .stamp {
   background: red;
   opacity: 0.75;
@@ -44,20 +47,8 @@ body {
   border: 1px solid;
 }
 
-/* ---- stamp ---- */
-
-.has-stamp .item { width: 45px; }
-
-/* stout, in the middle */
-.has-stamp .stamp1 {
-  width: 40px;
-  height: 30px;
-}
-
-/* really wide */
-.has-stamp .stamp2 {
-  width: 200px;
-  height: 20px;
+.has-stamp {
+  position: relative;
 }
 
 /* ---- get segment size ---- */
@@ -73,4 +64,13 @@ body {
 
 #masonry-measure-columns .grid-sizer {
   width: 70px;
+}
+
+/* ---- masonry stamp ---- */
+
+#masonry-stamp .stamp1 {
+  width: 80px;
+  height: 30px;
+  right: 25px;
+  top: 15px;
 }
