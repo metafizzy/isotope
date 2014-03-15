@@ -1,6 +1,6 @@
 {
   "name": "isotope",
-  "version": "2.0.0-beta.9",
+  "version": "2.0.0-beta.10",
   "description": "Filter and sort magical layouts",
   "main": [
     "js/item.js",
@@ -13,8 +13,8 @@
   "dependencies": {
     "get-size": "desandro/get-size#>=1 <2",
     "matches-selector": "desandro/matches-selector#>=1 <2",
-    "outlayer": "v1.2",
-    "masonry": "3.1.x"
+    "outlayer": "^1.2.0",
+    "masonry": "^3.1.5"
   },
   "devDependencies": {
     "doc-ready": "desandro/doc-ready",
