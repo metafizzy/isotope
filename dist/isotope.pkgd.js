@@ -1,5 +1,5 @@
 /*!
- * Isotope PACKAGED v2.0.0-beta.9
+ * Isotope PACKAGED v2.0.0-beta.10
  * Magical sorting and filtering layouts
  * http://isotope.metafizzy.co
  */
@@ -1666,7 +1666,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Outlayer v1.1.10
+ * Outlayer v1.2.0
  * the brains and guts of a layout library
  * MIT license
  */
@@ -2899,7 +2899,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Masonry v3.1.4
+ * Masonry v3.1.5
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -3076,18 +3076,10 @@ function masonryDefinition( Outlayer, getSize ) {
     return ( this.cols - unusedCols ) * this.columnWidth - this.gutter;
   };
 
-  // debounced, layout on resize
-  // HEADS UP this overwrites Outlayer.resize
-  // Any changes in Outlayer.resize need to be manually added here
-  Masonry.prototype.resize = function() {
-    // don't trigger if size did not change
+  Masonry.prototype.needsResizeLayout = function() {
     var previousWidth = this.containerWidth;
     this.getContainerWidth();
-    if ( previousWidth === this.containerWidth ) {
-      return;
-    }
-
-    this.layout();
+    return previousWidth !== this.containerWidth;
   };
 
   return Masonry;
@@ -3293,7 +3285,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Isotope v2.0.0-beta.9
+ * Isotope v2.0.0-beta.10
  * Magical sorting and filtering layouts
  * http://isotope.metafizzy.co
  */
