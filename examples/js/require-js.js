@@ -1,5 +1,7 @@
 /*global requirejs: false*/
 
+// -------------------------- bower -------------------------- //
+
 /*
 // with bower components
 requirejs.config({
@@ -15,9 +17,10 @@ requirejs( [ '../js/isotope' ], function( Isotope ) {
 });
 // */
 
-// isotope.pkgd.js
+// -------------------------- pkgd -------------------------- //
+
 /*
-requirejs( [ 'js/isotope.pkgd.js' ], function( Isotope ) {
+requirejs( [ '../dist/isotope.pkgd.js' ], function( Isotope ) {
   new Isotope( '#basic', {
     layoutMode: 'masonry',
     masonry: {
@@ -27,7 +30,8 @@ requirejs( [ 'js/isotope.pkgd.js' ], function( Isotope ) {
 });
 // */
 
-// bower components and jQuery
+// -------------------------- bower & jQuery -------------------------- //
+
 /*
 requirejs.config({
   baseUrl: '../bower_components',
@@ -52,7 +56,8 @@ requirejs( [
 
 // */
 
-// isotope.pkgd.js and jQuery
+// -------------------------- pkgd & jQuery -------------------------- //
+
 // /*
 requirejs.config({
   paths: {
@@ -60,7 +65,7 @@ requirejs.config({
   }
 });
 
-requirejs( [ 'require', 'jquery', 'js/isotope.pkgd.js' ],
+requirejs( [ 'require', 'jquery', '../dist/isotope.pkgd.js' ],
   function( require, $, Isotope ) {
     require( [
       'jquery-bridget/jquery.bridget'
