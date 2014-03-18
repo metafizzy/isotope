@@ -26,14 +26,12 @@
 
 <div id="options">
   <h2>Sort</h2>
-  <ul class="option-set">
-    <li><a href="#original-order">original-order</a></li>
-    <li><a href="#number">number</a></li>
-    <li><a href="#name">name</a></li>
-    <li><a href="#symbol">symbol</a></li>
-    <li><a href="#weight">weight</a></li>
-    <li><a href="#category">category</a></li>
-  </ul>
+  <button data-sort-by="original-order">original-order</a></li>
+  <button data-sort-by="number">number</button>
+  <button data-sort-by="name">name</button>
+  <button data-sort-by="symbol">symbol</button>
+  <button data-sort-by="weight">weight</button>
+  <button data-sort-by="category">category</button>
 </div>
 
 <div id="container">
@@ -174,7 +172,7 @@ docReady( function() {
     masonry: {
       columnWidth: 90
     },
-    // itemSelector: '.element',
+    itemSelector: '.element',
     stamp: '.stamp',
     getSortData: {
 
@@ -194,16 +192,11 @@ docReady( function() {
   var options = document.querySelector('#options');
 
   eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'a' ) ) {
+    if ( !matchesSelector( event.target, 'button' ) ) {
       return;
     }
-
-    // use link's href, remove leading hash
-    var sortBy = event.target.getAttribute('href').slice( 1 );
-    sortBy.slice( 0, 1 );
-    iso.options.sortBy = sortBy;
-    iso.arrange();
-    event.preventDefault();
+    var sortBy = event.target.getAttribute('data-sort-by');
+    iso.arrange({ sortBy: sortBy });
   });
 
 });
