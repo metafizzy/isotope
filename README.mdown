@@ -8,7 +8,8 @@ See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
 
 A packaged source file includes everything you need to use Isotope.
 
-TBD
++ [isotope.pkgd.js](http://isotope.metafizzy.co/beta/isotope.pkgd.js)
++ [isotope.pkgd.min.js](http://isotope.metafizzy.co/beta/isotope.pkgd.min.js)
 
 ### Bower
 
