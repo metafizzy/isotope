@@ -1,6 +1,6 @@
 # Isotope
 
-_Filter and sort magical layouts_
+_Filter & sort magical layouts_
 
 See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
 
@@ -18,7 +18,7 @@ If you are cool with the command line, install Isotope as a [Bower](http://bower
 bower install isotope
 ```
 
-## Isotope
+## License
 
 Isotope may be used in commercial projects and applications with the one-time purchase of a commercial license. If you are paid to do your job, and part of your job is implementing Isotope, a commercial license is required.
 
@@ -31,8 +31,8 @@ For non-commercial, personal, or open source projects and applications, you may 
 ### In JavaScript
 
 ``` js
-var container = document.querySelector('#container');
-var iso = new Isotope( container, {
+// jQuery
+$('#container').isotope({
   // options...
   itemSelector: '.item',
   masonry: {
@@ -41,10 +41,10 @@ var iso = new Isotope( container, {
 });
 ```
 
-Or with jQuery
-
 ``` js
-$('#container').isotope({
+// vanilla JS
+var container = document.querySelector('#container');
+var iso = new Isotope( container, {
   // options...
   itemSelector: '.item',
   masonry: {
@@ -65,6 +65,12 @@ Add a class of `js-isotope` to your element. Options can be set in JSON in `data
 </div>
 ```
 
+## Support
+
+[CodersClan has a dedicated support forum for Isotope](https://www.codersclan.net/?repo_id=1), where you can get personal support from experienced developers.
+
+#### [Get support on CodersClan](https://www.codersclan.net/?repo_id=1)
+
 * * *
 
-Copyright (c) 2013 Metafizzy
+By [Metafizzy](http://metafizzy.co)
