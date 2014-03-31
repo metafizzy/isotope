@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>insert</title>
+
+  <link rel="stylesheet" href="examples.css" />
+
+</head>
+<body>
+
+<h1>insert</h1>
+
+<p><button id="insert">Insert</button> <button id="append">Append</button></p>
+
+<div id="container">
+  <div class="item"><b>49</b></div>
+  <div class="item"><b>35</b></div>
+  <div class="item"><b>60</b></div>
+  <div class="item"><b>29</b></div>
+  <div class="item"><b>78</b></div>
+  <div class="item"><b>92</b></div>
+  <div class="item"><b>10</b></div>
+  <div class="item"><b>55</b></div>
+</div>
+
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+<script src="../bower_components/masonry/masonry.js"></script>
+
+<script src="../js/item.js"></script>
+<script src="../js/layout-mode.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/masonry.js"></script>
+
+<script>
+
+docReady( function() {
+
+  var container = document.querySelector('#container');
+  var iso = new Isotope( container, {
+    layoutMode: 'masonry',
+    transitionDuration: '0.8s',
+    getSortData: {
+      b: 'b parseInt'
+    },
+    sortBy: 'b',
+    // filter b greater than 40
+    filter: function( elem ) {
+      return parseInt( getText( elem.querySelector('b') ), 10 ) > 40
+    }
+  });
+
+  eventie.bind( document.querySelector('#insert'), 'click', function() {
+    // append 3 new items
+    iso.insert( [ getItem(), getItem(), getItem() ] );
+  });
+
+  eventie.bind( document.querySelector('#append'), 'click', function() {
+    // append 3 new items
+    iso.appended( [ appendItem(), appendItem(), appendItem() ] );
+  });
+
+  function getItem() {
+    var item = document.createElement('div');
+    item.className = 'item';
+    var num = Math.floor( Math.random() * 100 );
+    item.innerHTML = '<b>' + num + '</b>';
+    return item;
+  }
+
+  function appendItem() {
+    var item = getItem();
+    container.appendChild( item );
+    return item;
+  }
+
+});
+
+var docElem = document.documentElement;
+
+var getText = docElem.textContent ?
+  function( elem ) {
+    return elem.textContent;
+  } :
+  function( elem ) {
+    return elem.innerText;
+  };
+  
+
+
+</script>
+
+</body>
+</html>

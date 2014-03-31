@@ -1,15 +1,24 @@
 ## Submitting issues
 
-### Read the Help page
+### Reduced test case required
 
-[The Help page in the docs](http://isotope.metafizzy.co/docs/help.html) covers most issues. Please look it over first before submitting an issue.
+All bug reports and problem issues require a [**reduced test case**](http://css-tricks.com/reduced-test-cases/). Create one by forking any one of the [CodePen examples](http://codepen.io/desandro/tag/isotope-docs) from [the docs](http://isotope.metafizzy.co).
 
-### Provide an isolated example with a live URL
++ A reduced test case clearly demonstrates the bug or issue.
++ It contains the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug.
++ A link to your production site is **not** a reduced test case.
 
-**A live URL is required** for any bug report or personal support request. Try re-creating the issue in jsFiddle using this template:
+Providing a reduced test case is the best way to get your issue addressed. Without a reduced test case, your issue may be closed.
 
-+ [jsFiddle jQuery Isotope template](http://jsfiddle.net/desandro/DQydj/)
+## Support
 
-### Look over the Issues Agreement
++ Having trouble setting up Isotope?
++ Running into a time-consuming problem?
 
-I wrote an [Issues Agreement](https://github.com/desandro/issues-agreement/#readme) that covers how to submit a good issue.
+[CodersClan has a dedicated support forum for Isotope](https://www.codersclan.net/?repo_id=1), where you can get personal support from experienced developers.
+
+#### [Get support on CodersClan](https://www.codersclan.net/?repo_id=1)
+
+## Pull requests
+
+Contributions are welcome! Please note: your code may be used as part of a commercial product if merged. Be clear about what license applies to your patch. [The MIT license](http://choosealicense.com/licenses/mit/) or [public domain unlicense](http://choosealicense.com/licenses/unlicense/) are permissive, and allow integration of your patch into Isotope as part of a commercial product.

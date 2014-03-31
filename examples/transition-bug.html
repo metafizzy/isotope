@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>filter sort</title>
+
+  <link rel="stylesheet" href="examples.css" />
+  <style>
+  #container { width: 100%; }
+  </style>
+</head>
+<body>
+
+  <h1>filter sort</h1>
+
+<div>
+  <button id="bug-me">Bug me</button>
+</div>
+
+<div id="container">
+
+  <!-- <div class="element post-transition metal   " data-symbol="Tl" data-category="post-transition">
+    <p class="number">81</p>
+    <h3 class="symbol">H</h3>
+    <h2 class="name">Thallium</h2>
+    <p class="weight">58.3833</p>
+  </div> -->
+
+  <div class="element metalloid   " data-symbol="Sb" data-category="metalloid">
+    <p class="number">51</p>
+    <h3 class="symbol">Sb</h3>
+    <h2 class="name">Antimony</h2>
+    <p class="weight">121.76</p>
+  </div>
+</div>
+
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+
+<script src="../js/item.js"></script>
+<script src="../js/layout-mode.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/cells-by-row.js"></script>
+<script src="../js/layout-modes/vertical.js"></script>
+
+<script>
+docReady( function() {
+  var container = document.querySelector('#container');
+  var iso = window.iso = new Isotope( container, {
+    layoutMode: 'fitRows',
+    transitionDuration: '2s'
+  });
+
+  var item = iso.items[0];
+
+  var bugButton = document.querySelector('#bug-me');
+  eventie.bind( bugButton, 'click', function() {
+    item.reveal();
+    item.moveTo( 200, 100 );
+    setTimeout( function() {
+      item.moveTo( 100, 50 );
+    }, 1500 );
+  });
+
+});
+
+function getText( elem ) {
+  return elem.textContent || elem.innerText;
+}
+
+</script>
+
+</body>
+</html>
+
+
+

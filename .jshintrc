@@ -1,0 +1,10 @@
+{
+  "browser": true,
+  "devel": false,
+  "strict": true,
+  "undef": true,
+  "unused": true,
+  "predef": {
+    "define": false
+  }
+}
