@@ -1,6 +1,6 @@
 /*!
- * Isotope PACKAGED v2.0.0-beta.10
- * Magical sorting and filtering layouts
+ * Isotope PACKAGED v2.0.0
+ * Filter & sort magical layouts
  * http://isotope.metafizzy.co
  */
 
@@ -3285,8 +3285,8 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Isotope v2.0.0-beta.10
- * Magical sorting and filtering layouts
+ * Isotope v2.0.0
+ * Filter & sort magical layouts
  * http://isotope.metafizzy.co
  */
 
