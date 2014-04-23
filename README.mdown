@@ -1,64 +1,77 @@
-Isotope
-========
+# Isotope
 
-**An exquisite jQuery plugin for magical layouts. Enables filtering, sorting, and dynamic layouts.**
+_Filter & sort magical layouts_
 
-This package has all the documentation and demos to get you started.
+See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
 
-View this project live at [http://isotope.metafizzy.co](http://isotope.metafizzy.co).
+## Install
 
-## Licensing
+A packaged source file includes everything you need to use Isotope.
+
++ [isotope.pkgd.js](http://isotope.metafizzy.co/beta/isotope.pkgd.js)
++ [isotope.pkgd.min.js](http://isotope.metafizzy.co/beta/isotope.pkgd.min.js)
+
+### Bower
+
+If you are cool with the command line, install Isotope as a [Bower](http://bower.io) package:
+
+``` bash
+bower install isotope
+```
+
+## License
 
 Isotope may be used in commercial projects and applications with the one-time purchase of a commercial license. If you are paid to do your job, and part of your job is implementing Isotope, a commercial license is required.
 
-http://isotope.metafizzy.co/docs/license.html
+http://isotope.metafizzy.co/license.html
 
-For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the MIT License. You may use Isotope for free.
+For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the [GPL v3 License](http://choosealicense.com/licenses/gpl-v3/). You may use Isotope for free.
+
+## Initialize
+
+### In JavaScript
+
+``` js
+// jQuery
+$('#container').isotope({
+  // options...
+  itemSelector: '.item',
+  masonry: {
+    columnWidth: 200
+  }
+});
+```
+
+``` js
+// vanilla JS
+var container = document.querySelector('#container');
+var iso = new Isotope( container, {
+  // options...
+  itemSelector: '.item',
+  masonry: {
+    columnWidth: 200
+  }
+});
+```
+
+### In HTML
+
+Add a class of `js-isotope` to your element. Options can be set in JSON in `data-isotope-options`.
+
+``` html
+<div class="js-isotope" data-isotope-options='{ "itemSelector": ".item", "masonry": { "columnWidth": 200 } }'>
+  <div class="item"></div>
+  <div class="item"></div>
+  ...
+</div>
+```
 
 ## Support
 
-Try the support forum at CodersClan.
+[CodersClan has a dedicated support forum for Isotope](https://www.codersclan.net/?repo_id=1), where you can get personal support from experienced developers.
 
-[![Get Support](http://codersclan.net/graphics/getSupport_github4.png)](http://codersclan.net/support/step1.php?repo_id=1)
-
-## Viewing this project locally
-
-### Via download
-
-You can download a zip of all the flat HTML files from [http://meta.metafizzy.co/files/isotope-site.zip](http://meta.metafizzy.co/files/isotope-site.zip).
-
-### Via Jekyll
-
-The documentation and demo pages are generated using [Jekyll](http://github.com/mojombo/jekyll/wiki). With Jekyll installed, you can clone this repo and run Jekyll from Terminal:
-
-``` bash
-git clone https://github.com/desandro/isotope.git
-cd isotope/
-jekyll --server --auto
-```
-
-Then view the live site at [http://localhost:4000](http://localhost:4000).
-
-## Changelog
-
-View the [commit history](https://github.com/desandro/isotope/commits/master/jquery.isotope.js) for a complete robust list of changes to the script.
-
-+ **v1.5**
-  [2011-10-19](https://github.com/desandro/isotope/commit/2c789ecb5ec#jquery.isotope.js)
-  - add proper callback support that trigger after animation/transition
-+ **v1.4** [2011-06-29](https://github.com/desandro/isotope/commit/8e2f51612eaf20e3031b81b8c5ff5e322cbb7b4f#jquery.isotope.js)
-  - shuffle method added
-  - inserting and appending positions items then reveals them
-+ **v1.3** [2011-05-23](https://github.com/desandro/isotope/commit/a7cc0be2a0038c13a2955a889a873f63a39eb6c2#jquery.isotope.js)
-  - refactor layout mode API
-  - layoutModeResize -> layoutModeResizeChanged, which returns boolean
-+ **v1.2** [2011-05-13](https://github.com/desandro/isotope/commit/b3cf6139d7641f282724a7a541b3bfb10d1bbf54#jquery.isotope.js)
-  - add updateOption method, for changing options after initialization
-+ **v1.1** [2011-04-26](https://github.com/desandro/isotope/commit/3c551406ee1e4cd8345cdbe589c2d8d1e164b259#jquery.isotope.js)
-  - incremental additions, bug fixes, and refactorings
-+ **v1.0** [2011-02-07](https://github.com/desandro/isotope/commit/78253dfb34808d9a677ae721e97c5afc08aa19b8#jquery.isotope.js)
-  - public release
+#### [Get support on CodersClan](https://www.codersclan.net/?repo_id=1)
 
 * * *
 
-Copyright (c) 2011-2012 David DeSandro / Metafizzy LLC
+By [Metafizzy](http://metafizzy.co)

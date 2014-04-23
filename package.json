@@ -1,0 +1,15 @@
+{
+  "name": "isotope",
+  "version": "2.0.0",
+  "description": "Filter and sort magical layouts",
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.4.1",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-requirejs": "~0.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/metafizzy/isotope.git"
+  }
+}

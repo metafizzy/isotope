@@ -1,7 +1,0 @@
-    {% capture classnames %}{% for cat in element.categories %}{{ cat }} {% endfor %} {% if page.infinite_scroll %} width2 height2 {% endif %} {% endcapture %}
-    <div class="element {{ classnames }}" data-symbol="{{ element.symbol }}" data-category="{{ element.categories[0] }}">
-      <p class="number">{{ element.number }}</p>
-      <h3 class="symbol">{{ element.symbol }}</h3>
-      <h2 class="name">{{ element.name }}</h2>
-      <p class="weight">{{ element.weight }}</p>
-    </div>

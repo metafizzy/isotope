@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Isotope tests</title>
+
+  <link rel="stylesheet" href="tests.css" />
+  <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" />
+
+<script src="../bower_components/qunit/qunit/qunit.js"></script>
+
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+<script src="../bower_components/masonry/masonry.js"></script>
+
+<script src="../bower_components/jquery/jquery.js"></script>
+
+<script src="../js/item.js"></script>
+<script src="../js/layout-mode.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/masonry.js"></script>
+
+<script src="../bower_components/isotope-cells-by-row/cells-by-row.js"></script>
+
+<script src="helpers.js"></script>
+<script src="sorting.js"></script>
+<script src="get-sort-data.js"></script>
+<script src="filtering.js"></script>
+<script src="layout-complete.js"></script>
+<script src="get-segment-size.js"></script>
+<script src="masonry-measure-columns.js"></script>
+<script src="masonry-stamp.js"></script>
+
+</head>
+<body>
+
+  <h1>Isotope tests</h1>
+
+  <div id="qunit"></div>
+
+  <h2>Sorting</h2>
+
+  <div id="sorting1" class="container">
+    <div class="item"><b>B</b><i>4</i></div>
+    <div class="item"><b>B</b><i>2</i></div>
+    <div class="item"><b>A</b><i>4</i></div>
+    <div class="item"><b>A</b><i>1</i></div>
+    <div class="item"><b>B</b><i>1</i></div>
+    <div class="item"><b>A</b><i>3</i></div>
+    <div class="item"><b>A</b><i>2</i></div>
+  </div>
+
+  <h2>getSortData</h2>
+
+  <div id="get-sort-data" class="container">
+    <div class="item" data-ninja-turtle="leonardo">
+      <span class="fruit">watermelon</span>
+      <b>3.14</b>
+      <i>42</i>
+    </div>
+  </div>
+
+  <h2>Filtering</h2>
+
+  <div id="filtering" class="container">
+    <div data-item-id="1" class="item orange">5</div>
+    <div data-item-id="2" class="item">3</div>
+    <div data-item-id="3" class="item orange tall">2</div>
+    <div data-item-id="4" class="item tall">9</div>
+    <div data-item-id="5" class="item">7</div>
+    <div data-item-id="6" class="item orange">1</div>
+    <div data-item-id="7" class="item orange tall">8</div>
+  </div>
+
+  <h2>layoutComplete</h2>
+
+  <div id="layout-complete" class="container">
+    <div class="item a1 b1">a1 b1</div>
+    <div class="item a2 b1">a2 b1</div>
+    <div class="item a3 b1">a3 b1</div>
+    <div class="item a1 b2">a1 b2</div>
+    <div class="item a2 b2">a2 b2</div>
+    <div class="item a3 b2">a3 b2</div>
+    <div class="item a1 b3">a1 b3</div>
+    <div class="item a2 b3">a2 b3</div>
+    <div class="item a3 b3">a3 b3</div>
+  </div>
+
+  <h2>LayoutMode.getSegmentSize</h2>
+
+  <div id="get-segment-size" class="container">
+    <div class="grid-sizer"></div>
+    <div class="item"></div>
+  </div>
+
+  <h2>Masonry</h2>
+
+  <div id="masonry-measure-columns" class="container">
+    <div class="grid-sizer"></div>
+    <div class="item a">a</div>
+    <div class="item b">b</div>
+    <div class="item c">c</div>
+  </div>
+
+  <h2>Masonry stamp</h2>
+
+  <div id="masonry-stamp" class="container">
+    <div class="stamp stamp1"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+
+</body>
+</html>

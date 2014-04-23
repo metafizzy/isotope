@@ -1,0 +1,37 @@
+{
+  "name": "isotope",
+  "version": "2.0.0",
+  "description": "Filter and sort magical layouts",
+  "main": [
+    "js/item.js",
+    "js/layout-mode.js",
+    "js/isotope.js",
+    "js/layout-modes/vertical.js",
+    "js/layout-modes/fit-rows.js",
+    "js/layout-modes/masonry.js"
+  ],
+  "dependencies": {
+    "get-size": "desandro/get-size#>=1 <2",
+    "matches-selector": "desandro/matches-selector#>=1 <2",
+    "outlayer": "^1.2.0",
+    "masonry": "^3.1.5"
+  },
+  "devDependencies": {
+    "doc-ready": "desandro/doc-ready",
+    "isotope-cells-by-column": "metafizzy/isotope-cells-by-column",
+    "isotope-cells-by-row": "metafizzy/isotope-cells-by-row",
+    "isotope-fit-columns": "metafizzy/isotope-fit-columns",
+    "isotope-horizontal": "metafizzy/isotope-horizontal",
+    "isotope-masonry-horizontal": "metafizzy/isotope-masonry-horizontal",
+    "jquery": "1",
+    "qunit": "1.12"
+  },
+  "ignore": [
+    "test/",
+    "examples/",
+    "**/.*",
+    "Gruntfile.js",
+    "package.json",
+    "notes.md"
+  ]
+}

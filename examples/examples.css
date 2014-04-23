@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+}
+
+#container,
+.container {
+  background: #EEE;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.item {
+  width:  60px;
+  height: 60px;
+  float: left;
+  border: 1px solid;
+  background: #09F;
+}
+
+.item.w2 { width: 120px; }
+.item.w3 { width: 180px; }
+
+.item.h2 { height: 100px; }
+.item.h3 { height: 160px; }
+.item.h4 { height: 220px; }
+.item.h5 { height: 280px; }
+
+.stamp {
+  background: red;
+  opacity: 0.75;
+  position: absolute;
+  border: 1px solid;
+}
+
+
+/* element */
+
+.element {
+  width: 80px;
+  height: 90px;
+  margin: 5px;
+  background: #DDD;
+  float: left;
+  position: relative;
+  padding: 5px;
+}
+
+.element > * {
+  margin: 0;
+}
+
+.element .number {
+  right: 5px;
+  top: 5px;
+  position: absolute;
+}
+
+.element .symbol {
+  font-size: 30px;
+  left: 5px;
+  top: 5px;
+  color: white;
+}
+
+.element .name {
+  font-size: 14px;
+}
+
+.element .weight {
+  font-size: 14px;
+}
+
+.element.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
+.element.alkaline-earth  { background: #F80; background: hsl(  36, 100%, 50%); }
+.element.lanthanoid      { background: #FF0; background: hsl(  72, 100%, 50%); }
+.element.actinoid        { background: #0F0; background: hsl( 108, 100%, 50%); }
+.element.transition      { background: #0F8; background: hsl( 144, 100%, 50%); }
+.element.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
+.element.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
+.element.other.nonmetal  { background: #00F; background: hsl( 252, 100%, 50%); }
+.element.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
+.element.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
+
+/* stamps */
+
+.stamp {
+  position: absolute;
+  background: hsla(0, 100%, 50%, 0.8);
+  border: 1px solid;
+}
+
+.stamp1 {
+  left: 10%;
+  top: 20px;
+  width: 20%;
+  height: 200px;
+}
+
+.stamp2 {
+  right: 200px;
+  top: 100px;
+  width: 100px;
+  height: 100px;
+}
