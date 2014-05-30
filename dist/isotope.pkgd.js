@@ -1482,8 +1482,8 @@ Item.prototype.enableTransition = function(/* style */) {
     transitionProperty: itemTransitionProperties,
     transitionDuration: this.layout.options.transitionDuration
   });
-  // listen for transition end event
-  this.element.addEventListener( transitionEndEvent, this, false );
+  // fix: commenting out to prevent multiple transitions.
+  //this.element.addEventListener( transitionEndEvent, this, false );
 };
 
 Item.prototype.transition = Item.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
