@@ -579,6 +579,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     return returnValue;
   };
 
+  // ----- helper methods ----- //
+
+  /**
+   * getter method for getting filtered item elements
+   * @returns {Array} elems - collection of item elements
+   */
+  Isotope.prototype.getFilteredItemElements = function() {
+    var elems = [];
+    for ( var i=0, len = this.filteredItems.length; i < len; i++ ) {
+      elems.push( this.filteredItems[i].element );
+    }
+    return elems;
+  };
+
   // -----  ----- //
 
   return Isotope;
