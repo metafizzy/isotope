@@ -3,25 +3,40 @@
 <head>
   <meta charset="utf-8">
 
-  <title>sorting</title>
+  <title>horizontal layout modes</title>
 
-  <link rel="stylesheet" href="examples.css" />
-
+  <link rel="stylesheet" href="sandbox.css" />
+  <style>
+  body, html {
+    height: 100%;
+  }
+  #container {
+    position: relative;
+    height: 70%;
+    margin-bottom: 20px;
+  }
+  </style>
 </head>
 <body>
 
-  <h1>sorting</h1>
+  <h1>horizontal layout modes</h1>
 
 <div id="options">
+  <h2>Filter</h2>
+  <div class="option-set" data-isotope-key="filter">
+    <button data-isotope-value="*">show all</button>
+    <button data-isotope-value=".metal">metal</button>
+    <button data-isotope-value=".post-transition">post-transition</button>
+  </div>
   <h2>Sort</h2>
-  <ul class="option-set">
-    <li><a href="#original-order">original-order</a></li>
-    <li><a href="#number">number</a></li>
-    <li><a href="#name">name</a></li>
-    <li><a href="#symbol">symbol</a></li>
-    <li><a href="#weight">weight</a></li>
-    <li><a href="#category">category</a></li>
-  </ul>
+  <div class="option-set" data-isotope-key="sortBy">
+    <button data-isotope-value="original-order">original-order</button>
+    <button data-isotope-value="number">number</button>
+    <button data-isotope-value="name">name</button>
+    <button data-isotope-value="symbol">symbol</button>
+    <button data-isotope-value="weight">weight</button>
+    <button data-isotope-value="category">category</button>
+  </div>
 </div>
 
 <div id="container">
@@ -143,56 +158,51 @@
 <script src="../bower_components/outlayer/outlayer.js"></script>
 
 <script src="../js/item.js"></script>
-<script src="../js/isotope.js"></script>
 <script src="../js/layout-mode.js"></script>
-<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/isotope.js"></script>
+
+<script src="../bower_components/isotope-fit-columns/fit-columns.js"></script>
+<script src="../bower_components/isotope-cells-by-column/cells-by-column.js"></script>
+<script src="../bower_components/isotope-horizontal/horizontal.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
-    layoutMode: 'fitRows',
+    layoutMode: 'fitColumns',
+    transitionDuration: '0.8s',
+    horizontal: {
+      verticalAlignment: 0.5
+    },
+    cellsByColumn: {
+      columnWidth: 130,
+      rowHeight: 140,
+    },
     getSortData: {
-      // number: function( itemElem ) {
-      //   return parseInt( getText( itemElem.querySelector('.number') ), 10 );
-      // },
-      // symbol: function( itemElem ) {
-      //   return getText( itemElem.querySelector('.symbol') );
-      // },
-      // name: function( itemElem ) {
-      //   return getText( itemElem.querySelector('.name') );
-      // },
-      // category: function( itemElem ) {
-      //   return itemElem.getAttribute('data-category');
-      // },
-
       number: '.number parseInt',
       symbol: '.symbol',
       name: '.name',
       category: '[data-category]',
-
       weight: function( itemElem ) {
         // remove parenthesis
         return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
       }
-
-
     }
   });
 
   var options = document.querySelector('#options');
 
   eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'a' ) ) {
+    if ( !matchesSelector( event.target, 'button' ) ) {
       return;
     }
 
-    // use link's href, remove leading hash
-    var sortBy = event.target.getAttribute('href').slice( 1 );
-    sortBy.slice( 0, 1 );
-    iso.options.sortBy = sortBy;
+    // var opt = {};
+    var key = event.target.parentNode.getAttribute('data-isotope-key');
+    var value = event.target.getAttribute('data-isotope-value');
+    console.log( key, value );
+    iso.options[ key ] = value;
     iso.arrange();
-    event.preventDefault();
   });
 
 });
@@ -205,6 +215,3 @@ function getText( elem ) {
 
 </body>
 </html>
-
-
-

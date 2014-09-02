@@ -3,34 +3,25 @@
 <head>
   <meta charset="utf-8">
 
-  <title>filter sort</title>
+  <title>sorting</title>
 
-  <link rel="stylesheet" href="examples.css" />
-  <style>
-  #container { width: 100%; }
-  </style>
+  <link rel="stylesheet" href="sandbox.css" />
+
 </head>
 <body>
 
-  <h1>filter sort</h1>
+  <h1>sorting</h1>
 
 <div id="options">
-  <h2>Filter</h2>
-  <div class="option-set" data-isotope-key="filter">
-    <button data-isotope-value="*">show all</button>
-    <button data-isotope-value=".metal">metal</button>
-    <button data-isotope-value=".post-transition">post-transition</button>
-    <button data-isotope-value="number-greater-than-50">number > 50</button>
-  </div>
   <h2>Sort</h2>
-  <div class="option-set" data-isotope-key="sortBy">
-    <button data-isotope-value="original-order">original-order</button>
-    <button data-isotope-value="number">number</button>
-    <button data-isotope-value="name">name</button>
-    <button data-isotope-value="symbol">symbol</button>
-    <button data-isotope-value="weight">weight</button>
-    <button data-isotope-value="category">category</button>
-  </div>
+  <ul class="option-set">
+    <li><a href="#original-order">original-order</a></li>
+    <li><a href="#number">number</a></li>
+    <li><a href="#name">name</a></li>
+    <li><a href="#symbol">symbol</a></li>
+    <li><a href="#weight">weight</a></li>
+    <li><a href="#category">category</a></li>
+  </ul>
 </div>
 
 <div id="container">
@@ -152,55 +143,56 @@
 <script src="../bower_components/outlayer/outlayer.js"></script>
 
 <script src="../js/item.js"></script>
-<script src="../js/layout-mode.js"></script>
 <script src="../js/isotope.js"></script>
+<script src="../js/layout-mode.js"></script>
 <script src="../js/layout-modes/fit-rows.js"></script>
-<script src="../js/layout-modes/vertical.js"></script>
-
-<script src="../bower_components/isotope-cells-by-row/cells-by-row.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
     layoutMode: 'fitRows',
-    transitionDuration: '0.8s',
-    cellsByRow: {
-      columnWidth: 130,
-      rowHeight: 140,
-    },
     getSortData: {
+      // number: function( itemElem ) {
+      //   return parseInt( getText( itemElem.querySelector('.number') ), 10 );
+      // },
+      // symbol: function( itemElem ) {
+      //   return getText( itemElem.querySelector('.symbol') );
+      // },
+      // name: function( itemElem ) {
+      //   return getText( itemElem.querySelector('.name') );
+      // },
+      // category: function( itemElem ) {
+      //   return itemElem.getAttribute('data-category');
+      // },
+
       number: '.number parseInt',
       symbol: '.symbol',
       name: '.name',
       category: '[data-category]',
+
       weight: function( itemElem ) {
         // remove parenthesis
         return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
       }
+
+
     }
   });
 
   var options = document.querySelector('#options');
 
   eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'button' ) ) {
+    if ( !matchesSelector( event.target, 'a' ) ) {
       return;
     }
 
-    // var opt = {};
-    var key = event.target.parentNode.getAttribute('data-isotope-key');
-    var value = event.target.getAttribute('data-isotope-value');
-
-    if ( key === 'filter' && value === 'number-greater-than-50' ) {
-      value = function( elem ) {
-        var numberText = getText( elem.querySelector('.number') );
-        return parseInt( numberText, 10 ) > 40;
-      };
-    }
-    console.log( key, value );
-    iso.options[ key ] = value;
+    // use link's href, remove leading hash
+    var sortBy = event.target.getAttribute('href').slice( 1 );
+    sortBy.slice( 0, 1 );
+    iso.options.sortBy = sortBy;
     iso.arrange();
+    event.preventDefault();
   });
 
 });

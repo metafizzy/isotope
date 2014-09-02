@@ -5,7 +5,7 @@
 
   <title>horizontal layout modes</title>
 
-  <link rel="stylesheet" href="examples.css" />
+  <link rel="stylesheet" href="sandbox.css" />
   <style>
   body, html {
     height: 100%;
@@ -15,6 +15,32 @@
     height: 70%;
     margin-bottom: 20px;
   }
+  .element.alkali          { width: 170px; height: 190px; }
+  .element.alkaline-earth  {}
+  .element.lanthanoid      { height: 190px; }
+  .element.actinoid        { width: 170px; }
+  .element.transition      { width: 220px; }
+
+  .stamp {
+    background: #DDD;
+    border: 2px dotted;
+    position: absolute;
+  }
+
+  .stamp1 {
+    height: 30%;
+    width: 80px;
+    left: 30px;
+    top: 10%;
+  }
+
+  .stamp2 {
+    height: 200px;
+    width: 40px;
+    left: 15px;
+    top: 100px;
+  }
+
   </style>
 </head>
 <body>
@@ -40,7 +66,10 @@
 </div>
 
 <div id="container">
-  
+  <div class="stamp stamp1"></div>
+  <div class="stamp stamp2"></div>
+
+
   <div class="element transition metal   " data-symbol="Hg" data-category="transition">
     <p class="number">80</p>
     <h3 class="symbol">Hg</h3>
@@ -164,15 +193,18 @@
 <script src="../bower_components/isotope-fit-columns/fit-columns.js"></script>
 <script src="../bower_components/isotope-cells-by-column/cells-by-column.js"></script>
 <script src="../bower_components/isotope-horizontal/horizontal.js"></script>
+<script src="../bower_components/isotope-masonry-horizontal/masonry-horizontal.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
-    layoutMode: 'fitColumns',
+    itemSelector: '.element',
+    stamp: '.stamp',
+    layoutMode: 'masonryHorizontal',
     transitionDuration: '0.8s',
-    horizontal: {
-      verticalAlignment: 0.5
+    masonryHorizontal: {
+      rowHeight: 100
     },
     cellsByColumn: {
       columnWidth: 130,

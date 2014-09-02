@@ -3,49 +3,16 @@
 <head>
   <meta charset="utf-8">
 
-  <title>horizontal layout modes</title>
+  <title>filter sort</title>
 
-  <link rel="stylesheet" href="examples.css" />
+  <link rel="stylesheet" href="sandbox.css" />
   <style>
-  body, html {
-    height: 100%;
-  }
-  #container {
-    position: relative;
-    height: 70%;
-    margin-bottom: 20px;
-  }
-  .element.alkali          { width: 170px; height: 190px; }
-  .element.alkaline-earth  {}
-  .element.lanthanoid      { height: 190px; }
-  .element.actinoid        { width: 170px; }
-  .element.transition      { width: 220px; }
-
-  .stamp {
-    background: #DDD;
-    border: 2px dotted;
-    position: absolute;
-  }
-
-  .stamp1 {
-    height: 30%;
-    width: 80px;
-    left: 30px;
-    top: 10%;
-  }
-
-  .stamp2 {
-    height: 200px;
-    width: 40px;
-    left: 15px;
-    top: 100px;
-  }
-
+  #container { width: 100%; }
   </style>
 </head>
 <body>
 
-  <h1>horizontal layout modes</h1>
+  <h1>filter sort</h1>
 
 <div id="options">
   <h2>Filter</h2>
@@ -53,6 +20,7 @@
     <button data-isotope-value="*">show all</button>
     <button data-isotope-value=".metal">metal</button>
     <button data-isotope-value=".post-transition">post-transition</button>
+    <button data-isotope-value="number-greater-than-50">number > 50</button>
   </div>
   <h2>Sort</h2>
   <div class="option-set" data-isotope-key="sortBy">
@@ -66,10 +34,7 @@
 </div>
 
 <div id="container">
-  <div class="stamp stamp1"></div>
-  <div class="stamp stamp2"></div>
-
-
+  
   <div class="element transition metal   " data-symbol="Hg" data-category="transition">
     <p class="number">80</p>
     <h3 class="symbol">Hg</h3>
@@ -189,24 +154,18 @@
 <script src="../js/item.js"></script>
 <script src="../js/layout-mode.js"></script>
 <script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/vertical.js"></script>
 
-<script src="../bower_components/isotope-fit-columns/fit-columns.js"></script>
-<script src="../bower_components/isotope-cells-by-column/cells-by-column.js"></script>
-<script src="../bower_components/isotope-horizontal/horizontal.js"></script>
-<script src="../bower_components/isotope-masonry-horizontal/masonry-horizontal.js"></script>
+<script src="../bower_components/isotope-cells-by-row/cells-by-row.js"></script>
 
 <script>
 docReady( function() {
   var container = document.querySelector('#container');
   var iso = window.iso = new Isotope( container, {
-    itemSelector: '.element',
-    stamp: '.stamp',
-    layoutMode: 'masonryHorizontal',
+    layoutMode: 'fitRows',
     transitionDuration: '0.8s',
-    masonryHorizontal: {
-      rowHeight: 100
-    },
-    cellsByColumn: {
+    cellsByRow: {
       columnWidth: 130,
       rowHeight: 140,
     },
@@ -232,6 +191,13 @@ docReady( function() {
     // var opt = {};
     var key = event.target.parentNode.getAttribute('data-isotope-key');
     var value = event.target.getAttribute('data-isotope-value');
+
+    if ( key === 'filter' && value === 'number-greater-than-50' ) {
+      value = function( elem ) {
+        var numberText = getText( elem.querySelector('.number') );
+        return parseInt( numberText, 10 ) > 40;
+      };
+    }
     console.log( key, value );
     iso.options[ key ] = value;
     iso.arrange();
@@ -247,3 +213,6 @@ function getText( elem ) {
 
 </body>
 </html>
+
+
+
