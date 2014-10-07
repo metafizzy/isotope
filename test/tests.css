@@ -74,3 +74,9 @@ body {
   right: 25px;
   top: 15px;
 }
+
+/* ---- fit rows ---- */
+
+#fitrows-gutter .gutter-sizer {
+  width: 10%;
+}

@@ -10,13 +10,16 @@ FitRows.prototype._resetLayout = function() {
   this.x = 0;
   this.y = 0;
   this.maxY = 0;
+  this._getMeasurement( 'gutter', 'outerWidth' );
 };
 
 FitRows.prototype._getItemLayoutPosition = function( item ) {
   item.getSize();
 
+  var itemWidth = item.size.outerWidth + this.gutter;
   // if this element cannot fit in the current row
-  if ( this.x !== 0 && item.size.outerWidth + this.x > this.isotope.size.innerWidth ) {
+  var containerWidth = this.isotope.size.innerWidth + this.gutter;
+  if ( this.x !== 0 && itemWidth + this.x > containerWidth ) {
     this.x = 0;
     this.y = this.maxY;
   }
@@ -27,7 +30,7 @@ FitRows.prototype._getItemLayoutPosition = function( item ) {
   };
 
   this.maxY = Math.max( this.maxY, this.y + item.size.outerHeight );
-  this.x += item.size.outerWidth;
+  this.x += itemWidth;
 
   return position;
 };

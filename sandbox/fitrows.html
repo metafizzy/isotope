@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>fitRows</title>
+
+  <link rel="stylesheet" href="sandbox.css" />
+
+  <style>
+    #gutter2 .gutter-sizer { width: 30px; }
+  </style>
+
+</head>
+<body>
+
+  <h1>fitRows</h1>
+
+  <div id="basic" class="container">
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item w2 h2"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h4"></div>
+    <div class="item w2"></div>
+    <div class="item h5"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h5"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+  </div>
+
+  <div id="gutter1" class="container">
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item w2 h2"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h4"></div>
+    <div class="item w2"></div>
+    <div class="item h5"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h5"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+  </div>
+
+  <div id="gutter2" class="container">
+    <div class="gutter-sizer"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item w2 h2"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h4"></div>
+    <div class="item w2"></div>
+    <div class="item h5"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+    <div class="item h4"></div>
+    <div class="item"></div>
+    <div class="item w2 h5"></div>
+    <div class="item w2"></div>
+    <div class="item h3"></div>
+    <div class="item w3"></div>
+    <div class="item"></div>
+  </div>
+
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+
+<script src="../js/layout-mode.js"></script>
+<script src="../js/item.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+
+<script>
+docReady( function() {
+  var container = document.querySelector('#basic');
+  var iso = window.iso = new Isotope( container, {
+    layoutMode: 'fitRows'
+  });
+
+  // gutter with explicit value
+  new Isotope( '#gutter1', {
+    layoutMode: 'fitRows',
+    fitRows: {
+      gutter: 20
+    }
+  });
+
+  // gutter with element sizing
+  new Isotope( '#gutter2', {
+    itemSelector: '.item',
+    layoutMode: 'fitRows',
+    fitRows: {
+      gutter: '.gutter-sizer'
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
