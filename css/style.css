@@ -839,8 +839,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 #top-banner a {
   display: block;
-  background: #FF0;
-  color: #06F;
+  background: #FD0;
+  color: #06D;
   padding: 0.5em;
   font-family: Helvetica Neue, Arial, sans-serif;
   font-weight: bold;
@@ -849,7 +849,7 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   text-align: center;
 }
 
-#top-banner a:hover { background: white; color: #F06; }
+#top-banner a:hover { background: white; }
 
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
