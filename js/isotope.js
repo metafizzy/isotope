@@ -268,13 +268,17 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
    * @public
    */
   Isotope.prototype.updateSortData = function( elems ) {
+    // get items
+    var items;
+    if ( elems ) {
+      elems = makeArray( elems );
+      items = this.getItems( elems );
+    } else {
+      // update all items if no elems provided
+      items = this.items;
+    }
+
     this._getSorters();
-    // update item sort data
-    // default to all items if none are passed in
-    elems = makeArray( elems );
-    var items = this.getItems( elems );
-    // if no items found, update all items
-    items = items.length ? items : this.items;
     this._updateItemsSortData( items );
   };
 
@@ -291,7 +295,10 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
    * @private
    */
   Isotope.prototype._updateItemsSortData = function( items ) {
-    for ( var i=0, len = items.length; i < len; i++ ) {
+    // do not update if no items
+    var len = items && items.length;
+
+    for ( var i=0; len && i < len; i++ ) {
       var item = items[i];
       item.updateSortData();
     }
