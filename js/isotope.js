@@ -621,6 +621,18 @@ if ( typeof define === 'function' && define.amd ) {
       './layout-modes/vertical'
     ],
     isotopeDefinition );
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
+  module.exports = isotopeDefinition(
+    require('outlayer'),
+    require('get-size'),
+    require('desandro-matches-selector'),
+    require('./item'),
+    // include default layout modes
+    require('./layout-modes/masonry'),
+    require('./layout-modes/fit-rows'),
+    require('./layout-modes/vertical')
+  );
 } else {
   // browser global
   window.Isotope = isotopeDefinition(

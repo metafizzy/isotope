@@ -65,6 +65,12 @@ if ( typeof define === 'function' && define.amd ) {
       'masonry/masonry'
     ],
     masonryDefinition );
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
+  module.exports = masonryDefinition(
+    require('../layout-mode'),
+    require('masonry-layout')
+  );
 } else {
   // browser global
   masonryDefinition(
