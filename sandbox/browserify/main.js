@@ -2,6 +2,8 @@ var Isotope = window.Isotope = require('../../js/isotope');
 var eventie = require('eventie');
 var matchesSelector = require('desandro-matches-selector');
 
+// require('isotope-cells-by-row');
+
 function getText( elem ) {
   return elem.textContent || elem.innerText;
 }

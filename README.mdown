@@ -11,13 +11,11 @@ A packaged source file includes everything you need to use Isotope.
 + [isotope.pkgd.js](http://isotope.metafizzy.co/isotope.pkgd.js)
 + [isotope.pkgd.min.js](http://isotope.metafizzy.co/isotope.pkgd.min.js)
 
-### Bower
+If you are cool with the command line...
 
-If you are cool with the command line, install Isotope as a [Bower](http://bower.io) package:
+Install with [Bower](http://bower.io): `bower install isotope`
 
-``` bash
-bower install isotope
-```
+[Install with npm](https://www.npmjs.org/package/isotope-layout): `npm install isotope-layout`
 
 ## License
 
