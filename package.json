@@ -9,7 +9,9 @@
     "masonry-layout": "3.2.x"
   },
   "devDependencies": {
+    "desandro-matches-selector": "^1.0.2",
     "doc-ready": "1.x",
+    "eventie": "^1.0.5",
     "jquery": ">=1.4.3 <2",
     "jquery-bridget": "1.1.x",
     "qunitjs": "^1.15",

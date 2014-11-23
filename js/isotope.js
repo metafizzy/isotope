@@ -628,6 +628,7 @@ if ( typeof define === 'function' && define.amd ) {
     require('get-size'),
     require('desandro-matches-selector'),
     require('./item'),
+    require('./layout-mode'),
     // include default layout modes
     require('./layout-modes/masonry'),
     require('./layout-modes/fit-rows'),
