@@ -2,7 +2,10 @@ var Isotope = window.Isotope = require('../../js/isotope');
 var eventie = require('eventie');
 var matchesSelector = require('desandro-matches-selector');
 
-// require('isotope-cells-by-row');
+// require('isotope-fit-columns');
+// require('isotope-cells-by-column');
+// require('isotope-horizontal');
+// require('isotope-masonry-horizontal');
 
 function getText( elem ) {
   return elem.textContent || elem.innerText;
