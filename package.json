@@ -1,6 +1,6 @@
 {
   "name": "isotope-layout",
-  "version": "2.1.0-beta.1",
+  "version": "2.1.0",
   "description": "Filter and sort magical layouts",
   "dependencies": {
     "get-size": ">=1.1.8 <1.3",
