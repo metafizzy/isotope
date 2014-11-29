@@ -54,6 +54,15 @@ module.exports = function( grunt ) {
           banner: banner
         }
       }
+    },
+
+    shell: {
+      'meteor-test': {
+        command: 'meteor/runtests.sh'
+      },
+      'meteor-publish': {
+        command: 'meteor/publish.sh'
+      }
     }
 
   });
@@ -61,6 +70,7 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-requirejs');
+  grunt.loadNpmTasks('grunt-shell');
 
   grunt.registerTask( 'pkgd-edit', function() {
     var outFile = grunt.config.get('requirejs.pkgd.options.out');
@@ -76,6 +86,13 @@ module.exports = function( grunt ) {
     grunt.file.write( outFile, contents );
     grunt.log.writeln( 'Edited ' + outFile );
   });
+
+  grunt.registerTask('meteor-test', 'shell:meteor-test');
+  grunt.registerTask('meteor-publish', 'shell:meteor-publish');
+  // ideally we'd run tests before publishing, but the chances of tests breaking (given that
+  // Meteor is orthogonal to the library) are so small that it's not worth the maintainer's time
+  // grunt.regsterTask('meteor', ['shell:meteor-test', 'shell:meteor-publish']);
+  grunt.registerTask('meteor', 'shell:meteor-publish');
 
   grunt.registerTask( 'default', [
     'jshint',
