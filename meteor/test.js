@@ -5,7 +5,7 @@ Tinytest.addAsync('Isotope - fitRows', function (test, done) {
   document.body.appendChild(isotopeDropZone);
 
   // TODO ideally we'd get the htmls straight from this repo, but no idea how to do this from TinyTest - http://stackoverflow.com/questions/27180892/pull-an-html-file-into-a-tinytest
-  HTTP.get('https://rawgit.com/metafizzy/isotope/master/test/index.html', function callback(error, result) {
+  HTTP.get('http://rawgit.com/metafizzy/isotope/master/test/index.html', function callback(error, result) {
 
     // adapted from test/fit-rows.js
     function checkPosition(item, x, y) {

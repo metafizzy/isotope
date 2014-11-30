@@ -56,12 +56,26 @@ module.exports = function( grunt ) {
       }
     },
 
-    shell: {
+    exec: {
+      'meteor-init': {
+        command: [
+          // Make sure Meteor is installed, per https://meteor.com/install.
+          // The curl'ed script is safe; takes 2 minutes to read source & check.
+          'type meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }',
+          // Meteor expects package.js to be in the root directory of
+          // the checkout, so copy it there temporarily
+          'cp meteor/package.js .'
+        ].join(';')
+      },
+      'meteor-cleanup': {
+        // remove build files and package.js
+        command: 'rm -rf .build.* versions.json package.js'
+      },
       'meteor-test': {
-        command: 'meteor/runtests.sh'
+        command: 'spacejam --mongo-url mongodb:// test-packages ./'
       },
       'meteor-publish': {
-        command: 'meteor/publish.sh'
+        command: 'meteor publish'
       }
     }
 
@@ -70,7 +84,7 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-requirejs');
-  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask( 'pkgd-edit', function() {
     var outFile = grunt.config.get('requirejs.pkgd.options.out');
@@ -87,13 +101,11 @@ module.exports = function( grunt ) {
     grunt.log.writeln( 'Edited ' + outFile );
   });
 
-  grunt.registerTask('meteor-test', 'shell:meteor-test');
-  grunt.registerTask('meteor-publish', 'shell:meteor-publish');
-  // ideally we'd run tests before publishing, but the chances of tests breaking (given that
-  // Meteor is orthogonal to the library) are so small that it's not worth the maintainer's time
-  // grunt.regsterTask('meteor', ['shell:meteor-test', 'shell:meteor-publish']);
-  grunt.registerTask('meteor', 'shell:meteor-publish');
-
+  // Meteor tasks
+  grunt.registerTask('meteor-test', ['exec:meteor-init', 'exec:meteor-test', 'exec:meteor-cleanup']);
+  grunt.registerTask('meteor-publish', ['exec:meteor-init', 'exec:meteor-publish', 'exec:meteor-cleanup']);
+  grunt.registerTask('meteor', ['exec:meteor-init', 'exec:meteor-test', 'exec:meteor-publish', 'exec:meteor-cleanup']);
+  
   grunt.registerTask( 'default', [
     'jshint',
     'requirejs',
