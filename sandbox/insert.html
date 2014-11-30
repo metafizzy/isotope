@@ -12,7 +12,11 @@
 
 <h1>insert</h1>
 
-<p><button id="insert">Insert</button> <button id="append">Append</button></p>
+<p>
+  <button id="prepend">Prepend</button>
+  <button id="insert">Insert</button>
+  <button id="append">Append</button>
+</p>
 
 <div id="container">
   <div class="item"><b>49</b></div>
@@ -60,8 +64,13 @@ docReady( function() {
     }
   });
 
+  eventie.bind( document.querySelector('#prepend'), 'click', function() {
+    // prepend 3 new items
+    iso.prepended( [ prependItem(), prependItem(), prependItem() ] );
+  });
+
   eventie.bind( document.querySelector('#insert'), 'click', function() {
-    // append 3 new items
+    // insert 3 new items
     iso.insert( [ getItem(), getItem(), getItem() ] );
   });
 
@@ -75,6 +84,12 @@ docReady( function() {
     item.className = 'item';
     var num = Math.floor( Math.random() * 100 );
     item.innerHTML = '<b>' + num + '</b>';
+    return item;
+  }
+
+  function prependItem() {
+    var item = getItem();
+    container.insertBefore( item, container.firstChild );
     return item;
   }
 
@@ -95,8 +110,6 @@ var getText = docElem.textContent ?
   function( elem ) {
     return elem.innerText;
   };
-  
-
 
 </script>
 
