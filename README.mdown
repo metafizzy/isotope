@@ -57,7 +57,7 @@ var iso = new Isotope( container, {
 Add a class of `js-isotope` to your element. Options can be set in JSON in `data-isotope-options`.
 
 ``` html
-<div class="js-isotope" data-isotope-options='{ "itemSelector": ".item", "masonry": { "columnWidth": 200 } }'>
+<div id="container" data-isotope-options='{ "itemSelector": ".item", "masonry": { "columnWidth": 200 } }'>
   <div class="item"></div>
   <div class="item"></div>
   ...
