@@ -29,6 +29,7 @@ function layoutModeDefinition( getSize, Outlayer ) {
       '_manageStamp',
       '_getContainerSize',
       '_getElementOffset',
+      '_positionItem',
       'needsResizeLayout'
     ];
 
