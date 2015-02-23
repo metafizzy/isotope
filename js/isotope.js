@@ -453,6 +453,10 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     return this._mode()._getContainerSize();
   };
 
+  Isotope.prototype._positionItem = function(item, x, y, isInstant) {
+    return this._mode()._positionItem(item, x, y, isInstant);
+  };
+
   Isotope.prototype.needsResizeLayout = function() {
     return this._mode().needsResizeLayout();
   };

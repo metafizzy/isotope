@@ -145,7 +145,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * eventie v1.0.5
+ * eventie v1.0.6
  * event binding helper
  *   eventie.bind( elem, 'click', myFn )
  *   eventie.unbind( elem, 'click', myFn )
@@ -225,7 +225,7 @@ if ( typeof define === 'function' && define.amd ) {
   window.eventie = eventie;
 }
 
-})( this );
+})( window );
 
 /*!
  * docReady v1.0.4
@@ -309,13 +309,13 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * EventEmitter v4.2.9 - git.io/ee
- * Oliver Caldwell
- * MIT license
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
  * @preserve
  */
 
-(function () {
+;(function () {
     
 
     /**
@@ -2856,6 +2856,7 @@ function layoutModeDefinition( getSize, Outlayer ) {
       '_manageStamp',
       '_getContainerSize',
       '_getElementOffset',
+      '_positionItem',
       'needsResizeLayout'
     ];
 
@@ -2989,7 +2990,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Masonry v3.2.1
+ * Masonry v3.2.2
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -3184,7 +3185,8 @@ if ( typeof define === 'function' && define.amd ) {
       'get-size/get-size'
     ],
     masonryDefinition );
-} else if (typeof exports === 'object') {
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
   module.exports = masonryDefinition(
     require('outlayer'),
     require('get-size')
@@ -3851,6 +3853,10 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   Isotope.prototype._getContainerSize = function() {
     return this._mode()._getContainerSize();
+  };
+
+  Isotope.prototype._positionItem = function(item, x, y, isInstant) {
+    return this._mode()._positionItem(item, x, y, isInstant);
   };
 
   Isotope.prototype.needsResizeLayout = function() {
