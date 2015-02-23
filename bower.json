@@ -1,6 +1,6 @@
 {
   "name": "isotope",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Filter and sort magical layouts",
   "main": [
     "js/item.js",
@@ -11,7 +11,7 @@
     "js/layout-modes/masonry.js"
   ],
   "dependencies": {
-    "get-size": ">=1.1.8 <1.3",
+    "get-size": ">=1.2.2 <1.3",
     "matches-selector": ">=1 <2",
     "outlayer": "1.3.x",
     "masonry": "3.2.x"

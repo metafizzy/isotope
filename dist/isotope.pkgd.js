@@ -1,5 +1,5 @@
 /*!
- * Isotope PACKAGED v2.1.0
+ * Isotope PACKAGED v2.1.1
  * Filter & sort magical layouts
  * http://isotope.metafizzy.co
  */
@@ -3401,7 +3401,7 @@ if ( typeof define === 'function' && define.amd ) {
 })( window );
 
 /*!
- * Isotope v2.1.0
+ * Isotope v2.1.1
  * Filter & sort magical layouts
  * http://isotope.metafizzy.co
  */
