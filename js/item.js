@@ -5,13 +5,13 @@
 ( function( window, factory ) {
 'use strict';
   // universal module definition
-  if ( typeof define === 'function' && define.amd ) {
+  if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
         'outlayer/outlayer'
       ],
       factory );
-  } else if ( typeof exports === 'object' ) {
+  } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
       require('outlayer')

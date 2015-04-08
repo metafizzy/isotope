@@ -8,7 +8,7 @@
   'use strict';
   // universal module definition
 
-  if ( typeof define === 'function' && define.amd ) {
+  if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
         'outlayer/outlayer',
@@ -25,7 +25,7 @@
       function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
         return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
       });
-  } else if ( typeof exports === 'object' ) {
+  } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
       window,
@@ -256,7 +256,7 @@ var getText = docElem.textContent ?
         return jQuery( item.element ).is( filter );
       };
     }
-    if ( typeof filter === 'function' ) {
+    if ( typeof filter == 'function' ) {
       // use filter as function
       return function( item ) {
         return filter( item.element );
@@ -323,7 +323,7 @@ var getText = docElem.textContent ?
     // `.foo-bar parseInt` will parse that as a number
     function mungeSorter( sorter ) {
       // if not a string, return function or whatever it is
-      if ( typeof sorter !== 'string' ) {
+      if ( typeof sorter != 'string' ) {
         return sorter;
       }
       // parse the sorter string
@@ -392,7 +392,7 @@ var getText = docElem.textContent ?
     var itemSorter = getItemSorter( sortBys, this.options.sortAscending );
     this.filteredItems.sort( itemSorter );
     // keep track of sortBy History
-    if ( sortByOpt !== this.sortHistory[0] ) {
+    if ( sortByOpt != this.sortHistory[0] ) {
       // add to front, oldest goes in last
       this.sortHistory.unshift( sortByOpt );
     }

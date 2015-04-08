@@ -7,14 +7,14 @@
 ( function( window, factory ) {
   'use strict';
   // universal module definition
-  if ( typeof define === 'function' && define.amd ) {
+  if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
         '../layout-mode',
         'masonry/masonry'
       ],
       factory );
-  } else if ( typeof exports === 'object' ) {
+  } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
       require('../layout-mode'),

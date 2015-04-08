@@ -6,14 +6,14 @@
   'use strict';
   // universal module definition
 
-  if ( typeof define === 'function' && define.amd ) {
+  if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
         'get-size/get-size',
         'outlayer/outlayer'
       ],
       factory );
-  } else if ( typeof exports === 'object' ) {
+  } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
       require('get-size'),
@@ -78,7 +78,7 @@
     // check that this.size and size are there
     // IE8 triggers resize on body size change, so they might not be
     var hasSizes = this.isotope.size && size;
-    return hasSizes && size.innerHeight !== this.isotope.size.innerHeight;
+    return hasSizes && size.innerHeight != this.isotope.size.innerHeight;
   };
 
   // ----- measurements ----- //
