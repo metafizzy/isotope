@@ -4,7 +4,57 @@
  * http://isotope.metafizzy.co
  */
 
-( function( window ) {
+( function( window, factory ) {
+  'use strict';
+  // universal module definition
+
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        'outlayer/outlayer',
+        'get-size/get-size',
+        'matches-selector/matches-selector',
+        'fizzy-ui-utils/utils',
+        './item',
+        './layout-mode',
+        // include default layout modes
+        './layout-modes/masonry',
+        './layout-modes/fit-rows',
+        './layout-modes/vertical'
+      ],
+      function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
+        return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
+      });
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      window,
+      require('outlayer'),
+      require('get-size'),
+      require('desandro-matches-selector'),
+      require('fizzy-ui-utils'),
+      require('./item'),
+      require('./layout-mode'),
+      // include default layout modes
+      require('./layout-modes/masonry'),
+      require('./layout-modes/fit-rows'),
+      require('./layout-modes/vertical')
+    );
+  } else {
+    // browser global
+    window.Isotope = factory(
+      window,
+      window.Outlayer,
+      window.getSize,
+      window.matchesSelector,
+      window.fizzyUIUtils,
+      window.Isotope.Item,
+      window.Isotope.LayoutMode
+    );
+  }
+
+}( window, function factory( window, Outlayer, getSize, matchesSelector, utils,
+  Item, LayoutMode ) {
 
 'use strict';
 
@@ -34,8 +84,6 @@ var getText = docElem.textContent ?
 
 // -------------------------- isotopeDefinition -------------------------- //
 
-// used for AMD definition and requires
-function isotopeDefinition( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create( 'isotope', {
     layoutMode: "masonry",
@@ -545,49 +593,5 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, utils, Item, Lay
   // -----  ----- //
 
   return Isotope;
-}
 
-// -------------------------- transport -------------------------- //
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      'outlayer/outlayer',
-      'get-size/get-size',
-      'matches-selector/matches-selector',
-      'fizzy-ui-utils/utils',
-      './item',
-      './layout-mode',
-      // include default layout modes
-      './layout-modes/masonry',
-      './layout-modes/fit-rows',
-      './layout-modes/vertical'
-    ],
-    isotopeDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = isotopeDefinition(
-    require('outlayer'),
-    require('get-size'),
-    require('desandro-matches-selector'),
-    require('fizzy-ui-utils'),
-    require('./item'),
-    require('./layout-mode'),
-    // include default layout modes
-    require('./layout-modes/masonry'),
-    require('./layout-modes/fit-rows'),
-    require('./layout-modes/vertical')
-  );
-} else {
-  // browser global
-  window.Isotope = isotopeDefinition(
-    window.Outlayer,
-    window.getSize,
-    window.matchesSelector,
-    window.fizzyUIUtils,
-    window.Isotope.Item,
-    window.Isotope.LayoutMode
-  );
-}
-
-})( window );
+}));

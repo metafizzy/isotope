@@ -4,8 +4,31 @@
  * http://masonry.desandro.com
  */
 
-( function( window ) {
+( function( window, factory ) {
+  'use strict';
+  // universal module definition
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        '../layout-mode',
+        'masonry/masonry'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      require('../layout-mode'),
+      require('masonry-layout')
+    );
+  } else {
+    // browser global
+    factory(
+      window.Isotope.LayoutMode,
+      window.Masonry
+    );
+  }
 
+}( window, function factory( LayoutMode, Masonry ) {
 'use strict';
 
 // -------------------------- helpers -------------------------- //
@@ -20,8 +43,6 @@ function extend( a, b ) {
 
 // -------------------------- masonryDefinition -------------------------- //
 
-// used for AMD definition and requires
-function masonryDefinition( LayoutMode, Masonry ) {
   // create an Outlayer layout class
   var MasonryMode = LayoutMode.create('masonry');
 
@@ -54,29 +75,5 @@ function masonryDefinition( LayoutMode, Masonry ) {
   };
 
   return MasonryMode;
-}
 
-// -------------------------- transport -------------------------- //
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      '../layout-mode',
-      'masonry/masonry'
-    ],
-    masonryDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = masonryDefinition(
-    require('../layout-mode'),
-    require('masonry-layout')
-  );
-} else {
-  // browser global
-  masonryDefinition(
-    window.Isotope.LayoutMode,
-    window.Masonry
-  );
-}
-
-})( window );
+}));

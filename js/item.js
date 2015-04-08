@@ -2,13 +2,32 @@
  * Isotope Item
 **/
 
-( function( window ) {
+( function( window, factory ) {
+'use strict';
+  // universal module definition
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        'outlayer/outlayer'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      require('outlayer')
+    );
+  } else {
+    // browser global
+    window.Isotope = window.Isotope || {};
+    window.Isotope.Item = factory(
+      window.Outlayer
+    );
+  }
 
+}( window, function factory( Outlayer ) {
 'use strict';
 
 // -------------------------- Item -------------------------- //
-
-function itemDefinition( Outlayer ) {
 
 // sub-class Outlayer Item
 function Item() {
@@ -54,27 +73,4 @@ Item.prototype.destroy = function() {
 
 return Item;
 
-}
-
-// -------------------------- transport -------------------------- //
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      'outlayer/outlayer'
-    ],
-    itemDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = itemDefinition(
-    require('outlayer')
-  );
-} else {
-  // browser global
-  window.Isotope = window.Isotope || {};
-  window.Isotope.Item = itemDefinition(
-    window.Outlayer
-  );
-}
-
-})( window );
+}));

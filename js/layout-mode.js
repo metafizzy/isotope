@@ -1,10 +1,35 @@
-( function( window ) {
+/**
+ * Isotope LayoutMode
+ */
 
-'use strict';
+( function( window, factory ) {
+  'use strict';
+  // universal module definition
 
-// --------------------------  -------------------------- //
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        'get-size/get-size',
+        'outlayer/outlayer'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      require('get-size'),
+      require('outlayer')
+    );
+  } else {
+    // browser global
+    window.Isotope = window.Isotope || {};
+    window.Isotope.LayoutMode = factory(
+      window.getSize,
+      window.Outlayer
+    );
+  }
 
-function layoutModeDefinition( getSize, Outlayer ) {
+}( window, function factory( getSize, Outlayer ) {
+  'use strict';
 
   // layout mode class
   function LayoutMode( isotope ) {
@@ -131,32 +156,6 @@ function layoutModeDefinition( getSize, Outlayer ) {
     return Mode;
   };
 
-
   return LayoutMode;
 
-}
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      'get-size/get-size',
-      'outlayer/outlayer'
-    ],
-    layoutModeDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = layoutModeDefinition(
-    require('get-size'),
-    require('outlayer')
-  );
-} else {
-  // browser global
-  window.Isotope = window.Isotope || {};
-  window.Isotope.LayoutMode = layoutModeDefinition(
-    window.getSize,
-    window.Outlayer
-  );
-}
-
-
-})( window );
+}));

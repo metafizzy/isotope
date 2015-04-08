@@ -1,8 +1,30 @@
-( function( window ) {
+/**
+ * vertical layout mode
+ */
 
+( function( window, factory ) {
+  'use strict';
+  // universal module definition
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        '../layout-mode'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      require('../layout-mode')
+    );
+  } else {
+    // browser global
+    factory(
+      window.Isotope.LayoutMode
+    );
+  }
+
+}( window, function factory( LayoutMode ) {
 'use strict';
-
-function verticalDefinition( LayoutMode ) {
 
 var Vertical = LayoutMode.create( 'vertical', {
   horizontalAlignment: 0
@@ -27,24 +49,4 @@ Vertical.prototype._getContainerSize = function() {
 
 return Vertical;
 
-}
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      '../layout-mode'
-    ],
-    verticalDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = verticalDefinition(
-    require('../layout-mode')
-  );
-} else {
-  // browser global
-  verticalDefinition(
-    window.Isotope.LayoutMode
-  );
-}
-
-})( window );
+}));

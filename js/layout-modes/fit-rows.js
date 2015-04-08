@@ -1,8 +1,30 @@
-( function( window ) {
+/**
+ * fitRows layout mode
+ */
 
+( function( window, factory ) {
+  'use strict';
+  // universal module definition
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        '../layout-mode'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      require('../layout-mode')
+    );
+  } else {
+    // browser global
+    factory(
+      window.Isotope.LayoutMode
+    );
+  }
+
+}( window, function factory( LayoutMode ) {
 'use strict';
-
-function fitRowsDefinition( LayoutMode ) {
 
 var FitRows = LayoutMode.create('fitRows');
 
@@ -41,24 +63,4 @@ FitRows.prototype._getContainerSize = function() {
 
 return FitRows;
 
-}
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      '../layout-mode'
-    ],
-    fitRowsDefinition );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = fitRowsDefinition(
-    require('../layout-mode')
-  );
-} else {
-  // browser global
-  fitRowsDefinition(
-    window.Isotope.LayoutMode
-  );
-}
-
-})( window );
+}));
