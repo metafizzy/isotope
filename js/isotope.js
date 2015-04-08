@@ -14,14 +14,6 @@ var jQuery = window.jQuery;
 
 // -------------------------- helpers -------------------------- //
 
-// extend objects
-function extend( a, b ) {
-  for ( var prop in b ) {
-    a[ prop ] = b[ prop ];
-  }
-  return a;
-}
-
 var trim = String.prototype.trim ?
   function( str ) {
     return str.trim();
@@ -40,52 +32,10 @@ var getText = docElem.textContent ?
     return elem.innerText;
   };
 
-var objToString = Object.prototype.toString;
-function isArray( obj ) {
-  return objToString.call( obj ) === '[object Array]';
-}
-
-// index of helper cause IE8
-var indexOf = Array.prototype.indexOf ? function( ary, obj ) {
-    return ary.indexOf( obj );
-  } : function( ary, obj ) {
-    for ( var i=0, len = ary.length; i < len; i++ ) {
-      if ( ary[i] === obj ) {
-        return i;
-      }
-    }
-    return -1;
-  };
-
-// turn element or nodeList into an array
-function makeArray( obj ) {
-  var ary = [];
-  if ( isArray( obj ) ) {
-    // use object if already an array
-    ary = obj;
-  } else if ( obj && typeof obj.length === 'number' ) {
-    // convert nodeList to array
-    for ( var i=0, len = obj.length; i < len; i++ ) {
-      ary.push( obj[i] );
-    }
-  } else {
-    // array of single index
-    ary.push( obj );
-  }
-  return ary;
-}
-
-function removeFrom( obj, ary ) {
-  var index = indexOf( ary, obj );
-  if ( index !== -1 ) {
-    ary.splice( index, 1 );
-  }
-}
-
 // -------------------------- isotopeDefinition -------------------------- //
 
 // used for AMD definition and requires
-function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode ) {
+function isotopeDefinition( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
   // create an Outlayer layout class
   var Isotope = Outlayer.create( 'isotope', {
     layoutMode: "masonry",
@@ -143,7 +93,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     // HACK extend initial options, back-fill in default options
     var initialOpts = this.options[ name ] || {};
     this.options[ name ] = Mode.options ?
-      extend( Mode.options, initialOpts ) : initialOpts;
+      utils.extend( Mode.options, initialOpts ) : initialOpts;
     // init layout mode instance
     this.modes[ name ] = new Mode( this );
   };
@@ -280,7 +230,7 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
     // get items
     var items;
     if ( elems ) {
-      elems = makeArray( elems );
+      elems = utils.makeArray( elems );
       items = this.getItems( elems );
     } else {
       // update all items if no elems provided
@@ -531,19 +481,20 @@ function isotopeDefinition( Outlayer, getSize, matchesSelector, Item, LayoutMode
 
   var _remove = Isotope.prototype.remove;
   Isotope.prototype.remove = function( elems ) {
-    elems = makeArray( elems );
+    elems = utils.makeArray( elems );
     var removeItems = this.getItems( elems );
     // do regular thing
     _remove.call( this, elems );
     // bail if no items to remove
-    if ( !removeItems || !removeItems.length ) {
+    var len = removeItems && removeItems.length;
+    if ( !len ) {
       return;
     }
     // remove elems from filteredItems
-    for ( var i=0, len = removeItems.length; i < len; i++ ) {
+    for ( var i=0; i < len; i++ ) {
       var item = removeItems[i];
       // remove item from collection
-      removeFrom( item, this.filteredItems );
+      utils.removeFrom( this.filteredItems, item );
     }
   };
 
@@ -604,6 +555,7 @@ if ( typeof define === 'function' && define.amd ) {
       'outlayer/outlayer',
       'get-size/get-size',
       'matches-selector/matches-selector',
+      'fizzy-ui-utils/utils',
       './item',
       './layout-mode',
       // include default layout modes
@@ -618,6 +570,7 @@ if ( typeof define === 'function' && define.amd ) {
     require('outlayer'),
     require('get-size'),
     require('desandro-matches-selector'),
+    require('fizzy-ui-utils'),
     require('./item'),
     require('./layout-mode'),
     // include default layout modes
@@ -631,6 +584,7 @@ if ( typeof define === 'function' && define.amd ) {
     window.Outlayer,
     window.getSize,
     window.matchesSelector,
+    window.fizzyUIUtils,
     window.Isotope.Item,
     window.Isotope.LayoutMode
   );

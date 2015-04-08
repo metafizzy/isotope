@@ -36,7 +36,7 @@ requirejs( [ '../dist/isotope.pkgd.js' ], function( Isotope ) {
 requirejs.config({
   baseUrl: '../bower_components',
   paths: {
-    jquery: 'jquery/jquery'
+    jquery: 'jquery/dist/jquery'
   }
 })
 
@@ -61,7 +61,7 @@ requirejs( [
 // /*
 requirejs.config({
   paths: {
-    jquery: '../../bower_components/jquery/jquery'
+    jquery: '../../bower_components/jquery/dist/jquery'
   }
 });
 

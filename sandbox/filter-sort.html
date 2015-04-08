@@ -148,6 +148,7 @@
 <script src="../bower_components/get-size/get-size.js"></script>
 <script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
 <script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
 
@@ -198,10 +199,19 @@ docReady( function() {
         return parseInt( numberText, 10 ) > 40;
       };
     }
-    console.log( key, value );
+    // console.log( key, value );
     iso.options[ key ] = value;
     iso.arrange();
   });
+
+  // iso.on( 'hideComplete', function( items ) {
+  //   console.log( 'hideComplete', items );
+  // })
+
+  // iso.on( 'revealComplete', function( items ) {
+  //   console.log( 'revealComplete', items );
+  // })
+
 
 });
 
@@ -213,6 +223,3 @@ function getText( elem ) {
 
 </body>
 </html>
-
-
-
