@@ -66,7 +66,7 @@ module.exports = function( grunt ) {
     var outFile = grunt.config.get('requirejs.pkgd.options.out');
     var contents = grunt.file.read( outFile );
     // get requireJS definition code
-    var definitionRE = /define\(\s*'isotope\/js\/isotope'(.|\n)+isotopeDefinition\s*\)/;
+    var definitionRE = /define\(\s*'isotope\/js\/isotope'(.|\n)+function\( Outlayer/;
     var definition = contents.match( definitionRE )[0];
     // remove name module
     var fixDefinition = definition.replace( "'isotope/js/isotope',", '' )

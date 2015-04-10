@@ -1,5 +1,7 @@
 # Changelog
 
+## v2.2.0
+
 + Added [`arrangeComplete` event](http://isotope.metafizzy.co/events.html#arrangecomplete). Fixed [#732](https://github.com/metafizzy/isotope/issues/732)
 + Changed `bower.json` `main` to just `js/isotope.js`. Resolved [#879](https://github.com/metafizzy/isotope/issues/879)
 + Added [fizzy-ui-utils](https://github.com/metafizzy/fizzy-ui-utils)
