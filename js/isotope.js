@@ -1,7 +1,11 @@
 /*!
  * Isotope v2.1.1
- * Filter & sort magical layouts
+ *
+ * Licensed GPLv3 for open source use
+ * or Isotope Commercial License for commercial use
+ *
  * http://isotope.metafizzy.co
+ * Copyright 2015 Metafizzy
  */
 
 ( function( window, factory ) {

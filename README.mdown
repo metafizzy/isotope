@@ -6,24 +6,38 @@ See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
 
 ## Install
 
-A packaged source file includes everything you need to use Isotope.
+### Download
 
-+ [isotope.pkgd.js](http://isotope.metafizzy.co/isotope.pkgd.js)
-+ [isotope.pkgd.min.js](http://isotope.metafizzy.co/isotope.pkgd.min.js)
++ [isotope.pkgd.js](https://github.com/metafizzy/isotope/raw/master/dist/isotope.pkgd.js) un-minified, or
++ [isotope.pkgd.min.js](https://github.com/metafizzy/isotope/raw/master/dist/isotope.pkgd.min.js) minified
 
-If you are cool with the command line...
+### CDN
 
-Install with [Bower](http://bower.io): `bower install isotope`
+Link directly to [Isotope files on cdnjs](https://cdnjs.com/libraries/jquery.isotope).
 
-[Install with npm](https://www.npmjs.org/package/isotope-layout): `npm install isotope-layout`
+``` html
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.1.1/isotope.pkgd.min.js"></script>
+<!-- or -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.1.1/isotope.pkgd.min.js"></script>
+```
+
+### Package managers
+
+Bower: `bower install isotope --save`
+
+npm: `npm install isotope-layout --save`
 
 ## License
 
-Isotope may be used in commercial projects and applications with the one-time purchase of a commercial license. If you are paid to do your job, and part of your job is implementing Isotope, a commercial license is required.
+### Commerical license
 
-http://isotope.metafizzy.co/license.html
+If you want to use Isotope to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase a Isotope Commercial License at [isotope.metafizzy.co](http://isotope.metafizzy.co/#commerical-license)
 
-For non-commercial, personal, or open source projects and applications, you may use Isotope under the terms of the [GPL v3 License](http://choosealicense.com/licenses/gpl-v3/). You may use Isotope for free.
+### Open source license
+
+If you are creating an open source application under a license compatible with the [GNU GPL license v3](https://www.gnu.org/licenses/gpl-3.0.html), you may use Isotope under the terms of the GPLv3.
+
+[Read more about Isotope's license](http://isotope.metafizzy.co/license.html).
 
 ## Initialize
 
