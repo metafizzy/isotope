@@ -190,6 +190,8 @@ var getText = docElem.textContent ?
       _this.hide( filtered.needHide );
     }
 
+    this._bindArrangeComplete();
+
     if ( this._isInstant ) {
       this._noTransition( hideReveal );
     } else {
@@ -210,6 +212,31 @@ var getText = docElem.textContent ?
       this.options.isLayoutInstant : !this._isLayoutInited;
     this._isInstant = isInstant;
     return isInstant;
+  };
+
+  // listen for layoutComplete, hideComplete and revealComplete
+  // to trigger arrangeComplete
+  Isotope.prototype._bindArrangeComplete = function() {
+    // listen for 3 events to trigger arrangeComplete
+    var isLayoutComplete, isHideComplete, isRevealComplete;
+    var _this = this;
+    function arrangeParallelCallback() {
+      if ( isLayoutComplete && isHideComplete && isRevealComplete ) {
+        _this.emitEvent( 'arrangeComplete', [ _this.filteredItems ] );
+      }
+    }
+    this.once( 'layoutComplete', function() {
+      isLayoutComplete = true;
+      arrangeParallelCallback();
+    });
+    this.once( 'hideComplete', function() {
+      isHideComplete = true;
+      arrangeParallelCallback();
+    });
+    this.once( 'revealComplete', function() {
+      isRevealComplete = true;
+      arrangeParallelCallback();
+    });
   };
 
   // -------------------------- filter -------------------------- //

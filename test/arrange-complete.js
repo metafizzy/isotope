@@ -1,16 +1,16 @@
-test( 'layoutComplete', function() {
+test( 'arrangeComplete', function() {
 
   'use strict';
 
-  var iso = new Isotope( '#layout-complete', {
+  var iso = new Isotope( '#arrange-complete', {
     layoutMode: 'fitRows',
     transitionDuration: '0.1s'
   });
 
   var tests = [
     function() {
-      iso.once( 'layoutComplete', function() {
-        ok( true, 'layoutComplete after some were filtered' );
+      iso.once( 'arrangeComplete', function() {
+        ok( true, 'arrangeComplete after some were filtered' );
         next();
       });
 
@@ -19,7 +19,7 @@ test( 'layoutComplete', function() {
       });
     },
     function() {
-      iso.once( 'layoutComplete', function() {
+      iso.once( 'arrangeComplete', function() {
         ok( true, 'after some revealed, some hidden, some same' );
         next();
       });
@@ -29,7 +29,7 @@ test( 'layoutComplete', function() {
       });
     },
     function() {
-      iso.once( 'layoutComplete', function() {
+      iso.once( 'arrangeComplete', function() {
         ok( true, 'after random sort' );
         next();
       });
@@ -39,7 +39,7 @@ test( 'layoutComplete', function() {
       });
     },
     function() {
-      iso.once( 'layoutComplete', function() {
+      iso.once( 'arrangeComplete', function() {
         ok( true, 'after layout mid-way thru transition' );
         next();
       });
@@ -60,7 +60,7 @@ test( 'layoutComplete', function() {
   function next() {
     if ( tests.length ) {
       var nextTest = tests.shift();
-      // HACK for consecutive layoutComplete calls
+      // HACK for consecutive arrangeComplete calls
       setTimeout( nextTest );
     } else {
       start();
