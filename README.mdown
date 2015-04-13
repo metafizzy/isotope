@@ -16,9 +16,9 @@ See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
 Link directly to [Isotope files on cdnjs](https://cdnjs.com/libraries/jquery.isotope).
 
 ``` html
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.1.1/isotope.pkgd.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.js"></script>
 <!-- or -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.1.1/isotope.pkgd.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js"></script>
 ```
 
 ### Package managers
