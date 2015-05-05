@@ -2,7 +2,7 @@
 
 _Filter & sort magical layouts_
 
-See [isotopejs.com](http://isotopejs.com) for complete docs and demos.
+See [isotope.metafizzy.co](http://isotope.metafizzy.co) for complete docs and demos.
 
 ## Install
 

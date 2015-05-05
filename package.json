@@ -49,5 +49,6 @@
     "filter",
     "sort"
   ],
-  "author": "Metafizzy"
+  "author": "Metafizzy",
+  "license": "GPL-3.0"
 }
