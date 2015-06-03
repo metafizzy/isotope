@@ -78,7 +78,6 @@
     <div class="item"></div>
   </div>
 
-<script src="../bower_components/classie/classie.js"></script>
 <script src="../bower_components/eventEmitter/EventEmitter.js"></script>
 <script src="../bower_components/eventEmitter/EventEmitter.min.js"></script>
 <script src="../bower_components/eventie/eventie.js"></script>
@@ -90,26 +89,35 @@
 <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
+<script src="../bower_components/masonry/masonry.js"></script>
 
-<script src="../masonry.js"></script>
+<script src="../js/item.js"></script>
+<script src="../js/layout-mode.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/masonry.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
 
 <script>
 docReady( function() {
   ( function() {
     var container = document.querySelector('#basic');
-    var msnry = new Masonry( container, {
+    var iso = new Isotope( container, {
       isOriginTop: false,
-      columnWidth: 60
+      masonry: {
+        columnWidth: 60
+      }
     });
   })();
 
   ( function() {
     var container = document.querySelector('#stamped');
-    var msnry = new Masonry( container, {
+    var iso = new Isotope( container, {
       itemSelector: '.item',
       isOriginTop: false,
-      columnWidth: 60,
-      gutter: 10,
+      masonry: {
+        columnWidth: 60,
+        gutter: 10,
+      },
       stamp: '.stamp'
     });
   })();
