@@ -1,6 +1,5 @@
 {
   "name": "isotope",
-  "version": "2.2.0",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "dependencies": {
