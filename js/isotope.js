@@ -222,7 +222,7 @@ var getText = docElem.textContent ?
     var _this = this;
     function arrangeParallelCallback() {
       if ( isLayoutComplete && isHideComplete && isRevealComplete ) {
-        _this.emitEvent( 'arrangeComplete', [ _this.filteredItems ] );
+        _this.dispatchEvent( 'arrangeComplete', null, [ _this.filteredItems ] );
       }
     }
     this.once( 'layoutComplete', function() {

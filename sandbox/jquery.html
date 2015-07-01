@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+
+  <title>jquery</title>
+
+  <link rel="stylesheet" href="sandbox.css" />
+  <style>
+  #container { width: 100%; }
+  </style>
+</head>
+<body>
+
+  <h1>jquery</h1>
+
+<div id="options">
+  <h2>Filter</h2>
+  <div class="option-set" data-isotope-key="filter">
+    <button data-isotope-value="*">show all</button>
+    <button data-isotope-value=".metal">metal</button>
+    <button data-isotope-value=".post-transition">post-transition</button>
+    <button data-isotope-value="number-greater-than-50">number > 50</button>
+  </div>
+  <h2>Sort</h2>
+  <div class="option-set" data-isotope-key="sortBy">
+    <button data-isotope-value="original-order">original-order</button>
+    <button data-isotope-value="number">number</button>
+    <button data-isotope-value="name">name</button>
+    <button data-isotope-value="symbol">symbol</button>
+    <button data-isotope-value="weight">weight</button>
+    <button data-isotope-value="category">category</button>
+  </div>
+</div>
+
+<div id="container">
+  
+  <div class="element transition metal   " data-symbol="Hg" data-category="transition">
+    <p class="number">80</p>
+    <h3 class="symbol">Hg</h3>
+    <h2 class="name">Mercury</h2>
+    <p class="weight">200.59</p>
+  </div>
+
+  <div class="element metalloid   " data-symbol="Te" data-category="metalloid">
+    <p class="number">52</p>
+    <h3 class="symbol">Te</h3>
+    <h2 class="name">Tellurium</h2>
+    <p class="weight">127.6</p>
+  </div>
+
+  <div class="element post-transition metal   " data-symbol="Bi" data-category="post-transition">
+    <p class="number">83</p>
+    <h3 class="symbol">Bi</h3>
+    <h2 class="name">Bismuth</h2>
+    <p class="weight">208.9804</p>
+  </div>
+
+  <div class="element transition metal   " data-symbol="Cd" data-category="transition">
+    <p class="number">48</p>
+    <h3 class="symbol">Cd</h3>
+    <h2 class="name">Cadmium</h2>
+    <p class="weight">112.411</p>
+  </div>
+
+  <div class="element alkaline-earth metal   " data-symbol="Ca" data-category="alkaline-earth">
+    <p class="number">20</p>
+    <h3 class="symbol">Ca</h3>
+    <h2 class="name">Calcium</h2>
+    <p class="weight">40.078</p>
+  </div>
+
+  <div class="element transition metal   " data-symbol="Re" data-category="transition">
+    <p class="number">75</p>
+    <h3 class="symbol">Re</h3>
+    <h2 class="name">Rhenium</h2>
+    <p class="weight">186.207</p>
+  </div>
+
+  <div class="element post-transition metal   " data-symbol="Tl" data-category="post-transition">
+    <p class="number">81</p>
+    <h3 class="symbol">Tl</h3>
+    <h2 class="name">Thallium</h2>
+    <p class="weight">204.3833</p>
+  </div>
+
+  <div class="element metalloid   " data-symbol="Sb" data-category="metalloid">
+    <p class="number">51</p>
+    <h3 class="symbol">Sb</h3>
+    <h2 class="name">Antimony</h2>
+    <p class="weight">121.76</p>
+  </div>
+
+  <div class="element transition metal   " data-symbol="Co" data-category="transition">
+    <p class="number">27</p>
+    <h3 class="symbol">Co</h3>
+    <h2 class="name">Cobalt</h2>
+    <p class="weight">58.933195</p>
+  </div>
+
+  <div class="element lanthanoid metal inner-transition   " data-symbol="Lu" data-category="lanthanoid">
+    <p class="number">71</p>
+    <h3 class="symbol">Lu</h3>
+    <h2 class="name">Lutetium</h2>
+    <p class="weight">174.9668</p>
+  </div>
+
+  <div class="element noble-gas nonmetal   " data-symbol="Ar" data-category="noble-gas">
+    <p class="number">18</p>
+    <h3 class="symbol">Ar</h3>
+    <h2 class="name">Argon</h2>
+    <p class="weight">39.948</p>
+  </div>
+
+  <div class="element alkali metal   " data-symbol="Rb" data-category="alkali">
+    <p class="number">37</p>
+    <h3 class="symbol">Rb</h3>
+    <h2 class="name">Rubidium</h2>
+    <p class="weight">85.4678</p>
+  </div>
+
+  <div class="element other nonmetal   " data-symbol="N" data-category="other">
+    <p class="number">7</p>
+    <h3 class="symbol">N</h3>
+    <h2 class="name">Nitrogen</h2>
+    <p class="weight">14.0067</p>
+  </div>
+
+  <div class="element actinoid metal inner-transition   " data-symbol="Np" data-category="actinoid">
+    <p class="number">93</p>
+    <h3 class="symbol">Np</h3>
+    <h2 class="name">Neptunium</h2>
+    <p class="weight">(237)</p>
+  </div>
+
+  <div class="element actinoid metal inner-transition   " data-symbol="Ac" data-category="actinoid">
+    <p class="number">89</p>
+    <h3 class="symbol">Ac</h3>
+    <h2 class="name">Actinium</h2>
+    <p class="weight">(227)</p>
+  </div>
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+
+<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
+<script src="../bower_components/eventie/eventie.js"></script>
+<script src="../bower_components/doc-ready/doc-ready.js"></script>
+<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
+<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/fizzy-ui-utils/utils.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+
+<script src="../js/item.js"></script>
+<script src="../js/layout-mode.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+<script src="../js/layout-modes/vertical.js"></script>
+
+
+<script>
+$(document).ready( function() {
+  var container = document.querySelector('#container');
+  
+  var $container = $('#container').isotope({
+    layoutMode: 'fitRows',
+    transitionDuration: '0.8s',
+    cellsByRow: {
+      columnWidth: 130,
+      rowHeight: 140,
+    },
+    getSortData: {
+      number: '.number parseInt',
+      symbol: '.symbol',
+      name: '.name',
+      category: '[data-category]',
+      weight: function( itemElem ) {
+        // remove parenthesis
+        return parseFloat( $(itemElem).find('.weight').text().replace( /[\(\)]/g, '') );
+      }
+    }
+  });
+
+  var options = document.querySelector('#options');
+
+  $('#options').on( 'click', 'button', function( event ) {
+    var isoOptions = {};
+    var key = $(this).parent().attr('data-isotope-key');
+    var value = $(this).attr('data-isotope-value');
+
+    if ( key == 'filter' && value == 'number-greater-than-50' ) {
+      // jquery, function used in .each()
+      value = function( i, elem ) {
+        return parseInt( $(elem).find('.number').text(), 10 ) > 50;
+      };
+    }
+    // console.log( key, value );
+    isoOptions[ key ] = value;
+    $container.isotope( isoOptions );
+  });
+
+  $container.on( 'arrangeComplete', function( event, items ) {
+    console.log( 'arrangeComplete', items.length );
+  });
+
+  // $container.on( 'hideComplete', function( event, items ) {
+  //   console.log( 'hideComplete', items.length );
+  // });
+
+});
+
+</script>
+
+</body>
+</html>

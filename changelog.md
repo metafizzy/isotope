@@ -1,5 +1,12 @@
 # Changelog
 
+### v2.2.1
+
+Updated Outlayer v1.4.1
+
++ Added jQuery event triggering
++ Fix Safari layout bugs. Fixed [#945](https://github.com/metafizzy/isotope/issues/945)
+
 ## v2.2.0
 
 + Revised license model. Isotope is licensed GPL by default. Purchasing a commercial license allows use outside of the GPL, under the Commercial License terms. Read details at: [isotope.metafizzy.co/license.html](http://isotope.metafizzy.co/license.html)

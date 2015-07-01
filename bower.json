@@ -1,12 +1,12 @@
 {
   "name": "isotope",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "dependencies": {
     "get-size": "~1.2.2",
-    "matches-selector": ">=1 <2",
-    "outlayer": "~1.4.0",
+    "matches-selector": "~1.0.2",
+    "outlayer": "~1.4.1",
     "masonry": "~3.3.0",
     "fizzy-ui-utils": "~1.0.1"
   },
