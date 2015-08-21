@@ -1,5 +1,5 @@
 /*!
- * Isotope PACKAGED v2.2.1
+ * Isotope PACKAGED v2.2.2
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
@@ -1637,12 +1637,12 @@ Item.prototype.getPosition = function() {
   var isOriginTop = layoutOptions.isOriginTop;
   var xValue = style[ isOriginLeft ? 'left' : 'right' ];
   var yValue = style[ isOriginTop ? 'top' : 'bottom' ];
-  var x = parseInt( xValue, 10 );
-  var y = parseInt( yValue, 10 );
   // convert percent to pixels
   var layoutSize = this.layout.size;
-  x = xValue.indexOf('%') != -1 ? ( x / 100 ) * layoutSize.width : x;
-  y = yValue.indexOf('%') != -1 ? ( y / 100 ) * layoutSize.height : y;
+  var x = xValue.indexOf('%') != -1 ?
+    ( parseFloat( xValue ) / 100 ) * layoutSize.width : parseInt( xValue, 10 );
+  var y = yValue.indexOf('%') != -1 ?
+    ( parseFloat( yValue ) / 100 ) * layoutSize.height : parseInt( yValue, 10 );
 
   // clean up 'auto' or other non-integer values
   x = isNaN( x ) ? 0 : x;
@@ -1738,14 +1738,12 @@ Item.prototype.getTranslate = function( x, y ) {
   var layoutOptions = this.layout.options;
   x = layoutOptions.isOriginLeft ? x : -x;
   y = layoutOptions.isOriginTop ? y : -y;
-  x = this.getXValue( x );
-  y = this.getYValue( y );
 
   if ( is3d ) {
-    return 'translate3d(' + x + ', ' + y + ', 0)';
+    return 'translate3d(' + x + 'px, ' + y + 'px, 0)';
   }
 
-  return 'translate(' + x + ', ' + y + ')';
+  return 'translate(' + x + 'px, ' + y + 'px)';
 };
 
 // non transition + transform support
@@ -2059,7 +2057,7 @@ return Item;
 }));
 
 /*!
- * Outlayer v1.4.1
+ * Outlayer v1.4.2
  * the brains and guts of a layout library
  * MIT license
  */
@@ -3225,7 +3223,7 @@ return Item;
 }));
 
 /*!
- * Masonry v3.3.0
+ * Masonry v3.3.1
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -3629,7 +3627,7 @@ return Vertical;
 }));
 
 /*!
- * Isotope v2.2.1
+ * Isotope v2.2.2
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use

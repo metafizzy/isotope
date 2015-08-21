@@ -1,5 +1,9 @@
 # Changelog
 
+### v2.2.2
+
+Updated Outlayer v1.4.2. Fixed percent width bugs. Fixed [#948](https://github.com/metafizzy/isotope/issues/948).
+
 ### v2.2.1
 
 Updated Outlayer v1.4.1
