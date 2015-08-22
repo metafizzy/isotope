@@ -7,7 +7,6 @@
     "desandro-matches-selector": "~1.0.2",
     "fizzy-ui-utils": "~1.0.1",
     "get-size": "~1.2.2",
-    "grunt-contrib-uglify": "^0.9.1",
     "masonry-layout": "~3.3.0",
     "outlayer": "~1.4.1"
   },
@@ -19,7 +18,7 @@
     "qunitjs": "^1.15",
     "grunt": "~0.4.0",
     "grunt-contrib-jshint": "~0.4.1",
-    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-requirejs": "~0.4.0"
   },
   "repository": {
