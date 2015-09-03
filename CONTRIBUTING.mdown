@@ -22,3 +22,12 @@ Providing a reduced test case is the best way to get your issue addressed. Witho
 ## Pull requests
 
 Contributions are welcome! Please note: your code may be used as part of a commercial product if merged. Be clear about what license applies to your patch. [The MIT license](http://choosealicense.com/licenses/mit/) or [public domain unlicense](http://choosealicense.com/licenses/unlicense/) are permissive, and allow integration of your patch into Isotope as part of a commercial product.
+
+### Development setup / Sandbox
+
+After a fresh git clone, to run the examples in sandbox, you will first need to run (from the root directory):
+
+```shell
+$ npm install bower
+$ bower install
+```
