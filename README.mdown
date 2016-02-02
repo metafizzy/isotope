@@ -31,7 +31,7 @@ npm: `npm install isotope-layout --save`
 
 ### Commercial license
 
-If you want to use Isotope to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase a Isotope Commercial License at [isotope.metafizzy.co](http://isotope.metafizzy.co/#commercial-license)
+If you want to use Isotope to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase an Isotope Commercial License at [isotope.metafizzy.co](http://isotope.metafizzy.co/#commercial-license)
 
 ### Open source license
 
