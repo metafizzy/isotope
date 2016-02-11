@@ -76,16 +76,6 @@ var trim = String.prototype.trim ?
     return str.replace( /^\s+|\s+$/g, '' );
   };
 
-var docElem = document.documentElement;
-
-var getText = docElem.textContent ?
-  function( elem ) {
-    return elem.textContent;
-  } :
-  function( elem ) {
-    return elem.innerText;
-  };
-
 // -------------------------- isotopeDefinition -------------------------- //
 
   // create an Outlayer layout class
@@ -153,7 +143,7 @@ var getText = docElem.textContent ?
 
   Isotope.prototype.layout = function() {
     // if first time doing layout, do all magic
-    if ( !this._isLayoutInited && this.options.isInitLayout ) {
+    if ( !this._isLayoutInited && this._getOption('initLayout') ) {
       this.arrange();
       return;
     }
@@ -208,8 +198,8 @@ var getText = docElem.textContent ?
   // Don't animate/transition first layout
   // Or don't animate/transition other layouts
   Isotope.prototype._getIsInstant = function() {
-    var isInstant = this.options.isLayoutInstant !== undefined ?
-      this.options.isLayoutInstant : !this._isLayoutInited;
+    var isInstant = this._getOption('initLayout') !== undefined ?
+      this._getOption('layoutInstant') : !this._isLayoutInited;
     this._isInstant = isInstant;
     return isInstant;
   };
@@ -390,7 +380,7 @@ var getText = docElem.textContent ?
         // otherwise, assume its a querySelector, and get its text
         getValue = function( elem ) {
           var child = elem.querySelector( query );
-          return child && getText( child );
+          return child && child.textContent;
         };
       }
       return getValue;

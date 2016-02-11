@@ -1,15 +1,6 @@
-( function() {
-
-'use strict';
-
-function getItemsText( iso ) {
-  var texts = iso.filteredItems.map( function( item ) {
-    return item.element.textContent;
-  })
-  return texts.join(',');
-}
-
 test( 'sorting', function() {
+
+  'use strict';
 
   // sorting with history
   ( function() {
@@ -62,6 +53,11 @@ test( 'sorting', function() {
     iso.destroy();
   })();
 
-});
+  function getItemsText( iso ) {
+    var texts = iso.filteredItems.map( function( item ) {
+      return item.element.textContent;
+    });
+    return texts.join(',');
+  }
 
-})();
+});
