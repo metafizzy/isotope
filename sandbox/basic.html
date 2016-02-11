@@ -36,13 +36,9 @@
     <div class="item"></div>
   </div>
 
-<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
-<script src="../bower_components/eventie/eventie.js"></script>
-<script src="../bower_components/doc-ready/doc-ready.js"></script>
-<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/ev-emitter/ev-emitter.js"></script>
 <script src="../bower_components/get-size/get-size.js"></script>
-<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
-<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
 <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
@@ -53,11 +49,9 @@
 <script src="../js/layout-modes/fit-rows.js"></script>
 
 <script>
-docReady( function() {
-  var container = document.querySelector('#basic');
-  var iso = window.iso = new Isotope( container, {
-    layoutMode: 'fitRows'
-  });
+var container = document.querySelector('#basic');
+var iso = window.iso = new Isotope( container, {
+  layoutMode: 'fitRows'
 });
 </script>
 

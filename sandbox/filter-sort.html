@@ -141,13 +141,9 @@
   </div>
 </div>
 
-<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
-<script src="../bower_components/eventie/eventie.js"></script>
-<script src="../bower_components/doc-ready/doc-ready.js"></script>
-<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/ev-emitter/ev-emitter.js"></script>
 <script src="../bower_components/get-size/get-size.js"></script>
-<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
-<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
 <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
@@ -161,66 +157,60 @@
 <script src="../bower_components/isotope-cells-by-row/cells-by-row.js"></script>
 
 <script>
-docReady( function() {
-  var container = document.querySelector('#container');
-  var iso = window.iso = new Isotope( container, {
-    layoutMode: 'fitRows',
-    transitionDuration: '0.8s',
-    cellsByRow: {
-      columnWidth: 130,
-      rowHeight: 140,
-    },
-    getSortData: {
-      number: '.number parseInt',
-      symbol: '.symbol',
-      name: '.name',
-      category: '[data-category]',
-      weight: function( itemElem ) {
-        // remove parenthesis
-        return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
-      }
+
+var container = document.querySelector('#container');
+var iso = window.iso = new Isotope( container, {
+  layoutMode: 'fitRows',
+  transitionDuration: '0.8s',
+  cellsByRow: {
+    columnWidth: 130,
+    rowHeight: 140,
+  },
+  getSortData: {
+    number: '.number parseInt',
+    symbol: '.symbol',
+    name: '.name',
+    category: '[data-category]',
+    weight: function( itemElem ) {
+      // remove parenthesis
+      return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
     }
-  });
-
-  var options = document.querySelector('#options');
-
-  eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'button' ) ) {
-      return;
-    }
-
-    // var opt = {};
-    var key = event.target.parentNode.getAttribute('data-isotope-key');
-    var value = event.target.getAttribute('data-isotope-value');
-
-    if ( key === 'filter' && value === 'number-greater-than-50' ) {
-      value = function( elem ) {
-        var numberText = getText( elem.querySelector('.number') );
-        return parseInt( numberText, 10 ) > 40;
-      };
-    }
-    // console.log( key, value );
-    iso.options[ key ] = value;
-    iso.arrange();
-  });
-
-  // iso.on( 'hideComplete', function( items ) {
-  //   console.log( 'hideComplete', items );
-  // })
-
-  // iso.on( 'revealComplete', function( items ) {
-  //   console.log( 'revealComplete', items );
-  // })
-
-  // iso.on( 'arrangeComplete', function( items ) {
-  //   console.log( 'arrangeComplete', items.length );
-  // });
-
+  }
 });
 
-function getText( elem ) {
-  return elem.textContent || elem.innerText;
-}
+var options = document.querySelector('#options');
+
+options.addEventListener( 'click', function( event ) {
+  if ( !matchesSelector( event.target, 'button' ) ) {
+    return;
+  }
+
+  // var opt = {};
+  var key = event.target.parentNode.getAttribute('data-isotope-key');
+  var value = event.target.getAttribute('data-isotope-value');
+
+  if ( key === 'filter' && value === 'number-greater-than-50' ) {
+    value = function( elem ) {
+      var numberText = elem.querySelector('.number').textContent;
+      return parseInt( numberText, 10 ) > 40;
+    };
+  }
+  // console.log( key, value );
+  iso.options[ key ] = value;
+  iso.arrange();
+});
+
+// iso.on( 'hideComplete', function( items ) {
+//   console.log( 'hideComplete', items );
+// })
+
+// iso.on( 'revealComplete', function( items ) {
+//   console.log( 'revealComplete', items );
+// })
+
+// iso.on( 'arrangeComplete', function( items ) {
+//   console.log( 'arrangeComplete', items.length );
+// });
 
 </script>
 

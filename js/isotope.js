@@ -1,11 +1,11 @@
 /*!
- * Isotope v2.2.2
+ * Isotope v3.0.0-beta1
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2015 Metafizzy
+ * Copyright 2016 Metafizzy
  */
 
 ( function( window, factory ) {
@@ -17,7 +17,7 @@
     define( [
         'outlayer/outlayer',
         'get-size/get-size',
-        'matches-selector/matches-selector',
+        'desandro-matches-selector/matches-selector',
         'fizzy-ui-utils/utils',
         './item',
         './layout-mode',

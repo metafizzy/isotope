@@ -145,13 +145,9 @@
   </div>
 </div>
 
-<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
-<script src="../bower_components/eventie/eventie.js"></script>
-<script src="../bower_components/doc-ready/doc-ready.js"></script>
-<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/ev-emitter/ev-emitter.js"></script>
 <script src="../bower_components/get-size/get-size.js"></script>
-<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
-<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
 <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
@@ -164,47 +160,40 @@
 <script src="../js/layout-modes/fit-rows.js"></script>
 
 <script>
-docReady( function() {
-  var container = document.querySelector('#container');
-  var iso = window.iso = new Isotope( container, {
-    // sortBy: 'symbol',
-    // filter: '.metal',
-    layoutMode: 'masonry',
-    masonry: {
-      columnWidth: 90
-    },
-    itemSelector: '.element',
-    stamp: '.stamp',
-    getSortData: {
 
-      number: '.number parseInt',
-      symbol: '.symbol',
-      name: '.name',
-      category: '[data-category]',
+var container = document.querySelector('#container');
+var iso = window.iso = new Isotope( container, {
+  // sortBy: 'symbol',
+  // filter: '.metal',
+  layoutMode: 'masonry',
+  masonry: {
+    columnWidth: 90
+  },
+  itemSelector: '.element',
+  stamp: '.stamp',
+  getSortData: {
 
-      weight: function( itemElem ) {
-        // remove parenthesis
-        return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
-      }
+    number: '.number parseInt',
+    symbol: '.symbol',
+    name: '.name',
+    category: '[data-category]',
 
+    weight: function( itemElem ) {
+      // remove parenthesis
+      var weight = itemElem.querySelector('.weight').textContent;
+      return parseFloat( weight.replace( /[\(\)]/g, '') );
     }
-  });
-
-  var options = document.querySelector('#options');
-
-  eventie.bind( options, 'click', function( event ) {
-    if ( !matchesSelector( event.target, 'button' ) ) {
-      return;
-    }
-    var sortBy = event.target.getAttribute('data-sort-by');
-    iso.arrange({ sortBy: sortBy });
-  });
-
+  }
 });
 
-function getText( elem ) {
-  return elem.textContent || elem.innerText;
-}
+var options = document.querySelector('#options');
+options.addEventListener( 'click', function( event ) {
+  if ( !matchesSelector( event.target, 'button' ) ) {
+    return;
+  }
+  var sortBy = event.target.getAttribute('data-sort-by');
+  iso.arrange({ sortBy: sortBy });
+});
 
 </script>
 

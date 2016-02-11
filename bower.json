@@ -1,24 +1,17 @@
 {
   "name": "isotope",
-  "version": "2.2.2",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "dependencies": {
-    "get-size": "~1.2.2",
-    "matches-selector": "~1.0.2",
-    "outlayer": "~1.4.1",
-    "masonry": "~3.3.0",
-    "fizzy-ui-utils": "~1.0.1"
+    "get-size": "~2.0.0",
+    "desandro-matches-selector": "~2.0.0",
+    "outlayer": "~2.0.0",
+    "masonry": "~4.0.0",
+    "fizzy-ui-utils": "~2.0.0"
   },
   "devDependencies": {
-    "doc-ready": "1.x",
-    "isotope-cells-by-column": "1.x",
-    "isotope-cells-by-row": "1.x",
-    "isotope-fit-columns": "1.x",
-    "isotope-horizontal": "1.x",
-    "isotope-masonry-horizontal": "1.x",
-    "jquery": ">=1.4.3 <2",
-    "jquery-bridget": "1.1.x",
+    "jquery": "2 < 4",
+    "jquery-bridget": "^2",
     "qunit": "^1.15"
   },
   "ignore": [

@@ -47,7 +47,7 @@ test( 'filtering', function() {
 
   iso.arrange({
     filter: function( elem ) {
-      var num = parseInt( getText( elem ), 10 );
+      var num = parseInt( elem.textContent, 10 );
       return num > 5;
     }
   });

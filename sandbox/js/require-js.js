@@ -43,7 +43,7 @@ requirejs.config({
 requirejs( [
     'jquery',
     'isotope/js/isotope',
-    'jquery-bridget/jquery.bridget'
+    'jquery-bridget/jquery-bridget'
   ],
   function( $, Isotope ) {
     $.bridget( 'isotope', Isotope );
@@ -68,7 +68,7 @@ requirejs.config({
 requirejs( [ 'require', 'jquery', '../dist/isotope.pkgd.js' ],
   function( require, $, Isotope ) {
     require( [
-      'jquery-bridget/jquery.bridget'
+      'jquery-bridget/jquery-bridget'
     ],
     function() {
       $.bridget( 'isotope', Isotope );

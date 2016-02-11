@@ -78,14 +78,9 @@
     <div class="item"></div>
   </div>
 
-<script src="../bower_components/eventEmitter/EventEmitter.js"></script>
-<script src="../bower_components/eventEmitter/EventEmitter.min.js"></script>
-<script src="../bower_components/eventie/eventie.js"></script>
-<script src="../bower_components/doc-ready/doc-ready.js"></script>
-<script src="../bower_components/get-style-property/get-style-property.js"></script>
+<script src="../bower_components/ev-emitter/ev-emitter.js"></script>
 <script src="../bower_components/get-size/get-size.js"></script>
-<script src="../bower_components/jquery-bridget/jquery.bridget.js"></script>
-<script src="../bower_components/matches-selector/matches-selector.js"></script>
+<script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
 <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
 <script src="../bower_components/outlayer/item.js"></script>
 <script src="../bower_components/outlayer/outlayer.js"></script>
@@ -98,31 +93,28 @@
 <script src="../js/layout-modes/fit-rows.js"></script>
 
 <script>
-docReady( function() {
-  ( function() {
-    var container = document.querySelector('#basic');
-    var iso = new Isotope( container, {
-      isOriginTop: false,
-      masonry: {
-        columnWidth: 60
-      }
-    });
-  })();
+( function() {
+  var container = document.querySelector('#basic');
+  var iso = new Isotope( container, {
+    isOriginTop: false,
+    masonry: {
+      columnWidth: 60
+    }
+  });
+})();
 
-  ( function() {
-    var container = document.querySelector('#stamped');
-    var iso = new Isotope( container, {
-      itemSelector: '.item',
-      isOriginTop: false,
-      masonry: {
-        columnWidth: 60,
-        gutter: 10,
-      },
-      stamp: '.stamp'
-    });
-  })();
-
-});
+( function() {
+  var container = document.querySelector('#stamped');
+  var iso = new Isotope( container, {
+    itemSelector: '.item',
+    isOriginTop: false,
+    masonry: {
+      columnWidth: 60,
+      gutter: 10,
+    },
+    stamp: '.stamp'
+  });
+})();
 </script>
 
 </body>

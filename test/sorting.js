@@ -3,11 +3,9 @@
 'use strict';
 
 function getItemsText( iso ) {
-  var texts = [];
-  for ( var i=0, len = iso.filteredItems.length; i < len; i++ ) {
-    var item = iso.filteredItems[i];
-    texts.push( getText( item.element ) );
-  }
+  var texts = iso.filteredItems.map( function( item ) {
+    return item.element.textContent;
+  })
   return texts.join(',');
 }
 

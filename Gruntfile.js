@@ -29,7 +29,7 @@ module.exports = function( grunt ) {
         options: {
           baseUrl: 'bower_components',
           include: [
-            'jquery-bridget/jquery.bridget',
+            'jquery-bridget/jquery-bridget',
             'isotope/js/isotope'
           ],
           out: 'dist/isotope.pkgd.js',
