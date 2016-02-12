@@ -198,8 +198,9 @@ var trim = String.prototype.trim ?
   // Don't animate/transition first layout
   // Or don't animate/transition other layouts
   Isotope.prototype._getIsInstant = function() {
-    var isInstant = this._getOption('initLayout') !== undefined ?
-      this._getOption('layoutInstant') : !this._isLayoutInited;
+    var isLayoutInstant = this._getOption('layoutInstant')
+    var isInstant = isLayoutInstant !== undefined ? isLayoutInstant :
+      !this._isLayoutInited;
     this._isInstant = isInstant;
     return isInstant;
   };

@@ -47,27 +47,21 @@
    * some methods should just defer to default Outlayer method
    * and reference the Isotope instance as `this`
   **/
-  ( function() {
-    var facadeMethods = [
-      '_resetLayout',
-      '_getItemLayoutPosition',
-      '_manageStamp',
-      '_getContainerSize',
-      '_getElementOffset',
-      'needsResizeLayout'
-    ];
+  var facadeMethods = [
+    '_resetLayout',
+    '_getItemLayoutPosition',
+    '_manageStamp',
+    '_getContainerSize',
+    '_getElementOffset',
+    'needsResizeLayout',
+    '_getOption'
+  ];
 
-    for ( var i=0, len = facadeMethods.length; i < len; i++ ) {
-      var methodName = facadeMethods[i];
-      LayoutMode.prototype[ methodName ] = getOutlayerMethod( methodName );
-    }
-
-    function getOutlayerMethod( methodName ) {
-      return function() {
-        return Outlayer.prototype[ methodName ].apply( this.isotope, arguments );
-      };
-    }
-  })();
+  facadeMethods.forEach( function( methodName ) {
+    LayoutMode.prototype[ methodName ] = function() {
+      return Outlayer.prototype[ methodName ].apply( this.isotope, arguments );
+    };
+  });
 
   // -----  ----- //
 
@@ -142,7 +136,8 @@
       LayoutMode.apply( this, arguments );
     }
 
-    Mode.prototype = new LayoutMode();
+    Mode.prototype = Object.create( LayoutMode.prototype );
+    Mode.prototype.constructor = Mode;
 
     // default options
     if ( options ) {
