@@ -3,15 +3,15 @@
  */
 
 ( function( window, factory ) {
-  'use strict';
   // universal module definition
+  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
         '../layout-mode'
       ],
       factory );
-  } else if ( typeof exports == 'object' ) {
+  } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
       require('../layout-mode')
