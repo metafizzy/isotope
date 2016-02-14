@@ -28,14 +28,16 @@
 
 var FitRows = LayoutMode.create('fitRows');
 
-FitRows.prototype._resetLayout = function() {
+var proto = FitRows.prototype;
+
+proto._resetLayout = function() {
   this.x = 0;
   this.y = 0;
   this.maxY = 0;
   this._getMeasurement( 'gutter', 'outerWidth' );
 };
 
-FitRows.prototype._getItemLayoutPosition = function( item ) {
+proto._getItemLayoutPosition = function( item ) {
   item.getSize();
 
   var itemWidth = item.size.outerWidth + this.gutter;
@@ -57,7 +59,7 @@ FitRows.prototype._getItemLayoutPosition = function( item ) {
   return position;
 };
 
-FitRows.prototype._getContainerSize = function() {
+proto._getContainerSize = function() {
   return { height: this.maxY };
 };
 

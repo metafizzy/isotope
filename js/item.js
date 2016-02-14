@@ -34,16 +34,17 @@ function Item() {
   Outlayer.Item.apply( this, arguments );
 }
 
-Item.prototype = new Outlayer.Item();
+var proto = Item.prototype = Object.create( Outlayer.Item.prototype );
 
-Item.prototype._create = function() {
+var _create = proto._create;
+proto._create = function() {
   // assign id, used for original-order sorting
   this.id = this.layout.itemGUID++;
-  Outlayer.Item.prototype._create.call( this );
+  _create.call( this );
   this.sortData = {};
 };
 
-Item.prototype.updateSortData = function() {
+proto.updateSortData = function() {
   if ( this.isIgnored ) {
     return;
   }
@@ -61,8 +62,8 @@ Item.prototype.updateSortData = function() {
   }
 };
 
-var _destroy = Item.prototype.destroy;
-Item.prototype.destroy = function() {
+var _destroy = proto.destroy;
+proto.destroy = function() {
   // call super
   _destroy.apply( this, arguments );
   // reset display, #741
