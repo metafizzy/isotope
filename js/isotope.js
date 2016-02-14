@@ -370,20 +370,18 @@ var trim = String.prototype.trim ?
 
     // get an attribute getter, or get text of the querySelector
     function getValueGetter( attr, query ) {
-      var getValue;
       // if query looks like [foo-bar], get attribute
       if ( attr ) {
-        getValue = function( elem ) {
+        return function getAttribute( elem ) {
           return elem.getAttribute( attr );
         };
-      } else {
-        // otherwise, assume its a querySelector, and get its text
-        getValue = function( elem ) {
-          var child = elem.querySelector( query );
-          return child && child.textContent;
-        };
       }
-      return getValue;
+
+      // otherwise, assume its a querySelector, and get its text
+      return function getChildText( elem ) {
+        var child = elem.querySelector( query );
+        return child && child.textContent;
+      };
     }
 
     return mungeSorter;
