@@ -118,7 +118,7 @@ var trim = String.prototype.trim ?
   Isotope.prototype._itemize = function() {
     var items = Outlayer.prototype._itemize.apply( this, arguments );
     // assign ID for original-order
-    for ( var i=0, len = items.length; i < len; i++ ) {
+    for ( var i=0; i < items.length; i++ ) {
       var item = items[i];
       item.id = this.itemGUID++;
     }
@@ -174,18 +174,12 @@ var trim = String.prototype.trim ?
     var filtered = this._filter( this.items );
     this.filteredItems = filtered.matches;
 
-    var _this = this;
-    function hideReveal() {
-      _this.reveal( filtered.needReveal );
-      _this.hide( filtered.needHide );
-    }
-
     this._bindArrangeComplete();
 
     if ( this._isInstant ) {
-      this._noTransition( hideReveal );
+      this._noTransition( this._hideReveal, [ filtered ] );
     } else {
-      hideReveal();
+      this._hideReveal( filtered );
     }
 
     this._sort();
@@ -194,11 +188,16 @@ var trim = String.prototype.trim ?
   // alias to _init for main plugin method
   Isotope.prototype._init = Isotope.prototype.arrange;
 
+  Isotope.prototype._hideReveal = function( filtered ) {
+    this.reveal( filtered.needReveal );
+    this.hide( filtered.needHide );
+  };
+
   // HACK
   // Don't animate/transition first layout
   // Or don't animate/transition other layouts
   Isotope.prototype._getIsInstant = function() {
-    var isLayoutInstant = this._getOption('layoutInstant')
+    var isLayoutInstant = this._getOption('layoutInstant');
     var isInstant = isLayoutInstant !== undefined ? isLayoutInstant :
       !this._isLayoutInited;
     this._isInstant = isInstant;
@@ -242,7 +241,7 @@ var trim = String.prototype.trim ?
     var test = this._getFilterTest( filter );
 
     // test each item
-    for ( var i=0, len = items.length; i < len; i++ ) {
+    for ( var i=0; i < items.length; i++ ) {
       var item = items[i];
       if ( item.isIgnored ) {
         continue;
@@ -424,7 +423,7 @@ var trim = String.prototype.trim ?
   function getItemSorter( sortBys, sortAsc ) {
     return function sorter( itemA, itemB ) {
       // cycle through all sortKeys
-      for ( var i = 0, len = sortBys.length; i < len; i++ ) {
+      for ( var i = 0; i < sortBys.length; i++ ) {
         var sortBy = sortBys[i];
         var a = itemA.sortData[ sortBy ];
         var b = itemB.sortData[ sortBy ];
@@ -570,7 +569,7 @@ var trim = String.prototype.trim ?
 
   Isotope.prototype.shuffle = function() {
     // update random sortData
-    for ( var i=0, len = this.items.length; i < len; i++ ) {
+    for ( var i=0; i < this.items.length; i++ ) {
       var item = this.items[i];
       item.sortData.random = Math.random();
     }
@@ -583,16 +582,17 @@ var trim = String.prototype.trim ?
    * trigger fn without transition
    * kind of hacky to have this in the first place
    * @param {Function} fn
+   * @param {Array} args
    * @returns ret
    * @private
    */
-  Isotope.prototype._noTransition = function( fn ) {
+  Isotope.prototype._noTransition = function( fn, args ) {
     // save transitionDuration before disabling
     var transitionDuration = this.options.transitionDuration;
     // disable transition
     this.options.transitionDuration = 0;
     // do it
-    var returnValue = fn.call( this );
+    var returnValue = fn.apply( this, args );
     // re-enable transition for reveal
     this.options.transitionDuration = transitionDuration;
     return returnValue;
@@ -605,11 +605,9 @@ var trim = String.prototype.trim ?
    * @returns {Array} elems - collection of item elements
    */
   Isotope.prototype.getFilteredItemElements = function() {
-    var elems = [];
-    for ( var i=0, len = this.filteredItems.length; i < len; i++ ) {
-      elems.push( this.filteredItems[i].element );
-    }
-    return elems;
+    return this.filteredItems.map( function( item ) {
+      return item.element;
+    });
   };
 
   // -----  ----- //
