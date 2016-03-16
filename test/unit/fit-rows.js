@@ -1,8 +1,5 @@
-( function() {
-
-'use strict';
-
-test( 'fitRows', function() {
+QUnit.test( 'fitRows', function( assert ) {
+  'use strict';
 
   var iso = new Isotope( '#fitrows-gutter', {
     layoutMode: 'fitRows',
@@ -14,7 +11,7 @@ test( 'fitRows', function() {
     var elem = item.element;
     var left = parseInt( elem.style.left, 10 );
     var top = parseInt( elem.style.top, 10 );
-    deepEqual( [ left, top ], [ x, y ], 'item position ' + x + ', ' + y );
+    assert.deepEqual( [ left, top ], [ x, y ], 'item position ' + x + ', ' + y );
   }
 
   checkPosition( iso.items[0], 0, 0 );
@@ -39,5 +36,3 @@ test( 'fitRows', function() {
   checkPosition( iso.items[1], 78, 0 );
 
 });
-
-})();

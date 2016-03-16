@@ -1,4 +1,4 @@
-test( 'sorting', function() {
+QUnit.test( 'sorting', function( assert ) {
 
   'use strict';
 
@@ -18,7 +18,7 @@ test( 'sorting', function() {
 
     var texts = getItemsText( iso );
 
-    equal( texts, 'A1,A2,A3,A4,B1,B2,B4', 'items sorted by letter, then number, via history' );
+    assert.equal( texts, 'A1,A2,A3,A4,B1,B2,B4', 'items sorted by letter, then number, via history' );
 
     iso.destroy();
   })();
@@ -35,12 +35,12 @@ test( 'sorting', function() {
       sortBy: [ 'letter', 'number' ]
     });
 
-    equal( getItemsText( iso ), 'A1,A2,A3,A4,B1,B2,B4', 'sortBy array' );
+    assert.equal( getItemsText( iso ), 'A1,A2,A3,A4,B1,B2,B4', 'sortBy array' );
 
     iso.arrange({
       sortAscending: false
     });
-    equal( getItemsText( iso ), 'B4,B2,B1,A4,A3,A2,A1', 'sortAscending false' );
+    assert.equal( getItemsText( iso ), 'B4,B2,B1,A4,A3,A2,A1', 'sortAscending false' );
 
     iso.arrange({
       sortAscending: {
@@ -48,7 +48,7 @@ test( 'sorting', function() {
         number: false
       }
     });
-    equal( getItemsText( iso ), 'A4,A3,A2,A1,B4,B2,B1', 'sortAscending with object' );
+    assert.equal( getItemsText( iso ), 'A4,A3,A2,A1,B4,B2,B1', 'sortAscending with object' );
 
     iso.destroy();
   })();

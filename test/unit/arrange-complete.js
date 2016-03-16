@@ -1,5 +1,4 @@
-test( 'arrangeComplete', function() {
-
+QUnit.test( 'arrangeComplete', function( assert ) {
   'use strict';
 
   var iso = new Isotope( '#arrange-complete', {
@@ -7,10 +6,12 @@ test( 'arrangeComplete', function() {
     transitionDuration: '0.1s'
   });
 
+  var done = assert.async();
+
   var tests = [
     function() {
       iso.once( 'arrangeComplete', function() {
-        ok( true, 'arrangeComplete after some were filtered' );
+        assert.ok( true, 'arrangeComplete after some were filtered' );
         next();
       });
 
@@ -20,7 +21,7 @@ test( 'arrangeComplete', function() {
     },
     function() {
       iso.once( 'arrangeComplete', function() {
-        ok( true, 'after some revealed, some hidden, some same' );
+        assert.ok( true, 'after some revealed, some hidden, some same' );
         next();
       });
 
@@ -30,7 +31,7 @@ test( 'arrangeComplete', function() {
     },
     function() {
       iso.once( 'arrangeComplete', function() {
-        ok( true, 'after random sort' );
+        assert.ok( true, 'after random sort' );
         next();
       });
 
@@ -40,7 +41,7 @@ test( 'arrangeComplete', function() {
     },
     function() {
       iso.once( 'arrangeComplete', function() {
-        ok( true, 'after layout mid-way thru transition' );
+        assert.ok( true, 'after layout mid-way thru transition' );
         next();
       });
 
@@ -63,11 +64,10 @@ test( 'arrangeComplete', function() {
       // HACK for consecutive arrangeComplete calls
       setTimeout( nextTest );
     } else {
-      start();
+      done();
     }
   }
 
   next();
-  stop();
 
 });

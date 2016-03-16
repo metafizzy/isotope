@@ -6,22 +6,6 @@
   "unused": true,
   "predef": {
     "Isotope": false,
-    "getText": false,
-
-    "asyncTest": false,
-    "deepEqual": false,
-    "equal": false,
-    "expect": false,
-    "module": false,
-    "notDeepEqual": false,
-    "notEqual": false,
-    "notStrictEqual": false,
-    "ok": false,
-    "QUnit": false,
-    "raises": false,
-    "start": false,
-    "stop": false,
-    "strictEqual": false,
-    "test": false
+    "QUnit": false
   }
 }

@@ -1,9 +1,6 @@
-( function() {
+QUnit.test( 'Masonry stamp', function( assert ) {
+  'use strict';
 
-'use strict';
-
-test( 'Masonry stamp', function() {
-  
   var iso = new Isotope( '#masonry-stamp', {
     layoutMode: 'masonry',
     itemSelector: '.item',
@@ -14,7 +11,7 @@ test( 'Masonry stamp', function() {
     var elem = item.element;
     var left = parseInt( elem.style.left, 10 );
     var top = parseInt( elem.style.top, 10 );
-    deepEqual( [ left, top ], [ x, y ], 'item position ' + x + ', ' + y );
+    assert.deepEqual( [ left, top ], [ x, y ], 'item position ' + x + ', ' + y );
   }
 
   checkPosition( iso.items[0], 0, 0 );
@@ -23,5 +20,3 @@ test( 'Masonry stamp', function() {
   checkPosition( iso.items[3], 120, 45 );
 
 });
-
-})();
