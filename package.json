@@ -11,15 +11,20 @@
     "outlayer": "~1.4.1"
   },
   "devDependencies": {
-    "doc-ready": "1.x",
-    "eventie": "^1.0.5",
+    "chalk": "^1.1.1",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-json-lint": "^0.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-requirejs-optimize": "github:metafizzy/gulp-requirejs-optimize",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
     "jquery": ">=1.4.3 <2",
     "jquery-bridget": "1.1.x",
-    "qunitjs": "^1.15",
-    "grunt": "~0.4.0",
-    "grunt-contrib-jshint": "~0.4.1",
-    "grunt-contrib-uglify": "^0.9.1",
-    "grunt-requirejs": "~0.4.0"
+    "jshint": "^2.9.1",
+    "minimist": "^1.2.0",
+    "qunitjs": "^1.15"
   },
   "repository": {
     "type": "git",
