@@ -1,8 +1,12 @@
-( function() {
-
+test( 'LayoutMode.getSegmentSize', function() {
 'use strict';
 
-test( 'LayoutMode.getSegmentSize', function() {
+  var CellsByRow = Isotope.LayoutMode.create('cellsByRow');
+
+  CellsByRow.prototype._resetLayout = function() {
+    this.getColumnWidth();
+    this.getRowHeight();
+  };
 
   var iso = new Isotope( '#get-segment-size', {
     layoutMode: 'cellsByRow',
@@ -34,5 +38,3 @@ test( 'LayoutMode.getSegmentSize', function() {
   equal( cellsByRow.rowHeight, 30, 'first item rowHeight' );
 
 });
-
-})();
