@@ -21,7 +21,6 @@
     "package.json",
     "notes.md",
     "CONTRIBUTING.mdown",
-    "changelog.md",
     "node_modules",
     "bower_components",
     "test",
