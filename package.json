@@ -4,11 +4,11 @@
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "dependencies": {
-    "desandro-matches-selector": "~1.0.2",
-    "fizzy-ui-utils": "~1.0.1",
-    "get-size": "~1.2.2",
-    "masonry-layout": "~3.3.0",
-    "outlayer": "~1.4.1"
+    "desandro-matches-selector": "~2.0.0",
+    "fizzy-ui-utils": "~2.0.0",
+    "get-size": "~2.0.0",
+    "masonry-layout": "~4.0.0",
+    "outlayer": "~2.0.0"
   },
   "devDependencies": {
     "chalk": "^1.1.1",
@@ -20,8 +20,8 @@
     "gulp-requirejs-optimize": "github:metafizzy/gulp-requirejs-optimize",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
-    "jquery": ">=1.4.3 <2",
-    "jquery-bridget": "1.1.x",
+    "jquery": "2 < 4",
+    "jquery-bridget": "^2",
     "jshint": "^2.9.1",
     "minimist": "^1.2.0",
     "qunitjs": "^1.15"
@@ -46,7 +46,8 @@
     "masonry",
     "layout",
     "filter",
-    "sort"
+    "sort",
+    "jquery-plugin"
   ],
   "author": "Metafizzy",
   "license": "GPL-3.0"
