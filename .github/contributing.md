@@ -10,6 +10,7 @@ All bug reports and problem issues require a [**reduced test case**](http://css-
 + [Sorting](http://codepen.io/desandro/pen/lzCqe)
 + [Filtering and sorting](http://codepen.io/desandro/pen/nFrte)
 + [Masonry layout](http://codepen.io/desandro/pen/mEinp)
++ [Fluid Masonry layout](http://codepen.io/desandro/pen/mIkhq)
 
 **Test cases**
 
