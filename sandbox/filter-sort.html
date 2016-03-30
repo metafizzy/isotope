@@ -154,14 +154,13 @@
 <script src="../js/layout-modes/fit-rows.js"></script>
 <script src="../js/layout-modes/vertical.js"></script>
 
-<script src="../bower_components/isotope-cells-by-row/cells-by-row.js"></script>
-
 <script>
 
 var container = document.querySelector('#container');
 var iso = window.iso = new Isotope( container, {
   layoutMode: 'fitRows',
-  transitionDuration: '0.8s',
+  transitionDuration: 400,
+  stagger: '0.1s',
   cellsByRow: {
     columnWidth: 130,
     rowHeight: 140,

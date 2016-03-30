@@ -49,15 +49,16 @@
 var container = document.querySelector('#container');
 var iso = new Isotope( container, {
   layoutMode: 'masonry',
+  stagger: 50,
   transitionDuration: '0.8s',
   getSortData: {
     b: 'b parseInt'
   },
   sortBy: 'b',
   // filter b greater than 40
-  filter: function( elem ) {
-    return parseInt( elem.querySelector('b').textContent, 10 ) > 40
-  }
+  // filter: function( elem ) {
+  //   return parseInt( elem.querySelector('b').textContent, 10 ) > 40
+  // }
 });
 
 document.querySelector('#prepend').addEventListener( 'click', function() {
@@ -94,6 +95,10 @@ function appendItem() {
   container.appendChild( item );
   return item;
 }
+
+iso.on( 'layoutComplete', function() {
+  console.log('layout complete');
+});
 
 </script>
 
