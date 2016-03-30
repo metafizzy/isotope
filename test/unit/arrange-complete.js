@@ -40,10 +40,19 @@ QUnit.test( 'arrangeComplete', function( assert ) {
       });
     },
     function() {
-      iso.once( 'arrangeComplete', function() {
-        assert.ok( true, 'after layout mid-way thru transition' );
-        next();
-      });
+      var ticks = 0;
+      function onArrangeComplete() {
+        ticks++;
+        if ( ticks == 2) {
+          assert.ok( true, 'after layout mid-way thru transition' );
+          iso.off( 'arrangeComplete', onArrangeComplete );
+          next();
+        } else if ( ticks > 2 ) {
+          assert.ok( false, 'more ticks happened' );
+        }
+      }
+
+      iso.on( 'arrangeComplete',  onArrangeComplete );
 
       iso.arrange({
         filter: '.a2',
@@ -55,6 +64,49 @@ QUnit.test( 'arrangeComplete', function( assert ) {
           filter: '.b2'
         });
       }, 300 );
+    },
+    // stagger
+    function() {
+      iso.once( 'arrangeComplete', function() {
+        assert.ok( true, 'arrangeComplete with stagger' );
+        next();
+      });
+
+      iso.arrange({
+        stagger: 100,
+        sortBy: 'random',
+        filter: '*',
+        transitionDuration: '0.4s'
+      });
+    },
+    // stagger, triggered mid-transition
+    function() {
+      var ticks = 0;
+      function onArrangeComplete() {
+        ticks++;
+        if ( ticks == 2) {
+          assert.ok( true, 'after layout mid-way thru transition, with stagger' );
+          iso.off( 'arrangeComplete', onArrangeComplete );
+          iso.options.stagger = 0;
+          next();
+        } else if ( ticks > 2 ) {
+          assert.ok( false, 'more ticks happened' );
+        }
+      }
+
+      iso.on( 'arrangeComplete',  onArrangeComplete );
+
+      iso.arrange({
+        stagger: 100,
+        sortBy: 'random',
+        transitionDuration: '0.4s'
+      });
+
+      setTimeout( function() {
+        iso.arrange({
+          filter: '.a1'
+        });
+      }, 250 );
     }
   ];
 
