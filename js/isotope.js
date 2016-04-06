@@ -555,11 +555,8 @@ var trim = String.prototype.trim ?
     _remove.call( this, elems );
     // bail if no items to remove
     var len = removeItems && removeItems.length;
-    if ( !len ) {
-      return;
-    }
     // remove elems from filteredItems
-    for ( var i=0; i < len; i++ ) {
+    for ( var i=0; len && i < len; i++ ) {
       var item = removeItems[i];
       // remove item from collection
       utils.removeFrom( this.filteredItems, item );
