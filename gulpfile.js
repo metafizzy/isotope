@@ -122,7 +122,7 @@ gulp.task( 'version', function() {
     .pipe( gulp.dest('.') );
   // replace CDN links in README
   var minorVersion = version.match( /^\d\.\d+/ )[0];
-  gulp.src('README.mdown')
+  gulp.src('README.md')
     .pipe( replace( /isotope-layout@\d\.\d+/g, 'isotope-layout@' + minorVersion ))
     .pipe( gulp.dest('.') );
 });

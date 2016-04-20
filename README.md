@@ -8,24 +8,24 @@ See [isotope.metafizzy.co](http://isotope.metafizzy.co) for complete docs and de
 
 ### Download
 
-+ [isotope.pkgd.js](https://github.com/metafizzy/isotope/raw/master/dist/isotope.pkgd.js) un-minified, or
-+ [isotope.pkgd.min.js](https://github.com/metafizzy/isotope/raw/master/dist/isotope.pkgd.min.js) minified
++ [isotope.pkgd.js](https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.js) un-minified, or
++ [isotope.pkgd.min.js](https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.min.js) minified
 
 ### CDN
 
 Link directly to [Isotope files on cdnjs](https://cdnjs.com/libraries/jquery.isotope).
 
 ``` html
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.js"></script>
+<script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
 <!-- or -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
+<script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.js"></script>
 ```
 
 ### Package managers
 
-Bower: `bower install isotope --save`
-
 npm: `npm install isotope-layout --save`
+
+Bower: `bower install isotope --save`
 
 ## License
 
@@ -69,23 +69,17 @@ var iso = new Isotope( grid, {
 
 With HTML
 
-Add a class of `js-isotope` to your element. Options can be set in JSON in `data-isotope-options`.
+Add a `data-isotope` attribute to your element. Options can be set in JSON in the value.
 
 ``` html
-<div class="grid js-isotope"
-  data-isotope-options='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 200 } }'>
+<div class="grid"
+  data-isotope='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 200 } }'>
   <div class="grid-item"></div>
   <div class="grid-item"></div>
   ...
 </div>
 ```
 
-## Support
-
-[CodersClan has a dedicated support forum for Isotope](https://www.codersclan.net/?repo_id=1), where you can get personal support from experienced developers.
-
-#### [Get support on CodersClan](https://www.codersclan.net/?repo_id=1)
-
 * * *
 
-By [Metafizzy](http://metafizzy.co)
+By [Metafizzy](http://metafizzy.co), 2010–2016
