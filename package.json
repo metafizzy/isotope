@@ -1,6 +1,6 @@
 {
   "name": "isotope-layout",
-  "version": "3.0.0-beta1",
+  "version": "3.0.0",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "dependencies": {
@@ -8,7 +8,7 @@
     "fizzy-ui-utils": "^2.0.0",
     "get-size": "^2.0.0",
     "masonry-layout": "^4.0.0",
-    "outlayer": "^2.0.0"
+    "outlayer": "^2.1.0"
   },
   "devDependencies": {
     "chalk": "^1.1.1",
