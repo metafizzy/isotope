@@ -1,5 +1,5 @@
 /*!
- * Isotope PACKAGED v3.0.0
+ * Isotope PACKAGED v3.0.1
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
@@ -154,7 +154,7 @@ return jQueryBridget;
 }));
 
 /**
- * EvEmitter v1.0.2
+ * EvEmitter v1.0.3
  * Lil' event emitter
  * MIT License
  */
@@ -163,7 +163,7 @@ return jQueryBridget;
 
 ( function( global, factory ) {
   // universal module definition
-  /* jshint strict: false */ /* globals define, module */
+  /* jshint strict: false */ /* globals define, module, window */
   if ( typeof define == 'function' && define.amd ) {
     // AMD - RequireJS
     define( 'ev-emitter/ev-emitter',factory );
@@ -175,7 +175,7 @@ return jQueryBridget;
     global.EvEmitter = factory();
   }
 
-}( this, function() {
+}( typeof window != 'undefined' ? window : this, function() {
 
 
 
@@ -528,7 +528,7 @@ return getSize;
 }));
 
 /**
- * Fizzy UI utils v2.0.1
+ * Fizzy UI utils v2.0.2
  * MIT license
  */
 
@@ -699,7 +699,8 @@ utils.debounceMethod = function( _class, methodName, threshold ) {
 // ----- docReady ----- //
 
 utils.docReady = function( callback ) {
-  if ( document.readyState == 'complete' ) {
+  var readyState = document.readyState;
+  if ( readyState == 'complete' || readyState == 'interactive' ) {
     callback();
   } else {
     document.addEventListener( 'DOMContentLoaded', callback );
@@ -2266,7 +2267,7 @@ return Outlayer;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/item',[
+    define( 'isotope/js/item',[
         'outlayer/outlayer'
       ],
       factory );
@@ -2344,7 +2345,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/layout-mode',[
+    define( 'isotope/js/layout-mode',[
         'get-size/get-size',
         'outlayer/outlayer'
       ],
@@ -2710,7 +2711,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/layout-modes/masonry',[
+    define( 'isotope/js/layout-modes/masonry',[
         '../layout-mode',
         'masonry/masonry'
       ],
@@ -2783,7 +2784,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/layout-modes/fit-rows',[
+    define( 'isotope/js/layout-modes/fit-rows',[
         '../layout-mode'
       ],
       factory );
@@ -2852,7 +2853,7 @@ return FitRows;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/layout-modes/vertical',[
+    define( 'isotope/js/layout-modes/vertical',[
         '../layout-mode'
       ],
       factory );
@@ -2899,7 +2900,7 @@ return Vertical;
 }));
 
 /*!
- * Isotope v3.0.0
+ * Isotope v3.0.1
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
@@ -2918,12 +2919,12 @@ return Vertical;
         'get-size/get-size',
         'desandro-matches-selector/matches-selector',
         'fizzy-ui-utils/utils',
-        './item',
-        './layout-mode',
+        'isotope/js/item',
+        'isotope/js/layout-mode',
         // include default layout modes
-        './layout-modes/masonry',
-        './layout-modes/fit-rows',
-        './layout-modes/vertical'
+        'isotope/js/layout-modes/masonry',
+        'isotope/js/layout-modes/fit-rows',
+        'isotope/js/layout-modes/vertical'
       ],
       function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
         return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
@@ -2936,12 +2937,12 @@ return Vertical;
       require('get-size'),
       require('desandro-matches-selector'),
       require('fizzy-ui-utils'),
-      require('./item'),
-      require('./layout-mode'),
+      require('isotope/js/item'),
+      require('isotope/js/layout-mode'),
       // include default layout modes
-      require('./layout-modes/masonry'),
-      require('./layout-modes/fit-rows'),
-      require('./layout-modes/vertical')
+      require('isotope/js/layout-modes/masonry'),
+      require('isotope/js/layout-modes/fit-rows'),
+      require('isotope/js/layout-modes/vertical')
     );
   } else {
     // browser global

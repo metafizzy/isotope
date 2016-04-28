@@ -13,7 +13,7 @@ See [isotope.metafizzy.co](http://isotope.metafizzy.co) for complete docs and de
 
 ### CDN
 
-Link directly to [Isotope files on cdnjs](https://cdnjs.com/libraries/jquery.isotope).
+Link directly to Isotope files on [npmcdn](https://npmcdn.com).
 
 ``` html
 <script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>

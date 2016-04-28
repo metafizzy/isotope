@@ -56,6 +56,7 @@ function addBanner( str ) {
 var rjsOptimize = require('gulp-requirejs-optimize');
 
 gulp.task( 'requirejs', function() {
+  var definitionRE = /define\(\s*'isotope\/isotope'(.|\n)+\],/;
   var banner = getBanner();
   // HACK src is not needed
   // should refactor rjsOptimize to produce src
@@ -72,8 +73,14 @@ gulp.task( 'requirejs', function() {
         jquery: 'empty:'
       }
     }) )
-    // remove named module
-    .pipe( replace( "'isotope/isotope',", '' ) )
+    // munge AMD definition
+    .pipe( replace( definitionRE, function( definition ) {
+      // remove named module
+      return definition.replace( "'isotope/isotope',", '' )
+        // use explicit file paths, './item' -> 'isotope/js/item'
+        .replace( /'.\//g, "'isotope/js/" );
+    }) )
+    .pipe( replace( "define( 'isotope/", "define( 'isotope/js/" ) )
     // add banner
     .pipe( addBanner( banner ) )
     .pipe( rename('isotope.pkgd.js') )

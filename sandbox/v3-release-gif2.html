@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>v3 release gif</title>
+
+<style>
+
+/* Texta Regular */
+@font-face {
+  font-family: 'Texta';
+  src: url('../../metafizzy.co/assets/fonts/2D333F_2_0.woff2') format('woff2'),
+    url('../../metafizzy.co/assets/fonts/2D333F_2_0.woff') format('woff');
+}
+
+/* Texta Heavy */
+@font-face {
+  font-family: 'Texta';
+  font-weight: bold;
+  font-style: normal;
+  src: url('../../metafizzy.co/assets/fonts/2D333F_0_0.woff2') format('woff2'),
+    url('../../metafizzy.co/assets/fonts/2D333F_0_0.woff') format('woff');
+}
+
+/* Texta Italic */
+@font-face {
+  font-family: 'Texta';
+  font-weight: normal;
+  font-style: italic;
+  src: url('../../metafizzy.co/assets/fonts/2D333F_1_0.woff2') format('woff2'),
+    url('../../metafizzy.co/assets/fonts/2D333F_1_0.woff') format('woff');
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  color: #EEE;
+  background: #333;
+  font-family: Texta;
+  width: 800px;
+  margin: 0 auto;
+}
+
+
+
+.grid {
+  width: 375px;
+}
+
+.grid-item {
+  position: relative;
+  float: left;
+  width:  60px;
+  height: 60px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.4rem;
+  line-height: 1;
+  margin: 0 5px 5px 0;
+}
+
+.grid-item--red { background: #C25; }
+.grid-item--gold { background: #EA0; }
+.grid-item--blue { background: #19F; }
+
+.grid-item__letter {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+.grid-item__number {
+  position: absolute;
+  bottom: 6px;
+  right:  6px;
+  color: #222;
+  font-weight: bold;
+}
+
+/* button
+------------------------- */
+
+.button {
+  display: block;
+  padding: 10px 12px;
+  border: none;
+  background-color: #EEE;
+  color: #333;
+  line-height: 1;
+  font-size: 13px;
+}
+
+.button:hover {
+  background-color: #FFF;
+  cursor:pointer;
+}
+
+.button:active {
+  background-color: #EEE;
+}
+
+.button:focus {
+  outline: none;
+/*  outline: 5px auto -webkit-focus-ring-color;*/
+/*  outline-offset: -2px;*/
+  background-color: white;
+}
+
+.button.is-selected {
+  background-color: #19F;
+  color: white;
+}
+
+/* button group
+------------------------- */
+
+.button-group {
+  margin-bottom: 20px;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.button-group .button {
+  margin-right: 1px;
+}
+
+.button-group .button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.button-group .button:last-child {
+  border-radius: 0 8px 8px 0;
+  border-right: 1px solid #BBB;
+}
+
+
+</style>
+
+</head>
+<body>
+
+  <h1>v3 release gif</h1>
+
+  <div class="button-group">
+    <button class="button is-selected" data-arrange='{ "filter": "*", "sortBy": "original-order" }'>Original</button>
+    <button class="button" data-arrange='{ "filter": ".grid-item--red" }'>Red</button>
+    <button class="button" data-arrange='{ "filter": ".grid-item--red, .grid-item--gold" }'>Red &amp; Gold</button>
+    <button class="button" data-arrange='{ "filter": ".grid-item--blue" }'>Blue</button>
+    <button class="button" data-arrange='{ "sortBy": "number" }'>123</button>
+  </div>
+
+  <div class="grid">
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">A</span>
+      <span class="grid-item__number">8</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">B</span>
+      <span class="grid-item__number">12</span>
+    </div>
+    <div class="grid-item grid-item--gold">
+      <span class="grid-item__letter">C</span>
+      <span class="grid-item__number">15</span>
+    </div>
+    <div class="grid-item grid-item--gold">
+      <span class="grid-item__letter">D</span>
+      <span class="grid-item__number">10</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">E</span>
+      <span class="grid-item__number">9</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">F</span>
+      <span class="grid-item__number">3</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">G</span>
+      <span class="grid-item__number">4</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">H</span>
+      <span class="grid-item__number">12</span>
+    </div>
+    <div class="grid-item grid-item--gold">
+      <span class="grid-item__letter">I</span>
+      <span class="grid-item__number">16</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">J</span>
+      <span class="grid-item__number">1</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">K</span>
+      <span class="grid-item__number">11</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">L</span>
+      <span class="grid-item__number">7</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">M</span>
+      <span class="grid-item__number">19</span>
+    </div>
+    <div class="grid-item grid-item--gold">
+      <span class="grid-item__letter">N</span>
+      <span class="grid-item__number">13</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">O</span>
+      <span class="grid-item__number">17</span>
+    </div>
+    <div class="grid-item grid-item--gold">
+      <span class="grid-item__letter">P</span>
+      <span class="grid-item__number">14</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">Q</span>
+      <span class="grid-item__number">20</span>
+    </div>
+    <div class="grid-item grid-item--blue">
+      <span class="grid-item__letter">R</span>
+      <span class="grid-item__number">6</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">S</span>
+      <span class="grid-item__number">2</span>
+    </div>
+    <div class="grid-item grid-item--red">
+      <span class="grid-item__letter">T</span>
+      <span class="grid-item__number">5</span>
+    </div>
+  </div>
+
+<script src="../bower_components/ev-emitter/ev-emitter.js"></script>
+<script src="../bower_components/get-size/get-size.js"></script>
+<script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
+<script src="../bower_components/fizzy-ui-utils/utils.js"></script>
+<script src="../bower_components/outlayer/item.js"></script>
+<script src="../bower_components/outlayer/outlayer.js"></script>
+
+<script src="../js/layout-mode.js"></script>
+<script src="../js/item.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/layout-modes/fit-rows.js"></script>
+
+<script>
+
+var iso = new Isotope( '.grid', {
+  layoutMode: 'fitRows',
+  // transitionDuration: '0.3s',
+  stagger: 30,
+  getSortData: {
+    letter: '.grid-item__letter',
+    number: '.grid-item__number parseInt'
+  }
+});
+
+var buttonGroup = document.querySelector('.button-group');
+buttonGroup.onclick = function() {
+  var arrangeAttr = event.target.getAttribute('data-arrange');
+  iso.arrange( JSON.parse( arrangeAttr ) );
+  // change is-selected class
+  buttonGroup.querySelector('.is-selected').classList.remove('is-selected');
+  event.target.classList.add('is-selected');
+}
+
+</script>
+
+</body>
+</html>
