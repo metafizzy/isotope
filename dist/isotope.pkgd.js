@@ -1000,7 +1000,7 @@ proto.getTranslate = function( x, y ) {
   var isOriginTop = this.layout._getOption('originTop');
   x = isOriginLeft ? x : -x;
   y = isOriginTop ? y : -y;
-  return 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+  return 'translate3d(' + Math.round(x) + 'px, ' + Math.round(y) + 'px, 0)';
 };
 
 // non transition + transform support
