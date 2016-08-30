@@ -8,17 +8,17 @@ See [isotope.metafizzy.co](http://isotope.metafizzy.co) for complete docs and de
 
 ### Download
 
-+ [isotope.pkgd.js](https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.js) un-minified, or
-+ [isotope.pkgd.min.js](https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.min.js) minified
++ [isotope.pkgd.js](https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js) un-minified, or
++ [isotope.pkgd.min.js](https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js) minified
 
 ### CDN
 
-Link directly to Isotope files on [npmcdn](https://npmcdn.com).
+Link directly to Isotope files on [unpkg](https://unpkg.com).
 
 ``` html
-<script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
+<script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
 <!-- or -->
-<script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.js"></script>
+<script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.js"></script>
 ```
 
 ### Package managers
