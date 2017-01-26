@@ -121,7 +121,7 @@ gulp.task( 'version', function() {
   gutil.log( 'ticking version to ' + chalk.green( version ) );
 
   gulp.src('js/isotope.js')
-    .pipe( replace( /Packery v\d\.\d+\.\d+/, 'Isotope v' + version ) )
+    .pipe( replace( /Isotope v\d\.\d+\.\d+/, 'Isotope v' + version ) )
     .pipe( gulp.dest('js') );
 
   gulp.src( [ 'package.json' ] )
