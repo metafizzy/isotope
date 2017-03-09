@@ -65,11 +65,11 @@ QUnit.test( 'sorting', function( assert ) {
       sortBy: [ 'axis' ]
     });
 
-    iso.arrange({ sortBy: 'number' })
+    iso.arrange({ sortBy: 'number' });
     assert.equal( getItemsText( iso ), 'B1X,A1X,B1Y,A1Y,B2X,A2X,B2Y,A2Y',
       'sort history 1' );
 
-    iso.arrange({ sortBy: 'letter' })
+    iso.arrange({ sortBy: 'letter' });
     assert.equal( getItemsText( iso ), 'A1X,A1Y,A2X,A2Y,B1X,B1Y,B2X,B2Y',
       'sort history 2' );
 
