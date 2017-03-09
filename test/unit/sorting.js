@@ -53,6 +53,28 @@ QUnit.test( 'sorting', function( assert ) {
     iso.destroy();
   })();
 
+  ( function() {
+    var iso = new Isotope( '#sorting2', {
+      layoutMode: 'fitRows',
+      transitionDuration: 0,
+      getSortData: {
+        letter: 'b',
+        number: 'i',
+        axis: 'span',
+      },
+      sortBy: [ 'axis' ]
+    });
+
+    iso.arrange({ sortBy: 'number' })
+    assert.equal( getItemsText( iso ), 'B1X,A1X,B1Y,A1Y,B2X,A2X,B2Y,A2Y',
+      'sort history 1' );
+
+    iso.arrange({ sortBy: 'letter' })
+    assert.equal( getItemsText( iso ), 'A1X,A1Y,A2X,A2Y,B1X,B1Y,B2X,B2Y',
+      'sort history 2' );
+
+  })();
+
   function getItemsText( iso ) {
     var texts = iso.filteredItems.map( function( item ) {
       return item.element.textContent;
