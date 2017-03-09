@@ -1,11 +1,11 @@
 /*!
- * Isotope v3.0.2
+ * Isotope v3.0.3
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2016 Metafizzy
+ * Copyright 2017 Metafizzy
  */
 
 ( function( window, factory ) {

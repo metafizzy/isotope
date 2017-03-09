@@ -1,11 +1,11 @@
 /*!
- * Isotope PACKAGED v3.0.2
+ * Isotope PACKAGED v3.0.3
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2016 Metafizzy
+ * Copyright 2017 Metafizzy
  */
 
 /**
@@ -473,7 +473,7 @@ return getSize;
 });
 
 /**
- * matchesSelector v2.0.1
+ * matchesSelector v2.0.2
  * matchesSelector( element, '.selector' )
  * MIT license
  */
@@ -499,7 +499,7 @@ return getSize;
   'use strict';
 
   var matchesMethod = ( function() {
-    var ElemProto = Element.prototype;
+    var ElemProto = window.Element.prototype;
     // check for the standard method name first
     if ( ElemProto.matches ) {
       return 'matches';
@@ -527,7 +527,7 @@ return getSize;
 }));
 
 /**
- * Fizzy UI utils v2.0.3
+ * Fizzy UI utils v2.0.4
  * MIT license
  */
 
@@ -588,7 +588,8 @@ utils.makeArray = function( obj ) {
   if ( Array.isArray( obj ) ) {
     // use object if already an array
     ary = obj;
-  } else if ( obj && typeof obj.length == 'number' ) {
+  } else if ( obj && typeof obj == 'object' &&
+    typeof obj.length == 'number' ) {
     // convert nodeList to array
     for ( var i=0; i < obj.length; i++ ) {
       ary.push( obj[i] );
@@ -2900,13 +2901,13 @@ return Vertical;
 }));
 
 /*!
- * Isotope v3.0.2
+ * Isotope v3.0.3
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2016 Metafizzy
+ * Copyright 2017 Metafizzy
  */
 
 ( function( window, factory ) {
@@ -3303,20 +3304,28 @@ var trim = String.prototype.trim ?
 
   // sort filteredItem order
   proto._sort = function() {
-    var sortByOpt = this.options.sortBy;
-    if ( !sortByOpt ) {
+    if ( !this.options.sortBy ) {
       return;
     }
-    // concat all sortBy and sortHistory
-    var sortBys = [].concat.apply( sortByOpt, this.sortHistory );
-    // sort magic
-    var itemSorter = getItemSorter( sortBys, this.options.sortAscending );
-    this.filteredItems.sort( itemSorter );
     // keep track of sortBy History
-    if ( sortByOpt != this.sortHistory[0] ) {
-      // add to front, oldest goes in last
-      this.sortHistory.unshift( sortByOpt );
+    var sortBys = utils.makeArray( this.options.sortBy );
+    if ( !this._getIsSameSortBy( sortBys ) ) {
+      // concat all sortBy and sortHistory, add to front, oldest goes in last
+      this.sortHistory = sortBys.concat( this.sortHistory );
     }
+    // sort magic
+    var itemSorter = getItemSorter( this.sortHistory, this.options.sortAscending );
+    this.filteredItems.sort( itemSorter );
+  };
+
+  // check if sortBys is same as start of sortHistory
+  proto._getIsSameSortBy = function( sortBys ) {
+    for ( var i=0; i < sortBys.length; i++ ) {
+      if ( sortBys[i] != this.sortHistory[i] ) {
+        return false;
+      }
+    }
+    return true;
   };
 
   // returns a function used for sorting
