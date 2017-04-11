@@ -11,7 +11,7 @@
     // AMD
     define( [
         '../layout-mode',
-        'masonry/masonry'
+        'masonry-layout/masonry'
       ],
       factory );
   } else if ( typeof module == 'object' && module.exports ) {
