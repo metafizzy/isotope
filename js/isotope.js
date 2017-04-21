@@ -1,5 +1,5 @@
 /*!
- * Isotope v3.0.3
+ * Isotope v3.0.4
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use

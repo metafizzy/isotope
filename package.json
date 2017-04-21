@@ -1,13 +1,17 @@
 {
   "name": "isotope-layout",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
+  "files": [
+    "js",
+    "dist"
+  ],
   "dependencies": {
     "desandro-matches-selector": "^2.0.0",
     "fizzy-ui-utils": "^2.0.4",
     "get-size": "^2.0.0",
-    "masonry-layout": "^4.0.0",
+    "masonry-layout": "^4.1.0",
     "outlayer": "^2.1.0"
   },
   "devDependencies": {
