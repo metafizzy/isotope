@@ -1,0 +1,29 @@
+{
+  "name": "isotope",
+  "version": "1.5.18",
+  "description": "An exquisite jQuery plugin for magical layouts. Enables filtering, sorting, and dynamic layouts.",
+  "homepage": "http://isotope.metafizzy.co/",
+  "licenses" : [
+    { "type": "Commercial",
+      "url": "https://github.com/buzzedword/isotope#licensing",
+    }
+  ]
+  "main": [
+    "./jquery.isotope.js",
+    "./jquery.isotope.min.js"
+  ],
+  "dependencies": {
+    "jquery": "~1.7.1"
+  },
+  "keywords": [
+    "browser",
+    "client",
+    "filtering",
+    "sorting",
+    "dynamic"
+  ],
+  "author": {
+    "name": "David DeSandro",
+    "web": "http://desandro.com"
+  }
+}
