@@ -1117,8 +1117,8 @@ proto.enableTransition = function(/* style */) {
     transitionDuration: duration,
     transitionDelay: this.staggerDelay || 0
   });
-  // listen for transition end event
-  this.element.addEventListener( transitionEndEvent, this, false );
+  // fix: commenting out to prevent multiple transitions.
+  //this.element.addEventListener( transitionEndEvent, this, false );
 };
 
 // ----- events ----- //
