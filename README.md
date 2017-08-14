@@ -25,7 +25,7 @@ Link directly to Isotope files on [unpkg](https://unpkg.com).
 
 npm: `npm install isotope-layout --save`
 
-Bower: `bower install isotope --save`
+Bower: `bower install isotope-layout --save`
 
 ## License
 
