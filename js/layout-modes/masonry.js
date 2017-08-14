@@ -1,7 +1,7 @@
 /*!
  * Masonry layout mode
  * sub-classes Masonry
- * http://masonry.desandro.com
+ * https://masonry.desandro.com
  */
 
 ( function( window, factory ) {

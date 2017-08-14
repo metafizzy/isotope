@@ -2,7 +2,7 @@
 
 _Filter & sort magical layouts_
 
-See [isotope.metafizzy.co](http://isotope.metafizzy.co) for complete docs and demos.
+See [isotope.metafizzy.co](https://isotope.metafizzy.co) for complete docs and demos.
 
 ## Install
 
@@ -31,13 +31,13 @@ Bower: `bower install isotope --save`
 
 ### Commercial license
 
-If you want to use Isotope to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase an Isotope Commercial License at [isotope.metafizzy.co](http://isotope.metafizzy.co/#commercial-license)
+If you want to use Isotope to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase an Isotope Commercial License at [isotope.metafizzy.co](https://isotope.metafizzy.co/#commercial-license)
 
 ### Open source license
 
 If you are creating an open source application under a license compatible with the [GNU GPL license v3](https://www.gnu.org/licenses/gpl-3.0.html), you may use Isotope under the terms of the GPLv3.
 
-[Read more about Isotope's license](http://isotope.metafizzy.co/license.html).
+[Read more about Isotope's license](https://isotope.metafizzy.co/license.html).
 
 ## Initialize
 
