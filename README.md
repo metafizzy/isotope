@@ -13,7 +13,15 @@ See [isotope.metafizzy.co](https://isotope.metafizzy.co) for complete docs and d
 
 ### CDN
 
-Link directly to Isotope files on [unpkg](https://unpkg.com).
+Link directly to Isotope files on [jsDelivr](https://www.jsdelivr.com/package/npm/isotope-layout).
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<!-- or -->
+<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.js"></script>
+```
+
+Or on [unpkg](https://unpkg.com).
 
 ``` html
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
