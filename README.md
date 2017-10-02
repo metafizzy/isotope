@@ -1,4 +1,4 @@
-# Isotope
+# Isotope [![CDNJS version](https://img.shields.io/cdnjs/v/jquery.isotope.svg)](https://cdnjs.com/libraries/jquery.isotope)
 
 _Filter & sort magical layouts_
 
