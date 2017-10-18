@@ -14,7 +14,7 @@
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('outlayer')
+      require( 'outlayer' )
     );
   } else {
     // browser global
@@ -51,7 +51,7 @@ proto.updateSortData = function() {
   // default sorters
   this.sortData.id = this.id;
   // for backward compatibility
-  this.sortData['original-order'] = this.id;
+  this.sortData[ 'original-order' ] = this.id;
   this.sortData.random = Math.random();
   // go thru getSortData obj and apply the sorters
   var getSortData = this.layout.options.getSortData;

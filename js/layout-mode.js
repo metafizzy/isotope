@@ -15,8 +15,8 @@
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('get-size'),
-      require('outlayer')
+      require( 'get-size' ),
+      require( 'outlayer' )
     );
   } else {
     // browser global
@@ -112,7 +112,7 @@
   };
 
   proto.getFirstItemSize = function() {
-    var firstItem = this.isotope.filteredItems[0];
+    var firstItem = this.isotope.filteredItems[ 0 ];
     return firstItem && firstItem.element && getSize( firstItem.element );
   };
 

@@ -17,8 +17,8 @@
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('../layout-mode'),
-      require('masonry-layout')
+      require( '../layout-mode' ),
+      require( 'masonry-layout' )
     );
   } else {
     // browser global
@@ -34,7 +34,7 @@
 // -------------------------- masonryDefinition -------------------------- //
 
   // create an Outlayer layout class
-  var MasonryMode = LayoutMode.create('masonry');
+  var MasonryMode = LayoutMode.create( 'masonry' );
 
   var proto = MasonryMode.prototype;
 
