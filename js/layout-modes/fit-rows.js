@@ -14,7 +14,7 @@
   } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
-      require('../layout-mode')
+      require( '../layout-mode' )
     );
   } else {
     // browser global
@@ -26,7 +26,7 @@
 }( window, function factory( LayoutMode ) {
 'use strict';
 
-var FitRows = LayoutMode.create('fitRows');
+var FitRows = LayoutMode.create( 'fitRows' );
 
 var proto = FitRows.prototype;
 

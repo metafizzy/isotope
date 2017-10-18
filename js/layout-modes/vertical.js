@@ -14,7 +14,7 @@
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('../layout-mode')
+      require( '../layout-mode' )
     );
   } else {
     // browser global

@@ -32,16 +32,16 @@
     // CommonJS
     module.exports = factory(
       window,
-      require('outlayer'),
-      require('get-size'),
-      require('desandro-matches-selector'),
-      require('fizzy-ui-utils'),
-      require('./item'),
-      require('./layout-mode'),
+      require( 'outlayer' ),
+      require( 'get-size' ),
+      require( 'desandro-matches-selector' ),
+      require( 'fizzy-ui-utils' ),
+      require( './item' ),
+      require( './layout-mode' ),
       // include default layout modes
-      require('./layout-modes/masonry'),
-      require('./layout-modes/fit-rows'),
-      require('./layout-modes/vertical')
+      require( './layout-modes/masonry' ),
+      require( './layout-modes/fit-rows' ),
+      require( './layout-modes/vertical' )
     );
   } else {
     // browser global
@@ -120,7 +120,7 @@ var trim = String.prototype.trim ?
     var items = Outlayer.prototype._itemize.apply( this, arguments );
     // assign ID for original-order
     for ( var i=0; i < items.length; i++ ) {
-      var item = items[i];
+      var item = items[ i ];
       item.id = this.itemGUID++;
     }
     this._updateItemsSortData( items );
@@ -144,7 +144,7 @@ var trim = String.prototype.trim ?
 
   proto.layout = function() {
     // if first time doing layout, do all magic
-    if ( !this._isLayoutInited && this._getOption('initLayout') ) {
+    if ( !this._isLayoutInited && this._getOption( 'initLayout' ) ) {
       this.arrange();
       return;
     }
@@ -198,7 +198,7 @@ var trim = String.prototype.trim ?
   // Don't animate/transition first layout
   // Or don't animate/transition other layouts
   proto._getIsInstant = function() {
-    var isLayoutInstant = this._getOption('layoutInstant');
+    var isLayoutInstant = this._getOption( 'layoutInstant' );
     var isInstant = isLayoutInstant !== undefined ? isLayoutInstant :
       !this._isLayoutInited;
     this._isInstant = isInstant;
@@ -243,7 +243,7 @@ var trim = String.prototype.trim ?
 
     // test each item
     for ( var i=0; i < items.length; i++ ) {
-      var item = items[i];
+      var item = items[ i ];
       if ( item.isIgnored ) {
         continue;
       }
@@ -328,7 +328,7 @@ var trim = String.prototype.trim ?
     var len = items && items.length;
 
     for ( var i=0; len && i < len; i++ ) {
-      var item = items[i];
+      var item = items[ i ];
       item.updateSortData();
     }
   };
@@ -349,14 +349,14 @@ var trim = String.prototype.trim ?
         return sorter;
       }
       // parse the sorter string
-      var args = trim( sorter ).split(' ');
-      var query = args[0];
+      var args = trim( sorter ).split( ' ' );
+      var query = args[ 0 ];
       // check if query looks like [an-attribute]
       var attrMatch = query.match( /^\[(.+)\]$/ );
-      var attr = attrMatch && attrMatch[1];
+      var attr = attrMatch && attrMatch[ 1 ];
       var getValue = getValueGetter( attr, query );
       // use second argument as a parser
-      var parser = Isotope.sortDataParsers[ args[1] ];
+      var parser = Isotope.sortDataParsers[ args[ 1 ] ];
       // parse the value, if there was a parser
       sorter = parser ? function( elem ) {
         return elem && parser( getValue( elem ) );
@@ -419,7 +419,7 @@ var trim = String.prototype.trim ?
   // check if sortBys is same as start of sortHistory
   proto._getIsSameSortBy = function( sortBys ) {
     for ( var i=0; i < sortBys.length; i++ ) {
-      if ( sortBys[i] != this.sortHistory[i] ) {
+      if ( sortBys[ i ] != this.sortHistory[ i ] ) {
         return false;
       }
     }
@@ -430,8 +430,8 @@ var trim = String.prototype.trim ?
   function getItemSorter( sortBys, sortAsc ) {
     return function sorter( itemA, itemB ) {
       // cycle through all sortKeys
-      for ( var i = 0; i < sortBys.length; i++ ) {
-        var sortBy = sortBys[i];
+      for ( var i=0; i < sortBys.length; i++ ) {
+        var sortBy = sortBys[ i ];
         var a = itemA.sortData[ sortBy ];
         var b = itemB.sortData[ sortBy ];
         if ( a > b || a < b ) {
@@ -467,7 +467,7 @@ var trim = String.prototype.trim ?
     this._mode()._resetLayout();
   };
 
-  proto._getItemLayoutPosition = function( item  ) {
+  proto._getItemLayoutPosition = function( item ) {
     return this._mode()._getItemLayoutPosition( item );
   };
 
@@ -538,19 +538,19 @@ var trim = String.prototype.trim ?
     var i, item;
     var len = items.length;
     for ( i=0; i < len; i++ ) {
-      item = items[i];
+      item = items[ i ];
       this.element.appendChild( item.element );
     }
     // filter new stuff
     var filteredInsertItems = this._filter( items ).matches;
     // set flag
     for ( i=0; i < len; i++ ) {
-      items[i].isLayoutInstant = true;
+      items[ i ].isLayoutInstant = true;
     }
     this.arrange();
     // reset flag
     for ( i=0; i < len; i++ ) {
-      delete items[i].isLayoutInstant;
+      delete items[ i ].isLayoutInstant;
     }
     this.reveal( filteredInsertItems );
   };
@@ -565,7 +565,7 @@ var trim = String.prototype.trim ?
     var len = removeItems && removeItems.length;
     // remove elems from filteredItems
     for ( var i=0; len && i < len; i++ ) {
-      var item = removeItems[i];
+      var item = removeItems[ i ];
       // remove item from collection
       utils.removeFrom( this.filteredItems, item );
     }
@@ -574,7 +574,7 @@ var trim = String.prototype.trim ?
   proto.shuffle = function() {
     // update random sortData
     for ( var i=0; i < this.items.length; i++ ) {
-      var item = this.items[i];
+      var item = this.items[ i ];
       item.sortData.random = Math.random();
     }
     this.options.sortBy = 'random';
