@@ -1,10 +1,10 @@
 /*!
- * Isotope PACKAGED v3.0.4
+ * Isotope PACKAGED v3.0.5
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
- * http://isotope.metafizzy.co
+ * https://isotope.metafizzy.co
  * Copyright 2017 Metafizzy
  */
 
@@ -153,7 +153,7 @@ return jQueryBridget;
 }));
 
 /**
- * EvEmitter v1.0.3
+ * EvEmitter v1.1.0
  * Lil' event emitter
  * MIT License
  */
@@ -233,13 +233,14 @@ proto.emitEvent = function( eventName, args ) {
   if ( !listeners || !listeners.length ) {
     return;
   }
-  var i = 0;
-  var listener = listeners[i];
+  // copy over to avoid interference if .off() in listener
+  listeners = listeners.slice(0);
   args = args || [];
   // once stuff
   var onceListeners = this._onceEvents && this._onceEvents[ eventName ];
 
-  while ( listener ) {
+  for ( var i=0; i < listeners.length; i++ ) {
+    var listener = listeners[i]
     var isOnce = onceListeners && onceListeners[ listener ];
     if ( isOnce ) {
       // remove listener
@@ -250,12 +251,14 @@ proto.emitEvent = function( eventName, args ) {
     }
     // trigger listener
     listener.apply( this, args );
-    // get next listener
-    i += isOnce ? 0 : 1;
-    listener = listeners[i];
   }
 
   return this;
+};
+
+proto.allOff = function() {
+  delete this._events;
+  delete this._onceEvents;
 };
 
 return EvEmitter;
@@ -2268,7 +2271,7 @@ return Outlayer;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/js/item',[
+    define( 'isotope-layout/js/item',[
         'outlayer/outlayer'
       ],
       factory );
@@ -2346,7 +2349,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/js/layout-mode',[
+    define( 'isotope-layout/js/layout-mode',[
         'get-size/get-size',
         'outlayer/outlayer'
       ],
@@ -2496,9 +2499,9 @@ return Item;
 }));
 
 /*!
- * Masonry v4.2.0
+ * Masonry v4.2.1
  * Cascading grid layout library
- * http://masonry.desandro.com
+ * https://masonry.desandro.com
  * MIT License
  * by David DeSandro
  */
@@ -2508,7 +2511,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'masonry/masonry',[
+    define( 'masonry-layout/masonry',[
         'outlayer/outlayer',
         'get-size/get-size'
       ],
@@ -2738,7 +2741,7 @@ return Item;
 /*!
  * Masonry layout mode
  * sub-classes Masonry
- * http://masonry.desandro.com
+ * https://masonry.desandro.com
  */
 
 ( function( window, factory ) {
@@ -2746,9 +2749,9 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/js/layout-modes/masonry',[
+    define( 'isotope-layout/js/layout-modes/masonry',[
         '../layout-mode',
-        'masonry/masonry'
+        'masonry-layout/masonry'
       ],
       factory );
   } else if ( typeof module == 'object' && module.exports ) {
@@ -2819,7 +2822,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/js/layout-modes/fit-rows',[
+    define( 'isotope-layout/js/layout-modes/fit-rows',[
         '../layout-mode'
       ],
       factory );
@@ -2888,7 +2891,7 @@ return FitRows;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope/js/layout-modes/vertical',[
+    define( 'isotope-layout/js/layout-modes/vertical',[
         '../layout-mode'
       ],
       factory );
@@ -2935,12 +2938,12 @@ return Vertical;
 }));
 
 /*!
- * Isotope v3.0.4
+ * Isotope v3.0.5
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
- * http://isotope.metafizzy.co
+ * https://isotope.metafizzy.co
  * Copyright 2017 Metafizzy
  */
 
@@ -2954,12 +2957,12 @@ return Vertical;
         'get-size/get-size',
         'desandro-matches-selector/matches-selector',
         'fizzy-ui-utils/utils',
-        'isotope/js/item',
-        'isotope/js/layout-mode',
+        'isotope-layout/js/item',
+        'isotope-layout/js/layout-mode',
         // include default layout modes
-        'isotope/js/layout-modes/masonry',
-        'isotope/js/layout-modes/fit-rows',
-        'isotope/js/layout-modes/vertical'
+        'isotope-layout/js/layout-modes/masonry',
+        'isotope-layout/js/layout-modes/fit-rows',
+        'isotope-layout/js/layout-modes/vertical'
       ],
       function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
         return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
@@ -2972,12 +2975,12 @@ return Vertical;
       require('get-size'),
       require('desandro-matches-selector'),
       require('fizzy-ui-utils'),
-      require('isotope/js/item'),
-      require('isotope/js/layout-mode'),
+      require('isotope-layout/js/item'),
+      require('isotope-layout/js/layout-mode'),
       // include default layout modes
-      require('isotope/js/layout-modes/masonry'),
-      require('isotope/js/layout-modes/fit-rows'),
-      require('isotope/js/layout-modes/vertical')
+      require('isotope-layout/js/layout-modes/masonry'),
+      require('isotope-layout/js/layout-modes/fit-rows'),
+      require('isotope-layout/js/layout-modes/vertical')
     );
   } else {
     // browser global
