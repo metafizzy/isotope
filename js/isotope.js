@@ -238,6 +238,7 @@ var trim = String.prototype.trim ?
     var matches = [];
     var hiddenMatched = [];
     var visibleUnmatched = [];
+    var results;
 
     var test = this._getFilterTest( filter );
 
@@ -262,12 +263,17 @@ var trim = String.prototype.trim ?
       }
     }
 
-    // return collections of items to be manipulated
-    return {
+    results = {
       matches: matches,
       needReveal: hiddenMatched,
       needHide: visibleUnmatched
     };
+
+    // allow the filtered items to be modified
+    this.dispatchEvent( 'itemsFiltered', null, [ results ] );
+
+    // return collections of items to be manipulated
+    return results;
   };
 
   // get a jQuery, function, or a matchesSelector test given the filter
