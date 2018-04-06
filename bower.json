@@ -10,9 +10,9 @@
     "outlayer": "^2.1.0"
   },
   "devDependencies": {
-    "jquery": "2 < 4",
+    "jquery": "^3.3.1",
     "jquery-bridget": "^2",
-    "qunit": "^1.15"
+    "qunit": "^2.6.0"
   },
   "ignore": [
     "test/",

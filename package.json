@@ -1,6 +1,6 @@
 {
   "name": "isotope-layout",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Filter and sort magical layouts",
   "main": "js/isotope.js",
   "files": [
