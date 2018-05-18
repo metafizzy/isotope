@@ -24,7 +24,7 @@
     "gulp-requirejs-optimize": "github:metafizzy/gulp-requirejs-optimize",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
-    "jquery": "2 < 4",
+    "jquery": "^3.3.1",
     "jquery-bridget": "^2",
     "jshint": "^2.9.1",
     "minimist": "^1.2.0",
