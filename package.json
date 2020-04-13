@@ -9,8 +9,12 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint .",
-    "lintFix": "npx eslint . --fix"
+    "lint": "node bin/lint-json.js && npx eslint .",
+    "lintFix": "npx eslint . --fix",
+    "dist": "npm run bundleJs && npm run uglify",
+    "bundleJs": "node bin/bundle-js.js",
+    "uglify": "npx uglifyjs dist/isotope.pkgd.js -o dist/isotope.pkgd.min.js --mangle --comments /^!/",
+    "version": "node bin/version.js && npm run dist && git add -A css js dist"
   },
   "dependencies": {
     "desandro-matches-selector": "^2.0.0",
@@ -20,21 +24,14 @@
     "outlayer": "^2.1.0"
   },
   "devDependencies": {
-    "chalk": "^1.1.1",
     "eslint": "^6.8.0",
     "eslint-plugin-metafizzy": "file:../eslint-plugin-metafizzy",
-    "gulp": "^3.9.1",
-    "gulp-json-lint": "^0.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-requirejs-optimize": "github:metafizzy/gulp-requirejs-optimize",
-    "gulp-uglify": "^1.5.3",
-    "gulp-util": "^3.0.7",
     "jquery": "^3.3.1",
     "jquery-bridget": "^2",
-    "jshint": "^2.9.1",
-    "minimist": "^1.2.0",
-    "qunitjs": "^1.15"
+    "jshint": "^2.11.0",
+    "qunitjs": "^1.15",
+    "requirejs": "^2.3.6",
+    "uglifyjs": "^2.4.11"
   },
   "repository": {
     "type": "git",

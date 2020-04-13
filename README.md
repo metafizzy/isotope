@@ -82,4 +82,4 @@ Add a `data-isotope` attribute to your element. Options can be set in JSON in th
 
 * * *
 
-By [Metafizzy 🌈🐻](https://metafizzy.co), 2010–2018
+By [Metafizzy 🌈🐻](https://metafizzy.co), 2010–2020
