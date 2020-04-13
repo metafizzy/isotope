@@ -4,8 +4,8 @@ QUnit.test( 'Masonry stamp', function( assert ) {
   var iso = new Isotope( '#masonry-stamp', {
     layoutMode: 'masonry',
     itemSelector: '.item',
-    stamp: '.stamp'
-  });
+    stamp: '.stamp',
+  } );
 
   function checkPosition( item, x, y ) {
     var elem = item.element;
@@ -19,4 +19,4 @@ QUnit.test( 'Masonry stamp', function( assert ) {
   checkPosition( iso.items[2], 60, 45 );
   checkPosition( iso.items[3], 120, 45 );
 
-});
+} );

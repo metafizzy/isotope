@@ -4,22 +4,21 @@
 
 ( function( window, factory ) {
   // universal module definition
-  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-        '../layout-mode'
-      ],
-      factory );
+      '../layout-mode',
+    ],
+    factory );
   } else if ( typeof exports == 'object' ) {
     // CommonJS
     module.exports = factory(
-      require('../layout-mode')
+        require('../layout-mode')
     );
   } else {
     // browser global
     factory(
-      window.Isotope.LayoutMode
+        window.Isotope.LayoutMode
     );
   }
 
@@ -50,7 +49,7 @@ proto._getItemLayoutPosition = function( item ) {
 
   var position = {
     x: this.x,
-    y: this.y
+    y: this.y,
   };
 
   this.maxY = Math.max( this.maxY, this.y + item.size.outerHeight );
@@ -65,4 +64,4 @@ proto._getContainerSize = function() {
 
 return FitRows;
 
-}));
+} ) );

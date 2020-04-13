@@ -4,8 +4,8 @@ QUnit.test( 'Masonry.measureColumns', function( assert ) {
   var iso = new Isotope( '#masonry-measure-columns', {
     itemSelector: '.item',
     layoutMode: 'masonry',
-    transitionDuration: 0
-  });
+    transitionDuration: 0,
+  } );
 
   var msnryMode = iso.modes.masonry;
   assert.equal( msnryMode.columnWidth, 60, 'after layout, measured first element' );
@@ -15,20 +15,23 @@ QUnit.test( 'Masonry.measureColumns', function( assert ) {
 
   iso.modes.masonry.measureColumns();
   assert.equal( msnryMode.columnWidth, 60, 'measureColumns, no option' );
-  
+
   iso.arrange({ filter: '.c' });
 
   iso.modes.masonry.measureColumns();
-  assert.equal( msnryMode.columnWidth, 60, 'measureColumns after filter first item, no option' );
+  assert.equal( msnryMode.columnWidth, 60,
+      'measureColumns after filter first item, no option' );
 
   iso.arrange({
-    masonry: { columnWidth: 80 }
+    masonry: { columnWidth: 80 },
   });
-  assert.equal( msnryMode.columnWidth, 80, '.arrange() masonry.columnWidth option set number' );
+  assert.equal( msnryMode.columnWidth, 80,
+      '.arrange() masonry.columnWidth option set number' );
 
   iso.arrange({
-    masonry: { columnWidth: '.grid-sizer' }
+    masonry: { columnWidth: '.grid-sizer' },
   });
-  assert.equal( msnryMode.columnWidth, 70, '.arrange() masonry.columnWidth option set selector string' );
+  assert.equal( msnryMode.columnWidth, 70,
+      '.arrange() masonry.columnWidth option set selector string' );
 
-});
+} );

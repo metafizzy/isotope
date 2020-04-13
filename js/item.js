@@ -4,23 +4,22 @@
 
 ( function( window, factory ) {
   // universal module definition
-  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-        'outlayer/outlayer'
-      ],
-      factory );
+      'outlayer/outlayer',
+    ],
+    factory );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('outlayer')
+        require('outlayer')
     );
   } else {
     // browser global
     window.Isotope = window.Isotope || {};
     window.Isotope.Item = factory(
-      window.Outlayer
+        window.Outlayer
     );
   }
 
@@ -68,10 +67,10 @@ proto.destroy = function() {
   _destroy.apply( this, arguments );
   // reset display, #741
   this.css({
-    display: ''
+    display: '',
   });
 };
 
 return Item;
 
-}));
+} ) );

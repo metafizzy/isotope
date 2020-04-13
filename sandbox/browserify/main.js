@@ -16,7 +16,7 @@ var iso = window.iso = new Isotope( '#container', {
   transitionDuration: '0.8s',
   cellsByRow: {
     columnWidth: 130,
-    rowHeight: 140
+    rowHeight: 140,
   },
   getSortData: {
     number: '.number parseInt',
@@ -25,10 +25,11 @@ var iso = window.iso = new Isotope( '#container', {
     category: '[data-category]',
     weight: function( itemElem ) {
       // remove parenthesis
-      return parseFloat( getText( itemElem.querySelector('.weight') ).replace( /[\(\)]/g, '') );
-    }
-  }
-});
+      var weight = itemElem.querySelector('.weight').textContent;
+      return parseFloat( weight.replace( /[()]/g, '' ) );
+    },
+  },
+} );
 
 var options = document.querySelector('#options');
 
@@ -49,4 +50,4 @@ eventie.bind( options, 'click', function( event ) {
   console.log( key, value );
   iso.options[ key ] = value;
   iso.arrange();
-});
+} );

@@ -1,3 +1,5 @@
+/* eslint-disable id-length */
+
 var Isotope = window.Isotope = require('../../js/isotope');
 var $ = require('jquery');
 require('jquery-bridget');
@@ -10,7 +12,7 @@ var $container = $('#container').isotope({
   transitionDuration: '0.8s',
   cellsByRow: {
     columnWidth: 130,
-    rowHeight: 140
+    rowHeight: 140,
   },
   getSortData: {
     number: '.number parseInt',
@@ -19,9 +21,11 @@ var $container = $('#container').isotope({
     category: '[data-category]',
     weight: function( itemElem ) {
       // remove parenthesis
-      return parseFloat( $(itemElem).find('.weight').text().replace( /[\(\)]/g, '') );
-    }
-  }
+      return parseFloat( $( itemElem ).find('.weight')
+        .text()
+        .replace( /[()]/g, '' ) );
+    },
+  },
 });
 
 $('#options').on( 'click', 'button', function( event ) {
@@ -31,7 +35,8 @@ $('#options').on( 'click', 'button', function( event ) {
 
   if ( key === 'filter' && value === 'number-greater-than-50' ) {
     value = function( elem ) {
-      var numberText = $( elem ).find('.number').text();
+      var numberText = $( elem ).find('.number')
+        .text();
       return parseInt( numberText, 10 ) > 40;
     };
   }
@@ -39,4 +44,4 @@ $('#options').on( 'click', 'button', function( event ) {
   var opts = {};
   opts[ key ] = value;
   $container.isotope( opts );
-});
+} );

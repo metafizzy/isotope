@@ -6,25 +6,24 @@
 
 ( function( window, factory ) {
   // universal module definition
-  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-        '../layout-mode',
-        'masonry-layout/masonry'
-      ],
-      factory );
+      '../layout-mode',
+      'masonry-layout/masonry',
+    ],
+    factory );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('../layout-mode'),
-      require('masonry-layout')
+        require('../layout-mode'),
+        require('masonry-layout')
     );
   } else {
     // browser global
     factory(
-      window.Isotope.LayoutMode,
-      window.Masonry
+        window.Isotope.LayoutMode,
+        window.Masonry
     );
   }
 
@@ -41,7 +40,7 @@
   var keepModeMethods = {
     _getElementOffset: true,
     layout: true,
-    _getMeasurement: true
+    _getMeasurement: true,
   };
 
   // inherit Masonry prototype
@@ -71,4 +70,4 @@
 
   return MasonryMode;
 
-}));
+} ) );

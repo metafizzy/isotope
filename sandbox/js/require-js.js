@@ -1,4 +1,5 @@
-/*global requirejs: false*/
+/* eslint-disable id-length */
+/* globals requirejs */
 
 // -------------------------- bower -------------------------- //
 
@@ -61,25 +62,24 @@ requirejs( [
 // /*
 requirejs.config({
   paths: {
-    jquery: '../../bower_components/jquery/dist/jquery'
-  }
+    jquery: '../../bower_components/jquery/dist/jquery',
+  },
 });
 
 requirejs( [ 'require', 'jquery', '../dist/isotope.pkgd.js' ],
-  function( require, $, Isotope ) {
+    function( require, $, Isotope ) {
     require( [
-      'jquery-bridget/jquery-bridget'
+      'jquery-bridget/jquery-bridget',
     ],
     function() {
       $.bridget( 'isotope', Isotope );
       $('#basic').isotope({
         masonry: {
-          columnWidth: 60
-        }
+          columnWidth: 60,
+        },
       });
-    }
-  );
-});
+    } );
+} );
 
 // */
 

@@ -13,9 +13,9 @@ QUnit.test( 'LayoutMode.getSegmentSize', function( assert ) {
     itemSelector: '.item',
     cellsByRow: {
       columnWidth: 17,
-      rowHeight: 23
-    }
-  });
+      rowHeight: 23,
+    },
+  } );
 
   var cellsByRow = iso.modes.cellsByRow;
   assert.equal( cellsByRow.columnWidth, 17, 'explicit columnWidth option set' );
@@ -37,4 +37,4 @@ QUnit.test( 'LayoutMode.getSegmentSize', function( assert ) {
   assert.equal( cellsByRow.columnWidth, 60, 'first item columnWidth' );
   assert.equal( cellsByRow.rowHeight, 30, 'first item rowHeight' );
 
-});
+} );

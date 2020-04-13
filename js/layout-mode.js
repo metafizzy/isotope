@@ -4,26 +4,25 @@
 
 ( function( window, factory ) {
   // universal module definition
-  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-        'get-size/get-size',
-        'outlayer/outlayer'
-      ],
-      factory );
+      'get-size/get-size',
+      'outlayer/outlayer',
+    ],
+    factory );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('get-size'),
-      require('outlayer')
+        require('get-size'),
+        require('outlayer')
     );
   } else {
     // browser global
     window.Isotope = window.Isotope || {};
     window.Isotope.LayoutMode = factory(
-      window.getSize,
-      window.Outlayer
+        window.getSize,
+        window.Outlayer
     );
   }
 
@@ -55,14 +54,14 @@
     '_getContainerSize',
     '_getElementOffset',
     'needsResizeLayout',
-    '_getOption'
+    '_getOption',
   ];
 
   facadeMethods.forEach( function( methodName ) {
     proto[ methodName ] = function() {
       return Outlayer.prototype[ methodName ].apply( this.isotope, arguments );
     };
-  });
+  } );
 
   // -----  ----- //
 
@@ -92,9 +91,9 @@
 
   /**
    * get columnWidth or rowHeight
-   * segment: 'column' or 'row'
-   * size 'Width' or 'Height'
-  **/
+   * @param {String} segment - 'column' or 'row'
+   * @param {String} size - 'Width' or 'Height'
+   */
   proto.getSegmentSize = function( segment, size ) {
     var segmentName = segment + size;
     var outerSize = 'outer' + size;
@@ -154,4 +153,4 @@
 
   return LayoutMode;
 
-}));
+} ) );

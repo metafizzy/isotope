@@ -5,4 +5,4 @@
 // ----- default layout mode ----- //
 Isotope.defaults.layoutMode = 'fitRows';
 
-})();
+} )();

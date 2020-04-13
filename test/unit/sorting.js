@@ -9,19 +9,20 @@ QUnit.test( 'sorting', function( assert ) {
       transitionDuration: 0,
       getSortData: {
         letter: 'b',
-        number: 'i'
+        number: 'i',
       },
-      sortBy: 'number'
-    });
+      sortBy: 'number',
+    } );
 
     iso.arrange({ sortBy: 'letter' });
 
     var texts = getItemsText( iso );
 
-    assert.equal( texts, 'A1,A2,A3,A4,B1,B2,B4', 'items sorted by letter, then number, via history' );
+    assert.equal( texts, 'A1,A2,A3,A4,B1,B2,B4',
+        'items sorted by letter, then number, via history' );
 
     iso.destroy();
-  })();
+  } )();
 
   // sorting with array
   ( function() {
@@ -30,28 +31,29 @@ QUnit.test( 'sorting', function( assert ) {
       transitionDuration: 0,
       getSortData: {
         letter: 'b',
-        number: 'i'
+        number: 'i',
       },
-      sortBy: [ 'letter', 'number' ]
-    });
+      sortBy: [ 'letter', 'number' ],
+    } );
 
     assert.equal( getItemsText( iso ), 'A1,A2,A3,A4,B1,B2,B4', 'sortBy array' );
 
     iso.arrange({
-      sortAscending: false
+      sortAscending: false,
     });
     assert.equal( getItemsText( iso ), 'B4,B2,B1,A4,A3,A2,A1', 'sortAscending false' );
 
     iso.arrange({
       sortAscending: {
         letter: true,
-        number: false
-      }
+        number: false,
+      },
     });
-    assert.equal( getItemsText( iso ), 'A4,A3,A2,A1,B4,B2,B1', 'sortAscending with object' );
+    assert.equal( getItemsText( iso ),
+        'A4,A3,A2,A1,B4,B2,B1', 'sortAscending with object' );
 
     iso.destroy();
-  })();
+  } )();
 
   ( function() {
     var iso = new Isotope( '#sorting2', {
@@ -62,24 +64,24 @@ QUnit.test( 'sorting', function( assert ) {
         number: 'i',
         axis: 'span',
       },
-      sortBy: [ 'axis' ]
-    });
+      sortBy: [ 'axis' ],
+    } );
 
     iso.arrange({ sortBy: 'number' });
     assert.equal( getItemsText( iso ), 'B1X,A1X,B1Y,A1Y,B2X,A2X,B2Y,A2Y',
-      'sort history 1' );
+        'sort history 1' );
 
     iso.arrange({ sortBy: 'letter' });
     assert.equal( getItemsText( iso ), 'A1X,A1Y,A2X,A2Y,B1X,B1Y,B2X,B2Y',
-      'sort history 2' );
+        'sort history 2' );
 
-  })();
+  } )();
 
   function getItemsText( iso ) {
     var texts = iso.filteredItems.map( function( item ) {
       return item.element.textContent;
-    });
+    } );
     return texts.join(',');
   }
 
-});
+} );

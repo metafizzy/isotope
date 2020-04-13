@@ -7,6 +7,11 @@
     "js",
     "dist"
   ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint .",
+    "lintFix": "npx eslint . --fix"
+  },
   "dependencies": {
     "desandro-matches-selector": "^2.0.0",
     "fizzy-ui-utils": "^2.0.4",
@@ -16,8 +21,9 @@
   },
   "devDependencies": {
     "chalk": "^1.1.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-metafizzy": "file:../eslint-plugin-metafizzy",
     "gulp": "^3.9.1",
-    "gulp-jshint": "^2.0.0",
     "gulp-json-lint": "^0.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
@@ -40,9 +46,6 @@
   "homepage": "https://isotope.metafizzy.co",
   "directories": {
     "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "DOM",

@@ -5,59 +5,61 @@
  * or Isotope Commercial License for commercial use
  *
  * https://isotope.metafizzy.co
- * Copyright 2010-2018 Metafizzy
+ * Copyright 2010-2020 Metafizzy
  */
+
+/* eslint-disable max-params */
 
 ( function( window, factory ) {
   // universal module definition
-  /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( [
-        'outlayer/outlayer',
-        'get-size/get-size',
-        'desandro-matches-selector/matches-selector',
-        'fizzy-ui-utils/utils',
-        './item',
-        './layout-mode',
-        // include default layout modes
-        './layout-modes/masonry',
-        './layout-modes/fit-rows',
-        './layout-modes/vertical'
-      ],
-      function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
-        return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
-      });
+      'outlayer/outlayer',
+      'get-size/get-size',
+      'desandro-matches-selector/matches-selector',
+      'fizzy-ui-utils/utils',
+      './item',
+      './layout-mode',
+      // include default layout modes
+      './layout-modes/masonry',
+      './layout-modes/fit-rows',
+      './layout-modes/vertical',
+    ],
+    function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
+        return factory( window, Outlayer, getSize, matchesSelector, utils,
+            Item, LayoutMode );
+      } );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      window,
-      require('outlayer'),
-      require('get-size'),
-      require('desandro-matches-selector'),
-      require('fizzy-ui-utils'),
-      require('./item'),
-      require('./layout-mode'),
-      // include default layout modes
-      require('./layout-modes/masonry'),
-      require('./layout-modes/fit-rows'),
-      require('./layout-modes/vertical')
+        window,
+        require('outlayer'),
+        require('get-size'),
+        require('desandro-matches-selector'),
+        require('fizzy-ui-utils'),
+        require('./item'),
+        require('./layout-mode'),
+        // include default layout modes
+        require('./layout-modes/masonry'),
+        require('./layout-modes/fit-rows'),
+        require('./layout-modes/vertical')
     );
   } else {
     // browser global
     window.Isotope = factory(
-      window,
-      window.Outlayer,
-      window.getSize,
-      window.matchesSelector,
-      window.fizzyUIUtils,
-      window.Isotope.Item,
-      window.Isotope.LayoutMode
+        window,
+        window.Outlayer,
+        window.getSize,
+        window.matchesSelector,
+        window.fizzyUIUtils,
+        window.Isotope.Item,
+        window.Isotope.LayoutMode
     );
   }
 
 }( window, function factory( window, Outlayer, getSize, matchesSelector, utils,
-  Item, LayoutMode ) {
+    Item, LayoutMode ) {
 
 'use strict';
 
@@ -81,8 +83,8 @@ var trim = String.prototype.trim ?
   var Isotope = Outlayer.create( 'isotope', {
     layoutMode: 'masonry',
     isJQueryFiltering: true,
-    sortAscending: true
-  });
+    sortAscending: true,
+  } );
 
   Isotope.Item = Item;
   Isotope.LayoutMode = LayoutMode;
@@ -119,14 +121,13 @@ var trim = String.prototype.trim ?
   proto._itemize = function() {
     var items = Outlayer.prototype._itemize.apply( this, arguments );
     // assign ID for original-order
-    for ( var i=0; i < items.length; i++ ) {
+    for ( var i = 0; i < items.length; i++ ) {
       var item = items[i];
       item.id = this.itemGUID++;
     }
     this._updateItemsSortData( items );
     return items;
   };
-
 
   // -------------------------- layout -------------------------- //
 
@@ -140,7 +141,6 @@ var trim = String.prototype.trim ?
     // init layout mode instance
     this.modes[ name ] = new Mode( this );
   };
-
 
   proto.layout = function() {
     // if first time doing layout, do all magic
@@ -219,15 +219,15 @@ var trim = String.prototype.trim ?
     this.once( 'layoutComplete', function() {
       isLayoutComplete = true;
       arrangeParallelCallback();
-    });
+    } );
     this.once( 'hideComplete', function() {
       isHideComplete = true;
       arrangeParallelCallback();
-    });
+    } );
     this.once( 'revealComplete', function() {
       isRevealComplete = true;
       arrangeParallelCallback();
-    });
+    } );
   };
 
   // -------------------------- filter -------------------------- //
@@ -242,7 +242,7 @@ var trim = String.prototype.trim ?
     var test = this._getFilterTest( filter );
 
     // test each item
-    for ( var i=0; i < items.length; i++ ) {
+    for ( var i = 0; i < items.length; i++ ) {
       var item = items[i];
       if ( item.isIgnored ) {
         continue;
@@ -266,7 +266,7 @@ var trim = String.prototype.trim ?
     return {
       matches: matches,
       needReveal: hiddenMatched,
-      needHide: visibleUnmatched
+      needHide: visibleUnmatched,
     };
   };
 
@@ -293,8 +293,7 @@ var trim = String.prototype.trim ?
   // -------------------------- sorting -------------------------- //
 
   /**
-   * @params {Array} elems
-   * @public
+   * @param {Array} elems
    */
   proto.updateSortData = function( elems ) {
     // get items
@@ -311,28 +310,6 @@ var trim = String.prototype.trim ?
     this._updateItemsSortData( items );
   };
 
-  proto._getSorters = function() {
-    var getSortData = this.options.getSortData;
-    for ( var key in getSortData ) {
-      var sorter = getSortData[ key ];
-      this._sorters[ key ] = mungeSorter( sorter );
-    }
-  };
-
-  /**
-   * @params {Array} items - of Isotope.Items
-   * @private
-   */
-  proto._updateItemsSortData = function( items ) {
-    // do not update if no items
-    var len = items && items.length;
-
-    for ( var i=0; len && i < len; i++ ) {
-      var item = items[i];
-      item.updateSortData();
-    }
-  };
-
   // ----- munge sorter ----- //
 
   // encapsulate this, as we just need mungeSorter
@@ -343,7 +320,7 @@ var trim = String.prototype.trim ?
     // `[foo-bar]` will use attribute
     // you can also add parser
     // `.foo-bar parseInt` will parse that as a number
-    function mungeSorter( sorter ) {
+    function mngSorter( sorter ) {
       // if not a string, return function or whatever it is
       if ( typeof sorter != 'string' ) {
         return sorter;
@@ -362,9 +339,9 @@ var trim = String.prototype.trim ?
         return elem && parser( getValue( elem ) );
       } :
       // otherwise just return value
-      function( elem ) {
-        return elem && getValue( elem );
-      };
+        function( elem ) {
+          return elem && getValue( elem );
+        };
 
       return sorter;
     }
@@ -385,17 +362,41 @@ var trim = String.prototype.trim ?
       };
     }
 
-    return mungeSorter;
-  })();
+    return mngSorter;
+  } )();
+
+  proto._getSorters = function() {
+    var getSortData = this.options.getSortData;
+    for ( var key in getSortData ) {
+      var sorter = getSortData[ key ];
+      this._sorters[ key ] = mungeSorter( sorter );
+    }
+  };
+
+  /**
+   * @param {Array} items - of Isotope.Items
+   */
+  proto._updateItemsSortData = function( items ) {
+    // do not update if no items
+    var len = items && items.length;
+    if ( !len ) {
+      return;
+    }
+
+    for ( var i = 0; i < len; i++ ) {
+      var item = items[i];
+      item.updateSortData();
+    }
+  };
 
   // parsers used in getSortData shortcut strings
   Isotope.sortDataParsers = {
-    'parseInt': function( val ) {
+    parseInt: function( val ) {
       return parseInt( val, 10 );
     },
-    'parseFloat': function( val ) {
+    parseFloat: function( val ) {
       return parseFloat( val );
-    }
+    },
   };
 
   // ----- sort method ----- //
@@ -418,7 +419,7 @@ var trim = String.prototype.trim ?
 
   // check if sortBys is same as start of sortHistory
   proto._getIsSameSortBy = function( sortBys ) {
-    for ( var i=0; i < sortBys.length; i++ ) {
+    for ( var i = 0; i < sortBys.length; i++ ) {
       if ( sortBys[i] != this.sortHistory[i] ) {
         return false;
       }
@@ -467,7 +468,7 @@ var trim = String.prototype.trim ?
     this._mode()._resetLayout();
   };
 
-  proto._getItemLayoutPosition = function( item  ) {
+  proto._getItemLayoutPosition = function( item ) {
     return this._mode()._getItemLayoutPosition( item );
   };
 
@@ -527,7 +528,7 @@ var trim = String.prototype.trim ?
 
   /**
    * Filter, sort, and layout newly-appended item elements
-   * @param {Array or NodeList or Element} elems
+   * @param {[Array, NodeList, Element]} elems
    */
   proto.insert = function( elems ) {
     var items = this.addItems( elems );
@@ -537,19 +538,19 @@ var trim = String.prototype.trim ?
     // append item elements
     var i, item;
     var len = items.length;
-    for ( i=0; i < len; i++ ) {
+    for ( i = 0; i < len; i++ ) {
       item = items[i];
       this.element.appendChild( item.element );
     }
     // filter new stuff
     var filteredInsertItems = this._filter( items ).matches;
     // set flag
-    for ( i=0; i < len; i++ ) {
+    for ( i = 0; i < len; i++ ) {
       items[i].isLayoutInstant = true;
     }
     this.arrange();
     // reset flag
-    for ( i=0; i < len; i++ ) {
+    for ( i = 0; i < len; i++ ) {
       delete items[i].isLayoutInstant;
     }
     this.reveal( filteredInsertItems );
@@ -564,7 +565,10 @@ var trim = String.prototype.trim ?
     // bail if no items to remove
     var len = removeItems && removeItems.length;
     // remove elems from filteredItems
-    for ( var i=0; len && i < len; i++ ) {
+    if ( !len ) {
+      return;
+    }
+    for ( var i = 0; i < len; i++ ) {
       var item = removeItems[i];
       // remove item from collection
       utils.removeFrom( this.filteredItems, item );
@@ -573,7 +577,7 @@ var trim = String.prototype.trim ?
 
   proto.shuffle = function() {
     // update random sortData
-    for ( var i=0; i < this.items.length; i++ ) {
+    for ( var i = 0; i < this.items.length; i++ ) {
       var item = this.items[i];
       item.sortData.random = Math.random();
     }
@@ -587,7 +591,7 @@ var trim = String.prototype.trim ?
    * kind of hacky to have this in the first place
    * @param {Function} fn
    * @param {Array} args
-   * @returns ret
+   * @returns {Object} returnValue
    * @private
    */
   proto._noTransition = function( fn, args ) {
@@ -611,11 +615,11 @@ var trim = String.prototype.trim ?
   proto.getFilteredItemElements = function() {
     return this.filteredItems.map( function( item ) {
       return item.element;
-    });
+    } );
   };
 
   // -----  ----- //
 
   return Isotope;
 
-}));
+} ) );

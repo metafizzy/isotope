@@ -1,4 +1,4 @@
-/*globals jQuery */
+/* globals jQuery */
 
 QUnit.test( 'sort data', function( assert ) {
 
@@ -11,9 +11,9 @@ QUnit.test( 'sort data', function( assert ) {
       fruit: 'span.fruit',
       b: 'b parseFloat',
       i: 'i parseInt',
-      bbroke: 'b foobar'
-    }
-  });
+      bbroke: 'b foobar',
+    },
+  } );
 
   var item0 = iso.items[0];
   var item1 = iso.items[1];
@@ -44,8 +44,10 @@ QUnit.test( 'sort data', function( assert ) {
   iso.updateSortData( elem0 );
 
   var message = ', after updateSortData on single item';
-  assert.equal( item0.sortData.ninjaTurtle, 'donatello', '[data-attr] shorthand' + message );
-  assert.equal( item0.sortData.fruit, 'mango', 'query selector shorthand' + message );
+  assert.equal( item0.sortData.ninjaTurtle, 'donatello',
+      '[data-attr] shorthand' + message );
+  assert.equal( item0.sortData.fruit, 'mango',
+      'query selector shorthand' + message );
   assert.equal( item0.sortData.b, 7.24, 'parseFloat parser' + message );
   assert.ok( isNaN( item0.sortData.i ), 'parseInt parser' + message );
   assert.equal( item0.sortData.bbroke, '7.24', 'default nonparser' + message );
@@ -62,10 +64,14 @@ QUnit.test( 'sort data', function( assert ) {
   iso.updateSortData();
 
   message = ', after updateSortData on all items';
-  assert.equal( item0.sortData.ninjaTurtle, 'leonardo', '[data-attr] shorthand' + message );
-  assert.equal( item0.sortData.fruit, 'passion fruit', 'query selector shorthand' + message );
-  assert.equal( item1.sortData.ninjaTurtle, 'michelangelo', '[data-attr] shorthand' + message );
-  assert.equal( item1.sortData.fruit, 'starfruit', 'query selector shorthand' + message );
+  assert.equal( item0.sortData.ninjaTurtle, 'leonardo',
+      '[data-attr] shorthand' + message );
+  assert.equal( item0.sortData.fruit, 'passion fruit',
+      'query selector shorthand' + message );
+  assert.equal( item1.sortData.ninjaTurtle, 'michelangelo',
+      '[data-attr] shorthand' + message );
+  assert.equal( item1.sortData.fruit, 'starfruit',
+      'query selector shorthand' + message );
 
   // ----- no items ----- //
 
@@ -81,7 +87,7 @@ QUnit.test( 'sort data', function( assert ) {
   iso.updateSortData( false );
   assert.ok( true, 'updateSortData with falsy is ok, with no child items' );
 
-  iso.updateSortData( [] );
+  iso.updateSortData([]);
   assert.ok( true, 'updateSortData with empty array is ok, with no child items' );
 
   iso.updateSortData( jQuery() );
@@ -100,4 +106,4 @@ QUnit.test( 'sort data', function( assert ) {
   assert.equal( item0.sortData.badQuery, null, 'bad query returns null' );
   assert.equal( item0.sortData.badAttr, null, 'bad attr returns null' );
 
-});
+} );

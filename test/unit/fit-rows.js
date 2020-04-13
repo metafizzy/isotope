@@ -4,8 +4,8 @@ QUnit.test( 'fitRows', function( assert ) {
   var iso = new Isotope( '#fitrows-gutter', {
     layoutMode: 'fitRows',
     itemSelector: '.item',
-    transitionDuration: 0
-  });
+    transitionDuration: 0,
+  } );
 
   function checkPosition( item, x, y ) {
     var elem = item.element;
@@ -19,7 +19,7 @@ QUnit.test( 'fitRows', function( assert ) {
 
   // check gutter
   iso.options.fitRows = {
-    gutter: 10
+    gutter: 10,
   };
   iso.layout();
 
@@ -28,11 +28,11 @@ QUnit.test( 'fitRows', function( assert ) {
 
   // check gutter, with element sizing
   iso.options.fitRows = {
-    gutter: '.gutter-sizer'
+    gutter: '.gutter-sizer',
   };
   iso.layout();
 
   checkPosition( iso.items[0], 0, 0 );
   checkPosition( iso.items[1], 78, 0 );
 
-});
+} );
