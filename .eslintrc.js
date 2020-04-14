@@ -21,8 +21,6 @@ module.exports = {
     strict: 'off',
   },
   ignorePatterns: [
-    'dist/',
-    '!.eslintrc.js',
     'sandbox/browserify/bundle.js',
   ],
 };

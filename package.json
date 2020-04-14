@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "eslint-plugin-metafizzy": "file:../eslint-plugin-metafizzy",
+    "eslint-plugin-metafizzy": "^1.0.0",
     "jquery": "^3.3.1",
     "jquery-bridget": "^2",
     "jshint": "^2.11.0",
