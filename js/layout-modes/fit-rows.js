@@ -42,7 +42,7 @@ proto._getItemLayoutPosition = function( item ) {
   var itemWidth = item.size.outerWidth + this.gutter;
   // if this element cannot fit in the current row
   var containerWidth = this.isotope.size.innerWidth + this.gutter;
-  if ( this.x !== 0 && itemWidth + this.x > containerWidth ) {
+  if ( this.x !== 0 && itemWidth + this.x > containerWidth + 0.001 /*to prevent last item not fitting in some cases*/ ) {
     this.x = 0;
     this.y = this.maxY;
   }
