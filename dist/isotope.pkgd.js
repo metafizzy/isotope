@@ -2828,7 +2828,7 @@ return Item;
         '../layout-mode'
       ],
       factory );
-  } else if ( typeof exports == 'object' ) {
+  } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
       require('../layout-mode')
